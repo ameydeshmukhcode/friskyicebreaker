@@ -14,10 +14,4 @@
         android:title="@string/menu_item_messages"
         app:showAsAction="ifRoom" />
 
-    <item
-        android:id="@+id/home_menu_profile"
-        android:icon="@drawable/round_account_circle_white_48"
-        android:title="@string/menu_item_profile"
-        app:showAsAction="ifRoom" />
-
 </menu>

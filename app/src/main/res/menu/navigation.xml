@@ -4,8 +4,8 @@
     <item
         android:id="@+id/navigation_dashboard"
         android:icon="@drawable/placeholder_48"
-        android:title="@string/bottom_nav_dashboard" />
-    
+        android:title="@string/bottom_nav_pubs" />
+
     <item
         android:id="@+id/navigation_home"
         android:icon="@drawable/round_home_black_48"
@@ -14,6 +14,6 @@
     <item
         android:id="@+id/navigation_notifications"
         android:icon="@drawable/placeholder_48"
-        android:title="@string/bottom_nav_notifications" />
+        android:title="@string/bottom_nav_profile" />
 
 </menu>

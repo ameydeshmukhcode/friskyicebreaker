@@ -2,7 +2,9 @@
     <string name="app_name">Frisky</string>
 
     <!-- App -->
-    <string name="pings">Pings</string>
+    <string name="home">Home</string>
     <string name="messages">Messages</string>
+    <string name="pings">Pings</string>
     <string name="profile">Profile</string>
+    <string name="pubs">Pubs</string>
 </resources>

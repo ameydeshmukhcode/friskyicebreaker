@@ -6,7 +6,7 @@
     <string name="menu_item_profile">@string/profile</string>
 
     <!-- Home Activity Bottom NavView Menu -->
-    <string name="bottom_nav_home">Home</string>
-    <string name="bottom_nav_dashboard">Dashboard</string>
-    <string name="bottom_nav_notifications">Notifications</string>
+    <string name="bottom_nav_home">@string/home</string>
+    <string name="bottom_nav_pubs">@string/pubs</string>
+    <string name="bottom_nav_profile">@string/profile</string>
 </resources>
