@@ -23,6 +23,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent startHomeActivity = new Intent(getApplicationContext(), HomeActivity.class);
                 startActivity(startHomeActivity);
+                finish();
             }
         });
     }
