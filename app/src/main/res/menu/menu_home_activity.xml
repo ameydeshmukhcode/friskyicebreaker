@@ -3,15 +3,19 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/home_menu_pings"
-        android:icon="@drawable/round_notifications_white_48"
-        android:title="@string/menu_item_pings"
+        android:id="@+id/home_menu_scan_qr"
+        android:icon="@drawable/round_camera_white_24"
+        android:title="@string/scan_qr_code"
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/home_menu_messages"
-        android:icon="@drawable/round_message_white_48"
-        android:title="@string/menu_item_messages"
+        android:id="@+id/home_menu_social"
+        android:icon="@drawable/placeholder_white_24"
+        android:title="@string/social"
         app:showAsAction="ifRoom" />
 
+    <item
+        android:id="@+id/home_menu_settings"
+        android:title="@string/settings"
+        app:showAsAction="never"/>
 </menu>
