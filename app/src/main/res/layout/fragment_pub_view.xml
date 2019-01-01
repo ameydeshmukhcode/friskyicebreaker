@@ -42,8 +42,5 @@
         android:id="@+id/recycler_pub_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginStart="@dimen/margin"
-        android:layout_marginTop="@dimen/margin_half"
-        android:layout_marginEnd="@dimen/margin"
-        android:layout_marginBottom="@dimen/margin" />
+        android:layout_marginTop="@dimen/margin_half" />
 </LinearLayout>
