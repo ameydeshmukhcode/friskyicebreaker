@@ -4,9 +4,11 @@
     <string name="menu_item_pings">@string/pings</string>
     <string name="menu_item_messages">@string/messages</string>
     <string name="menu_item_profile">@string/profile</string>
+    <string name="menu_item_scan_qr_code">@string/scan_qr_code</string>
+    <string name="menu_item_social">@string/social</string>
 
     <!-- Home Activity Bottom NavView Menu -->
     <string name="bottom_nav_home">@string/home</string>
-    <string name="bottom_nav_pubs">@string/pubs</string>
     <string name="bottom_nav_profile">@string/profile</string>
+    <string name="bottom_nav_icebreaker">@string/icebreaker</string>
 </resources>

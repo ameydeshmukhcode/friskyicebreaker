@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="button_login">Login</string>
+    <string name="button_login">@string/login</string>
+    <string name="button_filters">@string/filters</string>
+    <string name="button_edit_profile">@string/edit</string>
 </resources>

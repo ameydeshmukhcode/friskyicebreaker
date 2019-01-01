@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Frisky</string>
+
+    <!-- App -->
+    <string name="home">Home</string>
+    <string name="edit">Edit</string>
+    <string name="messages">Messages</string>
+    <string name="pings">Pings</string>
+    <string name="profile">Profile</string>
+    <string name="pubs">Pubs</string>
+    <string name="settings">Settings</string>
+    <string name="scan_qr_code">Scan QR Code</string>
+    <string name="social">Social</string>
+    <string name="icebreaker">Ice Breaker</string>
+    <string name="filters">Filters</string>
+    <string name="empty"></string>
+    <string name="search">Search</string>
+    <string name="login">Login</string>
+    <string name="apply">Apply</string>
+    <string name="comma">,</string>
+</resources>
