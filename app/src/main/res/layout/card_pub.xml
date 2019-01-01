@@ -8,12 +8,12 @@
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin">
+        android:layout_margin="@dimen/margin_half">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="@dimen/padding">
+            android:padding="@dimen/padding_half">
 
             <ImageView
                 android:id="@+id/image"
