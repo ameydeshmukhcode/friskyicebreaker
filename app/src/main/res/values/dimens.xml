@@ -3,5 +3,4 @@
     <dimen name="margin_half">4dp</dimen>
     <dimen name="padding">8dp</dimen>
     <dimen name="padding_half">4dp</dimen>
-    <dimen name="zero">0dp</dimen>
 </resources>
