@@ -1,4 +1,4 @@
-package com.frisky.icebreaker.structures;
+package com.frisky.icebreaker.core.structures;
 
 public class Pub {
     private String mName;

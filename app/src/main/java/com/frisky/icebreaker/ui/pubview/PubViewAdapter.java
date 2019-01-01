@@ -1,4 +1,4 @@
-package com.frisky.icebreaker;
+package com.frisky.icebreaker.ui.pubview;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -7,7 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.frisky.icebreaker.structures.Pub;
+import com.frisky.icebreaker.R;
+import com.frisky.icebreaker.core.structures.Pub;
 
 import java.util.List;
 

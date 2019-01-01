@@ -1,4 +1,4 @@
-package com.frisky.icebreaker;
+package com.frisky.icebreaker.ui;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -7,6 +7,11 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.support.v7.widget.Toolbar;
+
+import com.frisky.icebreaker.R;
+import com.frisky.icebreaker.ui.profile.ProfileFragment;
+import com.frisky.icebreaker.ui.pubview.PubViewFragment;
+import com.frisky.icebreaker.ui.social.SocialFragment;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -21,9 +26,11 @@ public class HomeActivity extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.bottom_nav_home:
                     loadFragment(new PubViewFragment());
+                    changeTitle(R.string.app_name);
                     return true;
                 case R.id.bottom_nav_profile:
                     loadFragment(new ProfileFragment());
+                    changeTitle(R.string.profile);
                     return true;
                 case R.id.bottom_nav_icebreaker:
                     return true;
@@ -38,7 +45,7 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         mToolbarMain = findViewById(R.id.home_activity_toolbar);
-        mToolbarMain.setTitle(R.string.title_activity_home);
+        changeTitle(R.string.app_name);
 
         mToolbarMain.inflateMenu(R.menu.menu_home_activity);
 
@@ -53,6 +60,7 @@ public class HomeActivity extends AppCompatActivity {
                                 return true;
                             case R.id.home_menu_social:
                                 loadFragment(new SocialFragment());
+                                changeTitle(R.string.social);
                                 return true;
                         }
                         return false;
@@ -77,5 +85,9 @@ public class HomeActivity extends AppCompatActivity {
             return true;
         }
         return false;
+    }
+
+    private void changeTitle(int stringResource) {
+        mToolbarMain.setTitle(stringResource);
     }
 }

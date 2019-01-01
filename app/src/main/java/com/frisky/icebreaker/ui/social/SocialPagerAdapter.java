@@ -1,8 +1,11 @@
-package com.frisky.icebreaker;
+package com.frisky.icebreaker.ui.social;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+
+import com.frisky.icebreaker.ui.profile.ProfileFragment;
+import com.frisky.icebreaker.ui.pubview.PubViewFragment;
 
 public class SocialPagerAdapter extends FragmentStatePagerAdapter {
 

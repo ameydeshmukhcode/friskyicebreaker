@@ -1,4 +1,4 @@
-package com.frisky.icebreaker;
+package com.frisky.icebreaker.ui.pubview;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -11,7 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
-import com.frisky.icebreaker.structures.Pub;
+import com.frisky.icebreaker.ui.BottomSheetFragment;
+import com.frisky.icebreaker.R;
+import com.frisky.icebreaker.core.structures.Pub;
 
 import java.util.ArrayList;
 import java.util.List;
