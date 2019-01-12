@@ -25,7 +25,6 @@ public class SocialFragment extends Fragment {
         viewPager.setAdapter(myPagerAdapter);
         TabLayout tabLayout = (TabLayout) view.findViewById(R.id.tabs_social);
         tabLayout.setupWithViewPager(viewPager);
-        tabLayout.setElevation(5);
 
         return view;
     }
