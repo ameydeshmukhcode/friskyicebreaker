@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.ui.pubview.PubViewAdapter;
@@ -17,6 +18,7 @@ import java.util.List;
 public class BottomSheetFragment extends BottomSheetDialogFragment {
 
     private List<String> filtersList = new ArrayList<>();
+    private Button mApplyFilterButton;
 
     private RecyclerView mRecyclerFiltersView;
     private RecyclerView.Adapter mFiltersViewAdapter;
@@ -38,6 +40,14 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
 
         View view;
         view = inflater.inflate(R.layout.bottom_sheet_filters, null);
+
+        mApplyFilterButton = view.findViewById(R.id.button_apply);
+        mApplyFilterButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
 
         mRecyclerFiltersView = view.findViewById(R.id.recycler_filters);
 
