@@ -18,5 +18,10 @@
     <string name="login">Login</string>
     <string name="apply">Apply</string>
     <string name="comma">,</string>
-    <string name="placeholder">Placeholder</string>
+    <string name="connect">Connect</string>
+    <string name="placeholder">.. tbd ..</string>
+    <string name="reviews">Reviews</string>
+    <string name="directions">Directions</string>
+    <string name="bookmark">Bookmark</string>
+    <string name="view_users">View Users</string>
 </resources>
