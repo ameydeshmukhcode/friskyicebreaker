@@ -3,4 +3,8 @@
     <string name="button_login">@string/login</string>
     <string name="button_filters">@string/filters</string>
     <string name="button_edit_profile">@string/edit</string>
+    <string name="button_reviews">@string/reviews</string>
+    <string name="button_directions">@string/directions</string>
+    <string name="button_bookmark">@string/bookmark</string>
+    <string name="button_view_users">@string/view_users</string>
 </resources>

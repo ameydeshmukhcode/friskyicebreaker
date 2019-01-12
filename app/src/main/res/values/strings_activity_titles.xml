@@ -2,4 +2,5 @@
 <resources>
     <!-- Activity Titles -->
     <string name="title_activity_home">Frisky</string>
+    <string name="title_activity_pub_view">@string/empty</string>
 </resources>
