@@ -7,15 +7,17 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
-import com.frisky.icebreaker.ui.BottomSheetFragment;
+import com.frisky.icebreaker.ui.components.bottomsheet.filters.BottomSheetFragment;
 import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.core.structures.Pub;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class PubViewFragment extends Fragment {
@@ -66,43 +68,41 @@ public class PubViewFragment extends Fragment {
     }
 
     private void preparePubData() {
-        Pub pub = new Pub("DJ the BJ", "DJ the BJ");
+        Pub pub = new Pub("DJ the BJ", "DJ the BJ", Arrays.asList("Alcohol", "Food"), 4.5);
         pubList.add(pub);
 
-        pub = new Pub("Joey's Roaches", "Joey's Roaches");
+        pub = new Pub("Joey's Roaches", "Joey's Roaches", Arrays.asList("Alcohol", "Food"), 4.0);
         pubList.add(pub);
 
-        pub = new Pub("Biergarten", "Biergarten");
+        pub = new Pub("Biergarten", "Biergarten", Arrays.asList("Alcohol", "Food"), 4.75);
         pubList.add(pub);
 
-        pub = new Pub("Gourmet Theatre", "Gourmet Theatre");
+        pub = new Pub("Gourmet Theatre", "Gourmet Theatre", Arrays.asList("Alcohol", "Food"), 4.8);
         pubList.add(pub);
 
-        pub = new Pub("Rasta Cafe", "Rasta Cafe");
+        pub = new Pub("Rasta Cafe", "Rasta Cafe", Arrays.asList("Alcohol", "Food"), 3.8);
         pubList.add(pub);
 
-        pub = new Pub("Joey's Roaches", "Joey's Roaches");
+        pub = new Pub("Joey's Roaches", "Joey's Roaches", Arrays.asList("Alcohol", "Food"), 4.0);
         pubList.add(pub);
 
-        pub = new Pub("Biergarten", "Biergarten");
+        pub = new Pub("Biergarten", "Biergarten", Arrays.asList("Alcohol", "Food"), 4.75);
         pubList.add(pub);
 
-        pub = new Pub("Gourmet Theatre", "Gourmet Theatre");
+        pub = new Pub("Gourmet Theatre", "Gourmet Theatre", Arrays.asList("Alcohol", "Food"), 4.8);
         pubList.add(pub);
 
-        pub = new Pub("Rasta Cafe", "Rasta Cafe");
+        pub = new Pub("Joey's Roaches", "Joey's Roaches", Arrays.asList("Alcohol", "Food"), 4.0);
         pubList.add(pub);
 
-        pub = new Pub("Joey's Roaches", "Joey's Roaches");
+        pub = new Pub("Biergarten", "Biergarten", Arrays.asList("Alcohol", "Food"), 4.75);
         pubList.add(pub);
 
-        pub = new Pub("Biergarten", "Biergarten");
+        pub = new Pub("Gourmet Theatre", "Gourmet Theatre", Arrays.asList("Alcohol", "Food"), 4.8);
         pubList.add(pub);
 
-        pub = new Pub("Gourmet Theatre", "Gourmet Theatre");
+        pub = new Pub("Rasta Cafe", "Rasta Cafe", Arrays.asList("Alcohol", "Food"), 3.8);
         pubList.add(pub);
-
-        pub = new Pub("Rasta Cafe", "Rasta Cafe");
 
         mPubViewAdapter.notifyDataSetChanged();
     }
