@@ -5,10 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <android.support.v7.widget.CardView
+    <android.support.design.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin_half">
+        android:layout_margin="@dimen/margin_half"
+        android:clickable="true"
+        android:focusable="true">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
@@ -35,7 +37,6 @@
                 android:text="@string/placeholder"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.512"
                 app:layout_constraintStart_toEndOf="@+id/image"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -48,10 +49,8 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Caption"
                 app:layout_constraintBottom_toTopOf="@id/tag_list"
                 app:layout_constraintEnd_toEndOf="@+id/title"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/title"
                 app:layout_constraintTop_toBottomOf="@+id/title"
-                app:layout_constraintVertical_bias="0.0"
                 app:layout_constraintVertical_chainStyle="spread_inside" />
 
             <TextView
@@ -80,5 +79,5 @@
                 app:layout_constraintTop_toBottomOf="@+id/tag_list"
                 app:layout_constraintVertical_bias="1.0" />
         </android.support.constraint.ConstraintLayout>
-    </android.support.v7.widget.CardView>
+    </android.support.design.card.MaterialCardView>
 </RelativeLayout>
