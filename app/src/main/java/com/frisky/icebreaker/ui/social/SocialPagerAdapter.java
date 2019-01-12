@@ -4,9 +4,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.frisky.icebreaker.ui.profile.ProfileFragment;
-import com.frisky.icebreaker.ui.pubview.PubViewFragment;
-
 public class SocialPagerAdapter extends FragmentStatePagerAdapter {
 
     public SocialPagerAdapter(FragmentManager fm) {
@@ -14,11 +11,10 @@ public class SocialPagerAdapter extends FragmentStatePagerAdapter {
     }
 
     @Override
-
     public Fragment getItem(int i) {
         switch (i) {
-            case 0: return new PubViewFragment();
-            case 1: return new ProfileFragment();
+            case 0: return new PingsFragment();
+            case 1: return new FriendsFragment();
         }
         return null;
     }

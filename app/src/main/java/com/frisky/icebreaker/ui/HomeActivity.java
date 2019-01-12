@@ -12,6 +12,7 @@ import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.ui.profile.ProfileFragment;
 import com.frisky.icebreaker.ui.pubview.PubViewFragment;
 import com.frisky.icebreaker.ui.social.SocialFragment;
+import com.frisky.icebreaker.ui.social.UsersListFragment;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -28,11 +29,13 @@ public class HomeActivity extends AppCompatActivity {
                     loadFragment(new PubViewFragment());
                     changeTitle(R.string.app_name);
                     return true;
+                case R.id.bottom_nav_icebreaker:
+                    loadFragment(new UsersListFragment());
+                    changeTitle(R.string.view_users);
+                    return true;
                 case R.id.bottom_nav_profile:
                     loadFragment(new ProfileFragment());
                     changeTitle(R.string.profile);
-                    return true;
-                case R.id.bottom_nav_icebreaker:
                     return true;
             }
             return false;
