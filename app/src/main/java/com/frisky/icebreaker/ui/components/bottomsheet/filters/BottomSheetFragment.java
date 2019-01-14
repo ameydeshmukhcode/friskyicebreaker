@@ -69,25 +69,25 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
     }
 
     private void prepareFilters() {
-        String filter = new String("Alcohol");
+        String filter = "Alcohol";
         filtersList.add(filter);
 
-        filter = new String("Food");
+        filter = "Food";
         filtersList.add(filter);
 
-        filter = new String("Veg Only");
+        filter = "Veg Only";
         filtersList.add(filter);
 
-        filter = new String("Drinks Only");
+        filter = "Drinks Only";
         filtersList.add(filter);
 
-        filter = new String("Dance");
+        filter = "Dance";
         filtersList.add(filter);
 
-        filter = new String("Hookah");
+        filter = "Hookah";
         filtersList.add(filter);
 
-        filter = new String("Night");
+        filter = "Night";
         filtersList.add(filter);
     }
 }

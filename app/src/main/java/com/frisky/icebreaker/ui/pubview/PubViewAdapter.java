@@ -19,13 +19,13 @@ public class PubViewAdapter extends RecyclerView.Adapter<PubViewAdapter.PubViewH
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
-    public static class PubViewHolder extends RecyclerView.ViewHolder {
+    static class PubViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
-        public TextView mTitle;
-        public TextView mDescription;
-        public TextView mTags;
-        public TextView mRating;
-        public PubViewHolder(View v) {
+        TextView mTitle;
+        TextView mDescription;
+        TextView mTags;
+        TextView mRating;
+        PubViewHolder(View v) {
             super(v);
             mTitle = v.findViewById(R.id.title);
             mDescription = v.findViewById(R.id.description);
@@ -34,7 +34,7 @@ public class PubViewAdapter extends RecyclerView.Adapter<PubViewAdapter.PubViewH
         }
     }
 
-    public PubViewAdapter(List<Pub> pubList) {
+    PubViewAdapter(List<Pub> pubList) {
         this.mPubList = pubList;
     }
 
