@@ -19,6 +19,16 @@
         <activity
             android:name=".ui.HomeActivity"
             android:label="@string/title_activity_home"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".ui.profile.EditProfileActivity"
+            android:label="@string/title_activity_edit_profile"
+            android:parentActivityName=".ui.HomeActivity"
+            android:theme="@style/CancelAsUpActionTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.frisky.icebreaker.ui.HomeActivity" />
+        </activity>
     </application>
+
 </manifest>

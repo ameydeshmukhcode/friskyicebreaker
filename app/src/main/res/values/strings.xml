@@ -24,4 +24,5 @@
     <string name="directions">Directions</string>
     <string name="bookmark">Bookmark</string>
     <string name="view_users">View Users</string>
+    <string name="done">Done</string>
 </resources>
