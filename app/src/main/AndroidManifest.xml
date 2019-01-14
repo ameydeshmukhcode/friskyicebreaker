@@ -24,7 +24,8 @@
             android:name=".ui.profile.EditProfileActivity"
             android:label="@string/title_activity_edit_profile"
             android:parentActivityName=".ui.HomeActivity"
-            android:theme="@style/CancelAsUpActionTheme">
+            android:theme="@style/CancelAsUpActionTheme"
+            android:windowSoftInputMode="adjustNothing">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.frisky.icebreaker.ui.HomeActivity" />

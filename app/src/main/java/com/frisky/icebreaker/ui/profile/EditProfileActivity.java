@@ -8,10 +8,15 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 import com.frisky.icebreaker.R;
 
 public class EditProfileActivity extends AppCompatActivity {
+
+    Spinner mSpinnerGender;
+    Spinner mSpinnerInterest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,6 +24,21 @@ public class EditProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_profile);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        mSpinnerGender = findViewById(R.id.spinner_gender);
+        mSpinnerInterest = findViewById(R.id.spinner_interest);
+
+//        ArrayAdapter<CharSequence> spinnerGenderAdapter = ArrayAdapter
+//                .createFromResource(this, R.array.genders,
+//                        android.R.layout.simple_spinner_item);
+//
+//        mSpinnerGender.setAdapter(spinnerGenderAdapter);
+//
+//        ArrayAdapter<CharSequence> spinnerInterestAdapter = ArrayAdapter
+//                .createFromResource(this, R.array.genders,
+//                        android.R.layout.simple_spinner_item);
+//
+//        mSpinnerInterest.setAdapter(spinnerInterestAdapter);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
