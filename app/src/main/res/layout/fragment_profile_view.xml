@@ -10,6 +10,7 @@
         android:id="@+id/pager_profile_images"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
+        android:layout_margin="@dimen/margin"
         android:layout_weight="1"
         android:visibility="visible">
 
@@ -28,7 +29,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:text="Name goes here"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -38,7 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="@string/comma"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             app:layout_constraintStart_toEndOf="@+id/text_name"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -49,7 +50,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:text="25 (age)"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             app:layout_constraintStart_toEndOf="@+id/comma"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -60,7 +61,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
             android:text="Bio"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_name" />
 
@@ -84,7 +85,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
             android:text="Something Else?"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_bio" />
 
@@ -97,6 +98,7 @@
             android:background="@android:color/transparent"
             android:padding="@dimen/padding_half"
             android:scaleType="fitCenter"
+            android:tint="@color/colorPrimaryDark"
             android:tooltipText="@string/edit"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"

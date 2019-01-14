@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Activity Titles -->
-    <string name="title_activity_home">Frisky</string>
+    <string name="title_activity_home">@string/app_name</string>
     <string name="title_activity_edit_profile">Edit Profile</string>
 </resources>

@@ -25,4 +25,7 @@
     <string name="bookmark">Bookmark</string>
     <string name="view_users">View Users</string>
     <string name="done">Done</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="other">Other</string>
 </resources>
