@@ -35,6 +35,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_half"
+                android:contentDescription="@string/photo"
                 app:srcCompat="@drawable/sample_user" />
 
             <LinearLayout
@@ -53,7 +54,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/margin_half"
-                    android:text="Change Photo"
+                    android:text="@string/button_change_photo"
                     android:textAllCaps="false"
                     android:textColor="@color/colorPrimaryDark" />
 
@@ -68,7 +69,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin"
                 android:layout_weight="1"
-                android:hint="Name">
+                android:hint="@string/name">
 
                 <EditText
                     android:id="@+id/text_name"
@@ -84,7 +85,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin"
                 android:layout_weight="1"
-                android:hint="Bio">
+                android:hint="@string/bio">
 
                 <EditText
                     android:id="@+id/text_bio"
@@ -100,7 +101,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin"
                 android:layout_weight="1"
-                android:hint="Date of Birth">
+                android:hint="@string/dob">
 
                 <EditText
                     android:id="@+id/text_dob"
@@ -120,7 +121,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_half"
                 android:padding="@dimen/padding_half"
-                android:text="Gender"
+                android:text="@string/gender"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
             <Spinner
@@ -137,7 +138,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_half"
                 android:padding="@dimen/padding_half"
-                android:text="Interested in"
+                android:text="@string/interest"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
             <Spinner

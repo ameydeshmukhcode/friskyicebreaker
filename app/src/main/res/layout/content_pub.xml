@@ -17,16 +17,19 @@
             android:id="@+id/text_tags"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_half"
-            android:text="TextView"
+            android:layout_marginStart="@dimen/text_margin"
+            android:layout_marginTop="@dimen/text_margin"
+            android:text="@string/placeholder"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
         <TextView
             android:id="@+id/text_rating"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_half"
-            android:text="TextView"
+            android:layout_marginStart="@dimen/text_margin"
+            android:layout_marginTop="@dimen/text_margin"
+            android:layout_marginBottom="@dimen/margin"
+            android:text="@string/placeholder"
             android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
 
         <LinearLayout
@@ -36,27 +39,30 @@
 
             <Button
                 android:id="@+id/button_reviews"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_half"
                 android:layout_weight="1"
-                android:text="Reviews" />
+                android:text="@string/button_reviews" />
 
             <Button
                 android:id="@+id/button_directions"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_half"
                 android:layout_weight="1"
-                android:text="Directions" />
+                android:text="@string/button_directions" />
 
             <Button
                 android:id="@+id/button_bookmark"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_half"
                 android:layout_weight="1"
-                android:text="Bookmark" />
+                android:text="@string/button_bookmark" />
         </LinearLayout>
 
     </LinearLayout>

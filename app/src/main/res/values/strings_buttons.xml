@@ -7,4 +7,5 @@
     <string name="button_directions">@string/directions</string>
     <string name="button_bookmark">@string/bookmark</string>
     <string name="button_view_users">@string/view_users</string>
+    <string name="button_change_photo">Change Photo</string>
 </resources>
