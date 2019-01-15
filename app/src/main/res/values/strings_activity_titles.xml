@@ -3,4 +3,5 @@
     <!-- Activity Titles -->
     <string name="title_activity_home">@string/app_name</string>
     <string name="title_activity_edit_profile">Edit Profile</string>
+    <string name="title_activity_view_profile">@string/empty</string>
 </resources>
