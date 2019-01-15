@@ -7,6 +7,10 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="CancelAsUpActionTheme" parent="AppTheme">
+        <item name="homeAsUpIndicator">@drawable/round_close_white_24</item>
+    </style>
+
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />

@@ -24,4 +24,16 @@
     <string name="directions">Directions</string>
     <string name="bookmark">Bookmark</string>
     <string name="view_users">View Users</string>
+    <string name="done">Done</string>
+    <string name="gender">Gender</string>
+    <string name="interest">Interested In</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="other">Other</string>
+    <string name="name">Name</string>
+    <string name="photo">Photo</string>
+    <string name="bio">Bio</string>
+    <string name="dob">Date of Birth</string>
+    <string name="ping_rec">You have been pinged by </string>
+    <string name="ping_send">You have pinged </string>
 </resources>

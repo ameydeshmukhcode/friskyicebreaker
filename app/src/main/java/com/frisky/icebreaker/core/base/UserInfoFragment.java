@@ -1,6 +1,5 @@
 package com.frisky.icebreaker.core.base;
 
-import android.hardware.usb.UsbRequest;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -21,7 +20,7 @@ import java.util.List;
 
 public abstract class UserInfoFragment extends Fragment {
 
-    private List<String> usersList = new ArrayList<>();
+    protected List<String> usersList = new ArrayList<>();
 
     public void setUserInfoMode(UserInfoMode mUserInfoMode) {
         this.mUserInfoMode = mUserInfoMode;
@@ -30,7 +29,7 @@ public abstract class UserInfoFragment extends Fragment {
     private UserInfoMode mUserInfoMode = null;
 
     private RecyclerView mRecyclerUsersView;
-    private RecyclerView.Adapter mUsersViewAdapter;
+    protected RecyclerView.Adapter mUsersViewAdapter;
     private RecyclerView.LayoutManager mUsersViewLayoutManager;
     private DividerItemDecoration mDividerItemDecoration;
 
@@ -50,7 +49,7 @@ public abstract class UserInfoFragment extends Fragment {
         mRecyclerUsersView.setLayoutManager(mUsersViewLayoutManager);
 
         // specify an adapter (see also next example)
-        mUsersViewAdapter = new UsersListViewAdapter(usersList, mUserInfoMode);
+        mUsersViewAdapter = new UsersListViewAdapter(usersList, mUserInfoMode, getContext());
         mRecyclerUsersView.setAdapter(mUsersViewAdapter);
         mDividerItemDecoration = new DividerItemDecoration(mRecyclerUsersView.getContext(),
                 mUsersViewLayoutManager.getLayoutDirection());
@@ -61,34 +60,6 @@ public abstract class UserInfoFragment extends Fragment {
         return view;
     }
 
-    private void prepareUserData() {
-        String user = new String("Dj");
-        usersList.add(user);
-
-        user = new String("BJ");
-        usersList.add(user);
-
-        user = new String("CJ");
-        usersList.add(user);
-
-        user = new String("Amey");
-        usersList.add(user);
-
-        user = new String("Mah Dude");
-        usersList.add(user);
-
-        user = new String("BJ");
-        usersList.add(user);
-
-        user = new String("CJ");
-        usersList.add(user);
-
-        user = new String("Amey");
-        usersList.add(user);
-
-        user = new String("Mah Dude");
-        usersList.add(user);
-
-        mUsersViewAdapter.notifyDataSetChanged();
-    }
+    //Reimplement this in derived class to update user data in a specific Fragment
+    public abstract void prepareUserData();
 }

@@ -1,6 +1,9 @@
 package com.frisky.icebreaker.ui.pubview;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.design.card.MaterialCardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,28 +17,31 @@ import java.util.List;
 
 public class PubViewAdapter extends RecyclerView.Adapter<PubViewAdapter.PubViewHolder> {
 
+    private final Context mContext;
     private List<Pub> mPubList;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
-    public static class PubViewHolder extends RecyclerView.ViewHolder {
-        // each data item is just a string in this case
-        public TextView mTitle;
-        public TextView mDescription;
-        public TextView mTags;
-        public TextView mRating;
-        public PubViewHolder(View v) {
+    static class PubViewHolder extends RecyclerView.ViewHolder {
+        MaterialCardView mPubCard;
+        TextView mTitle;
+        TextView mDescription;
+        TextView mTags;
+        TextView mRating;
+        PubViewHolder(View v) {
             super(v);
             mTitle = v.findViewById(R.id.title);
             mDescription = v.findViewById(R.id.description);
             mTags = v.findViewById(R.id.tag_list);
             mRating = v.findViewById(R.id.rating);
+            mPubCard = v.findViewById(R.id.card_pub);
         }
     }
 
-    public PubViewAdapter(List<Pub> pubList) {
+    PubViewAdapter(List<Pub> pubList, Context context) {
         this.mPubList = pubList;
+        this.mContext = context;
     }
 
     @NonNull
@@ -47,7 +53,7 @@ public class PubViewAdapter extends RecyclerView.Adapter<PubViewAdapter.PubViewH
         return new PubViewHolder(itemView);
     }
 
-    public void onBindViewHolder(@NonNull PubViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull final PubViewHolder viewHolder, int i) {
         String tagList = "";
         Pub pub = mPubList.get(i);
         viewHolder.mTitle.setText(pub.getName());
@@ -57,6 +63,17 @@ public class PubViewAdapter extends RecyclerView.Adapter<PubViewAdapter.PubViewH
         }
         viewHolder.mTags.setText(tagList.substring(0, tagList.length() - 2));
         viewHolder.mRating.setText(Double.toString(pub.getRating()));
+
+        viewHolder.mPubCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent pubView = new Intent(mContext, PubActivity.class);
+                pubView.putExtra("name", viewHolder.mTitle.getText());
+                pubView.putExtra("tags", viewHolder.mTags.getText());
+                pubView.putExtra("rating", viewHolder.mRating.getText());
+                mContext.startActivity(pubView);
+            }
+        });
     }
 
     @Override

@@ -10,7 +10,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_half"
         android:clickable="true"
-        android:focusable="true">
+        android:focusable="true"
+        android:id="@+id/card_pub">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
