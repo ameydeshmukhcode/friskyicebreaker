@@ -15,10 +15,7 @@
         <android.support.design.widget.TextInputLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin"
-            android:layout_marginTop="@dimen/margin"
-            android:layout_marginEnd="@dimen/margin_half"
-            android:layout_marginBottom="@dimen/margin_half"
+            android:layout_margin="@dimen/margin"
             android:layout_weight="9"
             android:hint="Search">
 
