@@ -25,11 +25,14 @@
             android:label="@string/title_activity_edit_profile"
             android:parentActivityName=".ui.HomeActivity"
             android:theme="@style/CancelAsUpActionTheme"
-            android:windowSoftInputMode="adjustPan">
-        </activity>
+            android:windowSoftInputMode="adjustPan"></activity>
         <activity
             android:name=".ui.profile.ViewProfileActivity"
             android:label="@string/title_activity_view_profile"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".ui.pubview.PubActivity"
+            android:label="@string/title_activity_pub"
             android:theme="@style/AppTheme"></activity>
     </application>
 

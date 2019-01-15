@@ -7,4 +7,6 @@
     <dimen name="app_bar_height_extended">180dp</dimen>
     <dimen name="profile_image_edge">65dp</dimen>
     <dimen name="divider">1dp</dimen>
+    <dimen name="app_bar_height">180dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
 </resources>
