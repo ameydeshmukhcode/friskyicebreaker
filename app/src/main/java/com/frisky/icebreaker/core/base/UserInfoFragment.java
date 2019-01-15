@@ -49,7 +49,7 @@ public abstract class UserInfoFragment extends Fragment {
         mRecyclerUsersView.setLayoutManager(mUsersViewLayoutManager);
 
         // specify an adapter (see also next example)
-        mUsersViewAdapter = new UsersListViewAdapter(usersList, mUserInfoMode);
+        mUsersViewAdapter = new UsersListViewAdapter(usersList, mUserInfoMode, getContext());
         mRecyclerUsersView.setAdapter(mUsersViewAdapter);
         mDividerItemDecoration = new DividerItemDecoration(mRecyclerUsersView.getContext(),
                 mUsersViewLayoutManager.getLayoutDirection());

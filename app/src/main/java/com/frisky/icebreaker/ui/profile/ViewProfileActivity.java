@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.frisky.icebreaker.R;
 
@@ -19,6 +20,7 @@ public class ViewProfileActivity extends AppCompatActivity {
     ImageButton mEditButton;
     ViewPager mProfileImagePager;
     PagerAdapter mProfileImageAdapter;
+    TextView mUserNameText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,11 +32,19 @@ public class ViewProfileActivity extends AppCompatActivity {
         mEditButton = findViewById(R.id.button_edit);
         mEditButton.setVisibility(View.GONE);
 
+        mUserNameText = findViewById(R.id.text_name);
+
         mProfileImagePager = findViewById(R.id.pager_profile_images);
         mProfileImageAdapter = new ProfileImageAdapter(this);
         mProfileImagePager.setAdapter(mProfileImageAdapter);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        if (getIntent().hasExtra("name")){
+            String name = getIntent().getStringExtra("name");
+            getSupportActionBar().setTitle(name);
+            mUserNameText.setText(name);
+        }
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
