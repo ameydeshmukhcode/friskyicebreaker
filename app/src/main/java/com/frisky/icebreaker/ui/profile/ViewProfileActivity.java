@@ -46,7 +46,7 @@ public class ViewProfileActivity extends AppCompatActivity {
             mUserNameText.setText(name);
         }
 
-        FloatingActionButton fab = findViewById(R.id.fab);
+        FloatingActionButton fab = findViewById(R.id.fab_ping);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

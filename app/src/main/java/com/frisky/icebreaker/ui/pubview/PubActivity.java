@@ -40,7 +40,7 @@ public class PubActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_chat_room);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
