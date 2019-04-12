@@ -88,34 +88,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/input_password" />
 
-    <TextView
-        android:id="@+id/text_or"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:fontFamily="@font/museosans300"
-        android:text="@string/alternate_login"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_login" />
-
-    <ImageButton
-        android:id="@+id/button_facebook"
-        android:layout_width="90dp"
-        android:layout_height="50dp"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/button_primary"
-        android:backgroundTint="@color/colorFacebook"
-        android:contentDescription="@string/facebook"
-        android:elevation="2dp"
-        android:scaleType="fitCenter"
-        android:src="@drawable/logo_facebook"
-        app:layout_constraintBottom_toTopOf="@+id/banner_signup"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_or" />
-
     <View
         android:id="@+id/divider_left"
         android:layout_width="0dp"
@@ -127,6 +99,18 @@
         app:layout_constraintBottom_toBottomOf="@+id/text_or"
         app:layout_constraintEnd_toStartOf="@+id/text_or"
         app:layout_constraintStart_toStartOf="@+id/button_login"
+        app:layout_constraintTop_toBottomOf="@+id/button_login" />
+
+    <TextView
+        android:id="@+id/text_or"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/museosans300"
+        android:text="@string/alternate_login"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_login" />
 
     <View
@@ -141,6 +125,21 @@
         app:layout_constraintEnd_toEndOf="@+id/button_login"
         app:layout_constraintStart_toEndOf="@+id/text_or"
         app:layout_constraintTop_toBottomOf="@+id/button_login" />
+
+    <ImageButton
+        android:id="@+id/button_facebook"
+        android:layout_width="90dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/button_primary"
+        android:backgroundTint="@color/colorFacebook"
+        android:contentDescription="@string/facebook"
+        android:elevation="2dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/logo_facebook"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_or" />
 
     <View
         android:id="@+id/banner_signup"
