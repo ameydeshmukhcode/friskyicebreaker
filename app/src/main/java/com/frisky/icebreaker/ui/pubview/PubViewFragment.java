@@ -71,37 +71,22 @@ public class PubViewFragment extends Fragment {
         Pub pub = new Pub("DJ the BJ", "DJ the BJ", Arrays.asList("Alcohol", "Food"), 4.5);
         pubList.add(pub);
 
-        pub = new Pub("Joey's Roaches", "Joey's Roaches", Arrays.asList("Alcohol", "Food"), 4.0);
+        pub = new Pub("Joey's Roaches", "Joey's Roaches", Arrays.asList("Alcohol", "Food"), 3.7);
         pubList.add(pub);
 
-        pub = new Pub("Biergarten", "Biergarten", Arrays.asList("Alcohol", "Food"), 4.75);
+        pub = new Pub("Biergarten", "Biergarten", Arrays.asList("Alcohol", "Food"), 2.2);
         pubList.add(pub);
 
-        pub = new Pub("Gourmet Theatre", "Gourmet Theatre", Arrays.asList("Alcohol", "Food"), 4.8);
+        pub = new Pub("Gourmet Theatre", "Gourmet Theatre", Arrays.asList("Alcohol", "Food"), 3.2);
         pubList.add(pub);
 
-        pub = new Pub("Rasta Cafe", "Rasta Cafe", Arrays.asList("Alcohol", "Food"), 3.8);
-        pubList.add(pub);
-
-        pub = new Pub("Joey's Roaches", "Joey's Roaches", Arrays.asList("Alcohol", "Food"), 4.0);
-        pubList.add(pub);
-
-        pub = new Pub("Biergarten", "Biergarten", Arrays.asList("Alcohol", "Food"), 4.75);
-        pubList.add(pub);
-
-        pub = new Pub("Gourmet Theatre", "Gourmet Theatre", Arrays.asList("Alcohol", "Food"), 4.8);
+        pub = new Pub("Rasta Cafe", "Rasta Cafe", Arrays.asList("Alcohol", "Food"), 1.0);
         pubList.add(pub);
 
         pub = new Pub("Joey's Roaches", "Joey's Roaches", Arrays.asList("Alcohol", "Food"), 4.0);
         pubList.add(pub);
 
-        pub = new Pub("Biergarten", "Biergarten", Arrays.asList("Alcohol", "Food"), 4.75);
-        pubList.add(pub);
-
-        pub = new Pub("Gourmet Theatre", "Gourmet Theatre", Arrays.asList("Alcohol", "Food"), 4.8);
-        pubList.add(pub);
-
-        pub = new Pub("Rasta Cafe", "Rasta Cafe", Arrays.asList("Alcohol", "Food"), 3.8);
+        pub = new Pub("Biergarten", "Biergarten", Arrays.asList("Alcohol", "Food"), 2.6);
         pubList.add(pub);
 
         mPubViewAdapter.notifyDataSetChanged();
