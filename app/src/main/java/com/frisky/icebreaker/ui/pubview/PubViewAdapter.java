@@ -26,13 +26,11 @@ public class PubViewAdapter extends RecyclerView.Adapter<PubViewAdapter.PubViewH
     static class PubViewHolder extends RecyclerView.ViewHolder {
         MaterialCardView mPubCard;
         TextView mTitle;
-        TextView mDescription;
         TextView mTags;
         TextView mRating;
         PubViewHolder(View v) {
             super(v);
             mTitle = v.findViewById(R.id.title);
-            mDescription = v.findViewById(R.id.description);
             mTags = v.findViewById(R.id.tag_list);
             mRating = v.findViewById(R.id.rating);
             mPubCard = v.findViewById(R.id.card_pub);
@@ -57,12 +55,17 @@ public class PubViewAdapter extends RecyclerView.Adapter<PubViewAdapter.PubViewH
         String tagList = "";
         Pub pub = mPubList.get(i);
         viewHolder.mTitle.setText(pub.getName());
-        viewHolder.mDescription.setText(pub.getDesc());
+
         for (String tag: pub.getTags()) {
-            tagList += tag + ", ";
+            tagList += tag + " | ";
         }
-        viewHolder.mTags.setText(tagList.substring(0, tagList.length() - 2));
-        viewHolder.mRating.setText(Double.toString(pub.getRating()));
+
+        Double pubRating = pub.getRating();
+
+        viewHolder.mTags.setText(tagList.substring(0, tagList.length() - 3));
+        viewHolder.mRating.setText(Double.toString(pubRating));
+
+        viewHolder.mRating.setBackgroundResource(getRatingBadgeColor(pubRating));
 
         viewHolder.mPubCard.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,5 +82,20 @@ public class PubViewAdapter extends RecyclerView.Adapter<PubViewAdapter.PubViewH
     @Override
     public int getItemCount() {
         return mPubList.size();
+    }
+
+    private int getRatingBadgeColor(double rating) {
+        if (rating >= 4.0) {
+            return R.drawable.pub_rating_very_high;
+        }
+        else if (rating >= 3.5) {
+            return R.drawable.pub_rating_high;
+        }
+        else if (rating >= 2.5) {
+            return R.drawable.pub_rating_low;
+        }
+        else {
+            return R.drawable.pub_rating_very_low;
+        }
     }
 }
