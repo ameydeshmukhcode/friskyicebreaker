@@ -151,33 +151,41 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <TextView
-        android:id="@+id/text_noaccount"
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/layout_sign_up_text_holder"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="68dp"
-        android:fontFamily="@font/museosans300"
-        android:text="@string/no_account"
-        android:textAlignment="textEnd"
-        android:textColor="@color/textLight"
-        android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="@+id/banner_signup"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/banner_signup" />
+        app:layout_constraintEnd_toEndOf="@+id/banner_signup"
+        app:layout_constraintStart_toStartOf="@+id/banner_signup"
+        app:layout_constraintTop_toTopOf="@+id/banner_signup">
 
-    <TextView
-        android:id="@+id/link_sign_up"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="68dp"
-        android:fontFamily="@font/museosans300"
-        android:text="@string/sign_up"
-        android:textColor="@color/textLight"
-        android:textSize="15sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/banner_signup"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/text_noaccount"
-        app:layout_constraintTop_toTopOf="@+id/banner_signup" />
+        <TextView
+            android:id="@+id/text_noaccount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/museosans300"
+            android:text="@string/no_account"
+            android:textAlignment="textEnd"
+            android:textColor="@color/textLight"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/link_sign_up"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:fontFamily="@font/museosans300"
+            android:text="@string/sign_up"
+            android:textColor="@color/textLight"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/text_noaccount"
+            app:layout_constraintTop_toTopOf="parent" />
+    </android.support.constraint.ConstraintLayout>
 
 </android.support.constraint.ConstraintLayout>
