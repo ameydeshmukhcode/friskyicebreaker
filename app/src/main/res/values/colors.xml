@@ -8,4 +8,10 @@
     <color name="colorFacebook">#3C5A99</color>
     <color name="textLight">#ffffff</color>
     <color name="textDark">#707070</color>
+    
+    <!--Rating Badges-->
+    <color name="rating_very_high">#208927</color>
+    <color name="rating_high">#26B030</color>
+    <color name="rating_low">#E2D240</color>
+    <color name="rating_very_low">#DA2C2C</color>
 </resources>
