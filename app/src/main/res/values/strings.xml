@@ -17,6 +17,10 @@
     <string name="age_check">I\'m 18 years and older.</string>
     <string name="terms">By signing up, you\'re agreeing to our Terms and Privacy Policies</string>
 
+    <!--Home Page-->
+    <!--Pub View-->
+    <string name="search_pubs">Search pubs..</string>
+
     <!--Common-->
     <string name="facebook">Facebook</string>
 
@@ -33,7 +37,6 @@
     <string name="icebreaker">Ice Breaker</string>
     <string name="filters">Filters</string>
     <string name="empty"></string>
-    <string name="search">Search</string>
     <string name="apply">Apply</string>
     <string name="comma">,</string>
     <string name="connect">Connect</string>
