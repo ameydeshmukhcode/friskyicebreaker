@@ -8,7 +8,7 @@
     </style>
 
     <style name="CancelAsUpActionTheme" parent="AppTheme">
-        <item name="homeAsUpIndicator">@drawable/round_close_white_24</item>
+        <item name="homeAsUpIndicator">@drawable/round_close_24</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />

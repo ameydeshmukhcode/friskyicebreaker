@@ -3,16 +3,16 @@
 
     <item
         android:id="@+id/bottom_nav_home"
-        android:icon="@drawable/round_home_black_48"
+        android:icon="@drawable/round_home_24"
         android:title="@string/bottom_nav_home" />
 
     <item
         android:id="@+id/bottom_nav_icebreaker"
-        android:icon="@drawable/placeholder_black_48"
+        android:icon="@drawable/placeholder_24"
         android:title="@string/bottom_nav_icebreaker" />
 
     <item
         android:id="@+id/bottom_nav_profile"
-        android:icon="@drawable/round_account_circle_black_48"
+        android:icon="@drawable/round_account_circle_24"
         android:title="@string/bottom_nav_profile" />
 </menu>

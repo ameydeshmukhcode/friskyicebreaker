@@ -17,8 +17,8 @@
             android:id="@+id/text_tags"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/text_margin"
-            android:layout_marginTop="@dimen/text_margin"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
             android:text="@string/placeholder"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
@@ -26,9 +26,9 @@
             android:id="@+id/text_rating"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/text_margin"
-            android:layout_marginTop="@dimen/text_margin"
-            android:layout_marginBottom="@dimen/margin"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
             android:text="@string/placeholder"
             android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
 
@@ -42,7 +42,7 @@
                 style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin_half"
+                android:layout_margin="4dp"
                 android:layout_weight="1"
                 android:text="@string/button_reviews" />
 
@@ -51,7 +51,7 @@
                 style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin_half"
+                android:layout_margin="4dp"
                 android:layout_weight="1"
                 android:text="@string/button_directions" />
 
@@ -60,7 +60,7 @@
                 style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin_half"
+                android:layout_margin="4dp"
                 android:layout_weight="1"
                 android:text="@string/button_bookmark" />
         </LinearLayout>

@@ -34,7 +34,7 @@
                 android:id="@+id/image"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin_half"
+                android:layout_margin="4dp"
                 android:contentDescription="@string/photo"
                 app:srcCompat="@drawable/sample_user" />
 
@@ -53,7 +53,7 @@
                     style="@style/Widget.AppCompat.Button.Borderless.Colored"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/margin_half"
+                    android:layout_margin="4dp"
                     android:text="@string/button_change_photo"
                     android:textAllCaps="false"
                     android:textColor="@color/colorPrimaryDark" />
@@ -67,7 +67,7 @@
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin"
+                android:layout_margin="8dp"
                 android:layout_weight="1"
                 android:hint="@string/name">
 
@@ -83,7 +83,7 @@
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin"
+                android:layout_margin="8dp"
                 android:layout_weight="1"
                 android:hint="@string/bio">
 
@@ -99,7 +99,7 @@
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin"
+                android:layout_margin="8dp"
                 android:layout_weight="1"
                 android:hint="@string/dob">
 
@@ -119,8 +119,8 @@
                 android:id="@+id/gender"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin_half"
-                android:padding="@dimen/padding_half"
+                android:layout_margin="4dp"
+                android:padding="4dp"
                 android:text="@string/gender"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
@@ -128,16 +128,16 @@
                 android:id="@+id/spinner_gender"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin_half"
+                android:layout_margin="4dp"
                 android:entries="@array/genders"
-                android:padding="@dimen/padding_half" />
+                android:padding="4dp" />
 
             <TextView
                 android:id="@+id/interest"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin_half"
-                android:padding="@dimen/padding_half"
+                android:layout_margin="4dp"
+                android:padding="4dp"
                 android:text="@string/interest"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
@@ -145,9 +145,9 @@
                 android:id="@+id/spinner_interest"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin_half"
+                android:layout_margin="4dp"
                 android:entries="@array/genders"
-                android:padding="@dimen/padding_half" />
+                android:padding="4dp" />
 
         </LinearLayout>
     </ScrollView>

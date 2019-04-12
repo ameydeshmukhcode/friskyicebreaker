@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:clickable="true"
         android:focusable="true"
-        android:layout_margin="@dimen/margin_half"
+        android:layout_margin="4dp"
         android:id="@+id/card_user">
 
         <android.support.constraint.ConstraintLayout
@@ -19,11 +19,11 @@
 
             <ImageView
                 android:id="@+id/image_user"
-                android:layout_width="@dimen/profile_image_edge"
-                android:layout_height="@dimen/profile_image_edge"
-                android:layout_marginStart="@dimen/margin"
-                android:layout_marginTop="@dimen/margin"
-                android:layout_marginBottom="@dimen/margin"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
                 android:contentDescription="@string/photo"
                 android:scaleType="centerCrop"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -36,8 +36,8 @@
                 android:id="@+id/text_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_half"
-                android:layout_marginTop="@dimen/margin"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
                 android:text="@string/placeholder"
