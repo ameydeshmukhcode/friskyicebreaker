@@ -66,7 +66,7 @@ public class PubViewAdapter extends RecyclerView.Adapter<PubViewAdapter.PubViewH
         viewHolder.mTags.setText(tagList.substring(0, tagList.length() - 3));
         viewHolder.mRating.setText(Double.toString(pubRating));
 
-        viewHolder.mRating.setBackgroundResource(UIHelper.getInstance().getRatingBadgeColor(pubRating));
+        viewHolder.mRating.setBackgroundResource(UIHelper.getInstance().getRatingBadgeBackground(pubRating));
 
         viewHolder.mPubCard.setOnClickListener(new View.OnClickListener() {
             @Override

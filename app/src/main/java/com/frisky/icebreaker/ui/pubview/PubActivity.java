@@ -1,11 +1,13 @@
 package com.frisky.icebreaker.ui.pubview;
 
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toolbar;
 
 import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.ui.assistant.UIHelper;
@@ -15,6 +17,7 @@ public class PubActivity extends AppCompatActivity {
     TextView mPubNameText;
     TextView mTagsText;
     TextView mRatingText;
+    AppBarLayout mAppBarLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +31,7 @@ public class PubActivity extends AppCompatActivity {
         mPubNameText = findViewById(R.id.text_pub_name);
         mTagsText = findViewById(R.id.text_tags);
         mRatingText = findViewById(R.id.text_rating);
+        mAppBarLayout = findViewById(R.id.app_bar);
 
         if (getIntent().hasExtra("name")){
             mPubNameText.setText(getIntent().getStringExtra("name"));
@@ -41,7 +45,8 @@ public class PubActivity extends AppCompatActivity {
             String pubRatingText = getIntent().getStringExtra("rating");
             Double pubRating = Double.parseDouble(pubRatingText);
             mRatingText.setText(getIntent().getStringExtra("rating"));
-            mRatingText.setBackgroundResource(UIHelper.getInstance().getRatingBadgeColor(pubRating));
+            mRatingText.setBackgroundResource(UIHelper.getInstance().getRatingBadgeBackground(pubRating));
+            mAppBarLayout.setBackgroundResource(UIHelper.getInstance().getRatingBadgeColor(pubRating));
         }
 
         FloatingActionButton fab = findViewById(R.id.fab_chat_room);
