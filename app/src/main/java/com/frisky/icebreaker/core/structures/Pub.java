@@ -5,18 +5,24 @@ import java.util.List;
 public class Pub {
     private String mName;
     private String mDesc;
+    private String mLocation;
     private List<String> mTags;
     private double mRating;
 
     public Pub() {
     }
 
-    public Pub(String name, String desc, List<String> tags, double rating) {
+    public Pub(String name, String desc, String location, List<String> tags, double rating) {
         this.mName = name;
         this.mDesc = desc;
+        this.mLocation = location;
         this.mTags = tags;
         this.mRating = rating;
     }
+
+    public String getLocation() { return mLocation; }
+
+    public void setLocation(String mLocation) { this.mLocation = mLocation; }
 
     public String getName() {
         return mName;
