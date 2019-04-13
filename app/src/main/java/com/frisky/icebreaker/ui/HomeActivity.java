@@ -35,7 +35,7 @@ public class HomeActivity extends AppCompatActivity {
 
     private void initUI() {
         mSocialButton = findViewById(R.id.button_toolbar_right);
-        mSocialButton.setBackgroundResource(R.drawable.round_chat_24);
+        mSocialButton.setImageResource(R.drawable.round_chat_24);
         mSocialButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -44,10 +44,10 @@ public class HomeActivity extends AppCompatActivity {
         });
 
         mScanQRCodeButton = findViewById(R.id.button_toolbar_left);
-        mScanQRCodeButton.setBackgroundResource(R.drawable.round_camera_24);
+        mScanQRCodeButton.setImageResource(R.drawable.round_camera_24);
 
         mBottomNavHomeButton = findViewById(R.id.button_nav_left);
-        mBottomNavHomeButton.setBackgroundResource(R.drawable.round_home_24);
+        mBottomNavHomeButton.setImageResource(R.drawable.round_home_24);
         mBottomNavHomeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,13 +56,13 @@ public class HomeActivity extends AppCompatActivity {
         });
 
         m2ND = findViewById(R.id.button_nav_centre_left);
-        m2ND.setBackgroundResource(R.drawable.placeholder_24);
+        m2ND.setImageResource(R.drawable.placeholder_24);
 
         m4TH = findViewById(R.id.button_nav_centre_right);
-        m4TH.setBackgroundResource(R.drawable.placeholder_24);
+        m4TH.setImageResource(R.drawable.placeholder_24);
 
         mBottomNavProfileButton = findViewById(R.id.button_nav_right);
-        mBottomNavProfileButton.setBackgroundResource(R.drawable.round_person_24);
+        mBottomNavProfileButton.setImageResource(R.drawable.round_person_24);
         mBottomNavProfileButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
