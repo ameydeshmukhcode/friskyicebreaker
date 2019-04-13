@@ -4,14 +4,15 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 
 import com.frisky.icebreaker.R;
+import com.frisky.icebreaker.ui.assistant.UIHelper;
 
 public class PubActivity extends AppCompatActivity {
 
+    TextView mPubNameText;
     TextView mTagsText;
     TextView mRatingText;
 
@@ -19,15 +20,17 @@ public class PubActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pub);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
+        initUI();
+    }
+
+    private void initUI() {
+        mPubNameText = findViewById(R.id.text_pub_name);
         mTagsText = findViewById(R.id.text_tags);
         mRatingText = findViewById(R.id.text_rating);
 
         if (getIntent().hasExtra("name")){
-            String title = getIntent().getStringExtra("name");
-            getSupportActionBar().setTitle(title);
+            mPubNameText.setText(getIntent().getStringExtra("name"));
         }
 
         if (getIntent().hasExtra("tags")) {
@@ -35,12 +38,13 @@ public class PubActivity extends AppCompatActivity {
         }
 
         if (getIntent().hasExtra("rating")) {
+            String pubRatingText = getIntent().getStringExtra("rating");
+            Double pubRating = Double.parseDouble(pubRatingText);
             mRatingText.setText(getIntent().getStringExtra("rating"));
+            mRatingText.setBackgroundResource(UIHelper.getInstance().getRatingBadgeColor(pubRating));
         }
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_chat_room);
+        FloatingActionButton fab = findViewById(R.id.fab_chat_room);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
