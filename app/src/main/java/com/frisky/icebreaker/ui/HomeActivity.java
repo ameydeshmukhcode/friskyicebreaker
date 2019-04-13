@@ -1,11 +1,8 @@
 package com.frisky.icebreaker.ui;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 
@@ -23,6 +20,7 @@ public class HomeActivity extends AppCompatActivity {
     private ImageButton mBottomNavProfileButton;
     private ImageButton m2ND;
     private ImageButton m4TH;
+    private ImageButton mIceBreakerButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +65,14 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 loadFragment(new ProfileFragment());
+            }
+        });
+
+        mIceBreakerButton = findViewById(R.id.button_icebreaker);
+        mIceBreakerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadFragment(new UsersListFragment());
             }
         });
     }
