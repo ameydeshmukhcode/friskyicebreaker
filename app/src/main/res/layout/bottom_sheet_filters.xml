@@ -39,7 +39,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/button_primary"
+            android:background="@drawable/background_primary"
             android:fontFamily="@font/museosans300"
             android:text="@string/apply"
             android:textAllCaps="false"
