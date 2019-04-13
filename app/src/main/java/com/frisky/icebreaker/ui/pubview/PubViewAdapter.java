@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.core.structures.Pub;
+import com.frisky.icebreaker.ui.assistant.UIHelper;
 
 import java.util.List;
 
@@ -65,7 +66,7 @@ public class PubViewAdapter extends RecyclerView.Adapter<PubViewAdapter.PubViewH
         viewHolder.mTags.setText(tagList.substring(0, tagList.length() - 3));
         viewHolder.mRating.setText(Double.toString(pubRating));
 
-        viewHolder.mRating.setBackgroundResource(getRatingBadgeColor(pubRating));
+        viewHolder.mRating.setBackgroundResource(UIHelper.getInstance().getRatingBadgeColor(pubRating));
 
         viewHolder.mPubCard.setOnClickListener(new View.OnClickListener() {
             @Override
