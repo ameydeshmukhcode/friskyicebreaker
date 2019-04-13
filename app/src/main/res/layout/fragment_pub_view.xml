@@ -53,7 +53,7 @@
             android:background="@drawable/background_secondary_extra"
             android:src="@drawable/round_adjust"
             android:tint="@color/colorAccent"
-            android:tooltipText="@string/button_filters"
+            android:tooltipText="@string/filters"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/input_search"
