@@ -5,11 +5,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/toolbar_base"
     android:layout_width="match_parent"
-    android:layout_height="?attr/actionBarSize"
+    android:layout_height="50dp"
     android:background="@color/colorPrimary"
     android:elevation="10dp"
-
-    android:theme="@style/Base.ThemeOverlay.AppCompat.Dark.ActionBar" >
+    android:theme="@style/Base.ThemeOverlay.AppCompat.Dark.ActionBar">
 
     <TextView
         android:id="@+id/app_name"
@@ -28,9 +27,9 @@
         android:id="@+id/button_toolbar_left"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="13dp"
-        android:layout_marginTop="13dp"
-        android:layout_marginBottom="13dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:background="@android:color/transparent"
         android:scaleType="centerInside"
         android:tint="@android:color/white"
@@ -43,9 +42,9 @@
         android:id="@+id/button_toolbar_right"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="13dp"
-        android:layout_marginEnd="13dp"
-        android:layout_marginBottom="13dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
         android:background="@android:color/transparent"
         android:scaleType="centerInside"
         android:tint="@android:color/white"
