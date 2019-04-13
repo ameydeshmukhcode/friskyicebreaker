@@ -21,6 +21,8 @@ public class HomeActivity extends AppCompatActivity {
     private ImageButton mScanQRCodeButton;
     private ImageButton mBottomNavHomeButton;
     private ImageButton mBottomNavProfileButton;
+    private ImageButton m2ND;
+    private ImageButton m4TH;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +54,12 @@ public class HomeActivity extends AppCompatActivity {
                 loadFragment(new PubViewFragment());
             }
         });
+
+        m2ND = findViewById(R.id.button_nav_centre_left);
+        m2ND.setBackgroundResource(R.drawable.placeholder_24);
+
+        m4TH = findViewById(R.id.button_nav_centre_right);
+        m4TH.setBackgroundResource(R.drawable.placeholder_24);
 
         mBottomNavProfileButton = findViewById(R.id.button_nav_right);
         mBottomNavProfileButton.setBackgroundResource(R.drawable.round_person_24);
