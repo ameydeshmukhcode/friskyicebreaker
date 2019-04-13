@@ -7,4 +7,5 @@
     android:buttonTint="@color/colorAccent"
     android:padding="8dp"
     android:text="@string/empty"
-    android:textColor="@color/textDark" />
+    android:textColor="@color/textDark"
+    android:textSize="12sp" />
