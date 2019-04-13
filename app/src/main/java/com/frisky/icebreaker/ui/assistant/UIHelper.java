@@ -12,7 +12,7 @@ public class UIHelper {
     private UIHelper() {
     }
 
-    public int getRatingBadgeColor(double rating) {
+    public int getRatingBadgeBackground(double rating) {
         if (rating >= 4.0) {
             return R.drawable.pub_rating_very_high;
         }
@@ -24,6 +24,21 @@ public class UIHelper {
         }
         else {
             return R.drawable.pub_rating_very_low;
+        }
+    }
+
+    public int getRatingBadgeColor(double rating) {
+        if (rating >= 4.0) {
+            return R.color.rating_very_high;
+        }
+        else if (rating >= 3.5) {
+            return R.color.rating_high;
+        }
+        else if (rating >= 2.5) {
+            return R.color.rating_low;
+        }
+        else {
+            return R.color.rating_very_low;
         }
     }
 }
