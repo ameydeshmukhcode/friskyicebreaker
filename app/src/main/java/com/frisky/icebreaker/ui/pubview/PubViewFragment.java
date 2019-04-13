@@ -68,25 +68,32 @@ public class PubViewFragment extends Fragment {
     }
 
     private void preparePubData() {
-        Pub pub = new Pub("DJ the BJ", "DJ the BJ", Arrays.asList("Alcohol", "Food"), 4.5);
+        Pub pub = new Pub("DJ the BJ", "DJ the BJ", "Idhar",
+                Arrays.asList("Alcohol", "Food"), 4.5);
         pubList.add(pub);
 
-        pub = new Pub("Joey's Roaches", "Joey's Roaches", Arrays.asList("Alcohol", "Food"), 3.7);
+        pub = new Pub("Joey's Roaches", "Joey's Roaches", "Udhar",
+                Arrays.asList("Alcohol", "Food"), 3.7);
         pubList.add(pub);
 
-        pub = new Pub("Biergarten", "Biergarten", Arrays.asList("Alcohol", "Food"), 2.2);
+        pub = new Pub("Biergarten", "Biergarten", "Mera Ghar",
+                Arrays.asList("Alcohol", "Food"), 2.2);
         pubList.add(pub);
 
-        pub = new Pub("Gourmet Theatre", "Gourmet Theatre", Arrays.asList("Alcohol", "Food"), 3.2);
+        pub = new Pub("Gourmet Theatre", "Gourmet Theatre", "Arre Wah",
+                Arrays.asList("Alcohol", "Food"), 3.2);
         pubList.add(pub);
 
-        pub = new Pub("Rasta Cafe", "Rasta Cafe", Arrays.asList("Alcohol", "Food"), 1.0);
+        pub = new Pub("Rasta Cafe", "Rasta Cafe", "Kidhar?",
+                Arrays.asList("Alcohol", "Food"), 1.0);
         pubList.add(pub);
 
-        pub = new Pub("Joey's Roaches", "Joey's Roaches", Arrays.asList("Alcohol", "Food"), 4.0);
+        pub = new Pub("Naya Naam", "Naya Naam", "Bada Gaon",
+                Arrays.asList("Alcohol", "Food"), 4.0);
         pubList.add(pub);
 
-        pub = new Pub("Biergarten", "Biergarten", Arrays.asList("Alcohol", "Food"), 2.6);
+        pub = new Pub("Kya Pata", "Kya Pata", "Nice",
+                Arrays.asList("Alcohol", "Food"), 2.6);
         pubList.add(pub);
 
         mPubViewAdapter.notifyDataSetChanged();

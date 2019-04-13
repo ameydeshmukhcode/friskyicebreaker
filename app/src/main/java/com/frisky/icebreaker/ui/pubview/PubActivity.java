@@ -17,6 +17,7 @@ public class PubActivity extends AppCompatActivity {
     TextView mPubNameText;
     TextView mTagsText;
     TextView mRatingText;
+    TextView mLocationText;
     AppBarLayout mAppBarLayout;
 
     @Override
@@ -31,6 +32,7 @@ public class PubActivity extends AppCompatActivity {
         mPubNameText = findViewById(R.id.text_pub_name);
         mTagsText = findViewById(R.id.text_tags);
         mRatingText = findViewById(R.id.text_rating);
+        mLocationText = findViewById(R.id.text_location);
         mAppBarLayout = findViewById(R.id.app_bar);
 
         if (getIntent().hasExtra("name")){
@@ -39,6 +41,10 @@ public class PubActivity extends AppCompatActivity {
 
         if (getIntent().hasExtra("tags")) {
             mTagsText.setText(getIntent().getStringExtra("tags"));
+        }
+
+        if (getIntent().hasExtra("location")) {
+            mLocationText.setText(getIntent().getStringExtra("location"));
         }
 
         if (getIntent().hasExtra("rating")) {

@@ -29,11 +29,13 @@ public class PubViewAdapter extends RecyclerView.Adapter<PubViewAdapter.PubViewH
         TextView mTitle;
         TextView mTags;
         TextView mRating;
+        TextView mLocation;
         PubViewHolder(View v) {
             super(v);
             mTitle = v.findViewById(R.id.title);
             mTags = v.findViewById(R.id.tag_list);
             mRating = v.findViewById(R.id.rating);
+            mLocation = v.findViewById(R.id.location);
             mPubCard = v.findViewById(R.id.card_pub);
         }
     }
@@ -61,6 +63,8 @@ public class PubViewAdapter extends RecyclerView.Adapter<PubViewAdapter.PubViewH
             tagList += tag + " | ";
         }
 
+        viewHolder.mLocation.setText(pub.getLocation());
+
         Double pubRating = pub.getRating();
 
         viewHolder.mTags.setText(tagList.substring(0, tagList.length() - 3));
@@ -74,6 +78,7 @@ public class PubViewAdapter extends RecyclerView.Adapter<PubViewAdapter.PubViewH
                 Intent pubView = new Intent(mContext, PubActivity.class);
                 pubView.putExtra("name", viewHolder.mTitle.getText());
                 pubView.putExtra("tags", viewHolder.mTags.getText());
+                pubView.putExtra("location", viewHolder.mLocation.getText());
                 pubView.putExtra("rating", viewHolder.mRating.getText());
                 mContext.startActivity(pubView);
             }
@@ -83,20 +88,5 @@ public class PubViewAdapter extends RecyclerView.Adapter<PubViewAdapter.PubViewH
     @Override
     public int getItemCount() {
         return mPubList.size();
-    }
-
-    private int getRatingBadgeColor(double rating) {
-        if (rating >= 4.0) {
-            return R.drawable.pub_rating_very_high;
-        }
-        else if (rating >= 3.5) {
-            return R.drawable.pub_rating_high;
-        }
-        else if (rating >= 2.5) {
-            return R.drawable.pub_rating_low;
-        }
-        else {
-            return R.drawable.pub_rating_very_low;
-        }
     }
 }
