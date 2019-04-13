@@ -21,6 +21,9 @@
     <!--Pub View-->
     <string name="search_pubs">Search pubs..</string>
 
+    <!--Pub Activity-->
+    <string name="live_count">Live count</string>
+
     <!--Common-->
     <string name="facebook">Facebook</string>
 
@@ -41,6 +44,7 @@
     <string name="comma">,</string>
     <string name="connect">Connect</string>
     <string name="placeholder">dummy</string>
+    <string name="placeholder_number">23</string>
     <string name="reviews">Reviews</string>
     <string name="directions">Directions</string>
     <string name="bookmark">Bookmark</string>
