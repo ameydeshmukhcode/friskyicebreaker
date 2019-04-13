@@ -17,29 +17,10 @@ import com.frisky.icebreaker.ui.social.UsersListFragment;
 
 public class HomeActivity extends AppCompatActivity {
 
-    private BottomNavigationView mBottomNavigationView;
     private ImageButton mSocialButton;
     private ImageButton mScanQRCodeButton;
-
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.bottom_nav_home:
-                    loadFragment(new PubViewFragment());
-                    return true;
-                case R.id.bottom_nav_icebreaker:
-                    loadFragment(new UsersListFragment());
-                    return true;
-                case R.id.bottom_nav_profile:
-                    loadFragment(new ProfileFragment());
-                    return true;
-            }
-            return false;
-        }
-    };
+    private ImageButton mBottomNavHomeButton;
+    private ImageButton mBottomNavProfileButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,10 +29,6 @@ public class HomeActivity extends AppCompatActivity {
         initUI();
 
         loadFragment(new PubViewFragment());
-
-        mBottomNavigationView = findViewById(R.id.navigation);
-        mBottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        mBottomNavigationView.setSelectedItemId(R.id.bottom_nav_home);
     }
 
     private void initUI() {
@@ -66,6 +43,24 @@ public class HomeActivity extends AppCompatActivity {
 
         mScanQRCodeButton = findViewById(R.id.button_toolbar_left);
         mScanQRCodeButton.setBackgroundResource(R.drawable.round_camera_24);
+
+        mBottomNavHomeButton = findViewById(R.id.button_nav_left);
+        mBottomNavHomeButton.setBackgroundResource(R.drawable.round_home_24);
+        mBottomNavHomeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadFragment(new PubViewFragment());
+            }
+        });
+
+        mBottomNavProfileButton = findViewById(R.id.button_nav_right);
+        mBottomNavProfileButton.setBackgroundResource(R.drawable.round_person_24);
+        mBottomNavProfileButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadFragment(new ProfileFragment());
+            }
+        });
     }
 
     private boolean loadFragment(Fragment fragment) {
