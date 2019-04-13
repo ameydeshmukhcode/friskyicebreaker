@@ -145,7 +145,7 @@
         android:id="@+id/banner_signup"
         android:layout_width="wrap_content"
         android:layout_height="65dp"
-        android:background="@color/bannerPrimary"
+        android:background="@color/backgroundDark"
         android:contentDescription="@string/facebook"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
