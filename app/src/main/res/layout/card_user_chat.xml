@@ -2,7 +2,6 @@
 <android.support.design.card.MaterialCardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/card_user"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -24,7 +23,7 @@
             android:scaleType="centerCrop"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/text_name"
-            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintHorizontal_chainStyle="spread"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/sample_user" />
@@ -34,53 +33,48 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
             android:fontFamily="@font/museosans700"
             android:text="@string/placeholder"
-            android:textColor="@color/textDark"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="@+id/image_user"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toTopOf="@+id/text_last_message"
+            app:layout_constraintEnd_toStartOf="@+id/text_message_count"
             app:layout_constraintStart_toEndOf="@+id/image_user"
-            app:layout_constraintTop_toTopOf="@+id/image_user" />
+            app:layout_constraintTop_toTopOf="@+id/image_user"
+            app:layout_constraintVertical_bias="0.0" />
 
         <TextView
-            android:id="@+id/comma"
-            android:layout_width="wrap_content"
+            android:id="@+id/text_last_message"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/museosans700"
-            android:text="@string/comma"
-            android:textColor="@color/textDark"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="@+id/text_name"
-            app:layout_constraintStart_toEndOf="@+id/text_name"
-            app:layout_constraintTop_toTopOf="@+id/text_name" />
+            android:fontFamily="@font/museosans300"
+            android:text="@string/placeholder"
+            app:layout_constraintBottom_toBottomOf="@+id/image_user"
+            app:layout_constraintEnd_toEndOf="@+id/text_name"
+            app:layout_constraintStart_toStartOf="@+id/text_name"
+            app:layout_constraintTop_toBottomOf="@+id/text_name" />
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/text_message_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:fontFamily="@font/museosans700"
-            android:text="@string/placeholder_number"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="@+id/text_name"
-            app:layout_constraintStart_toEndOf="@+id/comma"
-            app:layout_constraintTop_toTopOf="@+id/text_name" />
-
-        <ImageButton
-            android:id="@+id/button_connect"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="8dp"
-            android:background="@android:color/transparent"
-            android:padding="5dp"
-            android:scaleType="fitCenter"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:background="@drawable/background_primary"
+            android:fontFamily="@font/museosans700"
+            android:paddingStart="5dp"
+            android:paddingTop="3dp"
+            android:paddingEnd="5dp"
+            android:paddingBottom="3dp"
+            android:text="@string/placeholder_number"
+            android:textAlignment="center"
+            android:textColor="@color/textLight"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/text_last_message"
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/icebreaker" />
+            app:layout_constraintTop_toTopOf="@+id/text_name" />
 
         <View
             android:id="@+id/bottomline"
