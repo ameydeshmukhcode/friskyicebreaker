@@ -48,9 +48,9 @@ public class UsersListViewAdapter extends RecyclerView.Adapter<UsersListViewAdap
             case PREVIEW: itemView = LayoutInflater.from(viewGroup.getContext())
                     .inflate(R.layout.card_user_preview, viewGroup, false); break;
             case PING: itemView = LayoutInflater.from(viewGroup.getContext())
-                    .inflate(R.layout.card_user_ping, viewGroup, false); break;
+                    .inflate(R.layout.card_user_pending, viewGroup, false); break;
             case FRIEND: itemView = LayoutInflater.from(viewGroup.getContext())
-                    .inflate(R.layout.card_user_friend, viewGroup, false); break;
+                    .inflate(R.layout.card_user_chat, viewGroup, false); break;
         }
 
         return new UsersListViewHolder(itemView);
