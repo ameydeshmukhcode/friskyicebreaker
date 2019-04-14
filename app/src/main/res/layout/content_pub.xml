@@ -46,9 +46,8 @@
             android:text="@string/placeholder"
             android:textColor="@color/textDark"
             android:textSize="15sp"
-            app:layout_constraintBottom_toBottomOf="@+id/text_live_count_value"
             app:layout_constraintStart_toStartOf="@+id/text_pub_name"
-            app:layout_constraintTop_toTopOf="@+id/text_live_count_value" />
+            app:layout_constraintTop_toBottomOf="@+id/text_location" />
 
         <TextView
             android:id="@+id/text_rating"
