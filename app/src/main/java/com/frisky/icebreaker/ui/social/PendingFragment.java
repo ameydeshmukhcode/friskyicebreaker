@@ -1,11 +1,21 @@
 package com.frisky.icebreaker.ui.social;
 
+import android.view.LayoutInflater;
+import android.view.View;
+
+import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.core.base.UserInfoFragment;
 import com.frisky.icebreaker.core.structures.UserInfoMode;
 
 public class PendingFragment extends UserInfoFragment {
     public PendingFragment() {
-        setUserInfoMode(UserInfoMode.PING);
+        setUserInfoMode(UserInfoMode.PENDING);
+    }
+
+    @Override
+    public View setViewLayout(View view, LayoutInflater inflater) {
+        view =  inflater.inflate(R.layout.fragment_list_view, null);
+        return view;
     }
 
     @Override
@@ -22,13 +32,7 @@ public class PendingFragment extends UserInfoFragment {
         user = "Somebody";
         usersList.add(user);
 
-        user = "Creme";
-        usersList.add(user);
-
-        user = "Brute";
-        usersList.add(user);
-
-        user = "Somebody";
+        user = "Jon";
         usersList.add(user);
 
         mUsersViewAdapter.notifyDataSetChanged();

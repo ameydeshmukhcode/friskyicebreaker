@@ -45,11 +45,11 @@ public class UsersListViewAdapter extends RecyclerView.Adapter<UsersListViewAdap
         View itemView = null;
 
         switch (mUserInfoMode) {
-            case PREVIEW: itemView = LayoutInflater.from(viewGroup.getContext())
+            case ICEBREAKER: itemView = LayoutInflater.from(viewGroup.getContext())
                     .inflate(R.layout.card_user_preview, viewGroup, false); break;
-            case PING: itemView = LayoutInflater.from(viewGroup.getContext())
+            case PENDING: itemView = LayoutInflater.from(viewGroup.getContext())
                     .inflate(R.layout.card_user_pending, viewGroup, false); break;
-            case FRIEND: itemView = LayoutInflater.from(viewGroup.getContext())
+            case CHAT: itemView = LayoutInflater.from(viewGroup.getContext())
                     .inflate(R.layout.card_user_chat, viewGroup, false); break;
         }
 
