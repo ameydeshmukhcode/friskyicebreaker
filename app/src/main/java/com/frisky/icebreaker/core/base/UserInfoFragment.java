@@ -36,8 +36,8 @@ public abstract class UserInfoFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view;
-        view = inflater.inflate(R.layout.fragment_list_view, null);
+        View view = null;
+        view = setViewLayout(view, inflater);
         mRecyclerUsersView = view.findViewById(R.id.recycler_users_list_view);
 
         // use this setting to improve performance if you know that changes
@@ -51,14 +51,13 @@ public abstract class UserInfoFragment extends Fragment {
         // specify an adapter (see also next example)
         mUsersViewAdapter = new UsersListViewAdapter(usersList, mUserInfoMode, getContext());
         mRecyclerUsersView.setAdapter(mUsersViewAdapter);
-        mDividerItemDecoration = new DividerItemDecoration(mRecyclerUsersView.getContext(),
-                mUsersViewLayoutManager.getLayoutDirection());
-        mRecyclerUsersView.addItemDecoration(mDividerItemDecoration);
 
         prepareUserData();
 
         return view;
     }
+
+    public abstract View setViewLayout(View view, LayoutInflater inflater);
 
     //Reimplement this in derived class to update user data in a specific Fragment
     public abstract void prepareUserData();
