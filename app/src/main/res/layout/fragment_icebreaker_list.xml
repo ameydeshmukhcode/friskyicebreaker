@@ -10,7 +10,6 @@
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:buttonTint="@color/backgroundDark"
-        android:elevation="10dp"
         android:fontFamily="@font/museosans700"
         android:paddingStart="15dp"
         android:paddingEnd="15dp"

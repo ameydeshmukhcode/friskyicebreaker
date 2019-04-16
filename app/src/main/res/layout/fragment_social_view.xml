@@ -10,8 +10,7 @@
     <android.support.constraint.ConstraintLayout
         android:id="@+id/tabs"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:elevation="10dp">
+        android:layout_height="50dp">
 
         <Button
             android:id="@+id/button_chats"
