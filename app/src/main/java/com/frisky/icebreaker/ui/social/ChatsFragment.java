@@ -34,6 +34,15 @@ public class ChatsFragment extends UserInfoFragment {
         user = "Mah Dude";
         usersList.add(user);
 
+        user = "Need";
+        usersList.add(user);
+
+        user = "More";
+        usersList.add(user);
+
+        user = "Samples";
+        usersList.add(user);
+
         mUsersViewAdapter.notifyDataSetChanged();
     }
 }

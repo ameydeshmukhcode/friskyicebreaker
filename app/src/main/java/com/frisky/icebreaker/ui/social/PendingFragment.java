@@ -35,6 +35,15 @@ public class PendingFragment extends UserInfoFragment {
         user = "Jon";
         usersList.add(user);
 
+        user = "Need";
+        usersList.add(user);
+
+        user = "More";
+        usersList.add(user);
+
+        user = "Samples";
+        usersList.add(user);
+
         mUsersViewAdapter.notifyDataSetChanged();
     }
 }
