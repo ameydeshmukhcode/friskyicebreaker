@@ -42,7 +42,7 @@ public abstract class UserInfoFragment extends Fragment {
 
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
-        mRecyclerUsersView.setHasFixedSize(true);
+        //mRecyclerUsersView.setHasFixedSize(true);
 
         // use a linear layout manager
         mUsersViewLayoutManager = new LinearLayoutManager(getContext());
