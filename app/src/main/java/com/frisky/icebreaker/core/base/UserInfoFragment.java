@@ -31,18 +31,13 @@ public abstract class UserInfoFragment extends Fragment {
     private RecyclerView mRecyclerUsersView;
     protected RecyclerView.Adapter mUsersViewAdapter;
     private RecyclerView.LayoutManager mUsersViewLayoutManager;
-    private DividerItemDecoration mDividerItemDecoration;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = null;
         view = setViewLayout(view, inflater);
-        mRecyclerUsersView = view.findViewById(R.id.recycler_users_list_view);
-
-        // use this setting to improve performance if you know that changes
-        // in content do not change the layout size of the RecyclerView
-        //mRecyclerUsersView.setHasFixedSize(true);
+        mRecyclerUsersView = view.findViewById(R.id.recycler_list_view);
 
         // use a linear layout manager
         mUsersViewLayoutManager = new LinearLayoutManager(getContext());
