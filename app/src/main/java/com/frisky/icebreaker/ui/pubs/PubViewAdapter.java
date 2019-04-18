@@ -1,4 +1,4 @@
-package com.frisky.icebreaker.ui.pubview;
+package com.frisky.icebreaker.ui.pubs;
 
 import android.content.Context;
 import android.content.Intent;

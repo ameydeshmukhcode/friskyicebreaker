@@ -8,7 +8,7 @@ import android.widget.ImageButton;
 
 import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.ui.profile.ProfileFragment;
-import com.frisky.icebreaker.ui.pubview.PubViewFragment;
+import com.frisky.icebreaker.ui.pubs.PubViewFragment;
 import com.frisky.icebreaker.ui.social.SocialFragment;
 import com.frisky.icebreaker.ui.social.UsersListFragment;
 

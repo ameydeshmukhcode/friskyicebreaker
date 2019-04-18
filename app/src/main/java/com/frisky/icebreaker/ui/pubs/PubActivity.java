@@ -1,4 +1,4 @@
-package com.frisky.icebreaker.ui.pubview;
+package com.frisky.icebreaker.ui.pubs;
 
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
@@ -7,7 +7,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toolbar;
 
 import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.ui.assistant.UIHelper;
