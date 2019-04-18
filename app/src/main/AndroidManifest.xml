@@ -12,13 +12,16 @@
         <activity android:name=".ui.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".ui.HomeActivity"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+            </intent-filter>
+        </activity>
         <activity
             android:name=".ui.profile.EditProfileActivity"
             android:parentActivityName=".ui.HomeActivity"
@@ -28,9 +31,8 @@
             android:name=".ui.profile.ViewProfileActivity"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".ui.pubview.PubActivity"
+            android:name=".ui.pubs.PubActivity"
             android:theme="@style/AppTheme" />
-        <activity android:name=".ui.SignUpActivity"></activity>
+        <activity android:name=".ui.SignUpActivity"/>
     </application>
-
 </manifest>
