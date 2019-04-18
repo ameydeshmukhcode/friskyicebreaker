@@ -43,9 +43,9 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
         android:clickable="true"
-        android:tint="@android:color/white"
+        android:tint="@color/tintLight"
         app:backgroundTint="@color/colorAccent"
-        app:rippleColor="@color/colorPrimary"
+        app:rippleColor="@color/tintLight"
         app:srcCompat="@drawable/round_chat_24" />
 
 </android.support.design.widget.CoordinatorLayout>

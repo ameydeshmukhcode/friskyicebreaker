@@ -61,6 +61,7 @@
             android:layout_marginStart="4dp"
             android:fontFamily="@font/museosans700"
             android:text="@string/placeholder_number"
+            android:textColor="@color/textDark"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="@+id/text_name"
             app:layout_constraintStart_toEndOf="@+id/comma"
