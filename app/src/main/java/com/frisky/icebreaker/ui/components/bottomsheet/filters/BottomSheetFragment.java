@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.frisky.icebreaker.R;
-import com.frisky.icebreaker.ui.pubview.PubViewAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
