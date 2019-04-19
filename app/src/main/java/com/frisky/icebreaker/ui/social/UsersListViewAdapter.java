@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.core.structures.UserInfoMode;
-import com.frisky.icebreaker.ui.assistant.UIHelper;
+import com.frisky.icebreaker.ui.assistant.UIAssistant;
 import com.frisky.icebreaker.ui.profile.ViewProfileActivity;
 
 import java.util.List;
@@ -68,7 +68,7 @@ public class UsersListViewAdapter extends RecyclerView.Adapter<UsersListViewAdap
         viewHolder.mName.setText(ping);
 
         Bitmap bm = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.sample_user);
-        viewHolder.mPicture.setImageBitmap(UIHelper.getInstance().getCircleBitmap(bm));
+        viewHolder.mPicture.setImageBitmap(UIAssistant.getInstance().getCircleBitmap(bm));
 
         viewHolder.mCard.setOnClickListener(new View.OnClickListener() {
             @Override

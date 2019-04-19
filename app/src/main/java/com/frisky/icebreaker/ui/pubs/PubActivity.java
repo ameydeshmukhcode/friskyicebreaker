@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.frisky.icebreaker.R;
-import com.frisky.icebreaker.ui.assistant.UIHelper;
+import com.frisky.icebreaker.ui.assistant.UIAssistant;
 
 public class PubActivity extends AppCompatActivity {
 
@@ -50,8 +50,8 @@ public class PubActivity extends AppCompatActivity {
             String pubRatingText = getIntent().getStringExtra("rating");
             Double pubRating = Double.parseDouble(pubRatingText);
             mRatingText.setText(getIntent().getStringExtra("rating"));
-            mRatingText.setBackgroundResource(UIHelper.getInstance().getRatingBadgeBackground(pubRating));
-            mAppBarLayout.setBackgroundResource(UIHelper.getInstance().getRatingBadgeColor(pubRating));
+            mRatingText.setBackgroundResource(UIAssistant.getInstance().getRatingBadgeBackground(pubRating));
+            mAppBarLayout.setBackgroundResource(UIAssistant.getInstance().getRatingBadgeColor(pubRating));
         }
 
         FloatingActionButton fab = findViewById(R.id.fab_chat_room);

@@ -11,14 +11,14 @@ import android.graphics.RectF;
 
 import com.frisky.icebreaker.R;
 
-public class UIHelper {
-    private static final UIHelper ourInstance = new UIHelper();
+public class UIAssistant {
+    private static final UIAssistant ourInstance = new UIAssistant();
 
-    public static UIHelper getInstance() {
+    public static UIAssistant getInstance() {
         return ourInstance;
     }
 
-    private UIHelper() {
+    private UIAssistant() {
     }
 
     public int getRatingBadgeBackground(double rating) {
