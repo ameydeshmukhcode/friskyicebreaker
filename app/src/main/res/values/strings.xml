@@ -27,6 +27,10 @@
     <string name="ping_send">You have pinged </string>
     <!--IceBreaker-->
     <string name="hide_visibility">Hide Visibility</string>
+    <!--Profile-->
+    <string name="about_me">About me:</string>
+    <string name="sample_bio">Some long text which no one cares about.</string>
+    <string name="edit_profile">Edit Profile</string>
 
     <!--Pub Activity-->
     <string name="live_count">Live count</string>

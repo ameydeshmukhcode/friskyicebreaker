@@ -1,5 +1,6 @@
 package com.frisky.icebreaker.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -7,7 +8,7 @@ import android.view.View;
 import android.widget.ImageButton;
 
 import com.frisky.icebreaker.R;
-import com.frisky.icebreaker.ui.profile.ProfileFragment;
+import com.frisky.icebreaker.ui.profile.ProfileActivity;
 import com.frisky.icebreaker.ui.pubs.PubViewFragment;
 import com.frisky.icebreaker.ui.social.SocialFragment;
 import com.frisky.icebreaker.ui.social.UsersListFragment;
@@ -64,7 +65,8 @@ public class HomeActivity extends AppCompatActivity {
         mBottomNavProfileButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadFragment(new ProfileFragment());
+                Intent startProfileActivity = new Intent(getApplicationContext(), ProfileActivity.class);
+                startActivity(startProfileActivity);
             }
         });
 
