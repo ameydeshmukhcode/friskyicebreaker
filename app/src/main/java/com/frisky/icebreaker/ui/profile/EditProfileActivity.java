@@ -10,7 +10,6 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.frisky.icebreaker.R;
-import com.frisky.icebreaker.ui.social.SocialFragment;
 
 public class EditProfileActivity extends AppCompatActivity {
 

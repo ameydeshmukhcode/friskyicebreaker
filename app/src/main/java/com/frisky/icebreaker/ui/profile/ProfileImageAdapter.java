@@ -16,9 +16,9 @@ public class ProfileImageAdapter extends PagerAdapter {
     LayoutInflater mLayoutInflater;
 
     int[] mImageList = {
-            R.drawable.sample_2,
-            R.drawable.sample_4,
-            R.drawable.sample_5
+            R.drawable.placeholder,
+            R.drawable.placeholder,
+            R.drawable.placeholder
     };
 
     public ProfileImageAdapter(Context context) {

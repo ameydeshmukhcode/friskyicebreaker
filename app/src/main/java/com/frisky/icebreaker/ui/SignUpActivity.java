@@ -10,25 +10,25 @@ import com.frisky.icebreaker.R;
 
 public class SignUpActivity extends AppCompatActivity {
 
-    Button mSignUpButton;
+  Button mSignUpButton;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_up);
-        initUI();
-    }
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_sign_up);
+    initUI();
+  }
 
-    private void initUI() {
-        mSignUpButton = findViewById(R.id.button_sign_up);
+  private void initUI() {
+    mSignUpButton = findViewById(R.id.button_sign_up);
 
-        mSignUpButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //TODO handle SignUp operation here
-                Intent startLoginActivity = new Intent(getApplicationContext(), LoginActivity.class);
-                startActivity(startLoginActivity);
-            }
-        });
-    }
+    mSignUpButton.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        //TODO handle SignUp operation here
+        Intent startLoginActivity = new Intent(getApplicationContext(), LoginActivity.class);
+        startActivity(startLoginActivity);
+      }
+    });
+  }
 }

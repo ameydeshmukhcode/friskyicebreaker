@@ -17,51 +17,51 @@ import com.frisky.icebreaker.R;
 
 public class ViewProfileActivity extends AppCompatActivity {
 
-    ImageButton mEditButton;
-    ViewPager mProfileImagePager;
-    PagerAdapter mProfileImageAdapter;
-    TextView mUserNameText;
+  ImageButton mEditButton;
+  ViewPager mProfileImagePager;
+  PagerAdapter mProfileImageAdapter;
+  TextView mUserNameText;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_profile);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_view_profile);
+    Toolbar toolbar = findViewById(R.id.toolbar);
+    setSupportActionBar(toolbar);
 
-        mEditButton = findViewById(R.id.button_edit);
-        mEditButton.setVisibility(View.GONE);
+    mEditButton = findViewById(R.id.button_edit);
+    mEditButton.setVisibility(View.GONE);
 
-        mUserNameText = findViewById(R.id.text_name);
+    mUserNameText = findViewById(R.id.text_name);
 
-        mProfileImagePager = findViewById(R.id.pager_profile_images);
-        mProfileImageAdapter = new ProfileImageAdapter(this);
-        mProfileImagePager.setAdapter(mProfileImageAdapter);
+    mProfileImagePager = findViewById(R.id.pager_profile_images);
+    mProfileImageAdapter = new ProfileImageAdapter(this);
+    mProfileImagePager.setAdapter(mProfileImageAdapter);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        if (getIntent().hasExtra("name")){
-            String name = getIntent().getStringExtra("name");
-            getSupportActionBar().setTitle(name);
-            mUserNameText.setText(name);
-        }
-
-        FloatingActionButton fab = findViewById(R.id.fab_ping);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Initiate 'Ping' from this.", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+    if (getIntent().hasExtra("name")){
+      String name = getIntent().getStringExtra("name");
+      getSupportActionBar().setTitle(name);
+      mUserNameText.setText(name);
     }
 
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            onBackPressed();
-            return true;
-        }
-        return super.onKeyDown(keyCode, event);
+    FloatingActionButton fab = findViewById(R.id.fab_ping);
+    fab.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        Snackbar.make(view, "Initiate 'Ping' from this.", Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show();
+      }
+    });
+  }
+
+  @Override
+  public boolean onKeyDown(int keyCode, KeyEvent event) {
+    if (keyCode == KeyEvent.KEYCODE_BACK) {
+      onBackPressed();
+      return true;
     }
+    return super.onKeyDown(keyCode, event);
+  }
 }

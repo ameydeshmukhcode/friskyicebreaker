@@ -67,7 +67,7 @@ public class UsersListViewAdapter extends RecyclerView.Adapter<UsersListViewAdap
         String ping = mUsersList.get(i);
         viewHolder.mName.setText(ping);
 
-        Bitmap bm = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.sample_user);
+        Bitmap bm = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.placeholder);
         viewHolder.mPicture.setImageBitmap(UIAssistant.getInstance().getCircleBitmap(bm));
 
         viewHolder.mCard.setOnClickListener(new View.OnClickListener() {
