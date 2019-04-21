@@ -1,11 +1,15 @@
 package com.frisky.icebreaker.ui;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.ui.profile.ProfileActivity;
@@ -22,6 +26,7 @@ public class HomeActivity extends AppCompatActivity {
     private ImageButton m2ND;
     private ImageButton m4TH;
     private ImageButton mIceBreakerButton;
+    private TextView mToolbarText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +38,12 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void initUI() {
+        mToolbarText = findViewById(R.id.toolbar_text);
+        mToolbarText.setText(R.string.app_name);
+        mToolbarText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 35);
+        Typeface typeface = ResourcesCompat.getFont(getApplicationContext(), R.font.ktfroadstar);
+        mToolbarText.setTypeface(typeface);
+
         mSocialButton = findViewById(R.id.button_toolbar_right);
         mSocialButton.setImageResource(R.drawable.round_chat_24);
         mSocialButton.setOnClickListener(new View.OnClickListener() {

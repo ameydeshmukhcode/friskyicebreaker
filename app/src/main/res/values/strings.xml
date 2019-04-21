@@ -3,6 +3,7 @@
     <string name="app_name">Frisky</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
+    <string name="comma">,</string>
 
     <!--Login Page-->
     <string name="login">Login</string>
@@ -20,6 +21,7 @@
     <!--Home Page-->
     <!--Pub View-->
     <string name="search_pubs">Search pubs..</string>
+    <string name="filters">Filters</string>
     <!--Social-->
     <string name="chats">Chats</string>
     <string name="pending">Pending</string>
@@ -31,16 +33,7 @@
     <string name="about_me">About me:</string>
     <string name="sample_bio">Some long text which no one cares about.</string>
     <string name="edit_profile">Edit Profile</string>
-
-    <!--Pub Activity-->
-    <string name="live_count">Live count</string>
-
-    <!--App Common-->
-    <string name="facebook">Facebook</string>
-    <string name="filters">Filters</string>
-    <string name="apply">Apply</string>
-    <string name="comma">,</string>
-    <string name="done">Done</string>
+    <!--Edit Profile-->
     <string name="gender">Gender</string>
     <string name="interest">Interested In</string>
     <string name="male">Male</string>
@@ -49,6 +42,20 @@
     <string name="photo">Photo</string>
     <string name="bio">Bio</string>
     <string name="dob">Date of Birth</string>
+    <string name="done">Done</string>
+    <string-array name="genders">
+        <item>@string/male</item>
+        <item>@string/female</item>
+        <item>@string/other</item>
+    </string-array>
+
+    <!--Pub Activity-->
+    <string name="live_count">Live count</string>
+
+    <!--App Common-->
+    <string name="facebook">Facebook</string>
+    <string name="apply">Apply</string>
+
     <string name="placeholder">dummy</string>
     <string name="placeholder_number">23</string>
 </resources>

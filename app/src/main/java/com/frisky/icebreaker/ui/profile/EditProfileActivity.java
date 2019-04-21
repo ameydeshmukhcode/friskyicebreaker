@@ -1,51 +1,48 @@
 package com.frisky.icebreaker.ui.profile;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuInflater;
+import android.util.TypedValue;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.frisky.icebreaker.R;
+import com.frisky.icebreaker.ui.social.SocialFragment;
 
 public class EditProfileActivity extends AppCompatActivity {
 
-    Spinner mSpinnerGender;
-    Spinner mSpinnerInterest;
+    private TextView mToolbarText;
+    private ImageButton mBackButton;
+    private ImageButton mDoneButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
-        mSpinnerGender = findViewById(R.id.spinner_gender);
-        mSpinnerInterest = findViewById(R.id.spinner_interest);
-
-//        ArrayAdapter<CharSequence> spinnerGenderAdapter = ArrayAdapter
-//                .createFromResource(this, R.array.genders,
-//                        android.R.layout.simple_spinner_item);
-//
-//        mSpinnerGender.setAdapter(spinnerGenderAdapter);
-//
-//        ArrayAdapter<CharSequence> spinnerInterestAdapter = ArrayAdapter
-//                .createFromResource(this, R.array.genders,
-//                        android.R.layout.simple_spinner_item);
-//
-//        mSpinnerInterest.setAdapter(spinnerInterestAdapter);
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        initUI();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_edit_profile_activity, menu);
-        return true;
+    private void initUI() {
+        mToolbarText = findViewById(R.id.toolbar_text);
+        mToolbarText.setText(R.string.edit_profile);
+        mToolbarText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+        Typeface typeface = ResourcesCompat.getFont(getApplicationContext(), R.font.museosans700);
+        mToolbarText.setTypeface(typeface);
+
+        mBackButton = findViewById(R.id.button_toolbar_left);
+        mBackButton.setImageResource(R.drawable.round_arrow_back_24);
+        mBackButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditProfileActivity.super.onBackPressed();
+            }
+        });
+
+        mDoneButton = findViewById(R.id.button_toolbar_right);
+        mDoneButton.setImageResource(R.drawable.round_done_24);
     }
 }
