@@ -6,4 +6,120 @@
     android:layout_height="match_parent"
     tools:context=".ui.profile.ViewUserActivity">
 
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager_profile_images"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="15dp"
+        android:visibility="visible"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </android.support.v4.view.ViewPager>
+
+    <TextView
+        android:id="@+id/text_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="20dp"
+        android:fontFamily="@font/museosans700"
+        android:padding="5dp"
+        android:text="@string/name"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/textLight"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/pager_profile_images"
+        app:layout_constraintStart_toStartOf="@+id/pager_profile_images" />
+
+    <TextView
+        android:id="@+id/comma"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/museosans700"
+        android:padding="5dp"
+        android:text="@string/comma"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/textLight"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/text_name"
+        app:layout_constraintStart_toEndOf="@+id/text_name"
+        app:layout_constraintTop_toTopOf="@+id/text_name" />
+
+    <TextView
+        android:id="@+id/text_age"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/museosans700"
+        android:padding="5dp"
+        android:text="@string/placeholder_number"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/textLight"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/text_name"
+        app:layout_constraintStart_toEndOf="@+id/comma"
+        app:layout_constraintTop_toTopOf="@+id/text_name" />
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tab_image"
+        android:layout_width="0dp"
+        android:layout_height="10dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="5dp"
+        android:background="@color/transparent"
+        app:layout_constraintBottom_toBottomOf="@+id/pager_profile_images"
+        app:layout_constraintEnd_toEndOf="@+id/pager_profile_images"
+        app:layout_constraintStart_toStartOf="@+id/pager_profile_images"
+        app:layout_constraintTop_toBottomOf="@+id/text_name"
+        app:tabBackground="@drawable/tab_selector"
+        app:tabGravity="fill"
+        app:tabIndicatorHeight="0dp"
+        app:tabMode="fixed" />
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/layout_bio"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/pager_profile_images">
+
+        <TextView
+            android:id="@+id/about_me"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/museosans300"
+            android:text="@string/about_me"
+            android:textColor="@color/textDark"
+            android:textSize="15sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/text_bio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/museosans300"
+            android:text="Some long text which no one cares about."
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/about_me" />
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_break_ice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:clickable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/icebreaker" />
+
 </android.support.constraint.ConstraintLayout>
