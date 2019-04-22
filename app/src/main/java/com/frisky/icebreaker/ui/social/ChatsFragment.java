@@ -4,7 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import com.frisky.icebreaker.R;
-import com.frisky.icebreaker.core.base.UserInfoFragment;
+import com.frisky.icebreaker.ui.base.UserInfoFragment;
 import com.frisky.icebreaker.core.structures.UserInfoMode;
 
 public class ChatsFragment extends UserInfoFragment {

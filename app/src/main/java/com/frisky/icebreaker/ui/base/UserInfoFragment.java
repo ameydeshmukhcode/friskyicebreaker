@@ -1,4 +1,4 @@
-package com.frisky.icebreaker.core.base;
+package com.frisky.icebreaker.ui.base;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
