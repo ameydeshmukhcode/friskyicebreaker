@@ -1,6 +1,7 @@
 package com.frisky.icebreaker.ui.profile;
 
 import android.content.Intent;
+import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -34,5 +35,8 @@ public class ProfileActivity extends AppCompatActivity {
 
         mProfileImagePager = findViewById(R.id.pager_profile_images);
         mProfileImagePager.setAdapter(mProfileImageAdapter);
+
+        TabLayout tabLayout = findViewById(R.id.tab_image);
+        tabLayout.setupWithViewPager(mProfileImagePager, true);
     }
 }

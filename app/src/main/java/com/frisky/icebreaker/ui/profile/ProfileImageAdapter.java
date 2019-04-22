@@ -19,9 +19,11 @@ public class ProfileImageAdapter extends PagerAdapter {
     LayoutInflater mLayoutInflater;
 
     int[] mImageList = {
+            R.drawable.logo_facebook,
             R.drawable.placeholder,
+            R.drawable.logo_facebook,
             R.drawable.placeholder,
-            R.drawable.placeholder
+            R.drawable.logo_facebook
     };
 
     public ProfileImageAdapter(Context context) {
