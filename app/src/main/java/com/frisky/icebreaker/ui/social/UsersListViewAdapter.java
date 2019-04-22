@@ -16,7 +16,7 @@ import android.widget.TextView;
 import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.core.structures.UserInfoMode;
 import com.frisky.icebreaker.ui.assistant.UIAssistant;
-import com.frisky.icebreaker.ui.profile.ViewProfileActivity;
+import com.frisky.icebreaker.ui.profile.ViewUserActivity;
 
 import java.util.List;
 
@@ -70,14 +70,20 @@ public class UsersListViewAdapter extends RecyclerView.Adapter<UsersListViewAdap
         Bitmap bm = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.placeholder);
         viewHolder.mPicture.setImageBitmap(UIAssistant.getInstance().getCircleBitmap(bm));
 
-        viewHolder.mCard.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent viewUser = new Intent(mContext, ViewProfileActivity.class);
-                viewUser.putExtra("name", viewHolder.mName.getText());
-                mContext.startActivity(viewUser);
-            }
-        });
+        switch (mUserInfoMode) {
+            case ICEBREAKER:
+                viewHolder.mCard.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent viewUser = new Intent(mContext, ViewUserActivity.class);
+                        viewUser.putExtra("name", viewHolder.mName.getText());
+                        mContext.startActivity(viewUser);
+                    }
+                });
+                break;
+            case PENDING: break;
+            case CHAT: break;
+        }
     }
 
     @Override
