@@ -44,7 +44,7 @@
                 android:fontFamily="@font/museosans700"
                 android:text="@string/placeholder"
                 android:textColor="@color/textDark"
-                android:textSize="20sp"
+                android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/image"
                 app:layout_constraintTop_toTopOf="parent" />
