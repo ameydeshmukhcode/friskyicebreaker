@@ -1,6 +1,8 @@
 package com.frisky.icebreaker.ui.profile;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.frisky.icebreaker.R;
+import com.frisky.icebreaker.ui.assistant.UIAssistant;
 
 public class ProfileImageAdapter extends PagerAdapter {
 
@@ -40,8 +43,9 @@ public class ProfileImageAdapter extends PagerAdapter {
     public Object instantiateItem(ViewGroup container, int position) {
         View itemView = mLayoutInflater.inflate(R.layout.image_pager_item, container, false);
 
-        ImageView imageView = (ImageView) itemView.findViewById(R.id.imageView);
-        imageView.setImageResource(mImageList[position]);
+        ImageView imageView = itemView.findViewById(R.id.imageView);
+        Bitmap bm = BitmapFactory.decodeResource(mContext.getResources(), mImageList[position]);
+        imageView.setImageBitmap(UIAssistant.getInstance().getProfileBitmap(bm));
 
         container.addView(itemView);
 
