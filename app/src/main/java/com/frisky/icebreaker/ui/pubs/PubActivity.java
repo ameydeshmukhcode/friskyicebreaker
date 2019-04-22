@@ -58,6 +58,7 @@ public class PubActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //TODO PUB CHAT ROOM
                 Snackbar.make(view, "Start Pub chat room here", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }

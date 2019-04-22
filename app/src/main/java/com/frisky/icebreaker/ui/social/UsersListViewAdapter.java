@@ -81,8 +81,26 @@ public class UsersListViewAdapter extends RecyclerView.Adapter<UsersListViewAdap
                     }
                 });
                 break;
-            case PENDING: break;
-            case CHAT: break;
+            case PENDING:
+                viewHolder.mCard.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent viewUser = new Intent(mContext, ChatActivity.class);
+                        viewUser.putExtra("name", viewHolder.mName.getText());
+                        mContext.startActivity(viewUser);
+                    }
+                });
+                break;
+            case CHAT:
+                viewHolder.mCard.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent viewUser = new Intent(mContext, ChatActivity.class);
+                        viewUser.putExtra("name", viewHolder.mName.getText());
+                        mContext.startActivity(viewUser);
+                    }
+                });
+                break;
         }
     }
 
