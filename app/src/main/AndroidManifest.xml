@@ -9,6 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".ui.social.ChatActivity"></activity>
+        <activity android:name=".ui.profile.ViewUserActivity" />
+        <activity android:name=".ui.profile.ProfileActivity" />
         <activity android:name=".ui.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -18,22 +21,20 @@
         </activity>
         <activity
             android:name=".ui.HomeActivity"
-            android:label="@string/title_activity_home"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".ui.profile.EditProfileActivity"
-            android:label="@string/title_activity_edit_profile"
             android:parentActivityName=".ui.HomeActivity"
             android:theme="@style/CancelAsUpActionTheme"
-            android:windowSoftInputMode="adjustPan"></activity>
+            android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".ui.profile.ViewProfileActivity"
-            android:label="@string/title_activity_view_profile"
+            android:name=".ui.pubs.PubActivity"
             android:theme="@style/AppTheme" />
-        <activity
-            android:name=".ui.pubview.PubActivity"
-            android:label="@string/title_activity_pub"
-            android:theme="@style/AppTheme"></activity>
+        <activity android:name=".ui.SignUpActivity" />
     </application>
 
 </manifest>

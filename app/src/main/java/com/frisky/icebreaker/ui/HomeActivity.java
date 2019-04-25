@@ -1,80 +1,93 @@
 package com.frisky.icebreaker.ui;
 
+import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.view.MenuItem;
-import android.support.v7.widget.Toolbar;
+import android.util.TypedValue;
+import android.view.View;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.frisky.icebreaker.R;
-import com.frisky.icebreaker.ui.profile.ProfileFragment;
-import com.frisky.icebreaker.ui.pubview.PubViewFragment;
+import com.frisky.icebreaker.ui.profile.ProfileActivity;
+import com.frisky.icebreaker.ui.pubs.PubViewFragment;
 import com.frisky.icebreaker.ui.social.SocialFragment;
 import com.frisky.icebreaker.ui.social.UsersListFragment;
 
 public class HomeActivity extends AppCompatActivity {
 
-    private Toolbar mToolbarMain;
-    private BottomNavigationView mBottomNavigationView;
-
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.bottom_nav_home:
-                    loadFragment(new PubViewFragment());
-                    changeTitle(R.string.app_name);
-                    return true;
-                case R.id.bottom_nav_icebreaker:
-                    loadFragment(new UsersListFragment());
-                    changeTitle(R.string.view_users);
-                    return true;
-                case R.id.bottom_nav_profile:
-                    loadFragment(new ProfileFragment());
-                    changeTitle(R.string.profile);
-                    return true;
-            }
-            return false;
-        }
-    };
+    private ImageButton mSocialButton;
+    private ImageButton mScanQRCodeButton;
+    private ImageButton mBottomNavHomeButton;
+    private ImageButton mBottomNavProfileButton;
+    private ImageButton m2ND;
+    private ImageButton m4TH;
+    private ImageButton mIceBreakerButton;
+    private TextView mToolbarText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
-        mToolbarMain = findViewById(R.id.home_activity_toolbar);
-        changeTitle(R.string.app_name);
-
-        mToolbarMain.inflateMenu(R.menu.menu_home_activity);
-
-        mToolbarMain.setOnMenuItemClickListener(
-                new Toolbar.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-
-                        switch(item.getItemId()){
-                            case R.id.home_menu_scan_qr:
-                                //TODO: Start QR Scanning Activity from here
-                                return true;
-                            case R.id.home_menu_social:
-                                loadFragment(new SocialFragment());
-                                changeTitle(R.string.social);
-                                return true;
-                        }
-                        return false;
-                    }
-                });
+        initUI();
 
         loadFragment(new PubViewFragment());
+    }
 
-        mBottomNavigationView = findViewById(R.id.navigation);
-        mBottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        mBottomNavigationView.setSelectedItemId(R.id.bottom_nav_home);
+    private void initUI() {
+        mToolbarText = findViewById(R.id.toolbar_text);
+        mToolbarText.setText(R.string.app_name);
+        mToolbarText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 35);
+        Typeface typeface = ResourcesCompat.getFont(getApplicationContext(), R.font.ktfroadstar);
+        mToolbarText.setTypeface(typeface);
+
+        mSocialButton = findViewById(R.id.button_toolbar_right);
+        mSocialButton.setImageResource(R.drawable.round_chat_24);
+        mSocialButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadFragment(new SocialFragment());
+            }
+        });
+
+        mScanQRCodeButton = findViewById(R.id.button_toolbar_left);
+        mScanQRCodeButton.setImageResource(R.drawable.round_camera_24);
+
+        mBottomNavHomeButton = findViewById(R.id.button_nav_left);
+        mBottomNavHomeButton.setImageResource(R.drawable.round_home_24);
+        mBottomNavHomeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadFragment(new PubViewFragment());
+            }
+        });
+
+        m2ND = findViewById(R.id.button_nav_centre_left);
+        m2ND.setImageResource(R.drawable.placeholder_24);
+
+        m4TH = findViewById(R.id.button_nav_centre_right);
+        m4TH.setImageResource(R.drawable.placeholder_24);
+
+        mBottomNavProfileButton = findViewById(R.id.button_nav_right);
+        mBottomNavProfileButton.setImageResource(R.drawable.round_person_24);
+        mBottomNavProfileButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent startProfileActivity = new Intent(getApplicationContext(), ProfileActivity.class);
+                startActivity(startProfileActivity);
+            }
+        });
+
+        mIceBreakerButton = findViewById(R.id.button_icebreaker);
+        mIceBreakerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadFragment(new UsersListFragment());
+            }
+        });
     }
 
     private boolean loadFragment(Fragment fragment) {
@@ -88,9 +101,5 @@ public class HomeActivity extends AppCompatActivity {
             return true;
         }
         return false;
-    }
-
-    private void changeTitle(int stringResource) {
-        mToolbarMain.setTitle(stringResource);
     }
 }

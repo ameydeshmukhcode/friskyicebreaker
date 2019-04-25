@@ -1,6 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#6c0961</color>
-    <color name="colorPrimaryDark">#3d0037</color>
-    <color name="colorAccent">#f57f17</color>
+    <color name="app">#ff5c5c</color>
+    <color name="lightAccent">#dcdcdc</color>
+    <color name="darkAccent">#707070</color>
+
+    <color name="colorPrimary">@color/app</color>
+    <color name="colorPrimaryDark">@color/app</color>
+    <color name="colorAccent">@color/darkAccent</color>
+    <color name="navigationBarColor">@color/darkAccent</color>
+
+    <!-- Others -->
+
+    <color name="backgroundLight">@color/lightAccent</color>
+    <color name="backgroundDark">@color/darkAccent</color>
+    <color name="textLight">@android:color/white</color>
+    <color name="textDark">@color/darkAccent</color>
+    <color name="tintLight">@android:color/white</color>
+    <color name="tintDark">@color/darkAccent</color>
+    <color name="transparent">@android:color/transparent</color>
+
+    <!--Facebook-->
+    <color name="colorFacebook">#3C5A99</color>
+
+    <!--Rating Badges-->
+    <color name="rating_very_high">#208927</color>
+    <color name="rating_high">#26B030</color>
+    <color name="rating_low">#E2D240</color>
+    <color name="rating_very_low">#DA2C2C</color>
 </resources>

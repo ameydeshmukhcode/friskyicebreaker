@@ -1,39 +1,61 @@
 <resources>
+    <!-- Common -->
     <string name="app_name">Frisky</string>
-
-    <!-- App -->
-    <string name="home">Home</string>
-    <string name="edit">Edit</string>
-    <string name="messages">Messages</string>
-    <string name="pings">Pings</string>
-    <string name="profile">Profile</string>
-    <string name="pubs">Pubs</string>
-    <string name="settings">Settings</string>
-    <string name="scan_qr_code">Scan QR Code</string>
-    <string name="social">Social</string>
-    <string name="icebreaker">Ice Breaker</string>
-    <string name="filters">Filters</string>
-    <string name="empty"></string>
-    <string name="search">Search</string>
-    <string name="login">Login</string>
-    <string name="apply">Apply</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
     <string name="comma">,</string>
-    <string name="connect">Connect</string>
-    <string name="placeholder">.. tbd ..</string>
-    <string name="reviews">Reviews</string>
-    <string name="directions">Directions</string>
-    <string name="bookmark">Bookmark</string>
-    <string name="view_users">View Users</string>
-    <string name="done">Done</string>
+
+    <!--Login Page-->
+    <string name="login">Login</string>
+    <string name="password_forgot">Forgot Password?</string>
+    <string name="alternate_login">or Log in with</string>
+    <string name="no_account">Don\'t have an account?</string>
+    <string name="sign_up">Sign up</string>
+
+    <!--Sign up page-->
+    <string name="password_confirm">Confirm Password</string>
+    <string name="name">Name</string>
+    <string name="age_check">I\'m 18 years and older.</string>
+    <string name="terms">By signing up, you\'re agreeing to our Terms and Privacy Policies</string>
+
+    <!--Home Page-->
+    <!--Pub View-->
+    <string name="search_pubs">Search pubs..</string>
+    <string name="filters">Filters</string>
+    <!--Social-->
+    <string name="chats">Chats</string>
+    <string name="pending">Pending</string>
+    <string name="ping_rec">You have been pinged by </string>
+    <string name="ping_send">You have pinged </string>
+    <!--IceBreaker-->
+    <string name="hide_visibility">Hide Visibility</string>
+    <!--Profile-->
+    <string name="about_me">About me:</string>
+    <string name="sample_bio">Some long text which no one cares about.</string>
+    <string name="edit_profile">Edit Profile</string>
+    <!--Edit Profile-->
     <string name="gender">Gender</string>
     <string name="interest">Interested In</string>
     <string name="male">Male</string>
     <string name="female">Female</string>
     <string name="other">Other</string>
-    <string name="name">Name</string>
     <string name="photo">Photo</string>
     <string name="bio">Bio</string>
     <string name="dob">Date of Birth</string>
-    <string name="ping_rec">You have been pinged by </string>
-    <string name="ping_send">You have pinged </string>
+    <string name="done">Done</string>
+    <string-array name="genders">
+        <item>@string/male</item>
+        <item>@string/female</item>
+        <item>@string/other</item>
+    </string-array>
+
+    <!--Pub Activity-->
+    <string name="live_count">Live count</string>
+
+    <!--App Common-->
+    <string name="facebook">Facebook</string>
+    <string name="apply">Apply</string>
+
+    <string name="placeholder">dummy</string>
+    <string name="placeholder_number">23</string>
 </resources>

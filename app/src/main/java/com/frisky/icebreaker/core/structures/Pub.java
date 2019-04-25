@@ -3,50 +3,56 @@ package com.frisky.icebreaker.core.structures;
 import java.util.List;
 
 public class Pub {
-    private String mName;
-    private String mDesc;
-    private List<String> mTags;
-    private double mRating;
+  private String mName;
+  private String mDesc;
+  private String mLocation;
+  private List<String> mTags;
+  private double mRating;
 
-    public Pub() {
-    }
+  public Pub() {
+  }
 
-    public Pub(String name, String desc, List<String> tags, double rating) {
-        this.mName = name;
-        this.mDesc = desc;
-        this.mTags = tags;
-        this.mRating = rating;
-    }
+  public Pub(String name, String desc, String location, List<String> tags, double rating) {
+    this.mName = name;
+    this.mDesc = desc;
+    this.mLocation = location;
+    this.mTags = tags;
+    this.mRating = rating;
+  }
 
-    public String getName() {
-        return mName;
-    }
+  public String getLocation() { return mLocation; }
 
-    public void setName(String mName) {
-        this.mName = mName;
-    }
+  public void setLocation(String mLocation) { this.mLocation = mLocation; }
 
-    public String getDesc() {
-        return mDesc;
-    }
+  public String getName() {
+    return mName;
+  }
 
-    public void setDesc(String mDesc) {
-        this.mDesc = mDesc;
-    }
+  public void setName(String mName) {
+    this.mName = mName;
+  }
 
-    public List<String> getTags() {
-        return mTags;
-    }
+  public String getDesc() {
+    return mDesc;
+  }
 
-    public void setTags(List<String> mTags) {
-        this.mTags = mTags;
-    }
+  public void setDesc(String mDesc) {
+    this.mDesc = mDesc;
+  }
 
-    public double getRating() {
-        return mRating;
-    }
+  public List<String> getTags() {
+    return mTags;
+  }
 
-    public void setRating(float mRating) {
-        this.mRating = mRating;
-    }
+  public void setTags(List<String> mTags) {
+    this.mTags = mTags;
+  }
+
+  public double getRating() {
+    return mRating;
+  }
+
+  public void setRating(float mRating) {
+    this.mRating = mRating;
+  }
 }

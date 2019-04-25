@@ -10,5 +10,5 @@
         android:layout_height="match_parent"
         android:contentDescription="@string/photo"
         android:scaleType="centerCrop"
-        app:srcCompat="@drawable/sample_user" />
+        app:srcCompat="@drawable/placeholder" />
 </LinearLayout>
