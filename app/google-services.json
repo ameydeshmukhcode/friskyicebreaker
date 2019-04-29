@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1089331425628",
+    "firebase_url": "https://friskyicebreaker-rld.firebaseio.com",
+    "project_id": "friskyicebreaker-rld",
+    "storage_bucket": "friskyicebreaker-rld.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1089331425628:android:7f0d5839cea17bd2",
+        "android_client_info": {
+          "package_name": "com.frisky.icebreaker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1089331425628-dqt9fet1u566u565b9jo5vgndd5abtku.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBrNTq0QGBSN7RJlQRnU2qXBJ1w8Bf6HM8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1089331425628-dqt9fet1u566u565b9jo5vgndd5abtku.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
