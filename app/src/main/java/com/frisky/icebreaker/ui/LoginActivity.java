@@ -43,7 +43,7 @@ public class LoginActivity extends AppCompatActivity implements FormActivity {
         mLoginButton = findViewById(R.id.button_login);
         mSignUpLink = findViewById(R.id.link_sign_up);
 
-        mEmailInput = findViewById(R.id.input_username);
+        mEmailInput = findViewById(R.id.input_email);
         mPasswordInput = findViewById(R.id.input_password);
 
         mLoginButton.setOnClickListener(new View.OnClickListener() {

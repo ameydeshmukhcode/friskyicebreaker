@@ -1,7 +1,6 @@
 package com.frisky.icebreaker.ui;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -24,7 +23,7 @@ import com.google.firebase.auth.UserProfileChangeRequest;
 public class SignUpActivity extends AppCompatActivity implements FormActivity {
 
     Button mSignUpButton;
-    EditText mUsernameInput;
+    EditText mEmailInput;
     EditText mPasswordInput;
     EditText mNameInput;
     EditText mConfirmPasswordInput;
@@ -44,7 +43,7 @@ public class SignUpActivity extends AppCompatActivity implements FormActivity {
     private void initUI() {
         mSignUpButton = findViewById(R.id.button_sign_up);
 
-        mUsernameInput = findViewById(R.id.input_username);
+        mEmailInput = findViewById(R.id.input_email);
         mPasswordInput = findViewById(R.id.input_password);
         mNameInput = findViewById(R.id.input_name);
         mConfirmPasswordInput = findViewById(R.id.input_confirm_password);
@@ -54,7 +53,7 @@ public class SignUpActivity extends AppCompatActivity implements FormActivity {
             @Override
             public void onClick(View v) {
                 //TODO handle SignUp operation here
-                handleSignUp(mUsernameInput.getText().toString(), mPasswordInput.getText().toString());
+                handleSignUp(mEmailInput.getText().toString(), mPasswordInput.getText().toString());
             }
         });
     }
@@ -97,7 +96,7 @@ public class SignUpActivity extends AppCompatActivity implements FormActivity {
 
     @Override
     public boolean validateForm() {
-        String email = mUsernameInput.getText().toString();
+        String email = mEmailInput.getText().toString();
         String password = mPasswordInput.getText().toString();
         String name = mNameInput.getText().toString();
         String confirmPassword = mConfirmPasswordInput.getText().toString();
