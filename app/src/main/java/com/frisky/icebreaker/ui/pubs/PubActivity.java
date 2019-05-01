@@ -5,6 +5,7 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 
@@ -18,6 +19,7 @@ public class PubActivity extends AppCompatActivity {
     TextView mRatingText;
     TextView mLocationText;
     AppBarLayout mAppBarLayout;
+    Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +35,15 @@ public class PubActivity extends AppCompatActivity {
         mRatingText = findViewById(R.id.text_rating);
         mLocationText = findViewById(R.id.text_location);
         mAppBarLayout = findViewById(R.id.app_bar);
+        mToolbar = findViewById(R.id.toolbar);
+
+        mToolbar.setNavigationIcon(R.drawable.round_arrow_back_24);
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
         if (getIntent().hasExtra("name")){
             mPubNameText.setText(getIntent().getStringExtra("name"));
