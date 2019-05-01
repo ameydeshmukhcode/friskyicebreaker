@@ -40,7 +40,7 @@
         app:layout_constraintTop_toBottomOf="@+id/app_name" />
 
     <EditText
-        android:id="@+id/input_username"
+        android:id="@+id/input_email"
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_marginTop="15dp"
@@ -75,9 +75,9 @@
         android:paddingBottom="12dp"
         android:textColor="@color/textDark"
         android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="@+id/input_username"
-        app:layout_constraintStart_toStartOf="@+id/input_username"
-        app:layout_constraintTop_toBottomOf="@+id/input_username" />
+        app:layout_constraintEnd_toEndOf="@+id/input_email"
+        app:layout_constraintStart_toStartOf="@+id/input_email"
+        app:layout_constraintTop_toBottomOf="@+id/input_email" />
 
     <EditText
         android:id="@+id/input_confirm_password"
