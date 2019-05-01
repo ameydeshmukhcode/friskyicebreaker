@@ -78,7 +78,8 @@
         app:tabBackground="@drawable/tab_selector"
         app:tabGravity="fill"
         app:tabIndicatorHeight="0dp"
-        app:tabMode="fixed" />
+        app:tabMode="fixed"
+        app:tabRippleColor="@color/transparent" />
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/layout_bio"
@@ -106,7 +107,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:fontFamily="@font/museosans300"
-            android:text="Some long text which no one cares about."
+            android:text="@string/sample_bio"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/about_me" />

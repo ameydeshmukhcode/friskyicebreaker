@@ -53,6 +53,10 @@
     <!--Pub Activity-->
     <string name="live_count">Live count</string>
 
+    <!--Chat Activity-->
+    <string name="type_mess">Type a message &#8230;</string>
+    <string name="send_message">Send</string>
+
     <!--App Common-->
     <string name="facebook">Facebook</string>
     <string name="apply">Apply</string>
