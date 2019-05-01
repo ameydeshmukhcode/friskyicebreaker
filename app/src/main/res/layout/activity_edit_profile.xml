@@ -49,7 +49,7 @@
             android:gravity="start|top"
             android:inputType="textMultiLine"
             android:padding="10dp"
-            android:text="@string/sample_bio"
+            android:hint="@string/sample_bio"
             android:textColor="@color/textDark"
             android:textIsSelectable="true"
             android:textSize="15sp"
