@@ -52,7 +52,6 @@
             android:background="@drawable/background_secondary_extra"
             android:src="@drawable/round_adjust"
             android:tint="@color/tintDark"
-            android:tooltipText="@string/filters"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintEnd_toEndOf="parent"
