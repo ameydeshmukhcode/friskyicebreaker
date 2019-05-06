@@ -14,7 +14,7 @@ public class UsersListFragment extends UserInfoFragment {
 
     @Override
     public View setViewLayout(View view, LayoutInflater inflater) {
-        view =  inflater.inflate(R.layout.fragment_icebreaker_list, null);
+        view =  inflater.inflate(R.layout.fragment_list_view, null);
         return view;
     }
 

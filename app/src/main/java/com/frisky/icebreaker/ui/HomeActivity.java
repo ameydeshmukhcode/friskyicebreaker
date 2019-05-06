@@ -14,8 +14,8 @@ import android.widget.TextView;
 import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.ui.profile.ProfileActivity;
 import com.frisky.icebreaker.ui.pubs.PubViewFragment;
+import com.frisky.icebreaker.ui.social.IceBreakerFragment;
 import com.frisky.icebreaker.ui.social.SocialFragment;
-import com.frisky.icebreaker.ui.social.UsersListFragment;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -85,7 +85,7 @@ public class HomeActivity extends AppCompatActivity {
         mIceBreakerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadFragment(new UsersListFragment());
+                loadFragment(new IceBreakerFragment());
             }
         });
     }
