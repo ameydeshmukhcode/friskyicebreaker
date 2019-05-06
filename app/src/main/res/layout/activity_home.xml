@@ -15,7 +15,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
+    <FrameLayout
         android:id="@+id/home_activity_fragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -25,7 +25,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/home_activity_toolbar">
 
-    </LinearLayout>
+    </FrameLayout>
 
     <include
         android:id="@+id/home_activity_bottom_nav"
@@ -42,6 +42,7 @@
         android:layout_height="65dp"
         android:background="@color/transparent"
         android:elevation="15dp"
+        android:padding="5dp"
         android:scaleType="fitCenter"
         android:src="@drawable/icebreaker"
         app:layout_constraintBottom_toBottomOf="parent"
