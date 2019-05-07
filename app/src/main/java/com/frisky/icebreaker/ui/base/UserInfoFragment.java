@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -37,7 +36,7 @@ public abstract class UserInfoFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = null;
         view = setViewLayout(view, inflater);
-        mRecyclerUsersView = view.findViewById(R.id.recycler_list_view);
+        mRecyclerUsersView = view.findViewById(R.id.recycler_view);
 
         // use a linear layout manager
         mUsersViewLayoutManager = new LinearLayoutManager(getContext());

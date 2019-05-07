@@ -22,7 +22,7 @@ public class PubViewFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view;
-        view = inflater.inflate(R.layout.fragment_pub_view, null);
+        view = inflater.inflate(R.layout.fragment_pubs, null);
 
         mFiltersButton = view.findViewById(R.id.button_filters);
         mFiltersButton.setOnClickListener(new View.OnClickListener() {

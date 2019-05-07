@@ -17,7 +17,7 @@ public class IceBreakerFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view;
-        view = inflater.inflate(R.layout.fragment_icebreaker_list, null);
+        view = inflater.inflate(R.layout.fragment_icebreaker, null);
 
         Fragment usersListFragment = new UsersListFragment();
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();

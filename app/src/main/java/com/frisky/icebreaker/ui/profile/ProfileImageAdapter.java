@@ -43,7 +43,7 @@ public class ProfileImageAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        View itemView = mLayoutInflater.inflate(R.layout.image_pager_item, container, false);
+        View itemView = mLayoutInflater.inflate(R.layout.pager_images, container, false);
 
         ImageView imageView = itemView.findViewById(R.id.imageView);
         Bitmap bm = BitmapFactory.decodeResource(mContext.getResources(), mImageList[position]);

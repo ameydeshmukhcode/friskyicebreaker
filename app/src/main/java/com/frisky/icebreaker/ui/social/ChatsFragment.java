@@ -14,7 +14,7 @@ public class ChatsFragment extends UserInfoFragment {
 
     @Override
     public View setViewLayout(View view, LayoutInflater inflater) {
-        view =  inflater.inflate(R.layout.fragment_list_view, null);
+        view =  inflater.inflate(R.layout.fragment_recycler_view, null);
         return view;       }
 
     @Override
