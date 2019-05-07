@@ -1,5 +1,6 @@
 package com.frisky.icebreaker.ui.pubs;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,13 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
-import com.frisky.icebreaker.ui.components.bottomsheet.filters.BottomSheetFragment;
 import com.frisky.icebreaker.R;
+import com.frisky.icebreaker.ui.components.dialogs.FiltersDialog;
 
 public class PubViewFragment extends Fragment {
 
-    private ImageButton mFiltersButton;
-
+    ImageButton mFiltersButton;
 
     @Nullable
     @Override
@@ -28,7 +28,7 @@ public class PubViewFragment extends Fragment {
         mFiltersButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showBottomSheetDialogFragment();
+                launchFiltersDialog(getContext());
             }
         });
 
@@ -39,8 +39,8 @@ public class PubViewFragment extends Fragment {
         return view;
     }
 
-    public void showBottomSheetDialogFragment() {
-        BottomSheetFragment bottomSheetFragment = new BottomSheetFragment();
-        bottomSheetFragment.show(getFragmentManager(), bottomSheetFragment.getTag());
+    private void launchFiltersDialog (Context context) {
+        FiltersDialog filtersDialog = new FiltersDialog(context);
+        filtersDialog.show();
     }
 }
