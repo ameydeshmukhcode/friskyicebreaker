@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "1089331425628-t32kl1gv3a45vfn7462dr4a1t379babv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.frisky.icebreaker",
+            "certificate_hash": "3e83974aace6aa8180a49465f1dab6237f647341"
+          }
+        },
+        {
           "client_id": "1089331425628-dqt9fet1u566u565b9jo5vgndd5abtku.apps.googleusercontent.com",
           "client_type": 3
         }
