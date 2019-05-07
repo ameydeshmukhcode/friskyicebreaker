@@ -13,7 +13,7 @@
         android:layout_height="@dimen/app_bar_height"
         android:background="@color/colorPrimary"
         android:fitsSystemWindows="true"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:theme="@style/FriskyAppBarOverlay">
 
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/toolbar_layout"
@@ -31,7 +31,7 @@
                 android:minHeight="50dp"
                 app:layout_collapseMode="pin"
                 app:navigationIcon="@drawable/round_arrow_back_24"
-                app:popupTheme="@style/AppTheme.PopupOverlay" />
+                app:popupTheme="@style/FriskyPopUpOverlay" />
 
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
