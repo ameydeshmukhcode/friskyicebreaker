@@ -38,14 +38,14 @@ public class ProfileImageAdapter extends PagerAdapter {
 
     @Override
     public boolean isViewFromObject(View view, Object object) {
-        return view == ((LinearLayout) object);
+        return view == object;
     }
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        View itemView = mLayoutInflater.inflate(R.layout.pager_images, container, false);
+        View itemView = mLayoutInflater.inflate(R.layout.view_image, container, false);
 
-        ImageView imageView = itemView.findViewById(R.id.imageView);
+        ImageView imageView = itemView.findViewById(R.id.image);
         Bitmap bm = BitmapFactory.decodeResource(mContext.getResources(), mImageList[position]);
         imageView.setImageBitmap(UIAssistant.getInstance().getProfileBitmap(bm));
 
@@ -56,6 +56,6 @@ public class ProfileImageAdapter extends PagerAdapter {
 
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
-        container.removeView((LinearLayout) object);
+        container.removeView((ImageView) object);
     }
 }
