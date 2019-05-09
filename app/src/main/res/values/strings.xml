@@ -62,6 +62,9 @@
     <string name="type_mess">Type a message&#8230;</string>
     <string name="send_message">Send</string>
 
+    <!--Settings Activity-->
+    <string name="settings">Settings</string>
+
     <!--App Common-->
     <string name="facebook">Facebook</string>
     <string name="apply">Apply</string>
