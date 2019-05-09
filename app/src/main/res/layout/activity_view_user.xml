@@ -6,16 +6,28 @@
     android:layout_height="match_parent"
     tools:context=".ui.profile.ViewUserActivity">
 
+    <ImageButton
+        android:id="@+id/button_back"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@color/transparent"
+        android:foreground="?attr/selectableItemBackground"
+        android:tint="@color/tintDark"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/round_arrow_back_24" />
+
     <android.support.v4.view.ViewPager
         android:id="@+id/pager_profile_images"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_margin="15dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
         android:visibility="visible"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/button_back">
 
     </android.support.v4.view.ViewPager>
 

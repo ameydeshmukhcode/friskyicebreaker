@@ -15,6 +15,7 @@ public class ProfileActivity extends AppCompatActivity {
     ImageButton mEditButton;
     ViewPager mProfileImagePager;
     ProfileImageAdapter mProfileImageAdapter;
+    ImageButton mBackButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +29,14 @@ public class ProfileActivity extends AppCompatActivity {
                 //TODO Start edit profile activity here
                 Intent editProfile = new Intent(getApplicationContext(), EditProfileActivity.class);
                 startActivity(editProfile);
+            }
+        });
+
+        mBackButton = findViewById(R.id.button_back);
+        mBackButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ProfileActivity.super.onBackPressed();
             }
         });
 
