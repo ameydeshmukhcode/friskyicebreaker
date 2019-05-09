@@ -16,16 +16,27 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <FrameLayout
+        android:id="@+id/frame_image_grid"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_profile_activity_toolbar">
+
+    </FrameLayout>
+
     <android.support.constraint.ConstraintLayout
         android:id="@+id/layout_bio"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="15dp"
-        android:layout_marginTop="32dp"
+        android:layout_margin="16dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.466"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_profile_activity_toolbar">
+        app:layout_constraintTop_toBottomOf="@+id/frame_image_grid">
 
         <TextView
             android:id="@+id/about_me"
@@ -47,9 +58,9 @@
             android:ems="10"
             android:fontFamily="@font/museosans300"
             android:gravity="start|top"
+            android:hint="@string/sample_bio"
             android:inputType="textMultiLine"
             android:padding="10dp"
-            android:hint="@string/sample_bio"
             android:textColor="@color/textDark"
             android:textIsSelectable="true"
             android:textSize="15sp"

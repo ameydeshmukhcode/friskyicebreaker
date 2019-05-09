@@ -13,9 +13,9 @@ import com.frisky.icebreaker.R;
 
 public class EditProfileActivity extends AppCompatActivity {
 
-    private TextView mToolbarText;
-    private ImageButton mBackButton;
-    private ImageButton mDoneButton;
+    TextView mToolbarText;
+    ImageButton mBackButton;
+    ImageButton mDoneButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +40,11 @@ public class EditProfileActivity extends AppCompatActivity {
                 EditProfileActivity.super.onBackPressed();
             }
         });
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.frame_image_grid, new EditImagesFragment())
+                .commit();
 
         mDoneButton = findViewById(R.id.button_toolbar_right);
         mDoneButton.setImageResource(R.drawable.round_done_24);
