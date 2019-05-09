@@ -54,7 +54,7 @@ public class HomeActivity extends AppCompatActivity {
         });
 
         mScanQRCodeButton = findViewById(R.id.button_toolbar_left);
-        mScanQRCodeButton.setImageResource(R.drawable.round_camera_24);
+        mScanQRCodeButton.setImageResource(R.drawable.round_qr_code);
 
         mBottomNavHomeButton = findViewById(R.id.button_nav_left);
         mBottomNavHomeButton.setImageResource(R.drawable.round_home_24);
