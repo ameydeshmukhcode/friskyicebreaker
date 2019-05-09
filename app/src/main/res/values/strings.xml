@@ -21,7 +21,7 @@
 
     <!--Home Page-->
     <!--Pub View-->
-    <string name="search_pubs">Search pubs..</string>
+    <string name="search_pubs">Search pubs&#8230;</string>
     <string name="filters">Filters</string>
     <!-- Pub Filters -->
     <string name="sort_by">Sort by</string>
@@ -59,7 +59,7 @@
     <string name="live_count">Live count</string>
 
     <!--Chat Activity-->
-    <string name="type_mess">Type a message &#8230;</string>
+    <string name="type_mess">Type a message&#8230;</string>
     <string name="send_message">Send</string>
 
     <!--App Common-->
