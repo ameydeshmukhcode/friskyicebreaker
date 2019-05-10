@@ -8,30 +8,30 @@
     tools:context=".ui.pubs.PubActivity">
 
     <android.support.design.widget.AppBarLayout
-        android:id="@+id/app_bar"
+        android:id="@+id/app_bar_container"
         android:layout_width="match_parent"
         android:layout_height="@dimen/app_bar_height"
         android:background="@color/colorPrimary"
         android:fitsSystemWindows="true"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:theme="@style/FriskyAppBarOverlay">
 
         <android.support.design.widget.CollapsingToolbarLayout
-            android:id="@+id/toolbar_layout"
+            android:id="@+id/app_bar_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
             app:contentScrim="?attr/colorPrimary"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            app:toolbarId="@+id/toolbar">
+            app:toolbarId="@+id/app_bar_pub">
 
             <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
+                android:id="@+id/app_bar_pub"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:minHeight="50dp"
                 app:layout_collapseMode="pin"
                 app:navigationIcon="@drawable/round_arrow_back_24"
-                app:popupTheme="@style/AppTheme.PopupOverlay" />
+                app:popupTheme="@style/FriskyPopUpOverlay" />
 
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>

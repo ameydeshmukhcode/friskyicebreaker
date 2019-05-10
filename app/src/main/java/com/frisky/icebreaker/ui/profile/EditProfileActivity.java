@@ -13,9 +13,9 @@ import com.frisky.icebreaker.R;
 
 public class EditProfileActivity extends AppCompatActivity {
 
-    private TextView mToolbarText;
-    private ImageButton mBackButton;
-    private ImageButton mDoneButton;
+    TextView mToolbarText;
+    ImageButton mBackButton;
+    ImageButton mDoneButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,13 +26,13 @@ public class EditProfileActivity extends AppCompatActivity {
     }
 
     private void initUI() {
-        mToolbarText = findViewById(R.id.toolbar_text);
+        mToolbarText = findViewById(R.id.text_app_bar);
         mToolbarText.setText(R.string.edit_profile);
         mToolbarText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
         Typeface typeface = ResourcesCompat.getFont(getApplicationContext(), R.font.museosans700);
         mToolbarText.setTypeface(typeface);
 
-        mBackButton = findViewById(R.id.button_toolbar_left);
+        mBackButton = findViewById(R.id.button_app_bar_left);
         mBackButton.setImageResource(R.drawable.round_arrow_back_24);
         mBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,7 +41,12 @@ public class EditProfileActivity extends AppCompatActivity {
             }
         });
 
-        mDoneButton = findViewById(R.id.button_toolbar_right);
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.frame_image_grid, new EditImagesFragment())
+                .commit();
+
+        mDoneButton = findViewById(R.id.button_app_bar_right);
         mDoneButton.setImageResource(R.drawable.round_done_24);
     }
 }

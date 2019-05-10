@@ -21,8 +21,13 @@
 
     <!--Home Page-->
     <!--Pub View-->
-    <string name="search_pubs">Search pubs..</string>
+    <string name="search_pubs">Search pubs&#8230;</string>
     <string name="filters">Filters</string>
+    <!-- Pub Filters -->
+    <string name="sort_by">Sort by</string>
+    <string name="type">Type</string>
+    <string name="city">City</string>
+    <string name="features">Features</string>
     <!--Social-->
     <string name="chats">Chats</string>
     <string name="pending">Pending</string>
@@ -54,12 +59,16 @@
     <string name="live_count">Live count</string>
 
     <!--Chat Activity-->
-    <string name="type_mess">Type a message &#8230;</string>
+    <string name="type_mess">Type a message&#8230;</string>
     <string name="send_message">Send</string>
+
+    <!--Settings Activity-->
+    <string name="settings">Settings</string>
 
     <!--App Common-->
     <string name="facebook">Facebook</string>
     <string name="apply">Apply</string>
+    <string name="cancel">Cancel</string>
 
     <string name="placeholder">dummy</string>
     <string name="placeholder_number">23</string>

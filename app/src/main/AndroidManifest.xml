@@ -7,11 +7,8 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".ui.social.ChatActivity"></activity>
-        <activity android:name=".ui.profile.ViewUserActivity" />
-        <activity android:name=".ui.profile.ProfileActivity" />
+        android:theme="@style/FriskyAppTheme">
+        <activity android:name=".ui.SettingsActivity"></activity>
         <activity android:name=".ui.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,6 +16,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.SignUpActivity" />
         <activity
             android:name=".ui.HomeActivity"
             android:windowSoftInputMode="adjustPan">
@@ -26,15 +24,13 @@
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.pubs.PubActivity" />
+        <activity android:name=".ui.profile.ProfileActivity" />
         <activity
             android:name=".ui.profile.EditProfileActivity"
-            android:parentActivityName=".ui.HomeActivity"
-            android:theme="@style/CancelAsUpActionTheme"
             android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name=".ui.pubs.PubActivity"
-            android:theme="@style/AppTheme" />
-        <activity android:name=".ui.SignUpActivity" />
+        <activity android:name=".ui.profile.ViewUserActivity" />
+        <activity android:name=".ui.social.ChatActivity" />
     </application>
 
 </manifest>

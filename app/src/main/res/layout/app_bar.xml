@@ -2,25 +2,25 @@
 
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/toolbar_base"
+    android:id="@+id/app_bar_base"
     android:layout_width="match_parent"
     android:layout_height="50dp"
     android:background="@color/colorPrimary"
-    android:elevation="10dp"
+    android:elevation="@dimen/app_bar_elevation"
     android:theme="@style/Base.ThemeOverlay.AppCompat.Dark.ActionBar">
 
     <TextView
-        android:id="@+id/toolbar_text"
+        android:id="@+id/text_app_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/textLight"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/button_toolbar_right"
-        app:layout_constraintStart_toEndOf="@+id/button_toolbar_left"
+        app:layout_constraintEnd_toStartOf="@+id/button_app_bar_right"
+        app:layout_constraintStart_toEndOf="@+id/button_app_bar_left"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
-        android:id="@+id/button_toolbar_left"
+        android:id="@+id/button_app_bar_left"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@color/transparent"
@@ -32,7 +32,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
-        android:id="@+id/button_toolbar_right"
+        android:id="@+id/button_app_bar_right"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@color/transparent"

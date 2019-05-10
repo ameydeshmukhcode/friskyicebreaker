@@ -23,8 +23,8 @@ public class HomeActivity extends AppCompatActivity {
     private ImageButton mScanQRCodeButton;
     private ImageButton mBottomNavHomeButton;
     private ImageButton mBottomNavProfileButton;
-    private ImageButton m2ND;
-    private ImageButton m4TH;
+    private ImageButton mBottomNavOrderButton;
+    private ImageButton mBottomNavNotificationButton;
     private ImageButton mIceBreakerButton;
     private TextView mToolbarText;
 
@@ -38,13 +38,13 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void initUI() {
-        mToolbarText = findViewById(R.id.toolbar_text);
+        mToolbarText = findViewById(R.id.text_app_bar);
         mToolbarText.setText(R.string.app_name);
         mToolbarText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 35);
         Typeface typeface = ResourcesCompat.getFont(getApplicationContext(), R.font.ktfroadstar);
         mToolbarText.setTypeface(typeface);
 
-        mSocialButton = findViewById(R.id.button_toolbar_right);
+        mSocialButton = findViewById(R.id.button_app_bar_right);
         mSocialButton.setImageResource(R.drawable.round_chat_24);
         mSocialButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,8 +53,8 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        mScanQRCodeButton = findViewById(R.id.button_toolbar_left);
-        mScanQRCodeButton.setImageResource(R.drawable.round_camera_24);
+        mScanQRCodeButton = findViewById(R.id.button_app_bar_left);
+        mScanQRCodeButton.setImageResource(R.drawable.round_qr_code);
 
         mBottomNavHomeButton = findViewById(R.id.button_nav_left);
         mBottomNavHomeButton.setImageResource(R.drawable.round_home_24);
@@ -65,11 +65,11 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        m2ND = findViewById(R.id.button_nav_centre_left);
-        m2ND.setImageResource(R.drawable.placeholder_24);
+        mBottomNavOrderButton = findViewById(R.id.button_nav_centre_left);
+        mBottomNavOrderButton.setImageResource(R.drawable.round_receipt_24);
 
-        m4TH = findViewById(R.id.button_nav_centre_right);
-        m4TH.setImageResource(R.drawable.placeholder_24);
+        mBottomNavNotificationButton = findViewById(R.id.button_nav_centre_right);
+        mBottomNavNotificationButton.setImageResource(R.drawable.round_notifications_none_24);
 
         mBottomNavProfileButton = findViewById(R.id.button_nav_right);
         mBottomNavProfileButton.setImageResource(R.drawable.round_person_24);

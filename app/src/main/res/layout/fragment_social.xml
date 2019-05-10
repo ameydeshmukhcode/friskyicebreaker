@@ -25,17 +25,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:tabIndicator="@drawable/background_tab_selected"
-            app:tabIndicatorColor="@color/backgroundLight"
-            app:tabIndicatorFullWidth="true"
-            app:tabIndicatorGravity="center"
             app:tabIndicatorHeight="35dp"
-            app:tabMaxWidth="250dp"
-            app:tabMode="fixed"
-            app:tabRippleColor="@color/transparent"
-            app:tabSelectedTextColor="@color/textDark"
-            app:tabTextAppearance="@style/TabTextAppearance"
-            app:tabTextColor="@color/textDark" />
+            style="@style/FriskyTabAppearance"/>
     </android.support.constraint.ConstraintLayout>
 
     <android.support.v4.view.ViewPager

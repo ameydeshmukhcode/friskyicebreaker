@@ -9,12 +9,15 @@ import android.view.View;
 import android.widget.ImageButton;
 
 import com.frisky.icebreaker.R;
+import com.frisky.icebreaker.ui.SettingsActivity;
 
 public class ProfileActivity extends AppCompatActivity {
 
     ImageButton mEditButton;
     ViewPager mProfileImagePager;
     ProfileImageAdapter mProfileImageAdapter;
+    ImageButton mBackButton;
+    ImageButton mSettingsButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +33,23 @@ public class ProfileActivity extends AppCompatActivity {
                 startActivity(editProfile);
             }
         });
+
+        mBackButton = findViewById(R.id.button_back);
+        mBackButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ProfileActivity.super.onBackPressed();
+            }
+        });
+
+        mSettingsButton = findViewById(R.id.button_settings);
+        mSettingsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent editProfile = new Intent(getApplicationContext(), SettingsActivity.class);
+                startActivity(editProfile);            }
+        });
+
 
         mProfileImageAdapter = new ProfileImageAdapter(getApplicationContext());
 

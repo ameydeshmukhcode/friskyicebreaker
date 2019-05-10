@@ -7,8 +7,8 @@
     tools:context=".ui.HomeActivity">
 
     <include
-        android:id="@+id/home_activity_toolbar"
-        layout="@layout/toolbar"
+        android:id="@+id/app_bar_home"
+        layout="@layout/app_bar"
         android:layout_width="0dp"
         android:layout_height="50dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -20,15 +20,15 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/home_activity_bottom_nav"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_nav_home"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/home_activity_toolbar">
+        app:layout_constraintTop_toBottomOf="@id/app_bar_home">
 
     </FrameLayout>
 
     <include
-        android:id="@+id/home_activity_bottom_nav"
+        android:id="@+id/bottom_nav_home"
         layout="@layout/bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="50dp"

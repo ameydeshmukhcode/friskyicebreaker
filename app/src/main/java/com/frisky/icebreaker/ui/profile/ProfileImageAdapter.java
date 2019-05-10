@@ -8,23 +8,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.ui.assistant.UIAssistant;
+import com.frisky.icebreaker.core.store.*;
 
 public class ProfileImageAdapter extends PagerAdapter {
 
     Context mContext;
     LayoutInflater mLayoutInflater;
-
-    int[] mImageList = {
-            R.drawable.logo_facebook,
-            R.drawable.placeholder,
-            R.drawable.logo_facebook,
-            R.drawable.placeholder,
-            R.drawable.logo_facebook
-    };
 
     public ProfileImageAdapter(Context context) {
         mContext = context;
@@ -33,20 +25,20 @@ public class ProfileImageAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return mImageList.length;
+        return UserDataStore.getInstance().getImageList().length;
     }
 
     @Override
     public boolean isViewFromObject(View view, Object object) {
-        return view == ((LinearLayout) object);
+        return view == object;
     }
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        View itemView = mLayoutInflater.inflate(R.layout.image_pager_item, container, false);
+        View itemView = mLayoutInflater.inflate(R.layout.view_image, container, false);
 
-        ImageView imageView = itemView.findViewById(R.id.imageView);
-        Bitmap bm = BitmapFactory.decodeResource(mContext.getResources(), mImageList[position]);
+        ImageView imageView = itemView.findViewById(R.id.image_placeholder);
+        Bitmap bm = BitmapFactory.decodeResource(mContext.getResources(),  UserDataStore.getInstance().getImageList()[position]);
         imageView.setImageBitmap(UIAssistant.getInstance().getProfileBitmap(bm));
 
         container.addView(itemView);
@@ -56,6 +48,6 @@ public class ProfileImageAdapter extends PagerAdapter {
 
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
-        container.removeView((LinearLayout) object);
+        container.removeView((ImageView) object);
     }
 }

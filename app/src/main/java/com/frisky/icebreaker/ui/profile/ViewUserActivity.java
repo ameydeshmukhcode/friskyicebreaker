@@ -1,6 +1,5 @@
 package com.frisky.icebreaker.ui.profile;
 
-import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
@@ -18,7 +17,7 @@ public class ViewUserActivity extends AppCompatActivity {
     ViewPager mProfileImagePager;
     ProfileImageAdapter mProfileImageAdapter;
     TextView mUserNameText;
-
+    ImageButton mBackButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +32,14 @@ public class ViewUserActivity extends AppCompatActivity {
             String name = getIntent().getStringExtra("name");
             mUserNameText.setText(name);
         }
+
+        mBackButton = findViewById(R.id.button_back);
+        mBackButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ViewUserActivity.super.onBackPressed();
+            }
+        });
 
         mProfileImagePager = findViewById(R.id.pager_profile_images);
         mProfileImagePager.setAdapter(mProfileImageAdapter);

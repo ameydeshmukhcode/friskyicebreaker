@@ -9,7 +9,6 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import com.frisky.icebreaker.R;
 
@@ -19,7 +18,7 @@ public class SocialFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view;
-        view = inflater.inflate(R.layout.fragment_social_view, null);
+        view = inflater.inflate(R.layout.fragment_social, null);
 
         final ViewPager viewPager = view.findViewById(R.id.pager_social);
         SocialPagerAdapter myPagerAdapter = new SocialPagerAdapter(getFragmentManager());

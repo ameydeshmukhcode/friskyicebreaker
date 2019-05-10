@@ -29,9 +29,9 @@ public class PubListFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view;
-        view = inflater.inflate(R.layout.fragment_list_view, null);
+        view = inflater.inflate(R.layout.fragment_recycler_view, null);
 
-        mRecyclerPubView = view.findViewById(R.id.recycler_list_view);
+        mRecyclerPubView = view.findViewById(R.id.recycler_view);
 
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
