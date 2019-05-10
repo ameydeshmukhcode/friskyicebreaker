@@ -10,7 +10,6 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.frisky.icebreaker.R;
-import com.frisky.icebreaker.ui.profile.EditProfileActivity;
 
 public class ChatActivity extends AppCompatActivity {
 
@@ -27,7 +26,7 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     private void initUI() {
-        mToolbarText = findViewById(R.id.toolbar_text);
+        mToolbarText = findViewById(R.id.text_app_bar);
         if (getIntent().hasExtra("name")){
             String name = getIntent().getStringExtra("name");
             mToolbarText.setText(name);
@@ -36,7 +35,7 @@ public class ChatActivity extends AppCompatActivity {
         Typeface typeface = ResourcesCompat.getFont(getApplicationContext(), R.font.museosans700);
         mToolbarText.setTypeface(typeface);
 
-        mBackButton = findViewById(R.id.button_toolbar_left);
+        mBackButton = findViewById(R.id.button_app_bar_left);
         mBackButton.setImageResource(R.drawable.round_arrow_back_24);
         mBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,7 +44,7 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
-        mMenuButton = findViewById(R.id.button_toolbar_right);
+        mMenuButton = findViewById(R.id.button_app_bar_right);
         mMenuButton.setImageResource(R.drawable.round_more_vert_24);
     }
 }

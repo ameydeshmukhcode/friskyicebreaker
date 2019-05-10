@@ -34,8 +34,8 @@ public class PubActivity extends AppCompatActivity {
         mTagsText = findViewById(R.id.text_tags);
         mRatingText = findViewById(R.id.text_rating);
         mLocationText = findViewById(R.id.text_location);
-        mAppBarLayout = findViewById(R.id.app_bar);
-        mToolbar = findViewById(R.id.toolbar);
+        mAppBarLayout = findViewById(R.id.app_bar_container);
+        mToolbar = findViewById(R.id.app_bar_pub);
 
         mToolbar.setNavigationIcon(R.drawable.round_arrow_back_24);
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {

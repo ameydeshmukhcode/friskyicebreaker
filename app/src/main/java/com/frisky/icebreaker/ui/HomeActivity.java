@@ -38,13 +38,13 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void initUI() {
-        mToolbarText = findViewById(R.id.toolbar_text);
+        mToolbarText = findViewById(R.id.text_app_bar);
         mToolbarText.setText(R.string.app_name);
         mToolbarText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 35);
         Typeface typeface = ResourcesCompat.getFont(getApplicationContext(), R.font.ktfroadstar);
         mToolbarText.setTypeface(typeface);
 
-        mSocialButton = findViewById(R.id.button_toolbar_right);
+        mSocialButton = findViewById(R.id.button_app_bar_right);
         mSocialButton.setImageResource(R.drawable.round_chat_24);
         mSocialButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,7 +53,7 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        mScanQRCodeButton = findViewById(R.id.button_toolbar_left);
+        mScanQRCodeButton = findViewById(R.id.button_app_bar_left);
         mScanQRCodeButton.setImageResource(R.drawable.round_qr_code);
 
         mBottomNavHomeButton = findViewById(R.id.button_nav_left);
