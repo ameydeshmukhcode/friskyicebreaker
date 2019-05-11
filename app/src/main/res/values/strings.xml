@@ -55,6 +55,9 @@
         <item>@string/other</item>
     </string-array>
 
+    <!--Setup Profile-->
+    <string name="update_image">Click the image above to upload your profile picture</string>
+
     <!--Pub Activity-->
     <string name="live_count">Live count</string>
 
