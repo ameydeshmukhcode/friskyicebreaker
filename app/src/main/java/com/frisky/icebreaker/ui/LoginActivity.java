@@ -89,6 +89,26 @@ public class LoginActivity extends AppCompatActivity implements FormActivity {
         });
     }
 
+    private void handleLogin() {
+        if (validateForm()){
+            mAuth.signInWithEmailAndPassword(mEmailInput.getText().toString(), mPasswordInput.getText().toString())
+                    .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                Intent launchHome = new Intent(getApplicationContext(), HomeActivity.class);
+                                startActivity(launchHome);
+                                finish();
+                            } else {
+                                Log.w("Warning", "signInWithEmail:failure", task.getException());
+                                Toast.makeText(LoginActivity.this, "Authentication failed.",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+        }
+    }
+
     private void googleSignIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
@@ -104,11 +124,12 @@ public class LoginActivity extends AppCompatActivity implements FormActivity {
             try {
                 // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = task.getResult(ApiException.class);
-                firebaseAuthWithGoogle(account);
+                if (account != null) {
+                    firebaseAuthWithGoogle(account);
+                }
             } catch (ApiException e) {
                 // Google Sign In failed, update UI appropriately
                 Log.w("Warning", "Google sign in failed", e);
-                // ...
             }
         }
     }
@@ -130,30 +151,8 @@ public class LoginActivity extends AppCompatActivity implements FormActivity {
                             Toast.makeText(LoginActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                         }
-
-                        // ...
                     }
                 });
-    }
-
-    private void handleLogin() {
-        if (validateForm()){
-            mAuth.signInWithEmailAndPassword(mEmailInput.getText().toString(), mPasswordInput.getText().toString())
-                    .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-                                Intent launchHome = new Intent(getApplicationContext(), HomeActivity.class);
-                                startActivity(launchHome);
-                                finish();
-                            } else {
-                                Log.w("Warning", "signInWithEmail:failure", task.getException());
-                                Toast.makeText(LoginActivity.this, "Authentication failed.",
-                                        Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
-        }
     }
 
     @Override
