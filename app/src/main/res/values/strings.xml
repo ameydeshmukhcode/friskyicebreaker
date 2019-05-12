@@ -69,6 +69,11 @@
     <!--Settings Activity-->
     <string name="settings">Settings</string>
 
+    <!--Image Picker Dialog-->
+    <string name="pick_image">Pick Image</string>
+    <string name="image_gallery">Choose from Gallery</string>
+    <string name="image_camera">Take a new photo</string>
+
     <!--App Common-->
     <string name="facebook">Facebook</string>
     <string name="apply">Apply</string>
