@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.ui.base.FormActivity;
+import com.frisky.icebreaker.ui.profile.SetupProfileActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -24,6 +25,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
 public class LoginActivity extends AppCompatActivity implements FormActivity {
@@ -96,9 +98,16 @@ public class LoginActivity extends AppCompatActivity implements FormActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                Intent launchHome = new Intent(getApplicationContext(), HomeActivity.class);
-                                startActivity(launchHome);
-                                finish();
+                                FirebaseUser user = mAuth.getCurrentUser();
+                                if (user.getDisplayName() != null) {
+                                    Intent launchHome = new Intent(getApplicationContext(), HomeActivity.class);
+                                    startActivity(launchHome);
+                                    finish();
+                                }
+                                else {
+                                    Intent setupProfile = new Intent(getApplicationContext(), SetupProfileActivity.class);
+                                    startActivity(setupProfile);
+                                }
                             } else {
                                 Log.w("Warning", "signInWithEmail:failure", task.getException());
                                 Toast.makeText(LoginActivity.this, "Authentication failed.",
