@@ -12,6 +12,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.frisky.icebreaker.R;
+import com.frisky.icebreaker.ui.orders.MenuActivity;
 import com.frisky.icebreaker.ui.profile.ProfileActivity;
 import com.frisky.icebreaker.ui.pubs.PubViewFragment;
 import com.frisky.icebreaker.ui.social.IceBreakerFragment;
@@ -67,6 +68,12 @@ public class HomeActivity extends AppCompatActivity {
 
         mBottomNavOrderButton = findViewById(R.id.button_nav_centre_left);
         mBottomNavOrderButton.setImageResource(R.drawable.round_receipt_24);
+        mBottomNavOrderButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), MenuActivity.class));
+            }
+        });
 
         mBottomNavNotificationButton = findViewById(R.id.button_nav_centre_right);
         mBottomNavNotificationButton.setImageResource(R.drawable.round_notifications_none_24);
