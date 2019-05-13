@@ -10,7 +10,6 @@
     <color name="navigationBarColor">@color/darkAccent</color>
 
     <!-- Others -->
-
     <color name="backgroundLight">@color/lightAccent</color>
     <color name="backgroundDark">@color/darkAccent</color>
     <color name="textLight">@android:color/white</color>
@@ -20,11 +19,15 @@
     <color name="transparent">@android:color/transparent</color>
 
     <!--Facebook-->
-    <color name="colorFacebook">#3C5A99</color>
+    <color name="colorFacebook">#3b579d</color>
 
     <!--Rating Badges-->
     <color name="rating_very_high">#208927</color>
     <color name="rating_high">#26B030</color>
     <color name="rating_low">#E2D240</color>
     <color name="rating_very_low">#DA2C2C</color>
+
+    <!--Order -->
+    <color name="appGreen">#49D852</color>
+    <color name="appRed">#E71A1A</color>
 </resources>
