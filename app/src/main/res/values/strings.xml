@@ -69,6 +69,15 @@
     <!--Settings Activity-->
     <string name="settings">Settings</string>
 
+    <!--Menu/Order Activity-->
+    <string name="at">You\'re at</string>
+    <string name="your_order">Your Order</string>
+    <string name="order_active">Your order is being processed</string>
+    <string name="your_total">Your total:</string>
+    <string name="clear_bill">Clear Bill</string>
+    <string name="rupee">\u20B9</string>
+    <string name="view">View</string>
+
     <!--Image Picker Dialog-->
     <string name="pick_image">Pick Image</string>
     <string name="image_gallery">Choose from Gallery</string>
