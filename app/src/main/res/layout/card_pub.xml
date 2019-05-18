@@ -76,7 +76,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="5dp"
-            android:background="@drawable/background_rating"
+            android:background="@drawable/background_badge"
             android:fontFamily="@font/museosans900"
             android:gravity="center"
             android:paddingStart="5dp"
