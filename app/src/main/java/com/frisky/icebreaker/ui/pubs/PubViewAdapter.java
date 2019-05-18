@@ -2,6 +2,7 @@ package com.frisky.icebreaker.ui.pubs;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.support.annotation.NonNull;
 import android.support.design.card.MaterialCardView;
 import android.support.v7.widget.RecyclerView;
@@ -70,7 +71,8 @@ public class PubViewAdapter extends RecyclerView.Adapter<PubViewAdapter.PubViewH
         viewHolder.mTags.setText(tagList.substring(0, tagList.length() - 3));
         viewHolder.mRating.setText(Double.toString(pubRating));
 
-        viewHolder.mRating.setBackgroundResource(UIAssistant.getInstance().getRatingBadgeBackground(pubRating));
+        viewHolder.mRating.setBackgroundTintList(ColorStateList.valueOf(mContext.getResources().
+                getColor(UIAssistant.getInstance().getRatingBadgeColor(pubRating))));
 
         viewHolder.mPubCard.setOnClickListener(new View.OnClickListener() {
             @Override

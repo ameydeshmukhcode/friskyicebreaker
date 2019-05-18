@@ -1,5 +1,6 @@
 package com.frisky.icebreaker.ui.pubs;
 
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -61,7 +62,8 @@ public class PubActivity extends AppCompatActivity {
             String pubRatingText = getIntent().getStringExtra("rating");
             Double pubRating = Double.parseDouble(pubRatingText);
             mRatingText.setText(getIntent().getStringExtra("rating"));
-            mRatingText.setBackgroundResource(UIAssistant.getInstance().getRatingBadgeBackground(pubRating));
+            mRatingText.setBackgroundTintList(ColorStateList.valueOf(getApplicationContext().getResources().
+                    getColor(UIAssistant.getInstance().getRatingBadgeColor(pubRating))));
             mAppBarLayout.setBackgroundResource(UIAssistant.getInstance().getRatingBadgeColor(pubRating));
         }
 
