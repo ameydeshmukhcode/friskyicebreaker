@@ -1,4 +1,4 @@
-package com.frisky.icebreaker.ui.profile;
+package com.frisky.icebreaker.profile;
 
 import android.content.Context;
 import android.graphics.Bitmap;

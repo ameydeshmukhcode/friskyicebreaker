@@ -1,4 +1,4 @@
-package com.frisky.icebreaker.ui.profile;
+package com.frisky.icebreaker.profile;
 
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
@@ -11,8 +11,8 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.frisky.icebreaker.R;
-import com.frisky.icebreaker.ui.LoginActivity;
-import com.frisky.icebreaker.ui.SettingsActivity;
+import com.frisky.icebreaker.LoginActivity;
+import com.frisky.icebreaker.SettingsActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 

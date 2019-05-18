@@ -1,7 +1,6 @@
-package com.frisky.icebreaker.ui.profile;
+package com.frisky.icebreaker.profile;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,7 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.frisky.icebreaker.R;
-import com.frisky.icebreaker.ui.HomeActivity;
+import com.frisky.icebreaker.HomeActivity;
 import com.frisky.icebreaker.ui.base.FormActivity;
 import com.frisky.icebreaker.ui.components.dialogs.PickImageDialog;
 import com.google.android.gms.tasks.OnCompleteListener;

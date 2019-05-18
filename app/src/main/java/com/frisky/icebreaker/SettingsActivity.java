@@ -1,4 +1,4 @@
-package com.frisky.icebreaker.ui;
+package com.frisky.icebreaker;
 
 import android.graphics.Typeface;
 import android.support.v4.content.res.ResourcesCompat;
@@ -8,8 +8,6 @@ import android.util.TypedValue;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
-
-import com.frisky.icebreaker.R;
 
 public class SettingsActivity extends AppCompatActivity {
 

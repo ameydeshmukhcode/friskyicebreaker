@@ -1,4 +1,4 @@
-package com.frisky.icebreaker.ui;
+package com.frisky.icebreaker;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -12,9 +12,8 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.ui.base.FormActivity;
-import com.frisky.icebreaker.ui.profile.SetupProfileActivity;
+import com.frisky.icebreaker.profile.SetupProfileActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;

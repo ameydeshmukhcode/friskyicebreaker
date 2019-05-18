@@ -1,4 +1,4 @@
-package com.frisky.icebreaker.ui.social;
+package com.frisky.icebreaker.social;
 
 import android.content.Context;
 import android.content.Intent;
@@ -16,7 +16,7 @@ import android.widget.TextView;
 import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.core.structures.UserInfoMode;
 import com.frisky.icebreaker.ui.assistant.UIAssistant;
-import com.frisky.icebreaker.ui.profile.ViewUserActivity;
+import com.frisky.icebreaker.profile.ViewUserActivity;
 
 import java.util.List;
 

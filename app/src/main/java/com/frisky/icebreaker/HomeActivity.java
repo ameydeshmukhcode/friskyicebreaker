@@ -1,4 +1,4 @@
-package com.frisky.icebreaker.ui;
+package com.frisky.icebreaker;
 
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -11,12 +11,11 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.frisky.icebreaker.R;
-import com.frisky.icebreaker.ui.orders.MenuActivity;
-import com.frisky.icebreaker.ui.profile.ProfileActivity;
-import com.frisky.icebreaker.ui.pubs.PubViewFragment;
-import com.frisky.icebreaker.ui.social.IceBreakerFragment;
-import com.frisky.icebreaker.ui.social.SocialFragment;
+import com.frisky.icebreaker.orders.MenuActivity;
+import com.frisky.icebreaker.profile.ProfileActivity;
+import com.frisky.icebreaker.pubs.PubViewFragment;
+import com.frisky.icebreaker.social.IceBreakerFragment;
+import com.frisky.icebreaker.social.SocialFragment;
 
 public class HomeActivity extends AppCompatActivity {
 

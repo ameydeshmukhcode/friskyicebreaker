@@ -1,4 +1,4 @@
-package com.frisky.icebreaker.ui.profile;
+package com.frisky.icebreaker.profile;
 
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;

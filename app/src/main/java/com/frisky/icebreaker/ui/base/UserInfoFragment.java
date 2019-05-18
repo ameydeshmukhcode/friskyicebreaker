@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 
 import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.core.structures.UserInfoMode;
-import com.frisky.icebreaker.ui.social.UsersListViewAdapter;
+import com.frisky.icebreaker.social.UsersListViewAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

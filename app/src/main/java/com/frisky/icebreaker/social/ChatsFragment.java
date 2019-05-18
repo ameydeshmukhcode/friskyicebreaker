@@ -1,4 +1,4 @@
-package com.frisky.icebreaker.ui.social;
+package com.frisky.icebreaker.social;
 
 import android.view.LayoutInflater;
 import android.view.View;

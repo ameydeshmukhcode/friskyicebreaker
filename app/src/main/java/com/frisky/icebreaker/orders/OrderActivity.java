@@ -1,4 +1,4 @@
-package com.frisky.icebreaker.ui.orders;
+package com.frisky.icebreaker.orders;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

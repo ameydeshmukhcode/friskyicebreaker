@@ -1,4 +1,4 @@
-package com.frisky.icebreaker.ui.pubs;
+package com.frisky.icebreaker.pubs;
 
 import android.content.res.ColorStateList;
 import android.os.Bundle;

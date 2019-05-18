@@ -1,4 +1,4 @@
-package com.frisky.icebreaker.ui.social;
+package com.frisky.icebreaker.social;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,9 +7,9 @@ import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.ui.base.UserInfoFragment;
 import com.frisky.icebreaker.core.structures.UserInfoMode;
 
-public class PendingFragment extends UserInfoFragment {
-    public PendingFragment() {
-        setUserInfoMode(UserInfoMode.PENDING);
+public class UsersListFragment extends UserInfoFragment {
+    public UsersListFragment() {
+        setUserInfoMode(UserInfoMode.ICEBREAKER);
     }
 
     @Override
@@ -20,28 +20,22 @@ public class PendingFragment extends UserInfoFragment {
 
     @Override
     public void prepareUserData() {
-        String user = "User";
+        String user = "View";
         this.usersList.add(user);
 
-        user = "Creme";
+        user = "Users";
         usersList.add(user);
 
-        user = "Brute";
+        user = "Up";
         usersList.add(user);
 
-        user = "Somebody";
+        user = "In";
         usersList.add(user);
 
-        user = "Jon";
+        user = "This";
         usersList.add(user);
 
-        user = "Need";
-        usersList.add(user);
-
-        user = "More";
-        usersList.add(user);
-
-        user = "Samples";
+        user = "Place";
         usersList.add(user);
 
         mUsersViewAdapter.notifyDataSetChanged();

@@ -1,4 +1,4 @@
-package com.frisky.icebreaker.ui.social;
+package com.frisky.icebreaker.social;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
