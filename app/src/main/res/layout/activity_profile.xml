@@ -55,7 +55,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="24dp"
         android:fontFamily="@font/museosans700"
         android:padding="5dp"
         android:text="@string/name"
