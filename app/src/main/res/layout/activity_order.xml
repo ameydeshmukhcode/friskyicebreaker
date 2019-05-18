@@ -8,8 +8,8 @@
 
     <ImageButton
         android:id="@+id/button_back"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="@dimen/button_square_dimen"
+        android:layout_height="@dimen/button_square_dimen"
         android:background="@color/transparent"
         android:tint="@color/tintDark"
         app:layout_constraintStart_toStartOf="parent"
@@ -23,7 +23,7 @@
         android:fontFamily="@font/museosans300"
         android:text="@string/your_order"
         android:textColor="@color/textDark"
-        android:textSize="20sp"
+        android:textSize="@dimen/app_bar_text_size"
         app:layout_constraintBottom_toBottomOf="@+id/button_back"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -31,25 +31,26 @@
 
     <TextView
         android:id="@+id/text_table"
-        android:layout_width="250dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:background="@drawable/background_round_rect"
+        android:fontFamily="@font/museosans700"
         android:gravity="center"
-        android:padding="5dp"
+        android:padding="@dimen/bg_round_rect_radius"
         android:text="@string/placeholder"
+        android:textAllCaps="true"
         android:textColor="@color/textDark"
-        android:textSize="40sp"
+        android:textSize="@dimen/text_large_banner_size"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/your_order" />
+        app:layout_constraintTop_toBottomOf="@+id/button_back" />
 
     <View
         android:id="@+id/divider"
         android:layout_width="0dp"
-        android:layout_height="1dp"
+        android:layout_height="@dimen/divider_height"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:background="@color/lightAccent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -59,14 +60,13 @@
     <View
         android:id="@+id/divider_bottom"
         android:layout_width="0dp"
-        android:layout_height="1dp"
+        android:layout_height="@dimen/divider_height"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="8dp"
         android:background="@color/lightAccent"
         app:layout_constraintBottom_toTopOf="@+id/your_total"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
@@ -74,10 +74,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="8dp"
         android:fontFamily="@font/museosans300"
         android:text="@string/your_total"
-        android:textSize="20sp"
+        android:textSize="@dimen/text_subtitle_size"
         app:layout_constraintBottom_toTopOf="@+id/button_clear_bill"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -85,11 +85,11 @@
         android:id="@+id/rupee"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_marginEnd="4dp"
+        android:layout_marginEnd="2dp"
         android:fontFamily="@font/museosans700"
         android:text="@string/rupee"
         android:textColor="@color/appRed"
-        android:textSize="20sp"
+        android:textSize="@dimen/text_subtitle_size"
         app:layout_constraintBottom_toBottomOf="@+id/your_total"
         app:layout_constraintEnd_toStartOf="@+id/text_order_total"
         app:layout_constraintTop_toTopOf="@+id/your_total" />
@@ -102,7 +102,7 @@
         android:fontFamily="@font/museosans700"
         android:text="@string/placeholder_number"
         android:textColor="@color/appRed"
-        android:textSize="20sp"
+        android:textSize="@dimen/text_subtitle_size"
         app:layout_constraintBottom_toBottomOf="@+id/your_total"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/your_total" />
@@ -116,11 +116,11 @@
         android:layout_marginBottom="16dp"
         android:background="@drawable/background_circular"
         android:backgroundTint="@color/appGreen"
-        android:fontFamily="@font/museosans900"
+        android:fontFamily="@font/museosans700"
         android:text="@string/clear_bill"
         android:textAllCaps="false"
         android:textColor="@color/textLight"
-        android:textSize="25sp"
+        android:textSize="@dimen/text_button_primary_size"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

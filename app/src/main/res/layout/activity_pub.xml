@@ -10,7 +10,7 @@
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar_container"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/app_bar_height"
+        android:layout_height="@dimen/app_bar_extended_height"
         android:background="@color/colorPrimary"
         android:fitsSystemWindows="true"
         android:theme="@style/FriskyAppBarOverlay">
@@ -27,8 +27,8 @@
             <android.support.v7.widget.Toolbar
                 android:id="@+id/app_bar_pub"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:minHeight="50dp"
+                android:layout_height="@dimen/app_bar_height"
+                android:minHeight="@dimen/app_bar_height"
                 app:layout_collapseMode="pin"
                 app:navigationIcon="@drawable/round_arrow_back_24"
                 app:popupTheme="@style/FriskyPopUpOverlay" />

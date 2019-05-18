@@ -8,8 +8,8 @@
 
     <ImageButton
         android:id="@+id/button_back"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="@dimen/button_square_dimen"
+        android:layout_height="@dimen/button_square_dimen"
         android:background="@color/transparent"
         android:tint="@color/tintDark"
         app:layout_constraintStart_toStartOf="parent"
@@ -20,7 +20,6 @@
         android:id="@+id/layout_at"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
         app:layout_constraintBottom_toBottomOf="@+id/button_back"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/button_back"
@@ -33,7 +32,7 @@
             android:fontFamily="@font/museosans300"
             android:text="@string/at"
             android:textColor="@color/textDark"
-            android:textSize="20sp"
+            android:textSize="@dimen/app_bar_text_size"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -43,10 +42,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:fontFamily="@font/museosans900"
+            android:fontFamily="@font/museosans700"
             android:text="@string/placeholder"
             android:textAllCaps="true"
-            android:textSize="20sp"
+            android:textSize="@dimen/app_bar_text_size"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/your_order"
             app:layout_constraintTop_toTopOf="parent" />
@@ -54,25 +53,26 @@
 
     <TextView
         android:id="@+id/text_table"
-        android:layout_width="250dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:background="@drawable/background_round_rect"
+        android:fontFamily="@font/museosans700"
         android:gravity="center"
-        android:padding="5dp"
+        android:padding="@dimen/bg_round_rect_radius"
         android:text="@string/placeholder"
+        android:textAllCaps="true"
         android:textColor="@color/textDark"
-        android:textSize="40sp"
+        android:textSize="@dimen/text_large_banner_size"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/layout_at" />
+        app:layout_constraintTop_toBottomOf="@+id/button_back" />
 
     <View
         android:id="@+id/divider"
         android:layout_width="0dp"
-        android:layout_height="1dp"
+        android:layout_height="@dimen/divider_height"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:background="@color/lightAccent"
         app:layout_constraintEnd_toEndOf="parent"
