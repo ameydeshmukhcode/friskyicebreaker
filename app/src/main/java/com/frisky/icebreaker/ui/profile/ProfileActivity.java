@@ -8,11 +8,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.ui.LoginActivity;
 import com.frisky.icebreaker.ui.SettingsActivity;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -22,6 +24,7 @@ public class ProfileActivity extends AppCompatActivity {
     ImageButton mBackButton;
     ImageButton mSettingsButton;
     Button mLogoutButton;
+    TextView mNameText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,5 +74,10 @@ public class ProfileActivity extends AppCompatActivity {
 
         TabLayout tabLayout = findViewById(R.id.tab_image);
         tabLayout.setupWithViewPager(mProfileImagePager, true);
+
+        mNameText = findViewById(R.id.text_name);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null)
+           mNameText.setText(user.getDisplayName());
     }
 }
