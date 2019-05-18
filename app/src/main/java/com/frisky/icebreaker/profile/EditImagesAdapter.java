@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,11 +14,14 @@ import android.widget.ImageView;
 import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.core.store.UserDataStore;
 import com.frisky.icebreaker.ui.assistant.UIAssistant;
+import com.frisky.icebreaker.ui.components.dialogs.PickImageDialog;
 
 public class EditImagesAdapter extends RecyclerView.Adapter<EditImagesAdapter.ImageViewHolder> {
 
     private Context mContext;
-
+    private FragmentActivity mActivity;
+    private PickImageDialog pickImageDialog;
+    
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
@@ -29,8 +33,9 @@ public class EditImagesAdapter extends RecyclerView.Adapter<EditImagesAdapter.Im
         }
     }
 
-    EditImagesAdapter(Context context) {
+    EditImagesAdapter(Context context, FragmentActivity activity) {
         mContext = context;
+        mActivity = activity;
     }
 
     @NonNull
@@ -47,7 +52,12 @@ public class EditImagesAdapter extends RecyclerView.Adapter<EditImagesAdapter.Im
     }
 
     public void onBindViewHolder(@NonNull final ImageViewHolder viewHolder, int i) {
-
+        viewHolder.mImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pickImageDialog = new PickImageDialog();
+                pickImageDialog.show(mActivity.getSupportFragmentManager(), "pick image dialog");            }
+        });
     }
 
     @Override

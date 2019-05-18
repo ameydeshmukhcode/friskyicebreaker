@@ -33,7 +33,7 @@ public class EditImagesFragment extends Fragment {
         mRecyclerImageGridView.setLayoutManager(mEditImagesGridLayoutManager);
 
         // specify an adapter (see also next example)
-        mImageGridAdapter = new EditImagesAdapter(getContext());
+        mImageGridAdapter = new EditImagesAdapter(getContext(), getActivity());
         mRecyclerImageGridView.setAdapter(mImageGridAdapter);
 
         return view;
