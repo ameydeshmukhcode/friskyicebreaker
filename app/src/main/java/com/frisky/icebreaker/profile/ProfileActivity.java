@@ -23,7 +23,6 @@ public class ProfileActivity extends AppCompatActivity {
     ProfileImageAdapter mProfileImageAdapter;
     ImageButton mBackButton;
     ImageButton mSettingsButton;
-    Button mLogoutButton;
     TextView mNameText;
 
     @Override
@@ -62,15 +61,6 @@ public class ProfileActivity extends AppCompatActivity {
 
         mProfileImagePager = findViewById(R.id.pager_profile_images);
         mProfileImagePager.setAdapter(mProfileImageAdapter);
-
-        mLogoutButton = findViewById(R.id.button_logout);
-        mLogoutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-            }
-        });
 
         TabLayout tabLayout = findViewById(R.id.tab_image);
         tabLayout.setupWithViewPager(mProfileImagePager, true);
