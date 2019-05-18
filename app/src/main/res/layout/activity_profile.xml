@@ -144,4 +144,15 @@
             app:layout_constraintTop_toBottomOf="@+id/about_me" />
     </android.support.constraint.ConstraintLayout>
 
+    <Button
+        android:id="@+id/button_logout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/round_exit_to_app_24"
+        android:drawablePadding="15dp"
+        android:drawableTint="@color/tintDark"
+        android:text="logout"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
 </android.support.constraint.ConstraintLayout>
