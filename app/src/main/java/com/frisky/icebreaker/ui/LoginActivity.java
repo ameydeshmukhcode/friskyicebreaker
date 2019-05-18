@@ -49,6 +49,13 @@ public class LoginActivity extends AppCompatActivity implements FormActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
+        FirebaseUser user = mAuth.getCurrentUser();
+        if (user != null) {
+            Intent launchHome = new Intent(getApplicationContext(), HomeActivity.class);
+            startActivity(launchHome);
+            finish();
+        }
+
         // Configure Google Sign In
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
