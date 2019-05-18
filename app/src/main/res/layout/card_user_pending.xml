@@ -29,6 +29,19 @@
             app:srcCompat="@drawable/placeholder" />
 
         <TextView
+            android:id="@+id/text_ping_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:fontFamily="@font/museosans300"
+            android:text="@string/ping_send"
+            android:textColor="@color/textDark"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/image_user"
+            app:layout_constraintStart_toEndOf="@+id/image_user"
+            app:layout_constraintTop_toTopOf="@+id/image_user" />
+
+        <TextView
             android:id="@+id/text_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -43,19 +56,6 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/text_ping_status"
             app:layout_constraintTop_toTopOf="@+id/text_ping_status" />
-
-        <TextView
-            android:id="@+id/text_ping_status"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:fontFamily="@font/museosans300"
-            android:text="@string/ping_send"
-            android:textColor="@color/textDark"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="@+id/image_user"
-            app:layout_constraintStart_toEndOf="@+id/image_user"
-            app:layout_constraintTop_toTopOf="@+id/image_user" />
 
     </android.support.constraint.ConstraintLayout>
 </android.support.design.card.MaterialCardView>

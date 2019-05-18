@@ -36,7 +36,9 @@
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_pub" />
+    <include
+        android:id="@+id/content_pub"
+        layout="@layout/content_pub" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_chat_room"

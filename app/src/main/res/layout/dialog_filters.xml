@@ -6,7 +6,7 @@
     android:layout_height="wrap_content">
 
     <TextView
-        android:id="@+id/text_filters"
+        android:id="@+id/pick_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -18,48 +18,48 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/text_sort"
+        android:id="@+id/sort"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:fontFamily="@font/museosans300"
         android:text="@string/sort_by"
         android:textSize="14sp"
-        app:layout_constraintStart_toStartOf="@+id/text_filters"
-        app:layout_constraintTop_toBottomOf="@+id/text_filters" />
+        app:layout_constraintStart_toStartOf="@+id/pick_image"
+        app:layout_constraintTop_toBottomOf="@+id/pick_image" />
 
     <TextView
-        android:id="@+id/text_type"
+        android:id="@+id/type"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:fontFamily="@font/museosans300"
         android:text="@string/type"
         android:textSize="14sp"
-        app:layout_constraintStart_toStartOf="@+id/text_sort"
-        app:layout_constraintTop_toBottomOf="@+id/text_sort" />
+        app:layout_constraintStart_toStartOf="@+id/sort"
+        app:layout_constraintTop_toBottomOf="@+id/sort" />
 
     <TextView
-        android:id="@+id/text_city"
+        android:id="@+id/city"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:fontFamily="@font/museosans300"
         android:text="@string/city"
         android:textSize="14sp"
-        app:layout_constraintStart_toStartOf="@+id/text_type"
-        app:layout_constraintTop_toBottomOf="@+id/text_type" />
+        app:layout_constraintStart_toStartOf="@+id/type"
+        app:layout_constraintTop_toBottomOf="@+id/type" />
 
     <TextView
-        android:id="@+id/text_features"
+        android:id="@+id/features"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:fontFamily="@font/museosans300"
         android:text="@string/features"
         android:textSize="14sp"
-        app:layout_constraintStart_toStartOf="@+id/text_city"
-        app:layout_constraintTop_toBottomOf="@+id/text_city" />
+        app:layout_constraintStart_toStartOf="@+id/city"
+        app:layout_constraintTop_toBottomOf="@+id/city" />
 
     <Button
         android:id="@+id/button_cancel"
@@ -77,7 +77,7 @@
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/button_apply"
-        app:layout_constraintTop_toBottomOf="@+id/text_features" />
+        app:layout_constraintTop_toBottomOf="@+id/features" />
 
     <Button
         android:id="@+id/button_apply"

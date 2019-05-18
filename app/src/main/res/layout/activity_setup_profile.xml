@@ -39,7 +39,7 @@
         app:srcCompat="@drawable/round_person_24" />
 
     <TextView
-        android:id="@+id/text_update_image"
+        android:id="@+id/update_image"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -70,5 +70,5 @@
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_update_image" />
+        app:layout_constraintTop_toBottomOf="@+id/update_image" />
 </android.support.constraint.ConstraintLayout>

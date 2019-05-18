@@ -33,10 +33,10 @@ public class PubViewAdapter extends RecyclerView.Adapter<PubViewAdapter.PubViewH
         TextView mLocation;
         PubViewHolder(View v) {
             super(v);
-            mTitle = v.findViewById(R.id.title);
-            mTags = v.findViewById(R.id.tag_list);
-            mRating = v.findViewById(R.id.rating);
-            mLocation = v.findViewById(R.id.location);
+            mTitle = v.findViewById(R.id.text_title);
+            mTags = v.findViewById(R.id.text_tag_list);
+            mRating = v.findViewById(R.id.text_rating);
+            mLocation = v.findViewById(R.id.text_location);
             mPubCard = v.findViewById(R.id.card_pub);
         }
     }

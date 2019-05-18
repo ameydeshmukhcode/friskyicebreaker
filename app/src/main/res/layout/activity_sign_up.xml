@@ -109,13 +109,13 @@
         app:layout_constraintTop_toBottomOf="@+id/checkbox_age" />
 
     <TextView
-        android:id="@+id/text_terms"
+        android:id="@+id/terms"
         android:layout_width="210dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:fontFamily="@font/museosans300"
+        android:gravity="center"
         android:text="@string/terms"
-        android:textAlignment="center"
         android:textColor="@color/textDark"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -17,7 +17,7 @@
         app:srcCompat="@drawable/round_arrow_back_24" />
 
     <TextView
-        android:id="@+id/text_your_order"
+        android:id="@+id/your_order"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/museosans300"
@@ -42,7 +42,7 @@
         android:textSize="40sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_your_order" />
+        app:layout_constraintTop_toBottomOf="@+id/your_order" />
 
     <View
         android:id="@+id/divider"
@@ -64,13 +64,13 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:background="@color/lightAccent"
-        app:layout_constraintBottom_toTopOf="@+id/text_total"
+        app:layout_constraintBottom_toTopOf="@+id/your_total"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/text_total"
+        android:id="@+id/your_total"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -82,7 +82,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/text_rupee"
+        android:id="@+id/rupee"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_marginEnd="4dp"
@@ -90,9 +90,9 @@
         android:text="@string/rupee"
         android:textColor="@color/appRed"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="@+id/text_total"
+        app:layout_constraintBottom_toBottomOf="@+id/your_total"
         app:layout_constraintEnd_toStartOf="@+id/text_order_total"
-        app:layout_constraintTop_toTopOf="@+id/text_total" />
+        app:layout_constraintTop_toTopOf="@+id/your_total" />
 
     <TextView
         android:id="@+id/text_order_total"
@@ -103,9 +103,9 @@
         android:text="@string/placeholder_number"
         android:textColor="@color/appRed"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="@+id/text_total"
+        app:layout_constraintBottom_toBottomOf="@+id/your_total"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/text_total" />
+        app:layout_constraintTop_toTopOf="@+id/your_total" />
 
     <Button
         android:id="@+id/button_clear_bill"

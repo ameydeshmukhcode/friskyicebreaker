@@ -2,25 +2,9 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/order_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".orders.MenuActivity">
-
-    <TextView
-        android:id="@+id/text_table"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/background_round_rect"
-        android:gravity="center"
-        android:padding="5dp"
-        android:text="@string/placeholder"
-        android:textColor="@color/textDark"
-        android:textSize="40sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2" />
 
     <ImageButton
         android:id="@+id/button_back"
@@ -33,7 +17,7 @@
         app:srcCompat="@drawable/round_arrow_back_24" />
 
     <android.support.constraint.ConstraintLayout
-        android:id="@+id/constraintLayout2"
+        android:id="@+id/layout_at"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -43,7 +27,7 @@
         app:layout_constraintTop_toTopOf="@+id/button_back">
 
         <TextView
-            android:id="@+id/text_your_order"
+            android:id="@+id/your_order"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/museosans300"
@@ -64,9 +48,24 @@
             android:textAllCaps="true"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/text_your_order"
+            app:layout_constraintStart_toEndOf="@+id/your_order"
             app:layout_constraintTop_toTopOf="parent" />
     </android.support.constraint.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/text_table"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/background_round_rect"
+        android:gravity="center"
+        android:padding="5dp"
+        android:text="@string/placeholder"
+        android:textColor="@color/textDark"
+        android:textSize="40sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layout_at" />
 
     <View
         android:id="@+id/divider"
