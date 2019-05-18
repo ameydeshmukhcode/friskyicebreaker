@@ -105,7 +105,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:background="@drawable/background_secondary_extra"
+            android:background="@drawable/background_round_rect"
             android:gravity="center"
             android:padding="5dp"
             android:text="@string/placeholder_number"

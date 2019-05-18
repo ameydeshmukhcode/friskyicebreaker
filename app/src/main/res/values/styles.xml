@@ -20,7 +20,7 @@
     </style>
 
     <style name="FriskyTabAppearance" parent="Widget.MaterialComponents.TabLayout">
-        <item name="tabIndicator">@drawable/background_tab_selected</item>
+        <item name="tabIndicator">@drawable/background_round_rect</item>
         <item name="tabIndicatorColor">@color/backgroundLight</item>
         <item name="tabIndicatorFullWidth">true</item>
         <item name="tabIndicatorGravity">center</item>
