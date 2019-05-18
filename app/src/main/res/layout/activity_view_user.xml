@@ -30,65 +30,77 @@
 
     </android.support.v4.view.ViewPager>
 
-    <TextView
-        android:id="@+id/text_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="24dp"
-        android:fontFamily="@font/museosans700"
-        android:text="@string/name"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="@color/textLight"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="@+id/pager_profile_images"
-        app:layout_constraintStart_toStartOf="@+id/pager_profile_images" />
-
-    <TextView
-        android:id="@+id/comma"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/museosans700"
-        android:text="@string/comma"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="@color/textLight"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="@+id/text_name"
-        app:layout_constraintStart_toEndOf="@+id/text_name"
-        app:layout_constraintTop_toTopOf="@+id/text_name" />
-
-    <TextView
-        android:id="@+id/text_age"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/museosans700"
-        android:paddingStart="5dp"
-        android:text="@string/placeholder_number"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="@color/textLight"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="@+id/text_name"
-        app:layout_constraintStart_toEndOf="@+id/comma"
-        app:layout_constraintTop_toTopOf="@+id/text_name" />
-
     <android.support.design.widget.TabLayout
         android:id="@+id/tab_image"
         android:layout_width="0dp"
         android:layout_height="10dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="5dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="5dp"
         android:background="@color/transparent"
         app:layout_constraintBottom_toBottomOf="@+id/pager_profile_images"
         app:layout_constraintEnd_toEndOf="@+id/pager_profile_images"
         app:layout_constraintStart_toStartOf="@+id/pager_profile_images"
-        app:layout_constraintTop_toBottomOf="@+id/text_name"
+        app:layout_constraintTop_toBottomOf="@+id/layout_info"
         app:tabBackground="@drawable/tab_selector"
         app:tabGravity="fill"
         app:tabIndicatorHeight="0dp"
         app:tabMode="fixed"
         app:tabRippleColor="@color/transparent" />
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/layout_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/background_badge"
+        android:backgroundTint="@color/backgroundDarkTranslucent"
+        android:padding="6dp"
+        app:layout_constraintBottom_toBottomOf="@+id/pager_profile_images"
+        app:layout_constraintStart_toStartOf="@+id/pager_profile_images">
+
+        <TextView
+            android:id="@+id/text_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/museosans700"
+            android:text="@string/name"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@color/textLight"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/comma"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/museosans700"
+            android:text="@string/comma"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@color/textLight"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="@+id/text_name"
+            app:layout_constraintStart_toEndOf="@+id/text_name"
+            app:layout_constraintTop_toTopOf="@+id/text_name" />
+
+        <TextView
+            android:id="@+id/text_age"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/museosans700"
+            android:paddingStart="6dp"
+            android:text="@string/placeholder_number"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@color/textLight"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="@+id/text_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/comma"
+            app:layout_constraintTop_toTopOf="@+id/text_name" />
+
+    </android.support.constraint.ConstraintLayout>
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/layout_bio"
