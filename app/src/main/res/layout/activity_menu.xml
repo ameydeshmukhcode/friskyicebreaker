@@ -26,7 +26,7 @@
         app:layout_constraintTop_toTopOf="@+id/button_back">
 
         <TextView
-            android:id="@+id/your_order"
+            android:id="@+id/youre_at"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/museosans300"
@@ -47,7 +47,7 @@
             android:textAllCaps="true"
             android:textSize="@dimen/app_bar_text_size"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/your_order"
+            app:layout_constraintStart_toEndOf="@+id/youre_at"
             app:layout_constraintTop_toTopOf="parent" />
     </android.support.constraint.ConstraintLayout>
 
