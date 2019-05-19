@@ -18,13 +18,38 @@
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_margin="16dp"
-            android:fontFamily="@font/museosans300"
+            android:fontFamily="@font/museosans700"
             android:text="@string/placeholder"
             android:textColor="@color/textDark"
             android:textSize="@dimen/text_large_title_size"
-            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/text_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
+            android:layout_marginTop="2dp"
+            android:fontFamily="@font/museosans300"
+            android:text="@string/placeholder"
+            android:textColor="@color/textDark"
+            android:textSize="@dimen/text_subtitle_size"
+            app:layout_constraintStart_toStartOf="@+id/text_pub_name"
+            app:layout_constraintTop_toBottomOf="@+id/text_pub_name" />
+
+        <TextView
+            android:id="@+id/text_tags"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
+            android:layout_marginTop="2dp"
+            android:fontFamily="@font/museosans300"
+            android:text="@string/placeholder"
+            android:textColor="@color/textDark"
+            android:textSize="@dimen/text_subtitle_size"
+            app:layout_constraintStart_toStartOf="@+id/text_pub_name"
+            app:layout_constraintTop_toBottomOf="@+id/text_location" />
 
         <TextView
             android:id="@+id/text_rating"
@@ -41,30 +66,6 @@
             app:layout_constraintBottom_toBottomOf="@+id/text_pub_name"
             app:layout_constraintStart_toEndOf="@+id/text_pub_name"
             app:layout_constraintTop_toTopOf="@+id/text_pub_name" />
-
-        <TextView
-            android:id="@+id/text_location"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="2dp"
-            android:fontFamily="@font/museosans300"
-            android:text="@string/placeholder"
-            android:textColor="@color/textDark"
-            android:textSize="@dimen/text_subtitle_size"
-            app:layout_constraintStart_toStartOf="@+id/text_pub_name"
-            app:layout_constraintTop_toBottomOf="@+id/text_pub_name" />
-
-        <TextView
-            android:id="@+id/text_tags"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="2dp"
-            android:fontFamily="@font/museosans300"
-            android:text="@string/placeholder"
-            android:textColor="@color/textDark"
-            android:textSize="@dimen/text_subtitle_size"
-            app:layout_constraintStart_toStartOf="@+id/text_pub_name"
-            app:layout_constraintTop_toBottomOf="@+id/text_location" />
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/layout_live_count"
@@ -108,6 +109,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:background="@drawable/background_round_rect"
+            android:fontFamily="@font/museosans700"
             android:gravity="center"
             android:padding="6dp"
             android:text="@string/placeholder_number"
