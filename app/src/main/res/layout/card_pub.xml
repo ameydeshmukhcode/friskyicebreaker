@@ -38,11 +38,10 @@
             android:layout_marginStart="6dp"
             android:layout_marginTop="6dp"
             android:layout_marginEnd="6dp"
-            android:fontFamily="@font/museosans300"
+            android:fontFamily="@font/museosans700"
             android:text="@string/placeholder"
             android:textColor="@color/textDark"
             android:textSize="@dimen/pub_title_size"
-            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/image_pub"
             app:layout_constraintTop_toTopOf="parent" />
