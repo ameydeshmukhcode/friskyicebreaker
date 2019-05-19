@@ -8,8 +8,9 @@ import android.widget.Button;
 import android.widget.ImageButton;
 
 import com.frisky.icebreaker.R;
+import com.frisky.icebreaker.ui.base.UIActivity;
 
-public class MenuActivity extends AppCompatActivity {
+public class MenuActivity extends AppCompatActivity implements UIActivity {
 
     ImageButton mBackButton;
     Button mViewOrderButton;
@@ -17,9 +18,12 @@ public class MenuActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_menu);
+        initUI();
+    }
 
+    @Override
+    public void initUI() {
         mBackButton = findViewById(R.id.button_back);
         mBackButton.setOnClickListener(new View.OnClickListener() {
             @Override

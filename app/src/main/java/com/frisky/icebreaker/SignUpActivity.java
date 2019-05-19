@@ -11,12 +11,13 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.frisky.icebreaker.ui.base.FormActivity;
+import com.frisky.icebreaker.ui.base.UIActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class SignUpActivity extends AppCompatActivity implements FormActivity {
+public class SignUpActivity extends AppCompatActivity implements FormActivity, UIActivity {
 
     Button mSignUpButton;
     EditText mEmailInput;
@@ -29,15 +30,12 @@ public class SignUpActivity extends AppCompatActivity implements FormActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
-
         mAuth = FirebaseAuth.getInstance();
-
         initUI();
     }
 
-    private void initUI() {
+    public void initUI() {
         mSignUpButton = findViewById(R.id.button_sign_up);
-
         mEmailInput = findViewById(R.id.input_email);
         mPasswordInput = findViewById(R.id.input_password);
         mConfirmPasswordInput = findViewById(R.id.input_confirm_password);

@@ -11,8 +11,9 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.frisky.icebreaker.R;
+import com.frisky.icebreaker.ui.base.UIActivity;
 
-public class ViewUserActivity extends AppCompatActivity {
+public class ViewUserActivity extends AppCompatActivity implements UIActivity {
 
     ViewPager mProfileImagePager;
     ProfileImageAdapter mProfileImageAdapter;
@@ -23,7 +24,11 @@ public class ViewUserActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_user);
+        initUI();
+    }
 
+    @Override
+    public void initUI() {
         mProfileImageAdapter = new ProfileImageAdapter(getApplicationContext());
 
         mUserNameText = findViewById(R.id.text_name);

@@ -12,8 +12,9 @@ import android.widget.TextView;
 
 import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.ui.assistant.UIAssistant;
+import com.frisky.icebreaker.ui.base.UIActivity;
 
-public class PubActivity extends AppCompatActivity {
+public class PubActivity extends AppCompatActivity implements UIActivity {
 
     TextView mPubNameText;
     TextView mTagsText;
@@ -26,11 +27,10 @@ public class PubActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pub);
-
         initUI();
     }
 
-    private void initUI() {
+    public void initUI() {
         mPubNameText = findViewById(R.id.text_pub_name);
         mTagsText = findViewById(R.id.text_tags);
         mRatingText = findViewById(R.id.text_rating);
@@ -60,7 +60,7 @@ public class PubActivity extends AppCompatActivity {
 
         if (getIntent().hasExtra("rating")) {
             String pubRatingText = getIntent().getStringExtra("rating");
-            Double pubRating = Double.parseDouble(pubRatingText);
+            double pubRating = Double.parseDouble(pubRatingText);
             mRatingText.setText(getIntent().getStringExtra("rating"));
             mRatingText.setBackgroundTintList(ColorStateList.valueOf(getApplicationContext().getResources().
                     getColor(UIAssistant.getInstance().getRatingBadgeColor(pubRating))));

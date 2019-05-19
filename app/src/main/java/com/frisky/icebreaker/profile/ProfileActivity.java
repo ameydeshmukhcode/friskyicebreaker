@@ -13,10 +13,11 @@ import android.widget.TextView;
 import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.LoginActivity;
 import com.frisky.icebreaker.SettingsActivity;
+import com.frisky.icebreaker.ui.base.UIActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class ProfileActivity extends AppCompatActivity {
+public class ProfileActivity extends AppCompatActivity implements UIActivity {
 
     ImageButton mEditButton;
     ViewPager mProfileImagePager;
@@ -29,12 +30,15 @@ public class ProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+        initUI();
+    }
 
+    @Override
+    public void initUI() {
         mEditButton = findViewById(R.id.button_edit);
         mEditButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO Start edit profile activity here
                 Intent editProfile = new Intent(getApplicationContext(), EditProfileActivity.class);
                 startActivity(editProfile);
             }
@@ -68,6 +72,6 @@ public class ProfileActivity extends AppCompatActivity {
         mNameText = findViewById(R.id.text_name);
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null)
-           mNameText.setText(user.getDisplayName());
+            mNameText.setText(user.getDisplayName());
     }
 }

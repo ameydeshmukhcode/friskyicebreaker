@@ -17,7 +17,7 @@ import com.frisky.icebreaker.ui.assistant.UIAssistant;
 
 import java.util.List;
 
-public class PubViewAdapter extends RecyclerView.Adapter<PubViewAdapter.PubViewHolder> {
+public class PubListAdapter extends RecyclerView.Adapter<PubListAdapter.PubViewHolder> {
 
     private final Context mContext;
     private List<Pub> mPubList;
@@ -41,14 +41,14 @@ public class PubViewAdapter extends RecyclerView.Adapter<PubViewAdapter.PubViewH
         }
     }
 
-    PubViewAdapter(List<Pub> pubList, Context context) {
+    PubListAdapter(List<Pub> pubList, Context context) {
         this.mPubList = pubList;
         this.mContext = context;
     }
 
     @NonNull
     @Override
-    public PubViewAdapter.PubViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, final int i) {
+    public PubListAdapter.PubViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, final int i) {
         final View itemView = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.card_pub, viewGroup, false);
 

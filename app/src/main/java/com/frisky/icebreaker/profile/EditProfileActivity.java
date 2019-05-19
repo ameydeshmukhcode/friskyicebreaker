@@ -10,8 +10,9 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.frisky.icebreaker.R;
+import com.frisky.icebreaker.ui.base.UIActivity;
 
-public class EditProfileActivity extends AppCompatActivity {
+public class EditProfileActivity extends AppCompatActivity implements UIActivity {
 
     TextView mToolbarText;
     ImageButton mBackButton;
@@ -21,11 +22,10 @@ public class EditProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
-
         initUI();
     }
 
-    private void initUI() {
+    public void initUI() {
         mToolbarText = findViewById(R.id.text_app_bar);
         mToolbarText.setText(R.string.edit_profile);
         mToolbarText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);

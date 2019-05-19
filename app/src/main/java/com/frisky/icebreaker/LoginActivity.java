@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.frisky.icebreaker.ui.base.FormActivity;
 import com.frisky.icebreaker.profile.SetupProfileActivity;
+import com.frisky.icebreaker.ui.base.UIActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -27,7 +28,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
-public class LoginActivity extends AppCompatActivity implements FormActivity {
+public class LoginActivity extends AppCompatActivity implements FormActivity, UIActivity {
 
     private static final int RC_SIGN_IN = 1;
     Button mLoginButton;
@@ -66,7 +67,7 @@ public class LoginActivity extends AppCompatActivity implements FormActivity {
         initUI();
     }
 
-    private void initUI() {
+    public void initUI() {
         mLoginButton = findViewById(R.id.button_login);
         mGoogleButton = findViewById(R.id.button_google);
         mSignUpLink = findViewById(R.id.link_sign_up);

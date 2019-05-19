@@ -42,7 +42,7 @@ public class PubListFragment extends Fragment {
         mRecyclerPubView.setLayoutManager(mPubViewLayoutManager);
 
         // specify an adapter (see also next example)
-        mPubViewAdapter = new PubViewAdapter(pubList, getContext());
+        mPubViewAdapter = new PubListAdapter(pubList, getContext());
         mRecyclerPubView.setAdapter(mPubViewAdapter);
 
         preparePubData();

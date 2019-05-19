@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.ImageButton;
@@ -16,28 +17,29 @@ import com.frisky.icebreaker.profile.ProfileActivity;
 import com.frisky.icebreaker.pubs.PubViewFragment;
 import com.frisky.icebreaker.social.IceBreakerFragment;
 import com.frisky.icebreaker.social.SocialFragment;
+import com.frisky.icebreaker.ui.base.UIActivity;
 
-public class HomeActivity extends AppCompatActivity {
-
-    private ImageButton mSocialButton;
-    private ImageButton mScanQRCodeButton;
-    private ImageButton mBottomNavHomeButton;
-    private ImageButton mBottomNavProfileButton;
-    private ImageButton mBottomNavOrderButton;
-    private ImageButton mBottomNavNotificationButton;
-    private ImageButton mIceBreakerButton;
-    private TextView mToolbarText;
+public class HomeActivity extends AppCompatActivity implements UIActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         initUI();
-
-        loadFragment(new PubViewFragment());
+        if (loadFragment(new PubViewFragment()))
+            Log.d("Fragment", "Loaded PubView Fragment successfully");
     }
 
-    private void initUI() {
+    public void initUI() {
+        ImageButton mSocialButton;
+        ImageButton mScanQRCodeButton;
+        ImageButton mBottomNavHomeButton;
+        ImageButton mBottomNavProfileButton;
+        ImageButton mBottomNavOrderButton;
+        ImageButton mBottomNavNotificationButton;
+        ImageButton mIceBreakerButton;
+        TextView mToolbarText;
+
         mToolbarText = findViewById(R.id.text_app_bar);
         mToolbarText.setText(R.string.app_name);
         mToolbarText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 35);
@@ -49,7 +51,8 @@ public class HomeActivity extends AppCompatActivity {
         mSocialButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadFragment(new SocialFragment());
+                if (loadFragment(new SocialFragment()))
+                    Log.d("Fragment", "Loaded Social Fragment successfully");
             }
         });
 
@@ -61,7 +64,8 @@ public class HomeActivity extends AppCompatActivity {
         mBottomNavHomeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadFragment(new PubViewFragment());
+                if (loadFragment(new PubViewFragment()))
+                    Log.d("Fragment", "Loaded PubView Fragment successfully");
             }
         });
 
@@ -91,14 +95,17 @@ public class HomeActivity extends AppCompatActivity {
         mIceBreakerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadFragment(new IceBreakerFragment());
+                if (loadFragment(new IceBreakerFragment()))
+                    Log.d("Fragment", "Loaded IceBreaker Fragment successfully");
             }
         });
     }
 
     private boolean loadFragment(Fragment fragment) {
+        Fragment currentFragment = getSupportFragmentManager().getFragment(Bundle.EMPTY, "");
+
         //switching fragment
-        if (fragment != null) {
+        if ((fragment != null) && (currentFragment != fragment)) {
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.home_activity_fragment, fragment)

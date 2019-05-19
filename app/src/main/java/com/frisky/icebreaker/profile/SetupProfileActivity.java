@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.HomeActivity;
 import com.frisky.icebreaker.ui.base.FormActivity;
+import com.frisky.icebreaker.ui.base.UIActivity;
 import com.frisky.icebreaker.ui.components.dialogs.PickImageDialog;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -21,7 +22,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 
-public class SetupProfileActivity extends AppCompatActivity implements FormActivity {
+public class SetupProfileActivity extends AppCompatActivity implements FormActivity, UIActivity {
 
     ImageView mProfileImage;
     ImageButton mCancelButton;
@@ -34,11 +35,26 @@ public class SetupProfileActivity extends AppCompatActivity implements FormActiv
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setup_profile);
+        initUI();
+    }
 
+    @Override
+    public boolean validateForm() {
+        String name = mNameInput.getText().toString();
+
+        if (name.matches("")) {
+            Toast.makeText(SetupProfileActivity.this, "Enter name",
+                    Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public void initUI() {
         mNameInput = findViewById(R.id.input_name);
-
         mProfileImage = findViewById(R.id.image_profile);
-
         mCancelButton = findViewById(R.id.button_cancel);
         mDoneButton = findViewById(R.id.button_done);
 
@@ -85,18 +101,5 @@ public class SetupProfileActivity extends AppCompatActivity implements FormActiv
                 pickImageDialog.show(getSupportFragmentManager(), "pick image dialog");
             }
         });
-    }
-
-    @Override
-    public boolean validateForm() {
-        String name = mNameInput.getText().toString();
-
-        if (name.matches("")) {
-            Toast.makeText(SetupProfileActivity.this, "Enter name",
-                    Toast.LENGTH_SHORT).show();
-            return false;
-        }
-
-        return true;
     }
 }

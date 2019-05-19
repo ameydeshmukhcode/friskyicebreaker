@@ -10,22 +10,22 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.frisky.icebreaker.R;
+import com.frisky.icebreaker.ui.base.UIActivity;
 
-public class ChatActivity extends AppCompatActivity {
-
-    private TextView mToolbarText;
-    private ImageButton mBackButton;
-    private ImageButton mMenuButton;
+public class ChatActivity extends AppCompatActivity implements UIActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
-
         initUI();
     }
 
-    private void initUI() {
+    public void initUI() {
+        TextView mToolbarText;
+        ImageButton mBackButton;
+        ImageButton mMenuButton;
+
         mToolbarText = findViewById(R.id.text_app_bar);
         if (getIntent().hasExtra("name")){
             String name = getIntent().getStringExtra("name");
