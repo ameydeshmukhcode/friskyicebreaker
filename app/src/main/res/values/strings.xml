@@ -83,6 +83,8 @@
     <string name="clear_bill">Clear Bill</string>
     <string name="rupee">\u20B9</string>
     <string name="view">View</string>
+    <string name="add">Add</string>
+    <string name="menu">Menu</string>
 
     <!--Image Picker Dialog-->
     <string name="pick_image">Pick Image</string>
