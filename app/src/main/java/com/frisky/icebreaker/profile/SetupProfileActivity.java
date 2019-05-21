@@ -35,10 +35,15 @@ public class SetupProfileActivity extends AppCompatActivity implements FormActiv
 
     PickImageDialog pickImageDialog;
 
+    FirebaseAuth mAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setup_profile);
+
+        mAuth = FirebaseAuth.getInstance();
+
         initUI();
     }
 
@@ -66,13 +71,16 @@ public class SetupProfileActivity extends AppCompatActivity implements FormActiv
             @Override
             public void onClick(View v) {
                 if (validateForm()) {
-                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                    FirebaseUser user = mAuth.getCurrentUser();
 
                     String name = mNameInput.getText().toString();
 
                     UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                             .setDisplayName(name)
                             .build();
+
+                    if (user == null)
+                        return;
 
                     user.updateProfile(profileUpdates)
                             .addOnCompleteListener(new OnCompleteListener<Void>() {

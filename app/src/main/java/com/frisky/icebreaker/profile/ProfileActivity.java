@@ -26,10 +26,15 @@ public class ProfileActivity extends AppCompatActivity implements UIActivity {
     ImageButton mSettingsButton;
     TextView mNameText;
 
+    FirebaseAuth mAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+
+        mAuth = FirebaseAuth.getInstance();
+
         initUI();
     }
 
@@ -70,7 +75,7 @@ public class ProfileActivity extends AppCompatActivity implements UIActivity {
         tabLayout.setupWithViewPager(mProfileImagePager, true);
 
         mNameText = findViewById(R.id.text_name);
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        FirebaseUser user = mAuth.getCurrentUser();
         if (user != null)
             mNameText.setText(user.getDisplayName());
     }

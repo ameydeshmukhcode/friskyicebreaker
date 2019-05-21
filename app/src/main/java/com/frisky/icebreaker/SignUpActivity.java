@@ -30,7 +30,9 @@ public class SignUpActivity extends AppCompatActivity implements FormActivity, U
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
+
         mAuth = FirebaseAuth.getInstance();
+
         initUI();
     }
 
@@ -59,7 +61,7 @@ public class SignUpActivity extends AppCompatActivity implements FormActivity, U
                                 // Sign in success, update UI with the signed-in user's information
                                 Toast.makeText(getApplicationContext(), "Signed up with Frisky!",
                                         Toast.LENGTH_SHORT).show();
-                                FirebaseAuth.getInstance().signOut();
+                                //mAuth.signOut();
                                 Intent startLoginActivity = new Intent(getApplicationContext(), LoginActivity.class);
                                 startActivity(startLoginActivity);
                             } else {

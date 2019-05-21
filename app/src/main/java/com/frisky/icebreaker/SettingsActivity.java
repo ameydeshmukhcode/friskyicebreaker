@@ -24,10 +24,15 @@ public class SettingsActivity extends AppCompatActivity implements UIActivity {
 
     TextView mVersionText;
 
+    FirebaseAuth mAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+
+        mAuth = FirebaseAuth.getInstance();
+
         initUI();
     }
 
@@ -52,9 +57,9 @@ public class SettingsActivity extends AppCompatActivity implements UIActivity {
         mLogoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FirebaseAuth.getInstance().signOut();
+                mAuth.signOut();
 
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                FirebaseUser user = mAuth.getCurrentUser();
                 if (user == null) {
                     Intent signOutIntent = new Intent(getApplicationContext(), LoginActivity.class);
                     signOutIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
