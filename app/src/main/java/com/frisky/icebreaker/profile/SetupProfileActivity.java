@@ -1,6 +1,8 @@
 package com.frisky.icebreaker.profile;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,6 +15,7 @@ import android.widget.Toast;
 
 import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.HomeActivity;
+import com.frisky.icebreaker.ui.assistant.UIAssistant;
 import com.frisky.icebreaker.ui.base.FormActivity;
 import com.frisky.icebreaker.ui.base.UIActivity;
 import com.frisky.icebreaker.ui.components.dialogs.PickImageDialog;
@@ -22,7 +25,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 
-public class SetupProfileActivity extends AppCompatActivity implements FormActivity, UIActivity {
+public class SetupProfileActivity extends AppCompatActivity implements FormActivity, UIActivity,
+        PickImageDialog.OnImageUpdatedListener {
 
     ImageView mProfileImage;
     ImageButton mCancelButton;
@@ -101,5 +105,10 @@ public class SetupProfileActivity extends AppCompatActivity implements FormActiv
                 pickImageDialog.show(getSupportFragmentManager(), "pick image dialog");
             }
         });
+    }
+
+    @Override
+    public void imageUpdated(Bitmap bitmap) {
+        mProfileImage.setImageBitmap(UIAssistant.getInstance().getProfileBitmap(bitmap));
     }
 }
