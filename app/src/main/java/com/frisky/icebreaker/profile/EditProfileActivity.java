@@ -1,5 +1,6 @@
 package com.frisky.icebreaker.profile;
 
+import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.content.res.ResourcesCompat;
@@ -11,8 +12,9 @@ import android.widget.TextView;
 
 import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.ui.base.UIActivity;
+import com.frisky.icebreaker.ui.components.dialogs.PickImageDialog;
 
-public class EditProfileActivity extends AppCompatActivity implements UIActivity {
+public class EditProfileActivity extends AppCompatActivity implements UIActivity, PickImageDialog.OnImageUpdatedListener {
 
     TextView mToolbarText;
     ImageButton mBackButton;
@@ -48,5 +50,10 @@ public class EditProfileActivity extends AppCompatActivity implements UIActivity
 
         mDoneButton = findViewById(R.id.button_app_bar_right);
         mDoneButton.setImageResource(R.drawable.round_done_24);
+    }
+
+    @Override
+    public void imageUpdated(Bitmap bitmap) {
+
     }
 }
