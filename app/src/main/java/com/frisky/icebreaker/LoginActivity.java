@@ -2,6 +2,7 @@ package com.frisky.icebreaker;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -51,9 +52,7 @@ public class LoginActivity extends AppCompatActivity implements FormActivity, UI
 
         FirebaseUser user = mAuth.getCurrentUser();
         if (user != null) {
-            Intent launchHome = new Intent(getApplicationContext(), HomeActivity.class);
-            startActivity(launchHome);
-            finish();
+            verifyLogin();
         }
 
         // Configure Google Sign In
@@ -65,6 +64,37 @@ public class LoginActivity extends AppCompatActivity implements FormActivity, UI
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
         initUI();
+    }
+
+    private void verifyLogin() {
+        FirebaseUser user = mAuth.getCurrentUser();
+
+        boolean emailVerified = user.isEmailVerified();
+
+        if (!emailVerified) {
+            user.sendEmailVerification()
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                Log.d("D", "Email sent.");
+                                Toast.makeText(LoginActivity.this, "Verification Email Sent.",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+            return;
+        }
+
+        if (user.getDisplayName() != null) {
+            Intent launchHome = new Intent(getApplicationContext(), HomeActivity.class);
+            startActivity(launchHome);
+            finish();
+        }
+        else {
+            Intent setupProfile = new Intent(getApplicationContext(), SetupProfileActivity.class);
+            startActivity(setupProfile);
+        }
     }
 
     public void initUI() {
@@ -105,16 +135,7 @@ public class LoginActivity extends AppCompatActivity implements FormActivity, UI
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                FirebaseUser user = mAuth.getCurrentUser();
-                                if (user.getDisplayName() != null) {
-                                    Intent launchHome = new Intent(getApplicationContext(), HomeActivity.class);
-                                    startActivity(launchHome);
-                                    finish();
-                                }
-                                else {
-                                    Intent setupProfile = new Intent(getApplicationContext(), SetupProfileActivity.class);
-                                    startActivity(setupProfile);
-                                }
+                                verifyLogin();
                             } else {
                                 Log.w("Warning", "signInWithEmail:failure", task.getException());
                                 Toast.makeText(LoginActivity.this, "Authentication failed.",
