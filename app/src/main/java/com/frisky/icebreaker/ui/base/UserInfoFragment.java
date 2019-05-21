@@ -20,22 +20,22 @@ import java.util.List;
 public abstract class UserInfoFragment extends Fragment {
 
     protected List<String> usersList = new ArrayList<>();
-
     public void setUserInfoMode(UserInfoMode mUserInfoMode) {
         this.mUserInfoMode = mUserInfoMode;
     }
-
     private UserInfoMode mUserInfoMode = null;
 
-    private RecyclerView mRecyclerUsersView;
-    protected RecyclerView.Adapter mUsersViewAdapter;
-    private RecyclerView.LayoutManager mUsersViewLayoutManager;
+    RecyclerView.Adapter mUsersViewAdapter;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        RecyclerView mRecyclerUsersView;
+        RecyclerView.LayoutManager mUsersViewLayoutManager;
+
         View view = null;
         view = setViewLayout(view, inflater);
+
         mRecyclerUsersView = view.findViewById(R.id.recycler_view);
 
         // use a linear layout manager

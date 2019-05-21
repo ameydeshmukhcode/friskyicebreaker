@@ -42,7 +42,5 @@ public class ChatsFragment extends UserInfoFragment {
 
         user = "Samples";
         usersList.add(user);
-
-        mUsersViewAdapter.notifyDataSetChanged();
     }
 }

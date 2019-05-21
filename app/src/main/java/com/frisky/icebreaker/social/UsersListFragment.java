@@ -37,7 +37,5 @@ public class UsersListFragment extends UserInfoFragment {
 
         user = "Place";
         usersList.add(user);
-
-        mUsersViewAdapter.notifyDataSetChanged();
     }
 }

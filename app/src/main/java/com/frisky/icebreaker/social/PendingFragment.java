@@ -43,7 +43,5 @@ public class PendingFragment extends UserInfoFragment {
 
         user = "Samples";
         usersList.add(user);
-
-        mUsersViewAdapter.notifyDataSetChanged();
     }
 }
