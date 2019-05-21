@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.frisky.icebreaker.ui.base.UIActivity;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class SettingsActivity extends AppCompatActivity implements UIActivity {
 
@@ -52,7 +53,16 @@ public class SettingsActivity extends AppCompatActivity implements UIActivity {
             @Override
             public void onClick(View v) {
                 FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                if (user == null) {
+                    Intent signOutIntent = new Intent(getApplicationContext(), LoginActivity.class);
+                    signOutIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
+                            Intent.FLAG_ACTIVITY_CLEAR_TASK |
+                            Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(signOutIntent);
+                    finish();
+                }
             }
         });
 
