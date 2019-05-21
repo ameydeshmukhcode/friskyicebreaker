@@ -82,12 +82,12 @@ public class LoginActivity extends AppCompatActivity implements FormActivity, UI
             }
         });
 
-        mGoogleButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                googleSignIn();
-            }
-        });
+//        mGoogleButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                googleSignIn();
+//            }
+//        });
 
         mSignUpLink.setOnClickListener(new View.OnClickListener() {
             @Override
