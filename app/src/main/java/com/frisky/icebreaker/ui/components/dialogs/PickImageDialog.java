@@ -33,6 +33,9 @@ public class PickImageDialog extends DialogFragment {
 
     private OnImageUpdatedListener onImageUpdatedListener;
 
+    final int PICK_IMAGE_GALLERY = 0;
+    final int PICK_IMAGE_CAMERA = 1;
+
     @Override
     public void onStart() {
         super.onStart();
@@ -44,18 +47,18 @@ public class PickImageDialog extends DialogFragment {
                         Intent.ACTION_PICK,
                         android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 
-                startActivityForResult(getImageFromDevice, 0);
+                startActivityForResult(getImageFromDevice, PICK_IMAGE_GALLERY);
             }
         });
 
-//        cameraButton = getDialog().findViewById(R.id.button_camera);
-//        cameraButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//                startActivityForResult(takePicture, 1);
-//            }
-//        });
+        cameraButton = getDialog().findViewById(R.id.button_camera);
+        cameraButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(takePicture, PICK_IMAGE_CAMERA);
+            }
+        });
     }
 
     @NonNull
@@ -74,14 +77,18 @@ public class PickImageDialog extends DialogFragment {
 
         if (resultCode == RESULT_OK && null != data) {
             Uri selectedImage = data.getData();
-            try {
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), selectedImage);
-                this.onImageUpdatedListener.imageUpdated(bitmap);
-                dismiss();
-            }
-            catch (IOException exp){
-                Log.e("IOException", "Image not found", exp);
-            }
+            if (requestCode == PICK_IMAGE_GALLERY) {
+                try {
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), selectedImage);
+                    this.onImageUpdatedListener.imageUpdated(bitmap);
+                    dismiss();
+                } catch (IOException exp) {
+                    Log.e("IOException", "Image not found", exp);
+                }
+            } else if (requestCode == PICK_IMAGE_CAMERA) {
+                Bitmap photo = (Bitmap) data.getExtras().get("data");
+                this.onImageUpdatedListener.imageUpdated(photo);
+                dismiss();            }
         }
     }
 
