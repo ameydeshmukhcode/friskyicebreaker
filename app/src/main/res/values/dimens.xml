@@ -24,6 +24,7 @@
     <dimen name="button_sec_login_width">90dp</dimen>
     <dimen name="button_square_dimen">50dp</dimen>
     <dimen name="button_send_message_dimen">44dp</dimen>
+    <dimen name="button_add_menu_item_width">60dp</dimen>
 
     <!-- Dividers -->
     <dimen name="divider_height">1dp</dimen>
@@ -36,6 +37,9 @@
     <dimen name="app_bar_text_size">20sp</dimen>
     <dimen name="text_large_banner_size">40sp</dimen>
     <dimen name="text_button_primary_size">24sp</dimen>
+    <dimen name="text_menu_item_title">14sp</dimen>
+    <dimen name="text_menu_item_description">12sp</dimen>
+    <dimen name="text_menu_item_price">14sp</dimen>
 
     <!-- Pub Card -->
     <dimen name="pub_title_size">16sp</dimen>
