@@ -155,6 +155,19 @@
         app:layout_constraintStart_toEndOf="@+id/button_google"
         app:layout_constraintTop_toBottomOf="@+id/or_log_in_with" />
 
+    <TextView
+        android:id="@+id/text_error"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/museosans300"
+        android:gravity="center"
+        android:textColor="@color/appRed"
+        android:textSize="@dimen/text_subtitle_size"
+        app:layout_constraintEnd_toEndOf="@+id/button_login"
+        app:layout_constraintStart_toStartOf="@+id/button_login"
+        app:layout_constraintTop_toBottomOf="@+id/button_google" />
+
     <android.support.constraint.ConstraintLayout
         android:id="@+id/layout_signup"
         android:layout_width="0dp"

@@ -22,9 +22,12 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseNetworkException;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
@@ -34,6 +37,7 @@ public class LoginActivity extends AppCompatActivity implements FormActivity, UI
     Button mLoginButton;
     ImageButton mGoogleButton;
     TextView mSignUpLink;
+    TextView mErrorText;
 
     EditText mEmailInput;
     EditText mPasswordInput;
@@ -69,6 +73,7 @@ public class LoginActivity extends AppCompatActivity implements FormActivity, UI
         mLoginButton = findViewById(R.id.button_login);
         mGoogleButton = findViewById(R.id.button_google);
         mSignUpLink = findViewById(R.id.link_sign_up);
+        mErrorText = findViewById(R.id.text_error);
 
         mEmailInput = findViewById(R.id.input_email);
         mPasswordInput = findViewById(R.id.input_password);
@@ -105,9 +110,21 @@ public class LoginActivity extends AppCompatActivity implements FormActivity, UI
                             if (task.isSuccessful()) {
                                 verifyLogin();
                             } else {
+                                try {
+                                    throw task.getException();
+                                } catch (FirebaseAuthInvalidUserException e) {
+                                    Log.e("Create User Error", e.getErrorCode());
+                                    mErrorText.setText(getString(R.string.error_not_signed_up));
+                                } catch (FirebaseAuthInvalidCredentialsException e) {
+                                    Log.e("Create User Error", e.getErrorCode());
+                                    mErrorText.setText(getString(R.string.error_incorrect_password));
+                                } catch (FirebaseNetworkException e) {
+                                    Log.e("Create User Error", e.getMessage());
+                                    mErrorText.setText(getString(R.string.error_network));
+                                } catch (Exception e) {
+                                    Log.e("Sign In Error", e.getMessage());
+                                }
                                 Log.w("Warning", "signInWithEmail:failure", task.getException());
-                                Toast.makeText(LoginActivity.this, "Authentication failed.",
-                                        Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
