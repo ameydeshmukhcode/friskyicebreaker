@@ -51,6 +51,8 @@ public class LoginActivity extends AppCompatActivity implements FormActivity, UI
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        initUI();
+
         mAuth = FirebaseAuth.getInstance();
 
         FirebaseUser user = mAuth.getCurrentUser();
@@ -65,8 +67,6 @@ public class LoginActivity extends AppCompatActivity implements FormActivity, UI
                 .build();
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-
-        initUI();
     }
 
     public void initUI() {
@@ -102,6 +102,8 @@ public class LoginActivity extends AppCompatActivity implements FormActivity, UI
     }
 
     private void handleLogin() {
+        mErrorText.setText("");
+        mErrorText.setOnClickListener(null);
         if (validateForm()){
             mAuth.signInWithEmailAndPassword(mEmailInput.getText().toString(), mPasswordInput.getText().toString())
                     .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
@@ -198,26 +200,32 @@ public class LoginActivity extends AppCompatActivity implements FormActivity, UI
     }
 
     private void verifyLogin() {
-        FirebaseUser user = mAuth.getCurrentUser();
+        final FirebaseUser user = mAuth.getCurrentUser();
 
         if (user == null) {
             return;
         }
-
+        
         boolean emailVerified = user.isEmailVerified();
 
         if (!emailVerified) {
-            user.sendEmailVerification()
-                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()) {
-                                Log.d("D", "Email sent.");
-                                Toast.makeText(LoginActivity.this, "Verification Email Sent.",
-                                        Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
+            mErrorText.setText(getString(R.string.error_email_not_verified));
+            mErrorText.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    user.sendEmailVerification()
+                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {
+                                        Log.d("D", "Email sent.");
+                                        Toast.makeText(LoginActivity.this, "Verification Email Sent.",
+                                                Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
+                }
+            });
             return;
         }
 
