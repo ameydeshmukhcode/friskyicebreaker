@@ -205,7 +205,7 @@ public class LoginActivity extends AppCompatActivity implements FormActivity, UI
         if (user == null) {
             return;
         }
-        
+
         boolean emailVerified = user.isEmailVerified();
 
         if (!emailVerified) {

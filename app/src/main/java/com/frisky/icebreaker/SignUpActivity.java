@@ -16,6 +16,7 @@ import com.frisky.icebreaker.ui.base.FormActivity;
 import com.frisky.icebreaker.ui.base.UIActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseNetworkException;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
@@ -85,6 +86,9 @@ public class SignUpActivity extends AppCompatActivity implements FormActivity, U
                                 } catch(FirebaseAuthUserCollisionException e) {
                                     Log.e("Create User Error", e.getErrorCode());
                                     mErrorText.setText(getString(R.string.error_duplicate_email));
+                                } catch (FirebaseNetworkException e) {
+                                    Log.e("Create User Error", e.getMessage());
+                                    mErrorText.setText(getString(R.string.error_network));
                                 } catch(Exception e) {
                                     Log.e("Create User Error", e.getMessage());
                                 }
