@@ -91,6 +91,11 @@
     <string name="image_gallery">Choose from Gallery</string>
     <string name="image_camera">Take a new photo</string>
 
+    <!-- Errors -->
+    <string name="error_weak_password">Weak password.\nPassword length should be more than 6 characters.</string>
+    <string name="error_invalid_email">Invalid email entered. Enter a valid email.</string>
+    <string name="error_duplicate_email">Account with this email already exists.\nTry \'Forgot Password?\'</string>
+
     <string name="placeholder">dummy</string>
     <string name="placeholder_number">23</string>
 </resources>
