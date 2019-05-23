@@ -1,39 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:elevation="2dp">
 
     <android.support.constraint.ConstraintLayout
+        android:id="@+id/layout_tabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0"
         android:background="@color/tintLight"
-        android:elevation="10dp">
+        android:elevation="2dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_conversion_absoluteHeight="48dp"
+        tools:layout_conversion_absoluteWidth="0dp">
 
         <android.support.design.widget.TabLayout
             android:id="@+id/tab_social"
+            style="@style/FriskyTabAppearance"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
-            android:layout_weight="0"
             android:backgroundTint="@color/tintLight"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:tabIndicatorHeight="35dp"
-            style="@style/FriskyTabAppearance"/>
+            app:tabIndicatorHeight="@dimen/tab_indicator_height"
+            tools:layout_conversion_absoluteHeight="48dp"
+            tools:layout_conversion_absoluteWidth="0dp" />
     </android.support.constraint.ConstraintLayout>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/pager_social"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layout_tabs"
+        tools:layout_conversion_absoluteHeight="683dp">
 
     </android.support.v4.view.ViewPager>
-</LinearLayout>
+</android.support.constraint.ConstraintLayout>

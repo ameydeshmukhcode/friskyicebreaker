@@ -4,13 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.HomeActivity">
+    tools:context=".HomeActivity">
 
     <include
         android:id="@+id/app_bar_home"
         layout="@layout/app_bar"
         android:layout_width="0dp"
-        android:layout_height="50dp"
+        android:layout_height="@dimen/app_bar_height"
+        android:elevation="@dimen/app_bar_elevation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -19,7 +20,6 @@
         android:id="@+id/home_activity_fragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/bottom_nav_home"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -31,18 +31,18 @@
         android:id="@+id/bottom_nav_home"
         layout="@layout/bottom_navigation"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="@dimen/bottom_nav_height"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageButton
         android:id="@+id/button_icebreaker"
-        android:layout_width="65dp"
-        android:layout_height="65dp"
+        android:layout_width="@dimen/icebreaker_dimen"
+        android:layout_height="@dimen/icebreaker_dimen"
         android:background="@color/transparent"
-        android:elevation="15dp"
-        android:padding="5dp"
+        android:elevation="@dimen/icebreaker_elevation"
+        android:padding="@dimen/icebreaker_padding"
         android:scaleType="fitCenter"
         android:src="@drawable/icebreaker"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -20,77 +20,75 @@
         android:foreground="?attr/selectableItemBackground" >
 
         <ImageView
-            android:id="@+id/image"
+            android:id="@+id/image_pub"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:scaleType="centerCrop"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/title"
+            app:layout_constraintEnd_toStartOf="@+id/text_title"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/placeholder" />
 
         <TextView
-            android:id="@+id/title"
+            android:id="@+id/text_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="7dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="7dp"
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="6dp"
             android:fontFamily="@font/museosans700"
             android:text="@string/placeholder"
             android:textColor="@color/textDark"
-            android:textSize="16sp"
+            android:textSize="@dimen/pub_title_size"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/image"
+            app:layout_constraintStart_toEndOf="@+id/image_pub"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/location"
+            android:id="@+id/text_location"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/museosans300"
             android:text="@string/placeholder"
             android:textColor="@color/textDark"
-            android:textSize="12sp"
-            app:layout_constraintEnd_toEndOf="@+id/title"
-            app:layout_constraintStart_toStartOf="@+id/title"
-            app:layout_constraintTop_toBottomOf="@+id/title" />
+            android:textSize="@dimen/pub_extra_info_size"
+            app:layout_constraintEnd_toEndOf="@+id/text_title"
+            app:layout_constraintStart_toStartOf="@+id/text_title"
+            app:layout_constraintTop_toBottomOf="@+id/text_title" />
 
         <TextView
-            android:id="@+id/tag_list"
+            android:id="@+id/text_tag_list"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/museosans300"
             android:text="@string/placeholder"
             android:textColor="@color/textDark"
-            android:textSize="12sp"
-            app:layout_constraintEnd_toEndOf="@+id/title"
-            app:layout_constraintStart_toStartOf="@+id/title"
-            app:layout_constraintTop_toBottomOf="@+id/location" />
+            android:textSize="@dimen/pub_extra_info_size"
+            app:layout_constraintEnd_toEndOf="@+id/text_title"
+            app:layout_constraintStart_toStartOf="@+id/text_title"
+            app:layout_constraintTop_toBottomOf="@+id/text_location" />
 
         <TextView
-            android:id="@+id/rating"
+            android:id="@+id/text_rating"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="5dp"
-            android:background="@drawable/pub_rating_very_high"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="6dp"
+            android:layout_marginBottom="6dp"
+            android:background="@drawable/background_badge"
             android:fontFamily="@font/museosans900"
             android:gravity="center"
-            android:paddingStart="5dp"
+            android:paddingStart="4dp"
             android:paddingTop="4dp"
-            android:paddingEnd="5dp"
+            android:paddingEnd="4dp"
             android:paddingBottom="4dp"
-            android:text="4.5"
+            android:text="@string/placeholder_number"
             android:textColor="@color/textLight"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintDimensionRatio="1"
-            app:layout_constraintEnd_toEndOf="@+id/title"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="@+id/tag_list"
-            app:layout_constraintTop_toBottomOf="@+id/tag_list"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_tag_list"
             app:layout_constraintVertical_bias="1.0" />
     </android.support.constraint.ConstraintLayout>
 </android.support.design.card.MaterialCardView>

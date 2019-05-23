@@ -2,17 +2,16 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/coordinatorLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.profile.EditProfileActivity">
+    tools:context=".profile.EditProfileActivity">
 
     <include
         android:id="@+id/app_bar_edit_profile"
         layout="@layout/app_bar"
         android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:elevation="10dp"
+        android:layout_height="@dimen/app_bar_height"
+        android:elevation="@dimen/app_bar_height"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -46,25 +45,25 @@
             android:fontFamily="@font/museosans300"
             android:text="@string/about_me"
             android:textColor="@color/textDark"
-            android:textSize="15sp"
+            android:textSize="@dimen/text_subtitle_size"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/edit_about_me"
+            android:id="@+id/input_about_me"
             android:layout_width="0dp"
-            android:layout_height="85dp"
-            android:layout_marginTop="5dp"
-            android:background="@drawable/background_secondary_extra"
+            android:layout_height="@dimen/input_about_me_height"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/background_round_rect"
             android:ems="10"
             android:fontFamily="@font/museosans300"
             android:gravity="start|top"
             android:hint="@string/sample_bio"
             android:inputType="textMultiLine"
-            android:padding="10dp"
+            android:padding="@dimen/bg_round_rect_radius"
             android:textColor="@color/textDark"
             android:textIsSelectable="true"
-            android:textSize="15sp"
+            android:textSize="@dimen/text_multiline_input_size"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/about_me" />

@@ -16,8 +16,8 @@
 
         <ImageView
             android:id="@+id/image_user"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="@dimen/user_image_dimen"
+            android:layout_height="@dimen/user_image_dimen"
             android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
@@ -36,15 +36,15 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:layout_marginEnd="12dp"
-            android:fontFamily="@font/museosans700"
+            android:fontFamily="@font/museosans300"
             android:text="@string/placeholder"
             android:textColor="@color/textDark"
-            android:textSize="15sp"
+            android:textSize="@dimen/text_title_size"
+            android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/text_last_message"
             app:layout_constraintEnd_toStartOf="@+id/text_message_count"
             app:layout_constraintStart_toEndOf="@+id/image_user"
-            app:layout_constraintTop_toTopOf="@+id/image_user"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintTop_toTopOf="@+id/image_user" />
 
         <TextView
             android:id="@+id/text_last_message"
@@ -62,34 +62,21 @@
             android:id="@+id/text_message_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
             android:layout_marginEnd="20dp"
-            android:layout_marginBottom="8dp"
-            android:background="@drawable/background_primary"
+            android:background="@drawable/background_circular"
+            android:backgroundTint="@color/colorPrimary"
             android:fontFamily="@font/museosans700"
-            android:paddingStart="5dp"
-            android:paddingTop="3dp"
-            android:paddingEnd="5dp"
-            android:paddingBottom="3dp"
+            android:paddingStart="4dp"
+            android:paddingTop="4dp"
+            android:paddingEnd="4dp"
+            android:paddingBottom="4dp"
             android:text="@string/placeholder_number"
             android:textAlignment="center"
             android:textColor="@color/textLight"
-            android:textSize="12sp"
+            android:textSize="@dimen/unread_message_count_size"
             app:layout_constraintBottom_toBottomOf="@+id/text_last_message"
-            app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/text_name" />
-
-        <View
-            android:id="@+id/bottomline"
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:background="@color/backgroundLight"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
 
     </android.support.constraint.ConstraintLayout>
 </android.support.design.card.MaterialCardView>

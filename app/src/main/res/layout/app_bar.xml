@@ -2,12 +2,23 @@
 
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/app_bar_base"
     android:layout_width="match_parent"
     android:layout_height="50dp"
     android:background="@color/colorPrimary"
     android:elevation="@dimen/app_bar_elevation"
     android:theme="@style/Base.ThemeOverlay.AppCompat.Dark.ActionBar">
+
+    <ImageButton
+        android:id="@+id/button_app_bar_left"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/transparent"
+        android:scaleType="centerInside"
+        android:tint="@color/tintLight"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/text_app_bar"
@@ -20,18 +31,6 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
-        android:id="@+id/button_app_bar_left"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@color/transparent"
-        android:scaleType="centerInside"
-        android:tint="@color/tintLight"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintDimensionRatio="w,1:1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageButton
         android:id="@+id/button_app_bar_right"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -39,7 +38,7 @@
         android:scaleType="centerInside"
         android:tint="@color/tintLight"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintDimensionRatio="1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>

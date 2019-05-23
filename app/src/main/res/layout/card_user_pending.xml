@@ -15,8 +15,8 @@
 
         <ImageView
             android:id="@+id/image_user"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="@dimen/user_image_dimen"
+            android:layout_height="@dimen/user_image_dimen"
             android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
@@ -29,22 +29,6 @@
             app:srcCompat="@drawable/placeholder" />
 
         <TextView
-            android:id="@+id/text_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_marginEnd="20dp"
-            android:fontFamily="@font/museosans700"
-            android:text="@string/placeholder"
-            android:textColor="@color/textDark"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="@+id/text_ping_status"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/text_ping_status"
-            app:layout_constraintTop_toTopOf="@+id/text_ping_status" />
-
-        <TextView
             android:id="@+id/text_ping_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -52,21 +36,27 @@
             android:fontFamily="@font/museosans300"
             android:text="@string/ping_send"
             android:textColor="@color/textDark"
-            android:textSize="16sp"
+            android:textSize="@dimen/text_title_size"
             app:layout_constraintBottom_toBottomOf="@+id/image_user"
             app:layout_constraintStart_toEndOf="@+id/image_user"
             app:layout_constraintTop_toTopOf="@+id/image_user" />
 
-        <View
-            android:id="@+id/bottomline"
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:background="@color/backgroundLight"
-            app:layout_constraintBottom_toBottomOf="parent"
+        <TextView
+            android:id="@+id/text_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="20dp"
+            android:fontFamily="@font/museosans300"
+            android:text="@string/placeholder"
+            android:textColor="@color/textDark"
+            android:textSize="@dimen/text_title_size"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/text_ping_status"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/text_ping_status"
+            app:layout_constraintTop_toTopOf="@+id/text_ping_status" />
 
     </android.support.constraint.ConstraintLayout>
 </android.support.design.card.MaterialCardView>

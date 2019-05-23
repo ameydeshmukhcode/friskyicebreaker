@@ -4,12 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.profile.ViewUserActivity">
+    tools:context=".profile.ViewUserActivity">
 
     <ImageButton
         android:id="@+id/button_back"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="@dimen/button_square_dimen"
+        android:layout_height="@dimen/button_square_dimen"
         android:background="@color/transparent"
         android:tint="@color/tintDark"
         app:layout_constraintStart_toStartOf="parent"
@@ -20,72 +20,78 @@
         android:id="@+id/pager_profile_images"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginEnd="15dp"
-        android:visibility="visible"
-        app:layout_constraintDimensionRatio="1:1"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintDimensionRatio="1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_back">
 
     </android.support.v4.view.ViewPager>
 
-    <TextView
-        android:id="@+id/text_name"
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/layout_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginBottom="20dp"
-        android:fontFamily="@font/museosans700"
-        android:padding="5dp"
-        android:text="@string/name"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="@color/textLight"
-        android:textSize="24sp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/background_badge"
+        android:backgroundTint="@color/backgroundDarkTranslucent"
+        android:padding="6dp"
         app:layout_constraintBottom_toBottomOf="@+id/pager_profile_images"
-        app:layout_constraintStart_toStartOf="@+id/pager_profile_images" />
+        app:layout_constraintStart_toStartOf="@+id/pager_profile_images">
 
-    <TextView
-        android:id="@+id/comma"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/museosans700"
-        android:padding="5dp"
-        android:text="@string/comma"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="@color/textLight"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="@+id/text_name"
-        app:layout_constraintStart_toEndOf="@+id/text_name"
-        app:layout_constraintTop_toTopOf="@+id/text_name" />
+        <TextView
+            android:id="@+id/text_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/museosans700"
+            android:text="@string/name"
+            android:textColor="@color/textLight"
+            android:textSize="@dimen/text_title_size"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/text_age"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/museosans700"
-        android:padding="5dp"
-        android:text="@string/placeholder_number"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="@color/textLight"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="@+id/text_name"
-        app:layout_constraintStart_toEndOf="@+id/comma"
-        app:layout_constraintTop_toTopOf="@+id/text_name" />
+        <TextView
+            android:id="@+id/comma"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/museosans700"
+            android:text="@string/comma"
+            android:textColor="@color/textLight"
+            android:textSize="@dimen/text_title_size"
+            app:layout_constraintBottom_toBottomOf="@+id/text_name"
+            app:layout_constraintStart_toEndOf="@+id/text_name"
+            app:layout_constraintTop_toTopOf="@+id/text_name" />
+
+        <TextView
+            android:id="@+id/text_age"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/museosans700"
+            android:paddingStart="4dp"
+            android:text="@string/placeholder_number"
+            android:textColor="@color/textLight"
+            android:textSize="@dimen/text_title_size"
+            app:layout_constraintBottom_toBottomOf="@+id/text_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/comma"
+            app:layout_constraintTop_toTopOf="@+id/text_name" />
+
+    </android.support.constraint.ConstraintLayout>
 
     <android.support.design.widget.TabLayout
         android:id="@+id/tab_image"
         android:layout_width="0dp"
-        android:layout_height="10dp"
+        android:layout_height="@dimen/image_tabs_height"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="5dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="5dp"
         android:background="@color/transparent"
         app:layout_constraintBottom_toBottomOf="@+id/pager_profile_images"
         app:layout_constraintEnd_toEndOf="@+id/pager_profile_images"
         app:layout_constraintStart_toStartOf="@+id/pager_profile_images"
-        app:layout_constraintTop_toBottomOf="@+id/text_name"
+        app:layout_constraintTop_toBottomOf="@+id/layout_info"
         app:tabBackground="@drawable/tab_selector"
         app:tabGravity="fill"
         app:tabIndicatorHeight="0dp"
@@ -97,6 +103,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/pager_profile_images">
@@ -108,7 +117,7 @@
             android:fontFamily="@font/museosans300"
             android:text="@string/about_me"
             android:textColor="@color/textDark"
-            android:textSize="15sp"
+            android:textSize="@dimen/text_subtitle_size"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -116,10 +125,10 @@
             android:id="@+id/text_bio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="8dp"
             android:fontFamily="@font/museosans300"
             android:text="@string/sample_bio"
-            android:textSize="20sp"
+            android:textSize="@dimen/text_title_size"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/about_me" />
     </android.support.constraint.ConstraintLayout>
@@ -128,12 +137,12 @@
         android:id="@+id/fab_break_ice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
         android:clickable="true"
         android:focusable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/icebreaker"
-        android:layout_gravity="bottom|end" />
+        app:srcCompat="@drawable/icebreaker" />
 
 </android.support.constraint.ConstraintLayout>

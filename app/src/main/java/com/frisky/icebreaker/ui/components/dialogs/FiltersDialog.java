@@ -11,9 +11,6 @@ import com.frisky.icebreaker.R;
 
 public class FiltersDialog extends Dialog {
 
-    Button mApplyButton;
-    Button mCancelButton;
-
     public FiltersDialog(Context context) {
         super(context);
     }
@@ -23,6 +20,9 @@ public class FiltersDialog extends Dialog {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.dialog_filters);
+
+        Button mCancelButton;
+        Button mApplyButton;
 
         mApplyButton = findViewById(R.id.button_apply);
         mCancelButton = findViewById(R.id.button_cancel);

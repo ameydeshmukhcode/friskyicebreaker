@@ -16,11 +16,11 @@
         <item name="android:textAllCaps">false</item>
         <item name="android:fontFamily">@font/museosans700</item>
         <item name="android:textColor">@color/textDark</item>
-        <item name="android:textSize">15sp</item>
+        <item name="android:textSize">16sp</item>
     </style>
 
     <style name="FriskyTabAppearance" parent="Widget.MaterialComponents.TabLayout">
-        <item name="tabIndicator">@drawable/background_tab_selected</item>
+        <item name="tabIndicator">@drawable/background_round_rect</item>
         <item name="tabIndicatorColor">@color/backgroundLight</item>
         <item name="tabIndicatorFullWidth">true</item>
         <item name="tabIndicatorGravity">center</item>

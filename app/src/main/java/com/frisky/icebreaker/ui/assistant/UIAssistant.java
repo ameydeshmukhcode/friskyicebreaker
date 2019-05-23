@@ -21,21 +21,6 @@ public class UIAssistant {
     private UIAssistant() {
     }
 
-    public int getRatingBadgeBackground(double rating) {
-        if (rating >= 4.0) {
-            return R.drawable.pub_rating_very_high;
-        }
-        else if (rating >= 3.5) {
-            return R.drawable.pub_rating_high;
-        }
-        else if (rating >= 2.5) {
-            return R.drawable.pub_rating_low;
-        }
-        else {
-            return R.drawable.pub_rating_very_low;
-        }
-    }
-
     public int getRatingBadgeColor(double rating) {
         if (rating >= 4.0) {
             return R.color.rating_very_high;

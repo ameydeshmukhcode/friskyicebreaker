@@ -4,15 +4,78 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.SettingsActivity">
+    tools:context=".SettingsActivity">
 
     <include
+        android:id="@+id/app_bar_settings"
         layout="@layout/app_bar"
         android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:elevation="10dp"
+        android:layout_height="@dimen/app_bar_height"
+        android:elevation="@dimen/app_bar_elevation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/layout_version"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/button_logout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/app_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/ktfroadstar"
+            android:text="@string/app_name"
+            android:textColor="@color/colorPrimary"
+            android:textSize="30sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/version"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:fontFamily="@font/museosans300"
+            android:text="@string/version"
+            android:textSize="@dimen/text_title_size"
+            app:layout_constraintBottom_toBottomOf="@+id/app_name"
+            app:layout_constraintStart_toEndOf="@+id/app_name"
+            app:layout_constraintTop_toTopOf="@+id/app_name" />
+
+        <TextView
+            android:id="@+id/text_version"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:fontFamily="@font/museosans300"
+            android:text="@string/placeholder_number"
+            android:textSize="@dimen/text_title_size"
+            app:layout_constraintBottom_toBottomOf="@+id/app_name"
+            app:layout_constraintStart_toEndOf="@+id/version"
+            app:layout_constraintTop_toTopOf="@+id/app_name" />
+    </android.support.constraint.ConstraintLayout>
+
+    <Button
+        android:id="@+id/button_logout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/backgroundLight"
+        android:drawableTint="@color/tintDark"
+        android:fontFamily="@font/museosans700"
+        android:foreground="?attr/selectableItemBackground"
+        android:text="@string/logout"
+        android:textAllCaps="false"
+        android:textColor="@color/textDark"
+        android:textSize="@dimen/text_title_size"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
