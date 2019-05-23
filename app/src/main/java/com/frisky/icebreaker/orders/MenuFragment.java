@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.frisky.icebreaker.R;
-import com.frisky.icebreaker.pubs.PubListFragment;
 
 public class MenuFragment extends Fragment {
 
@@ -20,9 +19,9 @@ public class MenuFragment extends Fragment {
         View view;
         view = inflater.inflate(R.layout.fragment_menu, null);
 
-        Fragment pubListFragment = new PubListFragment();
+        Fragment menuItemListFragment = new MenuItemListFragment();
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame_submenu, pubListFragment).commit();
+        transaction.replace(R.id.frame_submenu, menuItemListFragment).commit();
 
         return view;
     }

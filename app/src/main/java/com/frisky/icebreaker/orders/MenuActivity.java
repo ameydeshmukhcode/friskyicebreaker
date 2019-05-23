@@ -39,5 +39,9 @@ public class MenuActivity extends AppCompatActivity implements UIActivity {
                 startActivity(new Intent(getApplicationContext(), OrderActivity.class));
             }
         });
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.frame_menu, new MenuFragment())
+                .commit();
     }
 }
