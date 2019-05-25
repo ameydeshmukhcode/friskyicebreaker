@@ -31,12 +31,15 @@ import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
-public class LoginActivity extends AppCompatActivity implements FormActivity, UIActivity {
+public class SignInActivity extends AppCompatActivity implements FormActivity, UIActivity {
 
     private static final int RC_SIGN_IN = 1;
+    private int PW_ENTRY_FAILED = 0;
+
     Button mLoginButton;
     ImageButton mGoogleButton;
     TextView mSignUpLink;
+    TextView mForgotPasswordLink;
     TextView mErrorText;
 
     EditText mEmailInput;
@@ -49,7 +52,7 @@ public class LoginActivity extends AppCompatActivity implements FormActivity, UI
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_sign_in);
 
         initUI();
 
@@ -74,6 +77,7 @@ public class LoginActivity extends AppCompatActivity implements FormActivity, UI
         mGoogleButton = findViewById(R.id.button_google);
         mSignUpLink = findViewById(R.id.link_sign_up);
         mErrorText = findViewById(R.id.text_error);
+        mForgotPasswordLink = findViewById(R.id.link_forgot_password);
 
         mEmailInput = findViewById(R.id.input_email);
         mPasswordInput = findViewById(R.id.input_password);
@@ -99,6 +103,46 @@ public class LoginActivity extends AppCompatActivity implements FormActivity, UI
                 startActivity(startSignUpActivity);
             }
         });
+
+        mForgotPasswordLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String email = mEmailInput.getText().toString();
+
+                if (email.equals("")) {
+                    Toast.makeText(SignInActivity.this, "Enter email",
+                            Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                mAuth.sendPasswordResetEmail(email)
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    Log.d("Reset Password", "Email sent.");
+                                    mErrorText.setText(getString(R.string.error_password_reset_email));
+                                }
+                                else {
+                                    try {
+                                        throw task.getException();
+                                    }
+                                    catch (FirebaseAuthInvalidUserException e) {
+                                        Log.e("Create User Error", e.getErrorCode());
+                                        mErrorText.setText(getString(R.string.error_not_signed_up));
+                                    }
+                                    catch (FirebaseAuthInvalidCredentialsException e) {
+                                        Log.e("Create User Error", e.getErrorCode());
+                                        mErrorText.setText(getString(R.string.error_incorrect_password));
+                                    }
+                                    catch (Exception exp) {
+                                        Log.e("Reset password error", exp.toString());
+                                    }
+                                }
+                            }
+                        });
+            }
+        });
     }
 
     private void handleLogin() {
@@ -106,27 +150,42 @@ public class LoginActivity extends AppCompatActivity implements FormActivity, UI
         mErrorText.setOnClickListener(null);
         if (validateForm()){
             mAuth.signInWithEmailAndPassword(mEmailInput.getText().toString(), mPasswordInput.getText().toString())
-                    .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                    .addOnCompleteListener(SignInActivity.this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
                                 verifyLogin();
-                            } else {
+                            }
+                            else {
                                 try {
                                     throw task.getException();
-                                } catch (FirebaseAuthInvalidUserException e) {
-                                    Log.e("Create User Error", e.getErrorCode());
+                                }
+                                catch (FirebaseAuthInvalidUserException e) {
+                                    Log.e("Sign In Error", e.getErrorCode());
                                     mErrorText.setText(getString(R.string.error_not_signed_up));
-                                } catch (FirebaseAuthInvalidCredentialsException e) {
-                                    Log.e("Create User Error", e.getErrorCode());
-                                    mErrorText.setText(getString(R.string.error_incorrect_password));
-                                } catch (FirebaseNetworkException e) {
-                                    Log.e("Create User Error", e.getMessage());
+                                }
+                                catch (FirebaseAuthInvalidCredentialsException e) {
+                                    Log.e("Sign In Error", e.getErrorCode());
+                                    if (e.getErrorCode().equals("ERROR_INVALID_EMAIL")) {
+                                        mErrorText.setText(getString(R.string.error_invalid_email));
+                                    }
+                                    else if (e.getErrorCode().equals("ERROR_WRONG_PASSWORD")) {
+                                        if (PW_ENTRY_FAILED > 2) {
+                                            mErrorText.setText(getString(R.string.error_password_reset_hint));
+                                            return;
+                                        }
+                                        mErrorText.setText(getString(R.string.error_incorrect_password));
+                                        PW_ENTRY_FAILED++;
+                                    }
+                                }
+                                catch (FirebaseNetworkException e) {
+                                    Log.e("Sign In Error", e.getMessage());
                                     mErrorText.setText(getString(R.string.error_network));
-                                } catch (Exception e) {
+                                }
+                                catch (Exception e) {
                                     Log.e("Sign In Error", e.getMessage());
                                 }
-                                Log.w("Warning", "signInWithEmail:failure", task.getException());
+                                Log.e("Sign In Error", "signInWithEmail:failure", task.getException());
                             }
                         }
                     });
@@ -151,7 +210,8 @@ public class LoginActivity extends AppCompatActivity implements FormActivity, UI
                 if (account != null) {
                     firebaseAuthWithGoogle(account);
                 }
-            } catch (ApiException e) {
+            }
+            catch (ApiException e) {
                 // Google Sign In failed, update UI appropriately
                 Log.w("Warning", "Google sign in failed", e);
             }
@@ -169,11 +229,10 @@ public class LoginActivity extends AppCompatActivity implements FormActivity, UI
                             Intent launchHome = new Intent(getApplicationContext(), HomeActivity.class);
                             startActivity(launchHome);
                             finish();
-                        } else {
+                        }
+                        else {
                             // If sign in fails, display a message to the user.
                             Log.w("Warning", "signInWithCredential:failure", task.getException());
-                            Toast.makeText(LoginActivity.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -185,13 +244,13 @@ public class LoginActivity extends AppCompatActivity implements FormActivity, UI
         String password = mPasswordInput.getText().toString();
 
         if (email.matches("")) {
-            Toast.makeText(LoginActivity.this, "Enter email",
+            Toast.makeText(SignInActivity.this, "Enter email",
                     Toast.LENGTH_SHORT).show();
             return false;
         }
 
         if (password.matches("")) {
-            Toast.makeText(LoginActivity.this, "Enter password",
+            Toast.makeText(SignInActivity.this, "Enter password",
                     Toast.LENGTH_SHORT).show();
             return false;
         }
@@ -218,8 +277,8 @@ public class LoginActivity extends AppCompatActivity implements FormActivity, UI
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if (task.isSuccessful()) {
-                                        Log.d("D", "Email sent.");
-                                        Toast.makeText(LoginActivity.this, "Verification Email Sent.",
+                                        Log.d("Verification email", "Email sent.");
+                                        Toast.makeText(SignInActivity.this, "Verification Email Sent.",
                                                 Toast.LENGTH_SHORT).show();
                                     }
                                 }

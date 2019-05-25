@@ -5,7 +5,7 @@
     <string name="password">Password</string>
     <string name="comma">,</string>
     <string name="email">Email</string>
-    <string name="logout">Log out</string>
+    <string name="logout">Log Out</string>
     <string name="version">Version</string>
     <string name="facebook">Facebook</string>
     <string name="google">Google</string>
@@ -13,11 +13,11 @@
     <string name="cancel">Cancel</string>
 
     <!--Login Page-->
-    <string name="login">Login</string>
+    <string name="sign_in">Sign In</string>
     <string name="password_forgot">Forgot Password?</string>
-    <string name="alternate_login">or Log in with</string>
+    <string name="alternate_sign_in">or sign in with</string>
     <string name="no_account">Don\'t have an account?</string>
-    <string name="sign_up">Sign up</string>
+    <string name="sign_up">Sign Up</string>
 
     <!--Sign up page-->
     <string name="password_confirm">Confirm Password</string>
@@ -99,6 +99,8 @@
     <string name="error_incorrect_password">Incorrect password entered.</string>
     <string name="error_network">Check your network connection.</string>
     <string name="error_email_not_verified">You need to verify your email.\nClick here to send verification link.</string>
+    <string name="error_password_reset_email">Password reset link sent to your email.</string>
+    <string name="error_password_reset_hint">Seems like you\'ve forgotten your password.\nTry \'Forgot Password?\'</string>
 
     <string name="placeholder">dummy</string>
     <string name="placeholder_number">23</string>

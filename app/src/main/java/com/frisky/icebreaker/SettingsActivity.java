@@ -1,7 +1,6 @@
 package com.frisky.icebreaker;
 
 import android.content.Intent;
-import android.content.pm.PackageInfo;
 import android.graphics.Typeface;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -61,7 +60,7 @@ public class SettingsActivity extends AppCompatActivity implements UIActivity {
 
                 FirebaseUser user = mAuth.getCurrentUser();
                 if (user == null) {
-                    Intent signOutIntent = new Intent(getApplicationContext(), LoginActivity.class);
+                    Intent signOutIntent = new Intent(getApplicationContext(), SignInActivity.class);
                     signOutIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
                             Intent.FLAG_ACTIVITY_CLEAR_TASK |
                             Intent.FLAG_ACTIVITY_NEW_TASK);
