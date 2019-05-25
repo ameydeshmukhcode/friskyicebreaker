@@ -34,6 +34,8 @@ import com.google.firebase.auth.GoogleAuthProvider;
 public class SignInActivity extends AppCompatActivity implements FormActivity, UIActivity {
 
     private static final int RC_SIGN_IN = 1;
+    private int PW_ENTRY_FAILED = 0;
+
     Button mLoginButton;
     ImageButton mGoogleButton;
     TextView mSignUpLink;
@@ -168,7 +170,12 @@ public class SignInActivity extends AppCompatActivity implements FormActivity, U
                                         mErrorText.setText(getString(R.string.error_invalid_email));
                                     }
                                     else if (e.getErrorCode().equals("ERROR_WRONG_PASSWORD")) {
+                                        if (PW_ENTRY_FAILED > 2) {
+                                            mErrorText.setText(getString(R.string.error_password_reset_hint));
+                                            return;
+                                        }
                                         mErrorText.setText(getString(R.string.error_incorrect_password));
+                                        PW_ENTRY_FAILED++;
                                     }
                                 }
                                 catch (FirebaseNetworkException e) {
