@@ -99,6 +99,7 @@
     <string name="error_incorrect_password">Incorrect password entered.</string>
     <string name="error_network">Check your network connection.</string>
     <string name="error_email_not_verified">You need to verify your email.\nClick here to send verification link.</string>
+    <string name="error_password_reset_email">Password reset link sent to your email.</string>
 
     <string name="placeholder">dummy</string>
     <string name="placeholder_number">23</string>
