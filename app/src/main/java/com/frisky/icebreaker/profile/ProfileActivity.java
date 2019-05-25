@@ -1,10 +1,13 @@
 package com.frisky.icebreaker.profile;
 
 import android.content.Intent;
+import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -14,8 +17,17 @@ import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.LoginActivity;
 import com.frisky.icebreaker.SettingsActivity;
 import com.frisky.icebreaker.ui.base.UIActivity;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ProfileActivity extends AppCompatActivity implements UIActivity {
 
@@ -27,6 +39,8 @@ public class ProfileActivity extends AppCompatActivity implements UIActivity {
     TextView mNameText;
 
     FirebaseAuth mAuth;
+    FirebaseStorage mStorage;
+    StorageReference storageReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +48,8 @@ public class ProfileActivity extends AppCompatActivity implements UIActivity {
         setContentView(R.layout.activity_profile);
 
         mAuth = FirebaseAuth.getInstance();
+        mStorage = FirebaseStorage.getInstance();
+        storageReference = mStorage.getReference();
 
         initUI();
     }
@@ -78,5 +94,25 @@ public class ProfileActivity extends AppCompatActivity implements UIActivity {
         FirebaseUser user = mAuth.getCurrentUser();
         if (user != null)
             mNameText.setText(user.getDisplayName());
+
+        getProfileImage();
+    }
+
+    private void getProfileImage() {
+        StorageReference profileImageRef = storageReference.child("profile_images").child(mAuth.getCurrentUser().getUid());
+
+        profileImageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            @Override
+            public void onSuccess(byte[] bytes) {
+                mProfileImageAdapter.addToImageList(bytes);
+                mProfileImageAdapter.notifyDataSetChanged();
+                Log.e("Download successful", "Profile Image bytes");
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                Log.e("Download failed", "Profile Image bytes");
+            }
+        });
     }
 }
