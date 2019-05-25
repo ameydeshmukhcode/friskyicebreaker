@@ -31,7 +31,7 @@ import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
-public class LoginActivity extends AppCompatActivity implements FormActivity, UIActivity {
+public class SignInActivity extends AppCompatActivity implements FormActivity, UIActivity {
 
     private static final int RC_SIGN_IN = 1;
     Button mLoginButton;
@@ -49,7 +49,7 @@ public class LoginActivity extends AppCompatActivity implements FormActivity, UI
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_sign_in);
 
         initUI();
 
@@ -106,7 +106,7 @@ public class LoginActivity extends AppCompatActivity implements FormActivity, UI
         mErrorText.setOnClickListener(null);
         if (validateForm()){
             mAuth.signInWithEmailAndPassword(mEmailInput.getText().toString(), mPasswordInput.getText().toString())
-                    .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                    .addOnCompleteListener(SignInActivity.this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
@@ -172,7 +172,7 @@ public class LoginActivity extends AppCompatActivity implements FormActivity, UI
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w("Warning", "signInWithCredential:failure", task.getException());
-                            Toast.makeText(LoginActivity.this, "Authentication failed.",
+                            Toast.makeText(SignInActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -185,13 +185,13 @@ public class LoginActivity extends AppCompatActivity implements FormActivity, UI
         String password = mPasswordInput.getText().toString();
 
         if (email.matches("")) {
-            Toast.makeText(LoginActivity.this, "Enter email",
+            Toast.makeText(SignInActivity.this, "Enter email",
                     Toast.LENGTH_SHORT).show();
             return false;
         }
 
         if (password.matches("")) {
-            Toast.makeText(LoginActivity.this, "Enter password",
+            Toast.makeText(SignInActivity.this, "Enter password",
                     Toast.LENGTH_SHORT).show();
             return false;
         }
@@ -219,7 +219,7 @@ public class LoginActivity extends AppCompatActivity implements FormActivity, UI
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if (task.isSuccessful()) {
                                         Log.d("D", "Email sent.");
-                                        Toast.makeText(LoginActivity.this, "Verification Email Sent.",
+                                        Toast.makeText(SignInActivity.this, "Verification Email Sent.",
                                                 Toast.LENGTH_SHORT).show();
                                     }
                                 }

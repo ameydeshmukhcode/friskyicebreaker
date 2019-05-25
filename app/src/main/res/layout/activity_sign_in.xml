@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity">
+    tools:context=".SignInActivity">
 
     <TextView
         android:id="@+id/app_name"
@@ -75,8 +75,9 @@
         android:layout_marginTop="8dp"
         android:background="@drawable/background_circular"
         android:backgroundTint="@color/colorPrimary"
-        android:fontFamily="@font/ktfroadstar"
-        android:text="@string/login"
+        android:fontFamily="@font/museosans700"
+        android:text="@string/sign_in"
+        android:textAllCaps="false"
         android:textColor="@color/textLight"
         android:textSize="@dimen/text_button_primary_size"
         app:layout_constraintEnd_toEndOf="@+id/input_password"
@@ -102,7 +103,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/museosans300"
-        android:text="@string/alternate_login"
+        android:text="@string/alternate_sign_in"
         android:textColor="@color/textDark"
         android:textSize="@dimen/text_subtitle_size"
         app:layout_constraintEnd_toEndOf="parent"

@@ -72,7 +72,7 @@ public class SignUpActivity extends AppCompatActivity implements FormActivity, U
                                 Toast.makeText(getApplicationContext(), "Signed up with Frisky!",
                                         Toast.LENGTH_SHORT).show();
                                 mAuth.signOut();
-                                Intent startLoginActivity = new Intent(getApplicationContext(), LoginActivity.class);
+                                Intent startLoginActivity = new Intent(getApplicationContext(), SignInActivity.class);
                                 startActivity(startLoginActivity);
                             } else if (!task.isSuccessful()) {
                                 try {
