@@ -1,11 +1,11 @@
 package com.frisky.icebreaker.profile;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -43,8 +43,9 @@ public class SetupProfileActivity extends AppCompatActivity implements FormActiv
     ImageButton mCancelButton;
     ImageButton mDoneButton;
     TextView mNameInput;
+    TextView mBioInput;
     ProgressBar mProgressBar;
-
+    ConstraintLayout mProgressLayout;
 
     PickImageDialog pickImageDialog;
 
@@ -67,11 +68,13 @@ public class SetupProfileActivity extends AppCompatActivity implements FormActiv
     @Override
     public void initUI() {
         mNameInput = findViewById(R.id.input_name);
+        mBioInput = findViewById(R.id.input_bio);
+        mProgressLayout = findViewById(R.id.layout_progress);
         mProfileImage = findViewById(R.id.image_profile);
         mCancelButton = findViewById(R.id.button_cancel);
         mDoneButton = findViewById(R.id.button_done);
         mProgressBar = findViewById(R.id.progress_upload);
-        mProgressBar.setVisibility(View.GONE);
+        mProgressLayout.setVisibility(View.GONE);
 
         enableForm();
     }
@@ -79,9 +82,16 @@ public class SetupProfileActivity extends AppCompatActivity implements FormActiv
     @Override
     public boolean validateForm() {
         String name = mNameInput.getText().toString();
+        String bio = mBioInput.getText().toString();
 
         if (name.matches("")) {
             Toast.makeText(SetupProfileActivity.this, "Enter name",
+                    Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (bio.matches("")) {
+            Toast.makeText(SetupProfileActivity.this, "Enter bio",
                     Toast.LENGTH_SHORT).show();
             return false;
         }
@@ -95,11 +105,13 @@ public class SetupProfileActivity extends AppCompatActivity implements FormActiv
         mDoneButton.setOnClickListener(null);
         mCancelButton.setOnClickListener(null);
         mNameInput.setEnabled(false);
+        mBioInput.setEnabled(false);
     }
 
     @Override
     public void enableForm() {
         mNameInput.setEnabled(true);
+        mBioInput.setEnabled(true);
         mDoneButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -138,7 +150,7 @@ public class SetupProfileActivity extends AppCompatActivity implements FormActiv
         final UploadTask uploadTask = storageReference.child("profile_images")
                 .child(userUid).putBytes(getImageData());
 
-        mProgressBar.setVisibility(View.VISIBLE);
+        mProgressLayout.setVisibility(View.VISIBLE);
 
         uploadTask.addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
             @Override

@@ -26,17 +26,49 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/round_done_24" />
 
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/layout_progress"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="@+id/image_profile"
+        app:layout_constraintStart_toStartOf="@+id/image_profile"
+        app:layout_constraintTop_toBottomOf="@+id/button_cancel">
+
+        <TextView
+            android:id="@+id/uploading_details"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/museosans300"
+            android:text="@string/uploading_details"
+            android:textColor="@color/textDark"
+            android:textSize="@dimen/text_subtitle_size"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ProgressBar
+            android:id="@+id/progress_upload"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/uploading_details" />
+    </android.support.constraint.ConstraintLayout>
+
     <ImageView
         android:id="@+id/image_profile"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:scaleType="centerCrop"
         app:layout_constraintDimensionRatio="1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_cancel"
+        app:layout_constraintTop_toBottomOf="@id/layout_progress"
         app:srcCompat="@drawable/round_person_24" />
 
     <TextView
@@ -48,17 +80,15 @@
         android:gravity="center"
         android:text="@string/update_image"
         android:textColor="@color/textDark"
-        app:layout_constraintEnd_toEndOf="@+id/input_name"
-        app:layout_constraintStart_toStartOf="@+id/input_name"
+        app:layout_constraintEnd_toEndOf="@+id/image_profile"
+        app:layout_constraintStart_toStartOf="@+id/image_profile"
         app:layout_constraintTop_toBottomOf="@+id/image_profile" />
 
     <EditText
         android:id="@+id/input_name"
         android:layout_width="0dp"
         android:layout_height="@dimen/input_primary_height"
-        android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="24dp"
         android:background="@drawable/background_circular"
         android:ems="10"
         android:fontFamily="@font/museosans300"
@@ -67,17 +97,49 @@
         android:paddingStart="@dimen/input_primary_start_padding"
         android:paddingEnd="@dimen/input_primary_start_padding"
         android:textColor="@color/textDark"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/image_profile"
+        app:layout_constraintStart_toStartOf="@+id/image_profile"
         app:layout_constraintTop_toBottomOf="@+id/update_image" />
 
-    <ProgressBar
-        android:id="@+id/progress_upload"
-        style="?android:attr/progressBarStyleHorizontal"
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/layout_bio"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="@+id/input_name"
         app:layout_constraintStart_toStartOf="@+id/input_name"
-        app:layout_constraintTop_toBottomOf="@+id/input_name" />
+        app:layout_constraintTop_toBottomOf="@+id/input_name">
+
+        <TextView
+            android:id="@+id/bio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/museosans300"
+            android:text="@string/bio"
+            android:textColor="@color/textDark"
+            android:textSize="@dimen/text_subtitle_size"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/input_bio"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/input_about_me_height"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/background_round_rect"
+            android:ems="10"
+            android:fontFamily="@font/museosans300"
+            android:gravity="start|top"
+            android:hint="@string/enter_bio"
+            android:inputType="textMultiLine"
+            android:padding="@dimen/bg_round_rect_radius"
+            android:textColor="@color/textDark"
+            android:textIsSelectable="true"
+            android:textSize="@dimen/text_multiline_input_size"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bio" />
+
+    </android.support.constraint.ConstraintLayout>
+
 </android.support.constraint.ConstraintLayout>

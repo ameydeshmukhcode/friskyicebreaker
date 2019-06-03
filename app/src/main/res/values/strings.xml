@@ -64,6 +64,8 @@
     <!--Setup Profile-->
     <string name="update_image">Click the image above to upload your profile picture</string>
     <string name="enter_name">Enter Name</string>
+    <string name="enter_bio">Enter Bio</string>
+    <string name="uploading_details">Uploading Details</string>
 
     <!--Pub Activity-->
     <string name="live_count">Live count</string>
