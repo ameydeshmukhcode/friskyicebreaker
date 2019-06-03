@@ -103,13 +103,17 @@ public class ProfileActivity extends AppCompatActivity implements UIActivity {
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
+                    if (document == null)
+                        return;
                     mBioText.setText(document.get("bio").toString());
                     if (document.exists()) {
                         Log.d("Exists", "DocumentSnapshot data: " + document.getData());
-                    } else {
+                    }
+                    else {
                         Log.d("Doesn't exist", "No such document");
                     }
-                } else {
+                }
+                else {
                     Log.d("Task", "failed with ", task.getException());
                 }
             }

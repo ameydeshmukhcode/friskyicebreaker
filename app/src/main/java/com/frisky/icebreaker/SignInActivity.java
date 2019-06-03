@@ -82,13 +82,6 @@ public class SignInActivity extends AppCompatActivity implements FormActivity, U
         mEmailInput = findViewById(R.id.input_email);
         mPasswordInput = findViewById(R.id.input_password);
 
-        mLoginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                handleLogin();
-            }
-        });
-
 //        mGoogleButton.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
@@ -96,53 +89,7 @@ public class SignInActivity extends AppCompatActivity implements FormActivity, U
 //            }
 //        });
 
-        mSignUpLink.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent startSignUpActivity = new Intent(getApplicationContext(), SignUpActivity.class);
-                startActivity(startSignUpActivity);
-            }
-        });
-
-        mForgotPasswordLink.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String email = mEmailInput.getText().toString();
-
-                if (email.equals("")) {
-                    Toast.makeText(SignInActivity.this, "Enter email",
-                            Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                mAuth.sendPasswordResetEmail(email)
-                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if (task.isSuccessful()) {
-                                    Log.d("Reset Password", "Email sent.");
-                                    mErrorText.setText(getString(R.string.error_password_reset_email));
-                                }
-                                else {
-                                    try {
-                                        throw task.getException();
-                                    }
-                                    catch (FirebaseAuthInvalidUserException e) {
-                                        Log.e("Create User Error", e.getErrorCode());
-                                        mErrorText.setText(getString(R.string.error_not_signed_up));
-                                    }
-                                    catch (FirebaseAuthInvalidCredentialsException e) {
-                                        Log.e("Create User Error", e.getErrorCode());
-                                        mErrorText.setText(getString(R.string.error_incorrect_password));
-                                    }
-                                    catch (Exception exp) {
-                                        Log.e("Reset password error", exp.toString());
-                                    }
-                                }
-                            }
-                        });
-            }
-        });
+        enableForm();
     }
 
     private void handleLogin() {
@@ -192,51 +139,51 @@ public class SignInActivity extends AppCompatActivity implements FormActivity, U
         }
     }
 
-    private void googleSignIn() {
-        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-        startActivityForResult(signInIntent, RC_SIGN_IN);
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
-        if (requestCode == RC_SIGN_IN) {
-            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-            try {
-                // Google Sign In was successful, authenticate with Firebase
-                GoogleSignInAccount account = task.getResult(ApiException.class);
-                if (account != null) {
-                    firebaseAuthWithGoogle(account);
-                }
-            }
-            catch (ApiException e) {
-                // Google Sign In failed, update UI appropriately
-                Log.w("Warning", "Google sign in failed", e);
-            }
-        }
-    }
-
-    private void firebaseAuthWithGoogle(GoogleSignInAccount account) {
-        AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(), null);
-        mAuth.signInWithCredential(credential)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Intent launchHome = new Intent(getApplicationContext(), HomeActivity.class);
-                            startActivity(launchHome);
-                            finish();
-                        }
-                        else {
-                            // If sign in fails, display a message to the user.
-                            Log.w("Warning", "signInWithCredential:failure", task.getException());
-                        }
-                    }
-                });
-    }
+//    private void googleSignIn() {
+//        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+//        startActivityForResult(signInIntent, RC_SIGN_IN);
+//    }
+//
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//
+//        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
+//        if (requestCode == RC_SIGN_IN) {
+//            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+//            try {
+//                // Google Sign In was successful, authenticate with Firebase
+//                GoogleSignInAccount account = task.getResult(ApiException.class);
+//                if (account != null) {
+//                    firebaseAuthWithGoogle(account);
+//                }
+//            }
+//            catch (ApiException e) {
+//                // Google Sign In failed, update UI appropriately
+//                Log.w("Warning", "Google sign in failed", e);
+//            }
+//        }
+//    }
+//
+//    private void firebaseAuthWithGoogle(GoogleSignInAccount account) {
+//        AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(), null);
+//        mAuth.signInWithCredential(credential)
+//                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<AuthResult> task) {
+//                        if (task.isSuccessful()) {
+//                            // Sign in success, update UI with the signed-in user's information
+//                            Intent launchHome = new Intent(getApplicationContext(), HomeActivity.class);
+//                            startActivity(launchHome);
+//                            finish();
+//                        }
+//                        else {
+//                            // If sign in fails, display a message to the user.
+//                            Log.w("Warning", "signInWithCredential:failure", task.getException());
+//                        }
+//                    }
+//                });
+//    }
 
     @Override
     public boolean validateForm() {
@@ -260,12 +207,71 @@ public class SignInActivity extends AppCompatActivity implements FormActivity, U
 
     @Override
     public void disableForm() {
-
+        mLoginButton.setOnClickListener(null);
+        mSignUpLink.setOnClickListener(null);
+        mForgotPasswordLink.setOnClickListener(null);
+        mEmailInput.setEnabled(false);
+        mPasswordInput.setEnabled(false);
     }
 
     @Override
     public void enableForm() {
+        mEmailInput.setEnabled(true);
+        mPasswordInput.setEnabled(true);
+        mLoginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                handleLogin();
+            }
+        });
 
+        mSignUpLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent startSignUpActivity = new Intent(getApplicationContext(), SignUpActivity.class);
+                startActivity(startSignUpActivity);
+            }
+        });
+
+        mForgotPasswordLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String email = mEmailInput.getText().toString();
+
+                if (email.equals("")) {
+                    Toast.makeText(SignInActivity.this, "Enter email",
+                            Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                mAuth.sendPasswordResetEmail(email)
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    Log.d("Reset Password", "Email sent.");
+                                    mErrorText.setText(getString(R.string.error_password_reset_email));
+                                }
+                                else {
+                                    try {
+                                        throw task.getException();
+                                    }
+                                    catch (FirebaseAuthInvalidUserException e) {
+                                        Log.e("Create User Error", e.getErrorCode());
+                                        mErrorText.setText(getString(R.string.error_not_signed_up));
+                                    }
+                                    catch (FirebaseAuthInvalidCredentialsException e) {
+                                        Log.e("Create User Error", e.getErrorCode());
+                                        mErrorText.setText(getString(R.string.error_incorrect_password));
+                                    }
+                                    catch (Exception exp) {
+                                        Log.e("Reset password error", exp.toString());
+                                    }
+                                }
+                            }
+                        });
+            }
+        });
     }
 
     private void verifyLogin() {

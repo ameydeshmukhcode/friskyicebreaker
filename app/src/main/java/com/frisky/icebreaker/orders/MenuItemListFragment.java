@@ -20,9 +20,7 @@ public class MenuItemListFragment extends Fragment {
 
     private List<MenuItem> menu = new ArrayList<>();
 
-    private RecyclerView mRecyclerMenuListView;
     private RecyclerView.Adapter mMenuListViewAdapter;
-    private RecyclerView.LayoutManager mMenuListViewLayoutManager;
 
     @Nullable
     @Override
@@ -30,8 +28,10 @@ public class MenuItemListFragment extends Fragment {
         View view;
         view = inflater.inflate(R.layout.fragment_recycler_view, null);
 
+        RecyclerView mRecyclerMenuListView;
         mRecyclerMenuListView = view.findViewById(R.id.recycler_view);
 
+        RecyclerView.LayoutManager mMenuListViewLayoutManager;
         // use a linear layout manager
         mMenuListViewLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerMenuListView.setLayoutManager(mMenuListViewLayoutManager);

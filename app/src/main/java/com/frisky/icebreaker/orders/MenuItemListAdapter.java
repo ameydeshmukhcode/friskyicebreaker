@@ -8,14 +8,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.frisky.icebreaker.R;
-import com.frisky.icebreaker.core.structures.menu.Menu;
 import com.frisky.icebreaker.core.structures.menu.MenuItem;
 
 import java.util.List;
 
 public class MenuItemListAdapter extends RecyclerView.Adapter<MenuItemListAdapter.MenuItemHolder> {
 
-    List<MenuItem> menu;
+    private List<MenuItem> menu;
 
     static class MenuItemHolder extends RecyclerView.ViewHolder {
         TextView mName;

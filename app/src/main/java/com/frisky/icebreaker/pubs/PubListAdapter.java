@@ -22,9 +22,6 @@ public class PubListAdapter extends RecyclerView.Adapter<PubListAdapter.PubViewH
     private final Context mContext;
     private List<Pub> mPubList;
 
-    // Provide a reference to the views for each data item
-    // Complex data items may need more than one view per item, and
-    // you provide access to all the views for a data item in a view holder
     static class PubViewHolder extends RecyclerView.ViewHolder {
         MaterialCardView mPubCard;
         TextView mTitle;
@@ -61,15 +58,15 @@ public class PubListAdapter extends RecyclerView.Adapter<PubListAdapter.PubViewH
         viewHolder.mTitle.setText(pub.getName());
 
         for (String tag: pub.getTags()) {
-            tagList += tag + " | ";
+            tagList = tagList.concat(tag + " | ");
         }
 
         viewHolder.mLocation.setText(pub.getLocation());
 
-        Double pubRating = pub.getRating();
+        double pubRating = pub.getRating();
 
         viewHolder.mTags.setText(tagList.substring(0, tagList.length() - 3));
-        viewHolder.mRating.setText(Double.toString(pubRating));
+        viewHolder.mRating.setText(String.valueOf(pubRating));
 
         viewHolder.mRating.setBackgroundTintList(ColorStateList.valueOf(mContext.getResources().
                 getColor(UIAssistant.getInstance().getRatingBadgeColor(pubRating))));

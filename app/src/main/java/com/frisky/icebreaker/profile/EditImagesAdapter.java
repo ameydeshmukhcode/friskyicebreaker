@@ -19,11 +19,10 @@ import java.util.List;
 
 public class EditImagesAdapter extends RecyclerView.Adapter<EditImagesAdapter.ImageViewHolder> {
 
-    private Context mContext;
     private FragmentActivity mActivity;
     private PickImageDialog pickImageDialog;
 
-    List<Uri> mImageList = new ArrayList<>();
+    private List<Uri> mImageList = new ArrayList<>();
 
     static class ImageViewHolder extends RecyclerView.ViewHolder {
         ImageView mImage;
@@ -34,7 +33,6 @@ public class EditImagesAdapter extends RecyclerView.Adapter<EditImagesAdapter.Im
     }
 
     EditImagesAdapter(Context context, FragmentActivity activity) {
-        mContext = context;
         mActivity = activity;
     }
 
@@ -63,5 +61,9 @@ public class EditImagesAdapter extends RecyclerView.Adapter<EditImagesAdapter.Im
     @Override
     public int getItemCount() {
         return mImageList.size();
+    }
+
+    public void addToImageList(Uri image) {
+        mImageList.add(image);
     }
 }

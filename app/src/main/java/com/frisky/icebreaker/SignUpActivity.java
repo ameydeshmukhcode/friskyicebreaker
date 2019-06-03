@@ -74,7 +74,8 @@ public class SignUpActivity extends AppCompatActivity implements FormActivity, U
                                 mAuth.signOut();
                                 Intent startLoginActivity = new Intent(getApplicationContext(), SignInActivity.class);
                                 startActivity(startLoginActivity);
-                            } else if (!task.isSuccessful()) {
+                            }
+                            else if (!task.isSuccessful()) {
                                 try {
                                     throw task.getException();
                                 } catch(FirebaseAuthWeakPasswordException e) {

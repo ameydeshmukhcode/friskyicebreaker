@@ -26,12 +26,12 @@ public class UsersListViewAdapter extends RecyclerView.Adapter<UsersListViewAdap
     private List<String> mUsersList;
     private UserInfoMode mUserInfoMode;
 
-    public static class UsersListViewHolder extends RecyclerView.ViewHolder {
+    static class UsersListViewHolder extends RecyclerView.ViewHolder {
 
         MaterialCardView mCard;
-        public TextView mName;
-        public ImageView mPicture;
-        public UsersListViewHolder(View v) {
+        TextView mName;
+        ImageView mPicture;
+        UsersListViewHolder(View v) {
             super(v);
             mPicture = v.findViewById(R.id.image_user);
             mName = v.findViewById(R.id.text_name);
