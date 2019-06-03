@@ -1,6 +1,7 @@
 package com.frisky.icebreaker.profile;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -93,17 +94,17 @@ public class ProfileActivity extends AppCompatActivity implements UIActivity {
     private void getProfileImage() {
         StorageReference profileImageRef = storageReference.child("profile_images").child(mAuth.getCurrentUser().getUid());
 
-        profileImageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+        profileImageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
-            public void onSuccess(byte[] bytes) {
-                mProfileImageAdapter.addToImageList(bytes);
+            public void onSuccess(Uri uri) {
+                mProfileImageAdapter.addToImageList(uri);
                 mProfileImageAdapter.notifyDataSetChanged();
-                Log.e("Download successful", "Profile Image bytes");
+                Log.d("Image Uri downloaded", uri.toString());
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
-            public void onFailure(@NonNull Exception exception) {
-                Log.e("Download failed", "Profile Image bytes");
+            public void onFailure(@NonNull Exception e) {
+                Log.e("Uri Download Failed", e.getMessage());
             }
         });
     }
