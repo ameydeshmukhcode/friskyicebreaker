@@ -15,10 +15,15 @@ import android.widget.TextView;
 import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.SettingsActivity;
 import com.frisky.icebreaker.ui.base.UIActivity;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -30,10 +35,12 @@ public class ProfileActivity extends AppCompatActivity implements UIActivity {
     ImageButton mBackButton;
     ImageButton mSettingsButton;
     TextView mNameText;
+    TextView mBioText;
 
     FirebaseAuth mAuth;
     FirebaseStorage mStorage;
     StorageReference storageReference;
+    FirebaseFirestore firebaseFirestore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +50,7 @@ public class ProfileActivity extends AppCompatActivity implements UIActivity {
         mAuth = FirebaseAuth.getInstance();
         mStorage = FirebaseStorage.getInstance();
         storageReference = mStorage.getReference();
+        firebaseFirestore = FirebaseFirestore.getInstance();
 
         initUI();
     }
@@ -87,6 +95,25 @@ public class ProfileActivity extends AppCompatActivity implements UIActivity {
         FirebaseUser user = mAuth.getCurrentUser();
         if (user != null)
             mNameText.setText(user.getDisplayName());
+
+        mBioText = findViewById(R.id.text_bio);
+        DocumentReference docRef = firebaseFirestore.collection("users").document(mAuth.getCurrentUser().getUid());
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    mBioText.setText(document.get("bio").toString());
+                    if (document.exists()) {
+                        Log.d("Exists", "DocumentSnapshot data: " + document.getData());
+                    } else {
+                        Log.d("Doesn't exist", "No such document");
+                    }
+                } else {
+                    Log.d("Task", "failed with ", task.getException());
+                }
+            }
+        });
 
         getProfileImage();
     }
