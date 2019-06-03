@@ -29,12 +29,15 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SetupProfileActivity extends AppCompatActivity implements FormActivity, UIActivity,
         PickImageDialog.OnImageUpdatedListener {
@@ -52,6 +55,7 @@ public class SetupProfileActivity extends AppCompatActivity implements FormActiv
     FirebaseAuth mAuth;
     FirebaseStorage mStorage;
     StorageReference storageReference;
+    FirebaseFirestore mFirestore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +65,7 @@ public class SetupProfileActivity extends AppCompatActivity implements FormActiv
         mAuth = FirebaseAuth.getInstance();
         mStorage = FirebaseStorage.getInstance();
         storageReference = mStorage.getReference();
+        mFirestore = FirebaseFirestore.getInstance();
 
         initUI();
     }
@@ -145,7 +150,31 @@ public class SetupProfileActivity extends AppCompatActivity implements FormActiv
     private void updateProfileData() {
         disableForm();
         final FirebaseUser user = mAuth.getCurrentUser();
+
+        if (user == null)
+            return;
+
         final String userUid = user.getUid();
+
+        Map<String, Object> firestoreUser = new HashMap<>();
+        firestoreUser.put("name", mNameInput.getText().toString());
+        firestoreUser.put("bio", mBioInput.getText().toString());
+
+        mFirestore.collection("users")
+                .document(userUid)
+                .set(firestoreUser)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d("User", "DocumentSnapshot successfully written!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("Failed", e.getMessage(), e);
+                    }
+                });
 
         final UploadTask uploadTask = storageReference.child("profile_images")
                 .child(userUid).putBytes(getImageData());
