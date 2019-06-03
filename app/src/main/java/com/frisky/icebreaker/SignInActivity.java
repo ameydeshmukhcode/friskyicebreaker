@@ -258,6 +258,16 @@ public class SignInActivity extends AppCompatActivity implements FormActivity, U
         return true;
     }
 
+    @Override
+    public void disableForm() {
+
+    }
+
+    @Override
+    public void enableForm() {
+
+    }
+
     private void verifyLogin() {
         final FirebaseUser user = mAuth.getCurrentUser();
 

@@ -130,4 +130,14 @@ public class SignUpActivity extends AppCompatActivity implements FormActivity, U
 
         return true;
     }
+
+    @Override
+    public void disableForm() {
+
+    }
+
+    @Override
+    public void enableForm() {
+
+    }
 }
