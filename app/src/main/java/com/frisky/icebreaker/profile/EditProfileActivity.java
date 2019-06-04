@@ -15,7 +15,7 @@ import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.ui.base.UIActivity;
 import com.frisky.icebreaker.ui.components.dialogs.PickImageDialog;
 
-public class EditProfileActivity extends AppCompatActivity implements UIActivity {
+public class EditProfileActivity extends AppCompatActivity implements UIActivity, PickImageDialog.OnImageUpdatedListener {
 
     TextView mToolbarText;
     EditText mBioInput;
@@ -58,5 +58,10 @@ public class EditProfileActivity extends AppCompatActivity implements UIActivity
         if (getIntent().hasExtra("bio")){
             mBioInput.setHint(getIntent().getStringExtra("bio"));
         }
+    }
+
+    @Override
+    public void imageUpdated(Bitmap bitmap) {
+
     }
 }
