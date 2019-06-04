@@ -62,6 +62,7 @@ public class ProfileActivity extends AppCompatActivity implements UIActivity {
             @Override
             public void onClick(View v) {
                 Intent editProfile = new Intent(getApplicationContext(), EditProfileActivity.class);
+                editProfile.putExtra("bio", mBioText.getText().toString());
                 startActivity(editProfile);
             }
         });
@@ -105,8 +106,8 @@ public class ProfileActivity extends AppCompatActivity implements UIActivity {
                     DocumentSnapshot document = task.getResult();
                     if (document == null)
                         return;
-                    mBioText.setText(document.get("bio").toString());
                     if (document.exists()) {
+                        mBioText.setText(document.get("bio").toString());
                         Log.d("Exists", "DocumentSnapshot data: " + document.getData());
                     }
                     else {

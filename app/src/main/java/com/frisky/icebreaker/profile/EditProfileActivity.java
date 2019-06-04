@@ -7,6 +7,7 @@ import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.TypedValue;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -17,6 +18,7 @@ import com.frisky.icebreaker.ui.components.dialogs.PickImageDialog;
 public class EditProfileActivity extends AppCompatActivity implements UIActivity, PickImageDialog.OnImageUpdatedListener {
 
     TextView mToolbarText;
+    EditText mBioInput;
     ImageButton mBackButton;
     ImageButton mDoneButton;
 
@@ -50,6 +52,12 @@ public class EditProfileActivity extends AppCompatActivity implements UIActivity
 
         mDoneButton = findViewById(R.id.button_app_bar_right);
         mDoneButton.setImageResource(R.drawable.round_done_24);
+
+        mBioInput = findViewById(R.id.input_bio);
+
+        if (getIntent().hasExtra("bio")){
+            mBioInput.setHint(getIntent().getStringExtra("bio"));
+        }
     }
 
     @Override
