@@ -1,5 +1,6 @@
 package com.frisky.icebreaker.profile;
 
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,13 +14,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.frisky.icebreaker.R;
+import com.frisky.icebreaker.ui.components.dialogs.PickImageDialog;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-public class EditImagesFragment extends Fragment {
+public class EditImagesFragment extends Fragment implements PickImageDialog.OnImageUpdatedListener {
 
     RecyclerView mRecyclerImageGridView;
     RecyclerView.LayoutManager mEditImagesGridLayoutManager;
@@ -44,5 +46,10 @@ public class EditImagesFragment extends Fragment {
         mRecyclerImageGridView.setAdapter(mImageGridAdapter);
 
         return view;
+    }
+
+    @Override
+    public void imageUpdated(Bitmap bitmap) {
+        
     }
 }
