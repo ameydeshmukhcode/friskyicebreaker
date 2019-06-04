@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,11 @@ import android.widget.ImageView;
 
 import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.ui.components.dialogs.PickImageDialog;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -34,6 +40,7 @@ public class EditImagesAdapter extends RecyclerView.Adapter<EditImagesAdapter.Im
 
     EditImagesAdapter(Context context, FragmentActivity activity) {
         mActivity = activity;
+        getProfileImage();
     }
 
     @NonNull
@@ -65,5 +72,27 @@ public class EditImagesAdapter extends RecyclerView.Adapter<EditImagesAdapter.Im
 
     public void addToImageList(Uri image) {
         mImageList.add(image);
+    }
+
+    private void getProfileImage() {
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageReference = storage.getReference();
+
+        StorageReference profileImageRef = storageReference.child("profile_images").child(auth.getCurrentUser().getUid());
+
+        profileImageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                addToImageList(uri);
+                notifyDataSetChanged();
+                Log.d("Image Uri downloaded", uri.toString());
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.e("Uri Download Failed", e.getMessage());
+            }
+        });
     }
 }
