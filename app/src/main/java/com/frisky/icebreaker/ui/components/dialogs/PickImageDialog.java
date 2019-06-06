@@ -77,13 +77,15 @@ public class PickImageDialog extends DialogFragment {
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), selectedImage);
                     this.onImageUpdatedListener.imageUpdated(bitmap);
                     dismiss();
-                } catch (IOException exp) {
+                }
+                catch (IOException exp) {
                     Log.e("IOException", "Image not found", exp);
                 }
             } else if (requestCode == PICK_IMAGE_CAMERA) {
                 Bitmap photo = (Bitmap) data.getExtras().get("data");
                 this.onImageUpdatedListener.imageUpdated(photo);
-                dismiss();            }
+                dismiss();
+            }
         }
     }
 
