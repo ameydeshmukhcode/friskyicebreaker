@@ -44,7 +44,7 @@
             android:layout_marginStart="8dp"
             android:fontFamily="@font/museosans300"
             android:text="@string/version"
-            android:textSize="@dimen/text_title_size"
+            android:textSize="@dimen/text_subtitle_size"
             app:layout_constraintBottom_toBottomOf="@+id/app_name"
             app:layout_constraintStart_toEndOf="@+id/app_name"
             app:layout_constraintTop_toTopOf="@+id/app_name" />
@@ -56,7 +56,7 @@
             android:layout_marginStart="4dp"
             android:fontFamily="@font/museosans300"
             android:text="@string/placeholder_number"
-            android:textSize="@dimen/text_title_size"
+            android:textSize="@dimen/text_subtitle_size"
             app:layout_constraintBottom_toBottomOf="@+id/app_name"
             app:layout_constraintStart_toEndOf="@+id/version"
             app:layout_constraintTop_toTopOf="@+id/app_name" />

@@ -2,11 +2,8 @@ package com.frisky.icebreaker.ui.components.dialogs;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -17,11 +14,9 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.ImageView;
 
 import com.frisky.icebreaker.R;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import static android.app.Activity.RESULT_OK;
@@ -82,13 +77,15 @@ public class PickImageDialog extends DialogFragment {
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), selectedImage);
                     this.onImageUpdatedListener.imageUpdated(bitmap);
                     dismiss();
-                } catch (IOException exp) {
+                }
+                catch (IOException exp) {
                     Log.e("IOException", "Image not found", exp);
                 }
             } else if (requestCode == PICK_IMAGE_CAMERA) {
                 Bitmap photo = (Bitmap) data.getExtras().get("data");
                 this.onImageUpdatedListener.imageUpdated(photo);
-                dismiss();            }
+                dismiss();
+            }
         }
     }
 

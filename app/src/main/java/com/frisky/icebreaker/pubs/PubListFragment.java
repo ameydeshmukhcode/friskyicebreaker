@@ -21,9 +21,7 @@ public class PubListFragment extends Fragment {
 
     private List<Pub> pubList = new ArrayList<>();
 
-    private RecyclerView mRecyclerPubView;
     private RecyclerView.Adapter mPubViewAdapter;
-    private RecyclerView.LayoutManager mPubViewLayoutManager;
 
     @Nullable
     @Override
@@ -31,12 +29,10 @@ public class PubListFragment extends Fragment {
         View view;
         view = inflater.inflate(R.layout.fragment_recycler_view, null);
 
+        RecyclerView mRecyclerPubView;
         mRecyclerPubView = view.findViewById(R.id.recycler_view);
 
-        // use this setting to improve performance if you know that changes
-        // in content do not change the layout size of the RecyclerView
-        //mRecyclerPubView.setHasFixedSize(true);
-
+        RecyclerView.LayoutManager mPubViewLayoutManager;
         // use a linear layout manager
         mPubViewLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerPubView.setLayoutManager(mPubViewLayoutManager);
@@ -49,8 +45,7 @@ public class PubListFragment extends Fragment {
 
         return view;
     }
-
-
+    
     private void preparePubData() {
         Pub pub = new Pub("DJ the BJ", "DJ the BJ", "Idhar",
                 Arrays.asList("Alcohol", "Food"), 4.5);

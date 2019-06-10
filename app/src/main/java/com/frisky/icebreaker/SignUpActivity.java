@@ -74,22 +74,28 @@ public class SignUpActivity extends AppCompatActivity implements FormActivity, U
                                 mAuth.signOut();
                                 Intent startLoginActivity = new Intent(getApplicationContext(), SignInActivity.class);
                                 startActivity(startLoginActivity);
-                            } else if (!task.isSuccessful()) {
+                            }
+                            else if (!task.isSuccessful()) {
                                 try {
                                     throw task.getException();
-                                } catch(FirebaseAuthWeakPasswordException e) {
+                                }
+                                catch(FirebaseAuthWeakPasswordException e) {
                                     Log.e("Create User Error", e.getReason());
                                     mErrorText.setText(getString(R.string.error_weak_password));
-                                } catch(FirebaseAuthInvalidCredentialsException e) {
+                                }
+                                catch(FirebaseAuthInvalidCredentialsException e) {
                                     Log.e("Create User Error", e.getErrorCode());
                                     mErrorText.setText(getString(R.string.error_invalid_email));
-                                } catch(FirebaseAuthUserCollisionException e) {
+                                }
+                                catch(FirebaseAuthUserCollisionException e) {
                                     Log.e("Create User Error", e.getErrorCode());
                                     mErrorText.setText(getString(R.string.error_duplicate_email));
-                                } catch (FirebaseNetworkException e) {
+                                }
+                                catch (FirebaseNetworkException e) {
                                     Log.e("Create User Error", e.getMessage());
                                     mErrorText.setText(getString(R.string.error_network));
-                                } catch(Exception e) {
+                                }
+                                catch(Exception e) {
                                     Log.e("Create User Error", e.getMessage());
                                 }
                             }
@@ -129,5 +135,15 @@ public class SignUpActivity extends AppCompatActivity implements FormActivity, U
         }
 
         return true;
+    }
+
+    @Override
+    public void disableForm() {
+
+    }
+
+    @Override
+    public void enableForm() {
+
     }
 }

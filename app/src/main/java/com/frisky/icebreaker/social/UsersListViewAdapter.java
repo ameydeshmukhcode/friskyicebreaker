@@ -26,12 +26,12 @@ public class UsersListViewAdapter extends RecyclerView.Adapter<UsersListViewAdap
     private List<String> mUsersList;
     private UserInfoMode mUserInfoMode;
 
-    public static class UsersListViewHolder extends RecyclerView.ViewHolder {
+    static class UsersListViewHolder extends RecyclerView.ViewHolder {
 
         MaterialCardView mCard;
-        public TextView mName;
-        public ImageView mPicture;
-        public UsersListViewHolder(View v) {
+        TextView mName;
+        ImageView mPicture;
+        UsersListViewHolder(View v) {
             super(v);
             mPicture = v.findViewById(R.id.image_user);
             mName = v.findViewById(R.id.text_name);
@@ -51,12 +51,18 @@ public class UsersListViewAdapter extends RecyclerView.Adapter<UsersListViewAdap
         View itemView = null;
 
         switch (mUserInfoMode) {
-            case ICEBREAKER: itemView = LayoutInflater.from(viewGroup.getContext())
-                    .inflate(R.layout.card_user_preview, viewGroup, false); break;
-            case PENDING: itemView = LayoutInflater.from(viewGroup.getContext())
-                    .inflate(R.layout.card_user_pending, viewGroup, false); break;
-            case CHAT: itemView = LayoutInflater.from(viewGroup.getContext())
-                    .inflate(R.layout.card_user_chat, viewGroup, false); break;
+            case ICEBREAKER:
+                itemView = LayoutInflater.from(viewGroup.getContext())
+                    .inflate(R.layout.card_user_preview, viewGroup, false);
+                break;
+            case PENDING:
+                itemView = LayoutInflater.from(viewGroup.getContext())
+                    .inflate(R.layout.card_user_pending, viewGroup, false);
+                break;
+            case CHAT:
+                itemView = LayoutInflater.from(viewGroup.getContext())
+                    .inflate(R.layout.card_user_chat, viewGroup, false);
+                break;
         }
 
         return new UsersListViewHolder(itemView);
