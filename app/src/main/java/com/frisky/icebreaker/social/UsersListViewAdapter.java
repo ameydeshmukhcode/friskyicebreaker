@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.frisky.icebreaker.R;
+import com.frisky.icebreaker.core.structures.User;
 import com.frisky.icebreaker.core.structures.UserInfoMode;
 import com.frisky.icebreaker.ui.assistant.UIAssistant;
 import com.frisky.icebreaker.profile.ViewUserActivity;
@@ -23,7 +24,7 @@ import java.util.List;
 public class UsersListViewAdapter extends RecyclerView.Adapter<UsersListViewAdapter.UsersListViewHolder> {
 
     private final Context mContext;
-    private List<String> mUsersList;
+    private List<User> mUsersList;
     private UserInfoMode mUserInfoMode;
 
     static class UsersListViewHolder extends RecyclerView.ViewHolder {
@@ -39,7 +40,7 @@ public class UsersListViewAdapter extends RecyclerView.Adapter<UsersListViewAdap
         }
     }
 
-    public UsersListViewAdapter(List<String> usersList, UserInfoMode userInfoMode, Context context) {
+    public UsersListViewAdapter(List<User> usersList, UserInfoMode userInfoMode, Context context) {
         this.mUsersList = usersList;
         this.mUserInfoMode = userInfoMode;
         this.mContext = context;
@@ -70,8 +71,8 @@ public class UsersListViewAdapter extends RecyclerView.Adapter<UsersListViewAdap
 
     @Override
     public void onBindViewHolder(@NonNull final UsersListViewHolder viewHolder, int i) {
-        String ping = mUsersList.get(i);
-        viewHolder.mName.setText(ping);
+        User user = mUsersList.get(i);
+        viewHolder.mName.setText(user.getName());
 
         Bitmap bm = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.placeholder);
         viewHolder.mPicture.setImageBitmap(UIAssistant.getInstance().getCircleBitmap(bm));

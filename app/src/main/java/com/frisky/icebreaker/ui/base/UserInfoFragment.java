@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.frisky.icebreaker.R;
+import com.frisky.icebreaker.core.structures.User;
 import com.frisky.icebreaker.core.structures.UserInfoMode;
 import com.frisky.icebreaker.social.UsersListViewAdapter;
 
@@ -19,13 +20,13 @@ import java.util.List;
 
 public abstract class UserInfoFragment extends Fragment {
 
-    protected List<String> usersList = new ArrayList<>();
+    protected List<User> usersList = new ArrayList<>();
     public void setUserInfoMode(UserInfoMode mUserInfoMode) {
         this.mUserInfoMode = mUserInfoMode;
     }
     private UserInfoMode mUserInfoMode = null;
 
-    RecyclerView.Adapter mUsersViewAdapter;
+    protected RecyclerView.Adapter mUsersViewAdapter;
 
     @Nullable
     @Override

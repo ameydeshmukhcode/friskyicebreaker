@@ -7,4 +7,46 @@ public class User {
     private String mBio;
     private int mAge;
     private Date mDateOfBirth;
+
+    public User() {
+    }
+
+    public User(String mName, String mBio, int mAge, Date mDateOfBirth) {
+        this.mName = mName;
+        this.mBio = mBio;
+        this.mAge = mAge;
+        this.mDateOfBirth = mDateOfBirth;
+    }
+
+    public String getName() {
+        return mName;
+    }
+
+    public void setName(String mName) {
+        this.mName = mName;
+    }
+
+    public String getBio() {
+        return mBio;
+    }
+
+    public void setBio(String mBio) {
+        this.mBio = mBio;
+    }
+
+    public int getAge() {
+        return mAge;
+    }
+
+    public void setAge(int mAge) {
+        this.mAge = mAge;
+    }
+
+    public Date getDateOfBirth() {
+        return mDateOfBirth;
+    }
+
+    public void setDateOfBirth(Date mDateOfBirth) {
+        this.mDateOfBirth = mDateOfBirth;
+    }
 }
