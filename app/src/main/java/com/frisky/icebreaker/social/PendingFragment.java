@@ -20,28 +20,6 @@ public class PendingFragment extends UserInfoFragment {
 
     @Override
     public void prepareUserData() {
-        String user = "User";
-        this.usersList.add(user);
 
-        user = "Creme";
-        usersList.add(user);
-
-        user = "Brute";
-        usersList.add(user);
-
-        user = "Somebody";
-        usersList.add(user);
-
-        user = "Jon";
-        usersList.add(user);
-
-        user = "Need";
-        usersList.add(user);
-
-        user = "More";
-        usersList.add(user);
-
-        user = "Samples";
-        usersList.add(user);
     }
 }

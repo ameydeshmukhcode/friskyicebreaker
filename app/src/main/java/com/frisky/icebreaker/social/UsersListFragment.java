@@ -20,22 +20,6 @@ public class UsersListFragment extends UserInfoFragment {
 
     @Override
     public void prepareUserData() {
-        String user = "View";
-        this.usersList.add(user);
 
-        user = "Users";
-        usersList.add(user);
-
-        user = "Up";
-        usersList.add(user);
-
-        user = "In";
-        usersList.add(user);
-
-        user = "This";
-        usersList.add(user);
-
-        user = "Place";
-        usersList.add(user);
     }
 }

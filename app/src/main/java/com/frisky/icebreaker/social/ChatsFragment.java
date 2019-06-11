@@ -20,28 +20,6 @@ public class ChatsFragment extends UserInfoFragment {
 
     @Override
     public void prepareUserData() {
-        String user = "DJ";
-        this.usersList.add(user);
 
-        user = "BJ";
-        usersList.add(user);
-
-        user = "CJ";
-        usersList.add(user);
-
-        user = "Amey";
-        usersList.add(user);
-
-        user = "Mah Dude";
-        usersList.add(user);
-
-        user = "Need";
-        usersList.add(user);
-
-        user = "More";
-        usersList.add(user);
-
-        user = "Samples";
-        usersList.add(user);
     }
 }
