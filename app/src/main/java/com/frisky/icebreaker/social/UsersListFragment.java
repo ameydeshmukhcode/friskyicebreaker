@@ -43,7 +43,7 @@ public class UsersListFragment extends UserInfoFragment {
                                 Log.d("Whatever", document.getId() + " => " + document.getData());
                                 String name = document.getString("name");
                                 String bio = document.getString("bio");
-                                User user = new User(name, bio, 0/*placeholder*/, null);
+                                User user = new User(document.getId(), name, bio, 0, null);
                                 usersList.add(user);
                                 mUsersViewAdapter.notifyDataSetChanged();
                             }

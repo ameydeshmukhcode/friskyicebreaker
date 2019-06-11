@@ -71,7 +71,7 @@ public class UsersListViewAdapter extends RecyclerView.Adapter<UsersListViewAdap
 
     @Override
     public void onBindViewHolder(@NonNull final UsersListViewHolder viewHolder, int i) {
-        User user = mUsersList.get(i);
+        final User user = mUsersList.get(i);
         viewHolder.mName.setText(user.getName());
 
         Bitmap bm = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.placeholder);
@@ -83,7 +83,8 @@ public class UsersListViewAdapter extends RecyclerView.Adapter<UsersListViewAdap
                     @Override
                     public void onClick(View v) {
                         Intent viewUser = new Intent(mContext, ViewUserActivity.class);
-                        viewUser.putExtra("name", viewHolder.mName.getText());
+                        viewUser.putExtra("id", user.getID());
+                        viewUser.putExtra("name", user.getName());
                         mContext.startActivity(viewUser);
                     }
                 });
@@ -93,7 +94,7 @@ public class UsersListViewAdapter extends RecyclerView.Adapter<UsersListViewAdap
                     @Override
                     public void onClick(View v) {
                         Intent viewUser = new Intent(mContext, ChatActivity.class);
-                        viewUser.putExtra("name", viewHolder.mName.getText());
+                        viewUser.putExtra("name", user.getName());
                         mContext.startActivity(viewUser);
                     }
                 });
@@ -103,7 +104,7 @@ public class UsersListViewAdapter extends RecyclerView.Adapter<UsersListViewAdap
                     @Override
                     public void onClick(View v) {
                         Intent viewUser = new Intent(mContext, ChatActivity.class);
-                        viewUser.putExtra("name", viewHolder.mName.getText());
+                        viewUser.putExtra("name", user.getName());
                         mContext.startActivity(viewUser);
                     }
                 });

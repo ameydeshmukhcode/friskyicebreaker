@@ -3,19 +3,24 @@ package com.frisky.icebreaker.core.structures;
 import java.util.Date;
 
 public class User {
+    private String mID;
     private String mName;
     private String mBio;
     private int mAge;
     private Date mDateOfBirth;
-
     public User() {
     }
 
-    public User(String mName, String mBio, int mAge, Date mDateOfBirth) {
+    public User(String id, String mName, String mBio, int mAge, Date mDateOfBirth) {
+        this.mID = id;
         this.mName = mName;
         this.mBio = mBio;
         this.mAge = mAge;
         this.mDateOfBirth = mDateOfBirth;
+    }
+
+    public String getID() {
+        return mID;
     }
 
     public String getName() {
