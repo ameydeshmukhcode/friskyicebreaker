@@ -3,21 +3,27 @@ package com.frisky.icebreaker.core.structures;
 import java.util.List;
 
 public class Pub {
+    private String mID;
     private String mName;
     private String mDesc;
     private String mLocation;
     private List<String> mTags;
     private double mRating;
-
+    
     public Pub() {
     }
 
-    public Pub(String name, String desc, String location, List<String> tags, double rating) {
+    public Pub(String id, String name, String desc, String location, List<String> tags, double rating) {
+        this.mID = id;
         this.mName = name;
         this.mDesc = desc;
         this.mLocation = location;
         this.mTags = tags;
         this.mRating = rating;
+    }
+
+    public String getID() {
+        return mID;
     }
 
     public String getLocation() { return mLocation; }

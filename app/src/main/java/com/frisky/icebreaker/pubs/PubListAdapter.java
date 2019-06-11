@@ -54,7 +54,7 @@ public class PubListAdapter extends RecyclerView.Adapter<PubListAdapter.PubViewH
 
     public void onBindViewHolder(@NonNull final PubViewHolder viewHolder, int i) {
         String tagList = "";
-        Pub pub = mPubList.get(i);
+        final Pub pub = mPubList.get(i);
         viewHolder.mTitle.setText(pub.getName());
 
         for (String tag: pub.getTags()) {
@@ -75,6 +75,7 @@ public class PubListAdapter extends RecyclerView.Adapter<PubListAdapter.PubViewH
             @Override
             public void onClick(View v) {
                 Intent pubView = new Intent(mContext, PubActivity.class);
+                pubView.putExtra("id", pub.getID());
                 pubView.putExtra("name", viewHolder.mTitle.getText());
                 pubView.putExtra("tags", viewHolder.mTags.getText());
                 pubView.putExtra("location", viewHolder.mLocation.getText());

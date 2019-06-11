@@ -66,7 +66,8 @@ public class PubListFragment extends Fragment {
                                 String address = document.get("address").toString();
                                 String tags = document.get("cuisine").toString();
                                 Log.d("doc data maybe", name + " " + address + " " + tags);
-                                Pub pub = new Pub(name, name, address, Arrays.asList(tags.substring(1, tags.length()-1)), 4.5);
+                                Pub pub = new Pub(document.getId(), name, name, address,
+                                        Arrays.asList(tags.substring(1, tags.length()-1)), 4.5);
                                 pubList.add(pub);
                                 mPubViewAdapter.notifyDataSetChanged();
                             }
