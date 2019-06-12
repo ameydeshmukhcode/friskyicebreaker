@@ -19,7 +19,7 @@ public class IceBreakerFragment extends Fragment {
         View view;
         view = inflater.inflate(R.layout.fragment_icebreaker, null);
 
-        Fragment usersListFragment = new UsersListFragment();
+        Fragment usersListFragment = new IceBreakerListFragment();
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_user_list, usersListFragment).commit();
 
