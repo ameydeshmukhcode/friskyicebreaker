@@ -15,6 +15,8 @@ import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.core.structures.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -52,6 +54,8 @@ public class IceBreakerListFragment extends Fragment {
     private void prepareUserData() {
         FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();
 
+        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
         mFirestore.collection("users")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -59,7 +63,11 @@ public class IceBreakerListFragment extends Fragment {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d("Whatever", document.getId() + " => " + document.getData());
+                                Log.d("User", document.getId() + " => " + document.getData());
+                                if (user == null)
+                                    return;
+                                if (document.getId().equals(user.getUid()))
+                                    return;
                                 String name = document.getString("name");
                                 String bio = document.getString("bio");
                                 User user = new User(document.getId(), name, bio, 0, null);
