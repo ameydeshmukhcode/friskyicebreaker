@@ -86,7 +86,7 @@ public class EditImagesAdapter extends RecyclerView.Adapter<EditImagesAdapter.Im
             public void onSuccess(Uri uri) {
                 addToImageList(uri);
                 notifyDataSetChanged();
-                Log.d("Image Uri downloaded", uri.toString());
+                Log.i("Image Uri Downloaded", uri.toString());
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override

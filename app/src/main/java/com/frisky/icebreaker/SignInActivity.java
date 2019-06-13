@@ -249,7 +249,7 @@ public class SignInActivity extends AppCompatActivity implements FormActivity, U
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 if (task.isSuccessful()) {
-                                    Log.d("Reset Password", "Email sent.");
+                                    Log.i("Reset Password", "Email sent.");
                                     mErrorText.setText(getString(R.string.error_password_reset_email));
                                 }
                                 else {
@@ -293,7 +293,7 @@ public class SignInActivity extends AppCompatActivity implements FormActivity, U
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if (task.isSuccessful()) {
-                                        Log.d("Verification email", "Email sent.");
+                                        Log.i("Verification email", "Email sent.");
                                         Toast.makeText(SignInActivity.this, "Verification Email Sent.",
                                                 Toast.LENGTH_SHORT).show();
                                     }

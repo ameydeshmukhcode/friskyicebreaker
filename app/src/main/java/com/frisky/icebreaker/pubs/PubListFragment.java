@@ -65,7 +65,7 @@ public class PubListFragment extends Fragment {
                                 String name = document.get("name").toString();
                                 String address = document.get("address").toString();
                                 String tags = document.get("cuisine").toString();
-                                Log.d("doc data maybe", name + " " + address + " " + tags);
+                                Log.i("Rest", name + " " + address + " " + tags);
                                 Pub pub = new Pub(document.getId(), name, name, address,
                                         Arrays.asList(tags.substring(1, tags.length()-1)), 4.5);
                                 pubList.add(pub);
@@ -73,7 +73,7 @@ public class PubListFragment extends Fragment {
                             }
                         }
                         else {
-                            Log.d("error", "Error getting documents: ", task.getException());
+                            Log.e("error", "Error getting documents: ", task.getException());
                         }
                     }
                 });

@@ -26,8 +26,7 @@ public class HomeActivity extends AppCompatActivity implements UIActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         initUI();
-        if (loadFragment(new PubViewFragment()))
-            Log.d("Fragment", "Loaded PubView Fragment successfully");
+        loadFragment(new PubViewFragment());
     }
 
     public void initUI() {
@@ -51,8 +50,7 @@ public class HomeActivity extends AppCompatActivity implements UIActivity {
         mSocialButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (loadFragment(new SocialFragment()))
-                    Log.d("Fragment", "Loaded Social Fragment successfully");
+                loadFragment(new SocialFragment());
             }
         });
 
@@ -64,8 +62,7 @@ public class HomeActivity extends AppCompatActivity implements UIActivity {
         mBottomNavHomeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (loadFragment(new PubViewFragment()))
-                    Log.d("Fragment", "Loaded PubView Fragment successfully");
+                loadFragment(new PubViewFragment());
             }
         });
 
@@ -95,24 +92,22 @@ public class HomeActivity extends AppCompatActivity implements UIActivity {
         mIceBreakerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (loadFragment(new IceBreakerFragment()))
-                    Log.d("Fragment", "Loaded IceBreaker Fragment successfully");
+                loadFragment(new IceBreakerFragment());
             }
         });
     }
 
-    private boolean loadFragment(Fragment fragment) {
+    private void loadFragment(Fragment fragment) {
         Fragment currentFragment = getSupportFragmentManager().getFragment(Bundle.EMPTY, "");
 
-        //switching fragment
-        if ((fragment != null) && (currentFragment != fragment)) {
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.home_activity_fragment, fragment)
-                    .commit();
+        if (currentFragment != null)
+            Log.i("Current Frag", currentFragment.toString());
 
-            return true;
-        }
-        return false;
+        Log.i("Change To", fragment.toString());
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.home_activity_fragment, fragment)
+                .commit();
     }
 }
