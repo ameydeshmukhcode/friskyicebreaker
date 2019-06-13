@@ -30,6 +30,7 @@ public class MenuItemListFragment extends Fragment {
 
         RecyclerView mRecyclerMenuListView;
         mRecyclerMenuListView = view.findViewById(R.id.recycler_view);
+        mRecyclerMenuListView.setOverScrollMode(View.OVER_SCROLL_NEVER);
 
         RecyclerView.LayoutManager mMenuListViewLayoutManager;
         // use a linear layout manager

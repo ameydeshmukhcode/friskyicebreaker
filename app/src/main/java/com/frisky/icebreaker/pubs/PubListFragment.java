@@ -6,12 +6,18 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.core.structures.Pub;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -47,34 +53,29 @@ public class PubListFragment extends Fragment {
     }
     
     private void preparePubData() {
-        Pub pub = new Pub("DJ the BJ", "DJ the BJ", "Idhar",
-                Arrays.asList("Alcohol", "Food"), 4.5);
-        pubList.add(pub);
+        FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();
 
-        pub = new Pub("Joey's Roaches", "Joey's Roaches", "Udhar",
-                Arrays.asList("Alcohol", "Food"), 3.7);
-        pubList.add(pub);
-
-        pub = new Pub("Biergarten", "Biergarten", "Mera Ghar",
-                Arrays.asList("Alcohol", "Food"), 2.2);
-        pubList.add(pub);
-
-        pub = new Pub("Gourmet Theatre", "Gourmet Theatre", "Arre Wah",
-                Arrays.asList("Alcohol", "Food"), 3.2);
-        pubList.add(pub);
-
-        pub = new Pub("Rasta Cafe", "Rasta Cafe", "Kidhar?",
-                Arrays.asList("Alcohol", "Food"), 1.0);
-        pubList.add(pub);
-
-        pub = new Pub("Naya Naam", "Naya Naam", "Bada Gaon",
-                Arrays.asList("Alcohol", "Food"), 4.0);
-        pubList.add(pub);
-
-        pub = new Pub("Kya Pata", "Kya Pata", "Nice",
-                Arrays.asList("Alcohol", "Food"), 2.6);
-        pubList.add(pub);
-
-        mPubViewAdapter.notifyDataSetChanged();
+        mFirestore.collection("restaurants")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                String name = document.get("name").toString();
+                                String address = document.get("address").toString();
+                                String tags = document.get("cuisine").toString();
+                                Log.d("doc data maybe", name + " " + address + " " + tags);
+                                Pub pub = new Pub(document.getId(), name, name, address,
+                                        Arrays.asList(tags.substring(1, tags.length()-1)), 4.5);
+                                pubList.add(pub);
+                                mPubViewAdapter.notifyDataSetChanged();
+                            }
+                        }
+                        else {
+                            Log.d("error", "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
     }
 }

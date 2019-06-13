@@ -7,6 +7,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -65,6 +66,11 @@ public class PubActivity extends AppCompatActivity implements UIActivity {
             mRatingText.setBackgroundTintList(ColorStateList.valueOf(getApplicationContext().getResources().
                     getColor(UIAssistant.getInstance().getRatingBadgeColor(pubRating))));
             mAppBarLayout.setBackgroundResource(UIAssistant.getInstance().getRatingBadgeColor(pubRating));
+        }
+
+        if (getIntent().hasExtra("id")) {
+            String id = getIntent().getStringExtra("id");
+            Log.i("ID", id);
         }
 
         FloatingActionButton fab = findViewById(R.id.fab_chat_room);

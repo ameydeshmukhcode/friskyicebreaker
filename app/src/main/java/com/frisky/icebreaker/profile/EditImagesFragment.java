@@ -34,6 +34,7 @@ public class EditImagesFragment extends Fragment {
         mRecyclerImageGridView = view.findViewById(R.id.recycler_view);
 
         mRecyclerImageGridView.setHasFixedSize(true);
+        mRecyclerImageGridView.setOverScrollMode(View.OVER_SCROLL_NEVER);
 
         // use a grid layout manager
         mEditImagesGridLayoutManager = new GridLayoutManager(getContext(), 3);

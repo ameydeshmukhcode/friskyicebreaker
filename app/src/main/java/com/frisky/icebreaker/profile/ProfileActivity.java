@@ -88,6 +88,7 @@ public class ProfileActivity extends AppCompatActivity implements UIActivity {
 
         mProfileImagePager = findViewById(R.id.pager_profile_images);
         mProfileImagePager.setAdapter(mProfileImageAdapter);
+        mProfileImagePager.setOverScrollMode(View.OVER_SCROLL_NEVER);
 
         TabLayout tabLayout = findViewById(R.id.tab_image);
         tabLayout.setupWithViewPager(mProfileImagePager, true);
