@@ -15,7 +15,14 @@ public class MenuActivity extends AppCompatActivity implements UIActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_menu);
+
+        if (getIntent().hasExtra("qr_code_scanned")){
+            setContentView(R.layout.activity_menu);
+        }
+        else {
+            setContentView(R.layout.activity_menu_empty_state);
+        }
+
         initUI();
     }
 
@@ -29,8 +36,10 @@ public class MenuActivity extends AppCompatActivity implements UIActivity {
             }
         });
 
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.frame_menu, new MenuFragment())
-                .commit();
+        if (getIntent().hasExtra("qr_code_scanned")){
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.frame_menu, new MenuFragment())
+                    .commit();
+        }
     }
 }
