@@ -3,6 +3,7 @@ package com.frisky.icebreaker;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -36,7 +37,7 @@ public class HomeActivity extends AppCompatActivity implements UIActivity {
         ImageButton mBottomNavProfileButton;
         ImageButton mBottomNavOrderButton;
         ImageButton mBottomNavNotificationButton;
-        ImageButton mIceBreakerButton;
+        FloatingActionButton mIceBreakerButton;
         TextView mToolbarText;
 
         mToolbarText = findViewById(R.id.text_app_bar);
@@ -88,7 +89,8 @@ public class HomeActivity extends AppCompatActivity implements UIActivity {
             }
         });
 
-        mIceBreakerButton = findViewById(R.id.button_icebreaker);
+        mIceBreakerButton = findViewById(R.id.fab_icebreaker);
+        mIceBreakerButton.setCompatElevation(R.dimen.icebreaker_elevation);
         mIceBreakerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
