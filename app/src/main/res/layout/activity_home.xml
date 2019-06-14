@@ -40,14 +40,13 @@
         android:id="@+id/fab_icebreaker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="4dp"
+        android:layout_marginBottom="8dp"
         android:backgroundTint="@android:color/black"
         android:clickable="true"
-        android:tint="@color/tintLight"
         app:layout_constraintBottom_toBottomOf="@+id/bottom_nav_home"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:rippleColor="@color/lightAccent"
-        app:srcCompat="@drawable/placeholder_24" />
+        app:srcCompat="@drawable/logo" />
 
 </android.support.constraint.ConstraintLayout>
