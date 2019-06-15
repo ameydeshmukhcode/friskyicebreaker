@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.frisky.icebreaker">
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -9,7 +10,6 @@
         android:resizeableActivity="false"
         android:roundIcon="@mipmap/icon_first_round"
         android:theme="@style/FriskyAppTheme">
-        <activity android:name=".orders.QRScanActivity"></activity>
         <activity android:name=".SettingsActivity" />
         <activity android:name=".SignInActivity">
             <intent-filter>
@@ -36,6 +36,7 @@
         <activity android:name=".social.ChatActivity" />
         <activity android:name=".orders.OrderActivity" />
         <activity android:name=".orders.MenuActivity" />
+        <activity android:name=".orders.QRScanActivity"/>
     </application>
 
 </manifest>
