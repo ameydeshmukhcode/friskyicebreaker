@@ -19,6 +19,7 @@ import com.google.zxing.Result;
 public class QRScanActivity extends AppCompatActivity {
 
     public static final int MY_PERMISSIONS_REQUEST_CAMERA = 1;
+    CodeScanner mCodeScanner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +34,18 @@ public class QRScanActivity extends AppCompatActivity {
         else {
             setupScannerView();
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mCodeScanner.startPreview();
+    }
+
+    @Override
+    protected void onPause() {
+        mCodeScanner.releaseResources();
+        super.onPause();
     }
 
     @Override
@@ -52,7 +65,6 @@ public class QRScanActivity extends AppCompatActivity {
     }
 
     private void setupScannerView() {
-        CodeScanner mCodeScanner;
         CodeScannerView scannerView = findViewById(R.id.scanner_view);
         mCodeScanner = new CodeScanner(this, scannerView);
         mCodeScanner.setDecodeCallback(new DecodeCallback() {
