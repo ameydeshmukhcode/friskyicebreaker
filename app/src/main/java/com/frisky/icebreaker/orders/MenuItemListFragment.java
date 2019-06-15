@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.core.structures.menu.MenuItem;
@@ -32,6 +33,8 @@ public class MenuItemListFragment extends Fragment {
         mRecyclerMenuListView = view.findViewById(R.id.recycler_view);
         mRecyclerMenuListView.setOverScrollMode(View.OVER_SCROLL_NEVER);
 
+        String restID = getArguments().getString("restaurant_id");
+
         RecyclerView.LayoutManager mMenuListViewLayoutManager;
         // use a linear layout manager
         mMenuListViewLayoutManager = new LinearLayoutManager(getContext());
@@ -42,6 +45,8 @@ public class MenuItemListFragment extends Fragment {
         mRecyclerMenuListView.setAdapter(mMenuListViewAdapter);
 
         prepareMenuData();
+
+        Toast.makeText(getContext(), restID, Toast.LENGTH_SHORT).show();
 
         return view;
     }

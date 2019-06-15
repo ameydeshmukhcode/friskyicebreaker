@@ -19,7 +19,14 @@ public class MenuFragment extends Fragment {
         View view;
         view = inflater.inflate(R.layout.fragment_menu, null);
 
+        String restID = getArguments().getString("restaurant_id");
+
+        Bundle bundle = new Bundle();
+        bundle.putString("restaurant_id", restID);
+
         Fragment menuItemListFragment = new MenuItemListFragment();
+        menuItemListFragment.setArguments(bundle);
+
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_submenu, menuItemListFragment).commit();
 

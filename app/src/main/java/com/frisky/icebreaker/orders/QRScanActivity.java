@@ -1,6 +1,7 @@
 package com.frisky.icebreaker.orders;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -8,7 +9,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.budiyev.android.codescanner.CodeScanner;
 import com.budiyev.android.codescanner.CodeScannerView;
@@ -73,7 +73,10 @@ public class QRScanActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(getApplicationContext(), result.getText(), Toast.LENGTH_SHORT).show();
+                        Intent showMenu = new Intent(getBaseContext(), MenuActivity.class);
+                        showMenu.putExtra("qr_code_scanned", true);
+                        showMenu.putExtra("restaurant_id", result.getText());
+                        startActivity(showMenu);
                     }
                 });
             }

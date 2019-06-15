@@ -37,8 +37,17 @@ public class MenuActivity extends AppCompatActivity implements UIActivity {
         });
 
         if (getIntent().hasExtra("qr_code_scanned")){
+            MenuFragment menuFragment = new MenuFragment();
+
+            if (getIntent().hasExtra("restaurant_id")) {
+                String restID = getIntent().getStringExtra("restaurant_id");
+                Bundle bundle = new Bundle();
+                bundle.putString("restaurant_id", restID);
+                menuFragment.setArguments(bundle);
+            }
+
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.frame_menu, new MenuFragment())
+                    .replace(R.id.frame_menu, menuFragment)
                     .commit();
         }
     }
