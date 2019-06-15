@@ -14,6 +14,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.frisky.icebreaker.orders.MenuActivity;
+import com.frisky.icebreaker.orders.QRScanActivity;
 import com.frisky.icebreaker.profile.ProfileActivity;
 import com.frisky.icebreaker.pubs.PubViewFragment;
 import com.frisky.icebreaker.social.IceBreakerFragment;
@@ -57,6 +58,12 @@ public class HomeActivity extends AppCompatActivity implements UIActivity {
 
         mScanQRCodeButton = findViewById(R.id.button_app_bar_left);
         mScanQRCodeButton.setImageResource(R.drawable.round_qr_code);
+        mScanQRCodeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), QRScanActivity.class));
+            }
+        });
 
         mBottomNavHomeButton = findViewById(R.id.button_nav_left);
         mBottomNavHomeButton.setImageResource(R.drawable.round_home_24);
