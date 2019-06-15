@@ -73,7 +73,7 @@ public class MenuItemListFragment extends Fragment {
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
-                        Log.d("Item", document.getId() + " => " + document.getData());
+                        Log.i("Item", document.getId() + " => " + document.getData());
                         String name = document.getString("name");
                         String cost = document.getString("cost");
                         MenuItem item = new MenuItem(name, name, Integer.parseInt(cost));
