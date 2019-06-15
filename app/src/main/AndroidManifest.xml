@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.frisky.icebreaker">
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/icon_primero"
+        android:icon="@mipmap/icon_first"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/icon_primero_round"
+        android:resizeableActivity="false"
+        android:roundIcon="@mipmap/icon_first_round"
         android:theme="@style/FriskyAppTheme">
         <activity android:name=".SettingsActivity" />
         <activity android:name=".SignInActivity">
@@ -17,7 +19,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".SignUpActivity" />
-        <activity android:name=".HomeActivity"
+        <activity
+            android:name=".HomeActivity"
             android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -25,13 +28,15 @@
         </activity>
         <activity android:name=".pubs.PubActivity" />
         <activity android:name=".profile.ProfileActivity" />
-        <activity android:name=".profile.EditProfileActivity"
+        <activity
+            android:name=".profile.EditProfileActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".profile.ViewUserActivity" />
         <activity android:name=".profile.SetupProfileActivity" />
         <activity android:name=".social.ChatActivity" />
         <activity android:name=".orders.OrderActivity" />
         <activity android:name=".orders.MenuActivity" />
+        <activity android:name=".orders.QRScanActivity"/>
     </application>
 
 </manifest>

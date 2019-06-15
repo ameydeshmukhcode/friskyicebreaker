@@ -1,10 +1,8 @@
 package com.frisky.icebreaker.orders;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 
 import com.frisky.icebreaker.R;
@@ -13,12 +11,18 @@ import com.frisky.icebreaker.ui.base.UIActivity;
 public class MenuActivity extends AppCompatActivity implements UIActivity {
 
     ImageButton mBackButton;
-    Button mViewOrderButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_menu);
+
+        if (getIntent().hasExtra("qr_code_scanned")){
+            setContentView(R.layout.activity_menu);
+        }
+        else {
+            setContentView(R.layout.activity_menu_empty_state);
+        }
+
         initUI();
     }
 
@@ -32,16 +36,19 @@ public class MenuActivity extends AppCompatActivity implements UIActivity {
             }
         });
 
-        mViewOrderButton = findViewById(R.id.button_view_order);
-        mViewOrderButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), OrderActivity.class));
-            }
-        });
+        if (getIntent().hasExtra("qr_code_scanned")){
+            MenuFragment menuFragment = new MenuFragment();
 
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.frame_menu, new MenuFragment())
-                .commit();
+            if (getIntent().hasExtra("restaurant_id")) {
+                String restID = getIntent().getStringExtra("restaurant_id");
+                Bundle bundle = new Bundle();
+                bundle.putString("restaurant_id", restID);
+                menuFragment.setArguments(bundle);
+            }
+
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.frame_menu, menuFragment)
+                    .commit();
+        }
     }
 }

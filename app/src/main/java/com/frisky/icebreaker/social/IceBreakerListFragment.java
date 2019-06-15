@@ -76,7 +76,7 @@ public class IceBreakerListFragment extends Fragment {
                             }
                         }
                         else {
-                            Log.d("error", "Error getting documents: ", task.getException());
+                            Log.e("error", "Error getting documents: ", task.getException());
                         }
                     }
                 });

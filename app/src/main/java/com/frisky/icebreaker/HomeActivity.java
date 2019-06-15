@@ -3,6 +3,7 @@ package com.frisky.icebreaker;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +14,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.frisky.icebreaker.orders.MenuActivity;
+import com.frisky.icebreaker.orders.QRScanActivity;
 import com.frisky.icebreaker.profile.ProfileActivity;
 import com.frisky.icebreaker.pubs.PubViewFragment;
 import com.frisky.icebreaker.social.IceBreakerFragment;
@@ -26,8 +28,7 @@ public class HomeActivity extends AppCompatActivity implements UIActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         initUI();
-        if (loadFragment(new PubViewFragment()))
-            Log.d("Fragment", "Loaded PubView Fragment successfully");
+        loadFragment(new PubViewFragment());
     }
 
     public void initUI() {
@@ -37,7 +38,7 @@ public class HomeActivity extends AppCompatActivity implements UIActivity {
         ImageButton mBottomNavProfileButton;
         ImageButton mBottomNavOrderButton;
         ImageButton mBottomNavNotificationButton;
-        ImageButton mIceBreakerButton;
+        FloatingActionButton mIceBreakerButton;
         TextView mToolbarText;
 
         mToolbarText = findViewById(R.id.text_app_bar);
@@ -51,21 +52,25 @@ public class HomeActivity extends AppCompatActivity implements UIActivity {
         mSocialButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (loadFragment(new SocialFragment()))
-                    Log.d("Fragment", "Loaded Social Fragment successfully");
+                loadFragment(new SocialFragment());
             }
         });
 
         mScanQRCodeButton = findViewById(R.id.button_app_bar_left);
         mScanQRCodeButton.setImageResource(R.drawable.round_qr_code);
+        mScanQRCodeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), QRScanActivity.class));
+            }
+        });
 
         mBottomNavHomeButton = findViewById(R.id.button_nav_left);
         mBottomNavHomeButton.setImageResource(R.drawable.round_home_24);
         mBottomNavHomeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (loadFragment(new PubViewFragment()))
-                    Log.d("Fragment", "Loaded PubView Fragment successfully");
+                loadFragment(new PubViewFragment());
             }
         });
 
@@ -91,28 +96,27 @@ public class HomeActivity extends AppCompatActivity implements UIActivity {
             }
         });
 
-        mIceBreakerButton = findViewById(R.id.button_icebreaker);
+        mIceBreakerButton = findViewById(R.id.fab_icebreaker);
+        mIceBreakerButton.setCompatElevation(R.dimen.icebreaker_elevation);
         mIceBreakerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (loadFragment(new IceBreakerFragment()))
-                    Log.d("Fragment", "Loaded IceBreaker Fragment successfully");
+                loadFragment(new IceBreakerFragment());
             }
         });
     }
 
-    private boolean loadFragment(Fragment fragment) {
+    private void loadFragment(Fragment fragment) {
         Fragment currentFragment = getSupportFragmentManager().getFragment(Bundle.EMPTY, "");
 
-        //switching fragment
-        if ((fragment != null) && (currentFragment != fragment)) {
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.home_activity_fragment, fragment)
-                    .commit();
+        if (currentFragment != null)
+            Log.i("Current Frag", currentFragment.toString());
 
-            return true;
-        }
-        return false;
+        Log.i("Change To", fragment.toString());
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.home_activity_fragment, fragment)
+                .commit();
     }
 }

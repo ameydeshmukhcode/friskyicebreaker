@@ -109,14 +109,14 @@ public class ProfileActivity extends AppCompatActivity implements UIActivity {
                         return;
                     if (document.exists()) {
                         mBioText.setText(document.get("bio").toString());
-                        Log.d("Exists", "DocumentSnapshot data: " + document.getData());
+                        Log.i("Exists", "DocumentSnapshot data: " + document.getData());
                     }
                     else {
-                        Log.d("Doesn't exist", "No such document");
+                        Log.e("Doesn't exist", "No such document");
                     }
                 }
                 else {
-                    Log.d("Task", "failed with ", task.getException());
+                    Log.e("Task", "failed with ", task.getException());
                 }
             }
         });
@@ -132,7 +132,7 @@ public class ProfileActivity extends AppCompatActivity implements UIActivity {
             public void onSuccess(Uri uri) {
                 mProfileImageAdapter.addToImageList(uri);
                 mProfileImageAdapter.notifyDataSetChanged();
-                Log.d("Image Uri downloaded", uri.toString());
+                Log.i("Image Uri Downloaded", uri.toString());
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override

@@ -166,13 +166,13 @@ public class SetupProfileActivity extends AppCompatActivity implements FormActiv
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Log.d("User", "DocumentSnapshot successfully written!");
+                        Log.i("User", "DocumentSnapshot successfully written!");
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.w("Failed", e.getMessage(), e);
+                        Log.e("Failed", e.getMessage(), e);
                     }
                 });
 
@@ -210,7 +210,7 @@ public class SetupProfileActivity extends AppCompatActivity implements FormActiv
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
                                         if (task.isSuccessful()) {
-                                            Log.d("D", "User profile updated.");
+                                            Log.i("User", "User profile updated.");
                                             Intent launchHome = new Intent(getApplicationContext(), HomeActivity.class);
                                             startActivity(launchHome);
                                             finish();
@@ -224,7 +224,7 @@ public class SetupProfileActivity extends AppCompatActivity implements FormActiv
             @Override
             public void onFailure(@NonNull Exception e) {
                 enableForm();
-                Log.v("Upload Error", e.getMessage());
+                Log.e("Upload Error", e.getMessage());
             }
         });
     }
