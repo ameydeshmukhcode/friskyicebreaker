@@ -105,6 +105,10 @@
     <string name="error_password_reset_email">Password reset link sent to your email.</string>
     <string name="error_password_reset_hint">Seems like you\'ve forgotten your password.\nTry \'Forgot Password?\'</string>
 
+    <!--Empty state -->
+    <string name="empty_state_scan_qr">You haven\'t ordered anything yet.\nTo get the menu and start ordering,\n
+        scan the QR code on the table.</string>
+
     <string name="placeholder">dummy</string>
     <string name="placeholder_number">23</string>
 </resources>
