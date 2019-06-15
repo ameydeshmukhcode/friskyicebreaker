@@ -79,6 +79,7 @@ public class QRScanActivity extends AppCompatActivity {
                         showMenu.putExtra("qr_code_scanned", true);
                         showMenu.putExtra("restaurant_id", result.getText());
                         startActivity(showMenu);
+                        finish();
                     }
                 });
             }
