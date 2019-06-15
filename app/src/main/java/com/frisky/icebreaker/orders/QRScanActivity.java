@@ -39,12 +39,14 @@ public class QRScanActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        mCodeScanner.startPreview();
+        if (mCodeScanner != null)
+            mCodeScanner.startPreview();
     }
 
     @Override
     protected void onPause() {
-        mCodeScanner.releaseResources();
+        if (mCodeScanner != null)
+            mCodeScanner.releaseResources();
         super.onPause();
     }
 
