@@ -6,19 +6,32 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.frisky.icebreaker.R;
+import com.frisky.icebreaker.core.structures.User;
 import com.frisky.icebreaker.core.structures.menu.MenuItem;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MenuItemListFragment extends Fragment {
 
+    private String restID;
     private List<MenuItem> menu = new ArrayList<>();
 
     private RecyclerView.Adapter mMenuListViewAdapter;
@@ -33,7 +46,7 @@ public class MenuItemListFragment extends Fragment {
         mRecyclerMenuListView = view.findViewById(R.id.recycler_view);
         mRecyclerMenuListView.setOverScrollMode(View.OVER_SCROLL_NEVER);
 
-        String restID = getArguments().getString("restaurant_id");
+        restID = getArguments().getString("restaurant_id");
 
         RecyclerView.LayoutManager mMenuListViewLayoutManager;
         // use a linear layout manager
@@ -46,33 +59,33 @@ public class MenuItemListFragment extends Fragment {
 
         prepareMenuData();
 
-        Toast.makeText(getContext(), restID, Toast.LENGTH_SHORT).show();
-
         return view;
     }
 
     private void prepareMenuData() {
-        MenuItem item = new MenuItem("First", "Something", 100);
-        menu.add(item);
+        FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();
 
-        item = new MenuItem("Second", "Something", 150);
-        menu.add(item);
+        Query itemsListRef = mFirestore.collection("restaurants").document(restID)
+                .collection("items").orderBy("categoryid");
 
-        item = new MenuItem("Third", "Something", 80);
-        menu.add(item);
+        itemsListRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        Log.d("Item", document.getId() + " => " + document.getData());
+                        String name = document.getString("name");
+                        String cost = document.getString("cost");
+                        MenuItem item = new MenuItem(name, name, Integer.parseInt(cost));
+                        menu.add(item);
+                        mMenuListViewAdapter.notifyDataSetChanged();
+                    }
+                }
+                else {
+                    Log.e("error", "Error getting documents: ", task.getException());
+                }
+            }
+        });
 
-        item = new MenuItem("Fourth", "Something", 130);
-        menu.add(item);
-
-        item = new MenuItem("Fifth", "Something", 220);
-        menu.add(item);
-
-        item = new MenuItem("Sixth", "Something", 322);
-        menu.add(item);
-
-        item = new MenuItem("Seventh", "Something", 30);
-        menu.add(item);
-
-        mMenuListViewAdapter.notifyDataSetChanged();
     }
 }
