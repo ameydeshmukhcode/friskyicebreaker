@@ -4,11 +4,12 @@
 
     <application
         android:allowBackup="true"
-        android:label="@string/app_name"
         android:icon="@mipmap/icon_first"
+        android:label="@string/app_name"
+        android:resizeableActivity="false"
         android:roundIcon="@mipmap/icon_first_round"
-        android:theme="@style/FriskyAppTheme"
-        android:resizeableActivity="false">
+        android:theme="@style/FriskyAppTheme">
+        <activity android:name=".orders.QRScanActivity"></activity>
         <activity android:name=".SettingsActivity" />
         <activity android:name=".SignInActivity">
             <intent-filter>
@@ -18,7 +19,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".SignUpActivity" />
-        <activity android:name=".HomeActivity"
+        <activity
+            android:name=".HomeActivity"
             android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -26,7 +28,8 @@
         </activity>
         <activity android:name=".pubs.PubActivity" />
         <activity android:name=".profile.ProfileActivity" />
-        <activity android:name=".profile.EditProfileActivity"
+        <activity
+            android:name=".profile.EditProfileActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".profile.ViewUserActivity" />
         <activity android:name=".profile.SetupProfileActivity" />
