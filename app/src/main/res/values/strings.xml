@@ -11,6 +11,7 @@
     <string name="google">Google</string>
     <string name="apply">Apply</string>
     <string name="cancel">Cancel</string>
+    <string name="scan_qr_code">Scan QR Code</string>
 
     <!--Login Page-->
     <string name="sign_in">Sign In</string>
