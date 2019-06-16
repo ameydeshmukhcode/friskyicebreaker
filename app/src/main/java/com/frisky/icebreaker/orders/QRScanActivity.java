@@ -60,8 +60,7 @@ public class QRScanActivity extends AppCompatActivity {
                 setupScannerView();
             }
             else {
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA},
-                        MY_PERMISSIONS_REQUEST_CAMERA);
+                super.onBackPressed();
             }
         }
     }
