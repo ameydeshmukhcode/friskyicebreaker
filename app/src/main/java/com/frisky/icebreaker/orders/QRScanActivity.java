@@ -9,6 +9,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.budiyev.android.codescanner.CodeScanner;
 import com.budiyev.android.codescanner.CodeScannerView;
@@ -74,11 +75,19 @@ public class QRScanActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Intent showMenu = new Intent(getBaseContext(), MenuActivity.class);
-                        showMenu.putExtra("qr_code_scanned", true);
-                        showMenu.putExtra("restaurant_id", result.getText());
-                        startActivity(showMenu);
-                        finish();
+                        String qrCodeData = result.getText();
+                        if (qrCodeData.contains("frisky")) {
+                            Intent showMenu = new Intent(getBaseContext(), MenuActivity.class);
+                            showMenu.putExtra("qr_code_scanned", true);
+                            showMenu.putExtra("restaurant_id", qrCodeData.split("\\+")[1]);
+                            showMenu.putExtra("table_id", qrCodeData.split("\\+")[2]);
+                            startActivity(showMenu);
+                            finish();
+                        }
+                        else {
+                            Toast.makeText(getBaseContext(),"QR Code not recognised", Toast.LENGTH_LONG).show();
+                            mCodeScanner.startPreview();
+                        }
                     }
                 });
             }
