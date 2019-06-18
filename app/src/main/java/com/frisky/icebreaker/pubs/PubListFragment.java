@@ -1,5 +1,6 @@
 package com.frisky.icebreaker.pubs;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -62,11 +63,12 @@ public class PubListFragment extends Fragment {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
+                                String image = document.get("image").toString();
                                 String name = document.get("name").toString();
                                 String address = document.get("address").toString();
                                 String tags = document.get("cuisine").toString();
                                 Log.i("Rest", name + " " + address + " " + tags);
-                                Pub pub = new Pub(document.getId(), name, name, address,
+                                Pub pub = new Pub(Uri.parse(image), document.getId(), name, name, address,
                                         Arrays.asList(tags.substring(1, tags.length()-1)), 4.5);
                                 pubList.add(pub);
                                 mPubViewAdapter.notifyDataSetChanged();

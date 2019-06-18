@@ -1,8 +1,11 @@
 package com.frisky.icebreaker.core.structures;
 
+import android.net.Uri;
+
 import java.util.List;
 
 public class Pub {
+    private Uri imageUri;
     private String mID;
     private String mName;
     private String mDesc;
@@ -13,13 +16,22 @@ public class Pub {
     public Pub() {
     }
 
-    public Pub(String id, String name, String desc, String location, List<String> tags, double rating) {
+    public Pub(Uri image, String id, String name, String desc, String location, List<String> tags, double rating) {
+        this.imageUri = image;
         this.mID = id;
         this.mName = name;
         this.mDesc = desc;
         this.mLocation = location;
         this.mTags = tags;
         this.mRating = rating;
+    }
+
+    public Uri getImageUri() {
+        return imageUri;
+    }
+
+    public void setImageUri(Uri imageUri) {
+        this.imageUri = imageUri;
     }
 
     public String getID() {
