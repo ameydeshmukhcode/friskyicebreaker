@@ -87,51 +87,52 @@ public class QRScanActivity extends AppCompatActivity {
                             Toast.makeText(getBaseContext(),"QR Code not recognised", Toast.LENGTH_LONG).show();
                             mCodeScanner.startPreview();
                         }
+                        else {
+                            final String restaurant = qrCodeData.split("\\+")[1];
+                            final String table = qrCodeData.split("\\+")[2];
 
-                        final String restaurant = qrCodeData.split("\\+")[1];
-                        final String table = qrCodeData.split("\\+")[2];
+                            DocumentReference tableRef = firebaseFirestore
+                                    .collection("restaurants")
+                                    .document(restaurant)
+                                    .collection("tables")
+                                    .document(table);
 
-                        DocumentReference tableRef = firebaseFirestore
-                                .collection("restaurants")
-                                .document(restaurant)
-                                .collection("tables")
-                                .document(table);
-
-                        tableRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                if (task.isSuccessful()) {
-                                    DocumentSnapshot document = task.getResult();
-                                    if (document == null)
-                                        return;
-                                    if (document.exists()) {
-                                        boolean isOccupied = false;
-                                        if (document.contains("occupied")) {
-                                            isOccupied = Boolean.parseBoolean(document.get("occupied").toString());
-                                        }
-                                        if (!isOccupied) {
-                                            Intent showMenu = new Intent(getBaseContext(), MenuActivity.class);
-                                            showMenu.putExtra("qr_code_scanned", true);
-                                            showMenu.putExtra("restaurant_id", restaurant);
-                                            showMenu.putExtra("table_id", table);
-                                            startActivity(showMenu);
-                                            finish();
+                            tableRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                    if (task.isSuccessful()) {
+                                        DocumentSnapshot document = task.getResult();
+                                        if (document == null)
+                                            return;
+                                        if (document.exists()) {
+                                            boolean isOccupied = false;
+                                            if (document.contains("occupied")) {
+                                                isOccupied = Boolean.parseBoolean(document.get("occupied").toString());
+                                            }
+                                            if (!isOccupied) {
+                                                Intent showMenu = new Intent(getBaseContext(), MenuActivity.class);
+                                                showMenu.putExtra("qr_code_scanned", true);
+                                                showMenu.putExtra("restaurant_id", restaurant);
+                                                showMenu.putExtra("table_id", table);
+                                                startActivity(showMenu);
+                                                finish();
+                                            }
+                                            else {
+                                                Toast.makeText(getBaseContext(),"Table is Occupied", Toast.LENGTH_LONG).show();
+                                                mCodeScanner.startPreview();
+                                            }
+                                            Log.i("Exists", "DocumentSnapshot data: " + document.getData());
                                         }
                                         else {
-                                            Toast.makeText(getBaseContext(),"Table is Occupied", Toast.LENGTH_LONG).show();
-                                            mCodeScanner.startPreview();
+                                            Log.e("Doesn't exist", "No such document");
                                         }
-                                        Log.i("Exists", "DocumentSnapshot data: " + document.getData());
                                     }
                                     else {
-                                        Log.e("Doesn't exist", "No such document");
+                                        Log.e("Task", "failed with ", task.getException());
                                     }
                                 }
-                                else {
-                                    Log.e("Task", "failed with ", task.getException());
-                                }
-                            }
-                        });
+                            });
+                        }
                     }
                 });
             }
