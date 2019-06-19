@@ -28,7 +28,7 @@
 
     <!--Home Page-->
     <!--Pub View-->
-    <string name="search_pubs">Search pubs&#8230;</string>
+    <string name="search_restaurants">Search restaurants&#8230;</string>
     <string name="filters">Filters</string>
     <!-- Pub Filters -->
     <string name="sort_by">Sort by</string>
