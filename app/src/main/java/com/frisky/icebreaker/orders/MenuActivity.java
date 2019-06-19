@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.ui.base.UIActivity;
@@ -82,8 +83,12 @@ public class MenuActivity extends AppCompatActivity implements UIActivity {
                                 isSessionActive = Boolean.parseBoolean(document.get("sessionactive").toString());
                             }
                             if (!isSessionActive) {
+                                Toast.makeText(getApplicationContext(), "SessionInactive", Toast.LENGTH_SHORT).show();
                                 initUserSession(restID, tableID);
                                 getRestaurantAndTableDetails(restID, tableID);
+                            }
+                            else {
+                                Toast.makeText(getApplicationContext(), "SessionActive", Toast.LENGTH_SHORT).show();
                             }
                             Log.i("Exists", "DocumentSnapshot data: " + document.getData());
                         }
@@ -109,7 +114,7 @@ public class MenuActivity extends AppCompatActivity implements UIActivity {
         }
     }
 
-    private void initUserSession(final String restID, String tableID) {
+    private void initUserSession(final String restID, final String tableID) {
         final FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
 
         Map<String, Object> data = new HashMap<>();
@@ -135,7 +140,27 @@ public class MenuActivity extends AppCompatActivity implements UIActivity {
 
                         firebaseFirestore.collection("users")
                                 .document(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                                .set(data, SetOptions.merge());
+                                .set(data, SetOptions.merge())
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Map<String, Object> data = new HashMap<>();
+                                        data.put("occupied", true);
+
+                                        firebaseFirestore.collection("restaurants")
+                                                .document(restID)
+                                                .collection("tables")
+                                                .document(tableID)
+                                                .set(data, SetOptions.merge())
+                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void aVoid) {
+                                                        Toast.makeText(getApplicationContext(),
+                                                                "Table Occupied", Toast.LENGTH_SHORT).show();
+                                                    }
+                                                });
+                                    }
+                                });
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
