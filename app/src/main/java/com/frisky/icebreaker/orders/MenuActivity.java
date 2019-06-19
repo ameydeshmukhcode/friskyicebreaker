@@ -64,8 +64,6 @@ public class MenuActivity extends AppCompatActivity implements UIActivity {
             mRestName = findViewById(R.id.text_pub_name);
             mTableSerial = findViewById(R.id.text_table);
 
-            getRestaurantAndTableDetails(restID, tableID);
-
             FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
 
             DocumentReference userRef = firebaseFirestore.collection("users")
@@ -79,9 +77,13 @@ public class MenuActivity extends AppCompatActivity implements UIActivity {
                         if (document == null)
                             return;
                         if (document.exists()) {
-                            boolean isSessionActive = Boolean.parseBoolean(document.get("sessionactive").toString());
+                            boolean isSessionActive = false;
+                            if (document.contains("sessionactive")) {
+                                isSessionActive = Boolean.parseBoolean(document.get("sessionactive").toString());
+                            }
                             if (!isSessionActive) {
                                 initUserSession(restID, tableID);
+                                getRestaurantAndTableDetails(restID, tableID);
                             }
                             Log.i("Exists", "DocumentSnapshot data: " + document.getData());
                         }
