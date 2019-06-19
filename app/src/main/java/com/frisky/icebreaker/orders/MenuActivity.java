@@ -11,10 +11,18 @@ import android.widget.TextView;
 import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.ui.base.UIActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
+
+import java.sql.Timestamp;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MenuActivity extends AppCompatActivity implements UIActivity {
 
@@ -63,6 +71,8 @@ public class MenuActivity extends AppCompatActivity implements UIActivity {
 
             getRestaurantAndTableDetails(restID, tableID);
 
+            initUserSession(restID, tableID);
+
             MenuFragment menuFragment = new MenuFragment();
 
             Bundle bundle = new Bundle();
@@ -73,6 +83,43 @@ public class MenuActivity extends AppCompatActivity implements UIActivity {
                     .replace(R.id.frame_menu, menuFragment)
                     .commit();
         }
+    }
+
+    private void initUserSession(final String restID, String tableID) {
+        final FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+
+        Map<String, Object> data = new HashMap<>();
+        data.put("tableid", tableID);
+        data.put("createdby", FirebaseAuth.getInstance().getCurrentUser().getUid());
+        data.put("starttime", new Timestamp(System.currentTimeMillis()));
+        data.put("isactive", true);
+
+        firebaseFirestore.collection("restaurants")
+                .document(restID)
+                .collection("sessions")
+                .add(data)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        String id = documentReference.getId();
+                        Log.e("", "DocumentSnapshot written with ID: " + documentReference.getId());
+
+                        Map<String, Object> data = new HashMap<>();
+                        data.put("sessionactive", true);
+                        data.put("currentsession", id);
+                        data.put("restaurant", restID);
+
+                        firebaseFirestore.collection("users")
+                                .document(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                .set(data, SetOptions.merge());
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e("", "Error adding document", e);
+                    }
+                });
     }
 
     private void getRestaurantAndTableDetails(String restID, String tableID) {
