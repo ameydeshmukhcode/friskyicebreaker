@@ -54,24 +54,46 @@ public class MenuActivity extends AppCompatActivity implements UIActivity {
             }
         });
 
-        if (getIntent().hasExtra("qr_code_scanned")){
-            String restID = "";
-            String tableID = "";
+        if (getIntent().hasExtra("qr_code_scanned")
+            && getIntent().hasExtra("table_id")
+            && getIntent().hasExtra("restaurant_id")){
 
-            if (getIntent().hasExtra("restaurant_id")) {
-                restID = getIntent().getStringExtra("restaurant_id");
-            }
-
-            if (getIntent().hasExtra("table_id")) {
-                tableID = getIntent().getStringExtra("table_id");
-            }
+            final String restID = getIntent().getStringExtra("restaurant_id");;
+            final String tableID = getIntent().getStringExtra("table_id");;
 
             mRestName = findViewById(R.id.text_pub_name);
             mTableSerial = findViewById(R.id.text_table);
 
             getRestaurantAndTableDetails(restID, tableID);
 
-            initUserSession(restID, tableID);
+            FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+
+            DocumentReference userRef = firebaseFirestore.collection("users")
+                    .document(FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+            userRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        if (document == null)
+                            return;
+                        if (document.exists()) {
+                            boolean isSessionActive = Boolean.parseBoolean(document.get("sessionactive").toString());
+                            if (!isSessionActive) {
+                                initUserSession(restID, tableID);
+                            }
+                            Log.i("Exists", "DocumentSnapshot data: " + document.getData());
+                        }
+                        else {
+                            Log.e("Doesn't exist", "No such document");
+                        }
+                    }
+                    else {
+                        Log.e("Task", "failed with ", task.getException());
+                    }
+                }
+            });
 
             MenuFragment menuFragment = new MenuFragment();
 
