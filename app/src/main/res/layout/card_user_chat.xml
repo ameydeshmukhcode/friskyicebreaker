@@ -28,7 +28,7 @@
             app:layout_constraintHorizontal_chainStyle="spread"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/placeholder" />
+            app:srcCompat="@drawable/round_person_24" />
 
         <TextView
             android:id="@+id/text_name"
