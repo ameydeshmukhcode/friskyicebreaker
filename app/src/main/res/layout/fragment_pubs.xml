@@ -31,7 +31,7 @@
             android:drawableTint="@color/tintDark"
             android:ems="10"
             android:fontFamily="@font/museosans300"
-            android:hint="@string/search_pubs"
+            android:hint="@string/search_restaurants"
             android:inputType="text"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"

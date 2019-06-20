@@ -9,11 +9,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.core.structures.Pub;
 import com.frisky.icebreaker.ui.assistant.UIAssistant;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -24,12 +26,14 @@ public class PubListAdapter extends RecyclerView.Adapter<PubListAdapter.PubViewH
 
     static class PubViewHolder extends RecyclerView.ViewHolder {
         MaterialCardView mPubCard;
+        ImageView mImage;
         TextView mTitle;
         TextView mTags;
         TextView mRating;
         TextView mLocation;
         PubViewHolder(View v) {
             super(v);
+            mImage = v.findViewById(R.id.image_pub);
             mTitle = v.findViewById(R.id.text_title);
             mTags = v.findViewById(R.id.text_tag_list);
             mRating = v.findViewById(R.id.text_rating);
@@ -55,6 +59,9 @@ public class PubListAdapter extends RecyclerView.Adapter<PubListAdapter.PubViewH
     public void onBindViewHolder(@NonNull final PubViewHolder viewHolder, int i) {
         String tagList = "";
         final Pub pub = mPubList.get(i);
+
+        Picasso.get().load(pub.getImageUri()).into(viewHolder.mImage);
+
         viewHolder.mTitle.setText(pub.getName());
 
         for (String tag: pub.getTags()) {
