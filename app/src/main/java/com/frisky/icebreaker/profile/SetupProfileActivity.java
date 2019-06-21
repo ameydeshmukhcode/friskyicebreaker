@@ -18,7 +18,6 @@ import android.widget.Toast;
 
 import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.HomeActivity;
-import com.frisky.icebreaker.ui.assistant.CircularTransformation;
 import com.frisky.icebreaker.ui.assistant.RoundRectTransformation;
 import com.frisky.icebreaker.ui.assistant.UIAssistant;
 import com.frisky.icebreaker.ui.base.FormActivity;
@@ -38,7 +37,9 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
-import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -180,7 +181,7 @@ public class SetupProfileActivity extends AppCompatActivity implements FormActiv
                 });
 
         final UploadTask uploadTask = storageReference.child("profile_images")
-                .child(userUid).putBytes(getImageData());
+                .child(userUid).putFile(getImageUri());
 
         mProgressLayout.setVisibility(View.VISIBLE);
 
@@ -232,12 +233,21 @@ public class SetupProfileActivity extends AppCompatActivity implements FormActiv
         });
     }
 
-    private byte[] getImageData() {
-        mProfileImage.setDrawingCacheEnabled(true);
-        mProfileImage.buildDrawingCache();
+    private Uri getImageUri() {
         Bitmap bitmap = ((BitmapDrawable) mProfileImage.getDrawable()).getBitmap();
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
-        return baos.toByteArray();
+        File tmp = null;
+        try {
+            tmp = new File(getCacheDir() + "temporary.png");
+            FileOutputStream ostream;
+            ostream = new FileOutputStream(tmp);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, ostream);
+            ostream.close();
+            return Uri.fromFile(UIAssistant.getInstance().compressImage(tmp, getApplicationContext()));
+        }
+        catch (IOException exp) {
+            exp.printStackTrace();
+        }
+
+        return Uri.fromFile(tmp);
     }
 }
