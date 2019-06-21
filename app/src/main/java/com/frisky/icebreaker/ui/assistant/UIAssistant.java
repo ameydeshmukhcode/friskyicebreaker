@@ -36,13 +36,13 @@ public class UIAssistant {
     }
 
     public File compressImage(File file, Context context) throws IOException {
-        int height = 720, width = 720, quality = 25;
+        int height = 720, width = 720, quality = 50;
 
         return new Compressor(context)
                 .setMaxHeight(height)
                 .setMaxWidth(width)
                 .setQuality(quality)
-                .setCompressFormat(Bitmap.CompressFormat.PNG)
+                .setCompressFormat(Bitmap.CompressFormat.JPEG)
                 .compressToFile(file);
     }
 }

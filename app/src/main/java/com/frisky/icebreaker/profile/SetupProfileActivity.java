@@ -240,7 +240,7 @@ public class SetupProfileActivity extends AppCompatActivity implements FormActiv
             tmp = new File(getCacheDir() + "temporary.png");
             FileOutputStream ostream;
             ostream = new FileOutputStream(tmp);
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, ostream);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, ostream);
             ostream.close();
             return Uri.fromFile(UIAssistant.getInstance().compressImage(tmp, getApplicationContext()));
         }
