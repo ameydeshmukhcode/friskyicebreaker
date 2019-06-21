@@ -34,6 +34,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
@@ -143,8 +144,8 @@ public class SetupProfileActivity extends AppCompatActivity implements FormActiv
     }
 
     @Override
-    public void imageUpdated(Bitmap bitmap) {
-        mProfileImage.setImageBitmap(UIAssistant.getInstance().getProfileBitmap(bitmap));
+    public void imageUpdated(Uri bitmap) {
+        Picasso.get().load(bitmap).into(mProfileImage);
     }
 
     private void updateProfileData() {
