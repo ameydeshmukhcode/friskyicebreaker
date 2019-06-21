@@ -18,6 +18,8 @@ import android.widget.Toast;
 
 import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.HomeActivity;
+import com.frisky.icebreaker.ui.assistant.CircularTransformation;
+import com.frisky.icebreaker.ui.assistant.RoundRectTransformation;
 import com.frisky.icebreaker.ui.assistant.UIAssistant;
 import com.frisky.icebreaker.ui.base.FormActivity;
 import com.frisky.icebreaker.ui.base.UIActivity;
@@ -145,7 +147,7 @@ public class SetupProfileActivity extends AppCompatActivity implements FormActiv
 
     @Override
     public void imageUpdated(Uri bitmap) {
-        Picasso.get().load(bitmap).into(mProfileImage);
+        Picasso.get().load(bitmap).transform(new RoundRectTransformation()).into(mProfileImage);
     }
 
     private void updateProfileData() {
