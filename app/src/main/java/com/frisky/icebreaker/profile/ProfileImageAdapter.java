@@ -11,6 +11,7 @@ import android.widget.ImageView;
 
 import com.frisky.icebreaker.R;
 
+import com.frisky.icebreaker.ui.assistant.RoundRectTransformation;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -41,7 +42,7 @@ public class ProfileImageAdapter extends PagerAdapter {
         View itemView = mLayoutInflater.inflate(R.layout.view_image, container, false);
 
         ImageView imageView = itemView.findViewById(R.id.image_placeholder);
-        Picasso.get().load(mImageList.get(position)).into(imageView);
+        Picasso.get().load(mImageList.get(position)).transform(new RoundRectTransformation()).into(imageView);
         container.addView(itemView);
 
         return itemView;
