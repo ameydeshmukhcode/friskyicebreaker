@@ -46,14 +46,14 @@ public class PickImageDialog extends DialogFragment {
             }
         });
 
-        cameraButton = getDialog().findViewById(R.id.button_camera);
-        cameraButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(takePicture, PICK_IMAGE_CAMERA);
-            }
-        });
+//        cameraButton = getDialog().findViewById(R.id.button_camera);
+//        cameraButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//                startActivityForResult(takePicture, PICK_IMAGE_CAMERA);
+//            }
+//        });
     }
 
     @NonNull
@@ -81,7 +81,8 @@ public class PickImageDialog extends DialogFragment {
                 catch (IOException exp) {
                     Log.e("IOException", "Image not found", exp);
                 }
-            } else if (requestCode == PICK_IMAGE_CAMERA) {
+            }
+            else if (requestCode == PICK_IMAGE_CAMERA) {
                 Bitmap photo = (Bitmap) data.getExtras().get("data");
                 this.onImageUpdatedListener.imageUpdated(photo);
                 dismiss();

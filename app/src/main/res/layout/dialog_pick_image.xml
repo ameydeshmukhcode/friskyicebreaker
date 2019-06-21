@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="280dp"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:paddingBottom="16dp">
 
     <TextView
         android:id="@+id/pick_image"
@@ -38,27 +39,25 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/pick_image" />
 
-    <Button
-        android:id="@+id/button_camera"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:background="@color/transparent"
-        android:drawableLeft="@drawable/round_photo_camera_24"
-        android:drawablePadding="8dp"
-        android:drawableTint="@color/tintDark"
-        android:fontFamily="@font/museosans300"
-        android:foreground="?attr/selectableItemBackground"
-        android:gravity="start|center_vertical"
-        android:paddingStart="24dp"
-        android:text="@string/image_camera"
-        android:textAllCaps="false"
-        android:textColor="@color/textDark"
-        android:textSize="@dimen/text_title_size"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_gallery" />
+    <!--<Button-->
+        <!--android:id="@+id/button_camera"-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:background="@color/transparent"-->
+        <!--android:drawableLeft="@drawable/round_photo_camera_24"-->
+        <!--android:drawablePadding="8dp"-->
+        <!--android:drawableTint="@color/tintDark"-->
+        <!--android:fontFamily="@font/museosans300"-->
+        <!--android:foreground="?attr/selectableItemBackground"-->
+        <!--android:gravity="start|center_vertical"-->
+        <!--android:paddingStart="24dp"-->
+        <!--android:text="@string/image_camera"-->
+        <!--android:textAllCaps="false"-->
+        <!--android:textColor="@color/textDark"-->
+        <!--android:textSize="@dimen/text_title_size"-->
+        <!--app:layout_constraintEnd_toEndOf="parent"-->
+        <!--app:layout_constraintHorizontal_bias="0.0"-->
+        <!--app:layout_constraintStart_toStartOf="parent"-->
+        <!--app:layout_constraintTop_toBottomOf="@+id/button_gallery" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
