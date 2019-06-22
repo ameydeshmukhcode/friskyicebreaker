@@ -50,7 +50,7 @@ public class HomeActivity extends AppCompatActivity implements UIActivity {
         ImageButton mBottomNavProfileButton;
         ImageButton mBottomNavOrderButton;
         ImageButton mBottomNavNotificationButton;
-        FloatingActionButton mIceBreakerButton;
+        ImageButton mIceBreakerButton;
         TextView mToolbarText;
 
         mToolbarText = findViewById(R.id.text_app_bar);
@@ -108,8 +108,7 @@ public class HomeActivity extends AppCompatActivity implements UIActivity {
             }
         });
 
-        mIceBreakerButton = findViewById(R.id.fab_icebreaker);
-        mIceBreakerButton.setCompatElevation(R.dimen.icebreaker_elevation);
+        mIceBreakerButton = findViewById(R.id.button_icebreaker);
         mIceBreakerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

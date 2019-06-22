@@ -36,17 +36,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_icebreaker"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:backgroundTint="@android:color/black"
-        android:clickable="true"
-        app:layout_constraintBottom_toBottomOf="@+id/bottom_nav_home"
+    <ImageButton
+        android:id="@+id/button_icebreaker"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_marginBottom="4dp"
+        android:background="@color/transparent"
+        android:elevation="15dp"
+        android:padding="4dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="w,1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:rippleColor="@color/lightAccent"
         app:srcCompat="@drawable/logo" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
