@@ -25,6 +25,8 @@ import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.frisky.icebreaker.orders.OrderingAssistant.SESSION_ACTIVE;
+
 public class MenuActivity extends AppCompatActivity implements UIActivity {
 
     ImageButton mBackButton;
@@ -35,7 +37,7 @@ public class MenuActivity extends AppCompatActivity implements UIActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (getIntent().hasExtra("qr_code_scanned")){
+        if (SESSION_ACTIVE || getIntent().hasExtra("start_new_session")) {
             setContentView(R.layout.activity_menu);
         }
         else {
@@ -55,63 +57,38 @@ public class MenuActivity extends AppCompatActivity implements UIActivity {
             }
         });
 
-        if (getIntent().hasExtra("qr_code_scanned")
-            && getIntent().hasExtra("table_id")
-            && getIntent().hasExtra("restaurant_id")){
-
-            final String restID = getIntent().getStringExtra("restaurant_id");;
-            final String tableID = getIntent().getStringExtra("table_id");;
-
+        if (SESSION_ACTIVE) {
             mRestName = findViewById(R.id.text_pub_name);
             mTableSerial = findViewById(R.id.text_table);
 
-            FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+            restoreUserSession();
+        } else if (getIntent().hasExtra("start_new_session")) {
+            if (getIntent().hasExtra("table_id")
+                    && getIntent().hasExtra("restaurant_id")) {
 
-            DocumentReference userRef = firebaseFirestore.collection("users")
-                    .document(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                mRestName = findViewById(R.id.text_pub_name);
+                mTableSerial = findViewById(R.id.text_table);
 
-            userRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                    if (task.isSuccessful()) {
-                        DocumentSnapshot document = task.getResult();
-                        if (document == null)
-                            return;
-                        if (document.exists()) {
-                            boolean isSessionActive = false;
-                            if (document.contains("sessionactive")) {
-                                isSessionActive = Boolean.parseBoolean(document.get("sessionactive").toString());
-                            }
-                            if (!isSessionActive) {
-                                Toast.makeText(getApplicationContext(), "SessionInactive", Toast.LENGTH_SHORT).show();
-                                initUserSession(restID, tableID);
-                                getRestaurantAndTableDetails(restID, tableID);
-                            }
-                            else {
-                                Toast.makeText(getApplicationContext(), "SessionActive", Toast.LENGTH_SHORT).show();
-                            }
-                            Log.i("Exists", "DocumentSnapshot data: " + document.getData());
-                        }
-                        else {
-                            Log.e("Doesn't exist", "No such document");
-                        }
-                    }
-                    else {
-                        Log.e("Task", "failed with ", task.getException());
-                    }
-                }
-            });
+                final String restID = getIntent().getStringExtra("restaurant_id");
+                final String tableID = getIntent().getStringExtra("table_id");
 
-            MenuFragment menuFragment = new MenuFragment();
-
-            Bundle bundle = new Bundle();
-            bundle.putString("restaurant_id", restID);
-            menuFragment.setArguments(bundle);
-
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.frame_menu, menuFragment)
-                    .commit();
+                getRestaurantAndTableDetails(restID, tableID);
+                initUserSession(restID, tableID);
+                sendRestaurantID(restID);
+            }
         }
+    }
+
+    private void sendRestaurantID(String restaurant) {
+        MenuFragment menuFragment = new MenuFragment();
+
+        Bundle bundle = new Bundle();
+        bundle.putString("restaurant_id", restaurant);
+        menuFragment.setArguments(bundle);
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.frame_menu, menuFragment)
+                .commit();
     }
 
     private void initUserSession(final String restID, final String tableID) {
@@ -137,6 +114,8 @@ public class MenuActivity extends AppCompatActivity implements UIActivity {
                         data.put("sessionactive", true);
                         data.put("currentsession", id);
                         data.put("restaurant", restID);
+
+                        SESSION_ACTIVE = true;
 
                         firebaseFirestore.collection("users")
                                 .document(FirebaseAuth.getInstance().getCurrentUser().getUid())
@@ -167,6 +146,89 @@ public class MenuActivity extends AppCompatActivity implements UIActivity {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Log.e("", "Error adding document", e);
+                    }
+                });
+    }
+
+    private void restoreUserSession() {
+        final FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+
+        DocumentReference userRef = firebaseFirestore
+                .collection("users")
+                .document(FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+        userRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot doc = task.getResult();
+                            if (doc.contains("sessionactive")) {
+                                boolean isSessionActive = (boolean) doc.get("sessionactive");
+                                if (isSessionActive) {
+                                    if (doc.contains("restaurant") && doc.contains("currentsession")) {
+                                        final String restaurant = doc.getString("restaurant");
+                                        final String currentSession = doc.getString("currentsession");
+
+                                        DocumentReference restaurantRef = firebaseFirestore
+                                                .collection("restaurants")
+                                                .document(restaurant);
+
+                                        restaurantRef.get()
+                                                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                        if (task.isSuccessful()) {
+                                                            DocumentSnapshot doc = task.getResult();
+                                                            if (doc.contains("name")) {
+                                                                mRestName.setText(doc.getString("name"));
+                                                            }
+                                                        }
+
+                                                        DocumentReference sessionRef = firebaseFirestore
+                                                                .collection("restaurants")
+                                                                .document(restaurant)
+                                                                .collection("sessions")
+                                                                .document(currentSession);
+
+                                                        sessionRef.get()
+                                                                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                                                    @Override
+                                                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                                        if (task.isSuccessful()) {
+                                                                            DocumentSnapshot doc = task.getResult();
+                                                                            if (doc.contains("tableid")) {
+                                                                                String tableid = doc.getString("tableid");
+
+                                                                                DocumentReference tableRef = firebaseFirestore
+                                                                                        .collection("restaurants")
+                                                                                        .document(restaurant)
+                                                                                        .collection("tables")
+                                                                                        .document(tableid);
+
+                                                                                tableRef.get()
+                                                                                        .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                                                                            @Override
+                                                                                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                                                                if (task.isSuccessful()) {
+                                                                                                    DocumentSnapshot doc = task.getResult();
+                                                                                                    if (doc.contains("number")) {
+                                                                                                        String tableSerial = "Table " + doc.get("number");
+                                                                                                        mTableSerial.setText(tableSerial);
+                                                                                                    }
+                                                                                                }
+                                                                                                sendRestaurantID(restaurant);
+                                                                                            }
+                                                                                        });
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                });
+                                                    }
+                                                });
+                                    }
+                                }
+                            }
+                        }
                     }
                 });
     }
