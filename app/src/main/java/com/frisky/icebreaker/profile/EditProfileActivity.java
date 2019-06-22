@@ -2,6 +2,7 @@ package com.frisky.icebreaker.profile;
 
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.appcompat.app.AppCompatActivity;
@@ -61,7 +62,7 @@ public class EditProfileActivity extends AppCompatActivity implements UIActivity
     }
 
     @Override
-    public void imageUpdated(Bitmap bitmap) {
+    public void imageUpdated(Uri bitmap) {
 
     }
 }

@@ -46,14 +46,14 @@ public class PickImageDialog extends DialogFragment {
             }
         });
 
-        cameraButton = getDialog().findViewById(R.id.button_camera);
-        cameraButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(takePicture, PICK_IMAGE_CAMERA);
-            }
-        });
+//        cameraButton = getDialog().findViewById(R.id.button_camera);
+//        cameraButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//                startActivityForResult(takePicture, PICK_IMAGE_CAMERA);
+//            }
+//        });
     }
 
     @NonNull
@@ -73,24 +73,18 @@ public class PickImageDialog extends DialogFragment {
         if (resultCode == RESULT_OK && null != data) {
             Uri selectedImage = data.getData();
             if (requestCode == PICK_IMAGE_GALLERY) {
-                try {
-                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), selectedImage);
-                    this.onImageUpdatedListener.imageUpdated(bitmap);
-                    dismiss();
-                }
-                catch (IOException exp) {
-                    Log.e("IOException", "Image not found", exp);
-                }
-            } else if (requestCode == PICK_IMAGE_CAMERA) {
-                Bitmap photo = (Bitmap) data.getExtras().get("data");
-                this.onImageUpdatedListener.imageUpdated(photo);
+                this.onImageUpdatedListener.imageUpdated(selectedImage);
                 dismiss();
             }
+            else if (requestCode == PICK_IMAGE_CAMERA) {
+
+            }
+            dismiss();
         }
     }
 
-    public static interface OnImageUpdatedListener {
-        public abstract void imageUpdated(Bitmap bitmap);
+    public interface OnImageUpdatedListener {
+        void imageUpdated(Uri bitmap);
     }
 
     @Override

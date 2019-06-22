@@ -5,8 +5,15 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import androidx.annotation.NonNull;
+
+import com.frisky.icebreaker.ui.assistant.CircularTransformation;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.card.MaterialCardView;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +24,9 @@ import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.core.structures.User;
 import com.frisky.icebreaker.ui.assistant.UIAssistant;
 import com.frisky.icebreaker.profile.ViewUserActivity;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -59,8 +69,22 @@ public class IceBreakerListViewAdapter extends RecyclerView.Adapter<IceBreakerLi
         final User user = mUsersList.get(i);
         viewHolder.mName.setText(user.getName());
 
-        Bitmap bm = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.placeholder);
-        viewHolder.mPicture.setImageBitmap(UIAssistant.getInstance().getCircleBitmap(bm));
+        StorageReference profileImageRef = FirebaseStorage.getInstance().getReference()
+                .child("profile_images")
+                .child(user.getID());
+
+        profileImageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Picasso.get().load(uri).transform(new CircularTransformation()).into(viewHolder.mPicture);
+                Log.i("Image Uri Downloaded", uri.toString());
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.e("Uri Download Failed", e.getMessage());
+            }
+        });
 
         viewHolder.mCard.setOnClickListener(new View.OnClickListener() {
             @Override
