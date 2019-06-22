@@ -3,7 +3,12 @@ package com.frisky.icebreaker;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,6 +25,12 @@ import com.frisky.icebreaker.pubs.PubViewFragment;
 import com.frisky.icebreaker.social.IceBreakerFragment;
 import com.frisky.icebreaker.social.SocialFragment;
 import com.frisky.icebreaker.ui.base.UIActivity;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+
+import static com.frisky.icebreaker.orders.OrderingAssistant.SESSION_ACTIVE;
 
 public class HomeActivity extends AppCompatActivity implements UIActivity {
 
@@ -29,6 +40,7 @@ public class HomeActivity extends AppCompatActivity implements UIActivity {
         setContentView(R.layout.activity_home);
         initUI();
         loadFragment(new PubViewFragment());
+        checkSessionStatus();
     }
 
     public void initUI() {
@@ -104,6 +116,28 @@ public class HomeActivity extends AppCompatActivity implements UIActivity {
                 loadFragment(new IceBreakerFragment());
             }
         });
+    }
+
+    private void checkSessionStatus() {
+        FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+
+        firebaseFirestore.collection("users")
+                .document(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            if (document.contains("sessionactive")) {
+                                SESSION_ACTIVE = (boolean) document.get("sessionactive");
+                            }
+                            else {
+                                SESSION_ACTIVE = false;
+                            }
+                        }
+                    }
+                });
     }
 
     private void loadFragment(Fragment fragment) {
