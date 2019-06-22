@@ -54,7 +54,7 @@ public class IceBreakerListFragment extends Fragment {
     private void prepareUserData() {
         FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();
 
-        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
         mFirestore.collection("users")
                 .get()
@@ -63,16 +63,14 @@ public class IceBreakerListFragment extends Fragment {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d("User", document.getId() + " => " + document.getData());
-                                if (user == null)
-                                    return;
-                                if (document.getId().equals(user.getUid()))
-                                    return;
+                                Log.i("User", document.getId() + " => " + document.getData());
                                 String name = document.getString("name");
                                 String bio = document.getString("bio");
                                 User user = new User(document.getId(), name, bio, 0, null);
-                                usersList.add(user);
-                                iceBreakerAdapter.notifyDataSetChanged();
+                                if (!document.getId().equals(firebaseUser.getUid())) {
+                                    usersList.add(user);
+                                    iceBreakerAdapter.notifyDataSetChanged();
+                                }
                             }
                         }
                         else {
