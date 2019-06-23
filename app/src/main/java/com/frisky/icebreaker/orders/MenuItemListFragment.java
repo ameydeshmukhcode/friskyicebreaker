@@ -60,7 +60,7 @@ public class MenuItemListFragment extends Fragment {
         FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();
 
         Query itemsListRef = mFirestore.collection("restaurants").document(restID)
-                .collection("items").orderBy("categoryid");
+                .collection("items").orderBy("category_id");
 
         itemsListRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override

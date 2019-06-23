@@ -95,10 +95,10 @@ public class MenuActivity extends AppCompatActivity implements UIActivity {
         final FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
 
         Map<String, Object> data = new HashMap<>();
-        data.put("tableid", tableID);
-        data.put("createdby", FirebaseAuth.getInstance().getCurrentUser().getUid());
-        data.put("starttime", new Timestamp(System.currentTimeMillis()));
-        data.put("isactive", true);
+        data.put("table_id", tableID);
+        data.put("created_by", FirebaseAuth.getInstance().getCurrentUser().getUid());
+        data.put("start_time", new Timestamp(System.currentTimeMillis()));
+        data.put("is_active", true);
 
         firebaseFirestore.collection("restaurants")
                 .document(restID)
@@ -111,8 +111,8 @@ public class MenuActivity extends AppCompatActivity implements UIActivity {
                         Log.e("", "DocumentSnapshot written with ID: " + documentReference.getId());
 
                         Map<String, Object> data = new HashMap<>();
-                        data.put("sessionactive", true);
-                        data.put("currentsession", sessionID);
+                        data.put("session_active", true);
+                        data.put("current_session", sessionID);
                         data.put("restaurant", restID);
 
                         SESSION_ACTIVE = true;
@@ -125,7 +125,7 @@ public class MenuActivity extends AppCompatActivity implements UIActivity {
                                     public void onSuccess(Void aVoid) {
                                         Map<String, Object> data = new HashMap<>();
                                         data.put("occupied", true);
-                                        data.put("sessionid", sessionID);
+                                        data.put("session_id", sessionID);
 
                                         firebaseFirestore.collection("restaurants")
                                                 .document(restID)
@@ -162,12 +162,12 @@ public class MenuActivity extends AppCompatActivity implements UIActivity {
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                         if (task.isSuccessful()) {
                             DocumentSnapshot doc = task.getResult();
-                            if (doc.contains("sessionactive")) {
-                                boolean isSessionActive = (boolean) doc.get("sessionactive");
+                            if (doc.contains("session_active")) {
+                                boolean isSessionActive = (boolean) doc.get("session_active");
                                 if (isSessionActive) {
-                                    if (doc.contains("restaurant") && doc.contains("currentsession")) {
+                                    if (doc.contains("restaurant") && doc.contains("current_session")) {
                                         final String restaurant = doc.getString("restaurant");
-                                        final String currentSession = doc.getString("currentsession");
+                                        final String currentSession = doc.getString("current_session");
 
                                         DocumentReference restaurantRef = firebaseFirestore
                                                 .collection("restaurants")
@@ -196,8 +196,8 @@ public class MenuActivity extends AppCompatActivity implements UIActivity {
                                                                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                                                         if (task.isSuccessful()) {
                                                                             DocumentSnapshot doc = task.getResult();
-                                                                            if (doc.contains("tableid")) {
-                                                                                String tableid = doc.getString("tableid");
+                                                                            if (doc.contains("table_id")) {
+                                                                                String tableid = doc.getString("table_id");
 
                                                                                 DocumentReference tableRef = firebaseFirestore
                                                                                         .collection("restaurants")

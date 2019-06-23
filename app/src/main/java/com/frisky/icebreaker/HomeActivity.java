@@ -128,8 +128,8 @@ public class HomeActivity extends AppCompatActivity implements UIActivity {
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                         if (task.isSuccessful()) {
                             DocumentSnapshot document = task.getResult();
-                            if (document.contains("sessionactive")) {
-                                SESSION_ACTIVE = (boolean) document.get("sessionactive");
+                            if (document.contains("session_active")) {
+                                SESSION_ACTIVE = (boolean) document.get("session_active");
                             }
                             else {
                                 SESSION_ACTIVE = false;
