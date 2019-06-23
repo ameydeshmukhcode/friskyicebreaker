@@ -53,31 +53,31 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/comma"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/museosans700"
-            android:text="@string/comma"
-            android:textColor="@color/textLight"
-            android:textSize="@dimen/text_title_size"
-            app:layout_constraintBottom_toBottomOf="@+id/text_name"
-            app:layout_constraintStart_toEndOf="@+id/text_name"
-            app:layout_constraintTop_toTopOf="@+id/text_name" />
+        <!--<TextView-->
+            <!--android:id="@+id/comma"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:fontFamily="@font/museosans700"-->
+            <!--android:text="@string/comma"-->
+            <!--android:textColor="@color/textLight"-->
+            <!--android:textSize="@dimen/text_title_size"-->
+            <!--app:layout_constraintBottom_toBottomOf="@+id/text_name"-->
+            <!--app:layout_constraintStart_toEndOf="@+id/text_name"-->
+            <!--app:layout_constraintTop_toTopOf="@+id/text_name" />-->
 
-        <TextView
-            android:id="@+id/text_age"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/museosans700"
-            android:paddingStart="4dp"
-            android:text="@string/placeholder_number"
-            android:textColor="@color/textLight"
-            android:textSize="@dimen/text_title_size"
-            app:layout_constraintBottom_toBottomOf="@+id/text_name"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/comma"
-            app:layout_constraintTop_toTopOf="@+id/text_name" />
+        <!--<TextView-->
+            <!--android:id="@+id/text_age"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:fontFamily="@font/museosans700"-->
+            <!--android:paddingStart="4dp"-->
+            <!--android:text="@string/placeholder_number"-->
+            <!--android:textColor="@color/textLight"-->
+            <!--android:textSize="@dimen/text_title_size"-->
+            <!--app:layout_constraintBottom_toBottomOf="@+id/text_name"-->
+            <!--app:layout_constraintEnd_toEndOf="parent"-->
+            <!--app:layout_constraintStart_toEndOf="@+id/comma"-->
+            <!--app:layout_constraintTop_toTopOf="@+id/text_name" />-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -139,10 +139,12 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
+        android:backgroundTint="@color/backgroundLight"
         android:clickable="true"
         android:focusable="true"
+        android:tint="@color/appGreen"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/icebreaker" />
+        app:srcCompat="@drawable/round_favorite_24" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
