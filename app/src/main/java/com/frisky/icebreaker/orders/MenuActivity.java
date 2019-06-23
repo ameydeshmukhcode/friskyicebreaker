@@ -107,12 +107,12 @@ public class MenuActivity extends AppCompatActivity implements UIActivity {
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
-                        String id = documentReference.getId();
+                        final String sessionID = documentReference.getId();
                         Log.e("", "DocumentSnapshot written with ID: " + documentReference.getId());
 
                         Map<String, Object> data = new HashMap<>();
                         data.put("sessionactive", true);
-                        data.put("currentsession", id);
+                        data.put("currentsession", sessionID);
                         data.put("restaurant", restID);
 
                         SESSION_ACTIVE = true;
@@ -125,6 +125,7 @@ public class MenuActivity extends AppCompatActivity implements UIActivity {
                                     public void onSuccess(Void aVoid) {
                                         Map<String, Object> data = new HashMap<>();
                                         data.put("occupied", true);
+                                        data.put("sessionid", sessionID);
 
                                         firebaseFirestore.collection("restaurants")
                                                 .document(restID)
@@ -134,8 +135,7 @@ public class MenuActivity extends AppCompatActivity implements UIActivity {
                                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                     @Override
                                                     public void onSuccess(Void aVoid) {
-                                                        Toast.makeText(getApplicationContext(),
-                                                                "Table Occupied", Toast.LENGTH_SHORT).show();
+                                                        Log.i("Success", "Table details updated");
                                                     }
                                                 });
                                     }

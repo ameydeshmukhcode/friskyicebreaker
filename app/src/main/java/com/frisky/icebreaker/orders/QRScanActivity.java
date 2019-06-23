@@ -85,12 +85,12 @@ public class QRScanActivity extends AppCompatActivity {
                         FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
                         final String qrCodeData = result.getText();
 
-                        if (SESSION_ACTIVE) {
-                            Toast.makeText(getBaseContext(),"Session Already Active", Toast.LENGTH_LONG).show();
+                        if (!qrCodeData.contains("frisky")) {
+                            Toast.makeText(getBaseContext(),"QR Code not recognised", Toast.LENGTH_LONG).show();
                             mCodeScanner.startPreview();
                         }
-                        else if (!qrCodeData.contains("frisky")) {
-                            Toast.makeText(getBaseContext(),"QR Code not recognised", Toast.LENGTH_LONG).show();
+                        else if (SESSION_ACTIVE) {
+                            Toast.makeText(getBaseContext(),"Session Already Active", Toast.LENGTH_LONG).show();
                             mCodeScanner.startPreview();
                         }
                         else {
