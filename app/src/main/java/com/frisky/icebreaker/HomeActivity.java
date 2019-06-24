@@ -9,6 +9,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.appcompat.app.AppCompatActivity;
@@ -34,6 +35,8 @@ import static com.frisky.icebreaker.orders.OrderingAssistant.SESSION_ACTIVE;
 
 public class HomeActivity extends AppCompatActivity implements UIActivity {
 
+    ConstraintLayout bottomSheet;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +55,9 @@ public class HomeActivity extends AppCompatActivity implements UIActivity {
         ImageButton mBottomNavNotificationButton;
         ImageButton mIceBreakerButton;
         TextView mToolbarText;
+
+        bottomSheet = findViewById(R.id.bottom_sheet_session);
+        bottomSheet.setVisibility(View.GONE);
 
         mToolbarText = findViewById(R.id.text_app_bar);
         mToolbarText.setText(R.string.app_name);
@@ -130,6 +136,9 @@ public class HomeActivity extends AppCompatActivity implements UIActivity {
                             DocumentSnapshot document = task.getResult();
                             if (document.contains("session_active")) {
                                 SESSION_ACTIVE = (boolean) document.get("session_active");
+                                if (SESSION_ACTIVE) {
+                                    bottomSheet.setVisibility(View.VISIBLE);
+                                }
                             }
                             else {
                                 SESSION_ACTIVE = false;

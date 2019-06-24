@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:backgroundTint="@color/tintLight">
+    android:background="@color/tintLight"
+    android:elevation="10dp">
 
     <TextView
         android:id="@+id/session"
@@ -12,7 +13,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:fontFamily="@font/museosans300"
-        android:text="@string/your_session"
+        android:text="@string/current_session"
         android:textSize="@dimen/text_subtitle_size"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
