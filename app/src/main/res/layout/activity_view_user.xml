@@ -139,10 +139,11 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
-        android:backgroundTint="@color/backgroundLight"
+        android:backgroundTint="@color/backgroundDark"
         android:clickable="true"
         android:focusable="true"
         android:tint="@color/appGreen"
+        app:borderWidth="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/round_favorite_24" />
