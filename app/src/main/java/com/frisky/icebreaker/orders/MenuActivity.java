@@ -88,7 +88,7 @@ public class MenuActivity extends AppCompatActivity implements UIActivity {
 
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.frame_menu, menuFragment)
-                .commit();
+                .commitAllowingStateLoss();
     }
 
     private void initUserSession(final String restID, final String tableID) {
