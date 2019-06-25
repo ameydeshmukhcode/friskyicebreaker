@@ -6,7 +6,6 @@ import android.os.Bundle;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -15,7 +14,6 @@ import androidx.core.content.res.ResourcesCompat;
 import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.util.TypedValue;
-import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -29,9 +27,9 @@ import com.frisky.icebreaker.social.IceBreakerFragment;
 import com.frisky.icebreaker.social.SocialFragment;
 import com.frisky.icebreaker.ui.base.UIActivity;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.storage.FirebaseStorage;
 
 import static com.frisky.icebreaker.orders.OrderingAssistant.SESSION_ACTIVE;
 
@@ -39,11 +37,16 @@ public class HomeActivity extends AppCompatActivity implements UIActivity {
 
     ConstraintLayout bottomSheet;
     Button viewMenuButton;
+    TextView restaurantName;
+    TextView tableName;
+
+    Intent resumeSession;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        resumeSession = new Intent(getApplicationContext(), MenuActivity.class);
         initUI();
         loadFragment(new PubViewFragment());
         checkSessionStatus();
@@ -141,12 +144,17 @@ public class HomeActivity extends AppCompatActivity implements UIActivity {
                                 SESSION_ACTIVE = (boolean) document.get("session_active");
                                 if (SESSION_ACTIVE) {
                                     bottomSheet.setVisibility(View.VISIBLE);
-                                    
+
+                                    restaurantName = findViewById(R.id.text_restaurant);
+                                    tableName = findViewById(R.id.text_table);
+
+                                    getSessionDetails();
+
                                     viewMenuButton = findViewById(R.id.button_view_menu);
                                     viewMenuButton.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
-                                            startActivity(new Intent(getApplicationContext(), MenuActivity.class));
+                                            startActivity(resumeSession);
                                         }
                                     });
                                 }
@@ -157,6 +165,87 @@ public class HomeActivity extends AppCompatActivity implements UIActivity {
                         }
                     }
                 });
+    }
+
+    private void getSessionDetails() {
+        final FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+
+        DocumentReference userRef = firebaseFirestore
+                .collection("users")
+                .document(FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+        userRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot doc = task.getResult();
+                    if (doc.contains("restaurant") && doc.contains("current_session")) {
+                        final String restaurant = doc.getString("restaurant");
+                        final String currentSession = doc.getString("current_session");
+
+                        DocumentReference restaurantRef = firebaseFirestore
+                                .collection("restaurants")
+                                .document(restaurant);
+
+                        restaurantRef.get()
+                            .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                    if (task.isSuccessful()) {
+                                        DocumentSnapshot doc = task.getResult();
+                                        if (doc.contains("name")) {
+                                            restaurantName.setText(doc.getString("name"));
+                                        }
+                                    }
+
+                                    DocumentReference sessionRef = firebaseFirestore
+                                            .collection("restaurants")
+                                            .document(restaurant)
+                                            .collection("sessions")
+                                            .document(currentSession);
+
+                                    sessionRef.get()
+                                        .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                if (task.isSuccessful()) {
+                                                    DocumentSnapshot doc = task.getResult();
+                                                    if (doc.contains("table_id")) {
+                                                        final String tableid = doc.getString("table_id");
+
+                                                        DocumentReference tableRef = firebaseFirestore
+                                                                .collection("restaurants")
+                                                                .document(restaurant)
+                                                                .collection("tables")
+                                                                .document(tableid);
+
+                                                        tableRef.get()
+                                                            .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                                                @Override
+                                                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                                    if (task.isSuccessful()) {
+                                                                        DocumentSnapshot doc = task.getResult();
+                                                                        String tableSerial = "";
+                                                                        if (doc.contains("number")) {
+                                                                            tableSerial = "Table " + doc.get("number");
+                                                                            tableName.setText(tableSerial);
+                                                                        }
+                                                                        resumeSession.putExtra("restaurant_id", restaurant);
+                                                                        resumeSession.putExtra("restaurant_name", restaurantName.getText().toString());
+                                                                        resumeSession.putExtra("table_number", tableSerial);
+                                                                    }
+                                                                }
+                                                            });
+                                                    }
+                                                }
+                                            }
+                                        });
+                                }
+                            });
+                    }
+                }
+            }
+        });
     }
 
     private void loadFragment(Fragment fragment) {

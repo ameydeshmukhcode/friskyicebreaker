@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.ui.base.UIActivity;
@@ -151,86 +150,13 @@ public class MenuActivity extends AppCompatActivity implements UIActivity {
     }
 
     private void restoreUserSession() {
-        final FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
-
-        DocumentReference userRef = firebaseFirestore
-                .collection("users")
-                .document(FirebaseAuth.getInstance().getCurrentUser().getUid());
-
-        userRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if (task.isSuccessful()) {
-                            DocumentSnapshot doc = task.getResult();
-                            if (doc.contains("session_active")) {
-                                boolean isSessionActive = (boolean) doc.get("session_active");
-                                if (isSessionActive) {
-                                    if (doc.contains("restaurant") && doc.contains("current_session")) {
-                                        final String restaurant = doc.getString("restaurant");
-                                        final String currentSession = doc.getString("current_session");
-
-                                        DocumentReference restaurantRef = firebaseFirestore
-                                                .collection("restaurants")
-                                                .document(restaurant);
-
-                                        restaurantRef.get()
-                                                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                                    @Override
-                                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                                        if (task.isSuccessful()) {
-                                                            DocumentSnapshot doc = task.getResult();
-                                                            if (doc.contains("name")) {
-                                                                mRestName.setText(doc.getString("name"));
-                                                            }
-                                                        }
-
-                                                        DocumentReference sessionRef = firebaseFirestore
-                                                                .collection("restaurants")
-                                                                .document(restaurant)
-                                                                .collection("sessions")
-                                                                .document(currentSession);
-
-                                                        sessionRef.get()
-                                                                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                                                    @Override
-                                                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                                                        if (task.isSuccessful()) {
-                                                                            DocumentSnapshot doc = task.getResult();
-                                                                            if (doc.contains("table_id")) {
-                                                                                String tableid = doc.getString("table_id");
-
-                                                                                DocumentReference tableRef = firebaseFirestore
-                                                                                        .collection("restaurants")
-                                                                                        .document(restaurant)
-                                                                                        .collection("tables")
-                                                                                        .document(tableid);
-
-                                                                                tableRef.get()
-                                                                                        .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                                                                            @Override
-                                                                                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                                                                                if (task.isSuccessful()) {
-                                                                                                    DocumentSnapshot doc = task.getResult();
-                                                                                                    if (doc.contains("number")) {
-                                                                                                        String tableSerial = "Table " + doc.get("number");
-                                                                                                        mTableSerial.setText(tableSerial);
-                                                                                                    }
-                                                                                                }
-                                                                                                sendRestaurantID(restaurant);
-                                                                                            }
-                                                                                        });
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                });
-                                                    }
-                                                });
-                                    }
-                                }
-                            }
-                        }
-                    }
-                });
+        if (getIntent().hasExtra("table_number")
+                && getIntent().hasExtra("restaurant_name")
+                && getIntent().hasExtra("restaurant_id")) {
+            mRestName.setText(getIntent().getStringExtra("restaurant_name"));
+            mTableSerial.setText(getIntent().getStringExtra("table_number"));
+            sendRestaurantID(getIntent().getStringExtra("restaurant_id"));
+        }
     }
 
     private void getRestaurantAndTableDetails(String restID, String tableID) {

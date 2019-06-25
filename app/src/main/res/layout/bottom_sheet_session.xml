@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/background_top_corners_rounded"
@@ -13,7 +14,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:fontFamily="@font/museosans300"
-        android:text="@string/current_session"
+        android:text="@string/currently_at"
         android:textSize="@dimen/text_subtitle_size"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -25,7 +26,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="16dp"
-        android:fontFamily="@font/museosans300"
+        android:fontFamily="@font/museosans700"
         android:text="@string/placeholder"
         android:textSize="@dimen/text_subtitle_size"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -39,13 +40,12 @@
         android:layout_marginStart="4dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="16dp"
-        android:fontFamily="@font/museosans300"
+        android:fontFamily="@font/museosans700"
         android:text="@string/placeholder"
         android:textSize="@dimen/text_subtitle_size"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/text_restaurant"
-        app:layout_constraintTop_toBottomOf="@+id/session"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintStart_toEndOf="@+id/dash"
+        app:layout_constraintTop_toBottomOf="@+id/session" />
 
     <Button
         android:id="@+id/button_view_menu"
@@ -64,5 +64,19 @@
         app:layout_constraintBottom_toBottomOf="@+id/text_restaurant"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/session" />
+
+    <TextView
+        android:id="@+id/dash"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp"
+        android:fontFamily="@font/museosans700"
+        android:text="@string/dash"
+        android:textSize="@dimen/text_subtitle_size"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/text_restaurant"
+        app:layout_constraintTop_toBottomOf="@+id/session" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

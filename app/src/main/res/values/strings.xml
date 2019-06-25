@@ -82,7 +82,7 @@
     <!--Menu/Order Activity-->
     <string name="at">You\'re at</string>
     <string name="your_order">Your Order</string>
-    <string name="current_session">Current session</string>
+    <string name="currently_at">Currently at</string>
     <string name="order_active">Your order is being processed</string>
     <string name="view_menu">View Menu</string>
     <string name="your_total">Your total:</string>
@@ -111,6 +111,8 @@
     <!--Empty state -->
     <string name="empty_state_scan_qr">You haven\'t ordered anything yet.\nTo get the menu and start ordering,\n
         scan the QR code on the table.</string>
+
+    <string name="dash">-</string>
 
     <string name="placeholder">dummy</string>
     <string name="placeholder_number">23</string>
