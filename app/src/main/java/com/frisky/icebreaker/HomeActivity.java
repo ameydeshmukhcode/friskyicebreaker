@@ -49,6 +49,11 @@ public class HomeActivity extends AppCompatActivity implements UIActivity {
         resumeSession = new Intent(getApplicationContext(), MenuActivity.class);
         initUI();
         loadFragment(new PubViewFragment());
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         checkSessionStatus();
     }
 
