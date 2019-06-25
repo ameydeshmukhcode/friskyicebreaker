@@ -103,7 +103,7 @@ public class HomeActivity extends AppCompatActivity implements UIActivity {
         mBottomNavOrderButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), MenuActivity.class));
+                startActivity(resumeSession);
             }
         });
 
