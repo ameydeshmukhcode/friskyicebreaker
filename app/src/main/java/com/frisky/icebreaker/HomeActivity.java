@@ -143,7 +143,6 @@ public class HomeActivity extends AppCompatActivity implements UIActivity {
                             if (document.contains("session_active")) {
                                 SESSION_ACTIVE = (boolean) document.get("session_active");
                                 if (SESSION_ACTIVE) {
-                                    bottomSheet.setVisibility(View.VISIBLE);
 
                                     restaurantName = findViewById(R.id.text_restaurant);
                                     tableName = findViewById(R.id.text_table);
@@ -230,6 +229,7 @@ public class HomeActivity extends AppCompatActivity implements UIActivity {
                                                                             tableSerial = "Table " + doc.get("number");
                                                                             tableName.setText(tableSerial);
                                                                         }
+                                                                        bottomSheet.setVisibility(View.VISIBLE);
                                                                         resumeSession.putExtra("restaurant_id", restaurant);
                                                                         resumeSession.putExtra("restaurant_name", restaurantName.getText().toString());
                                                                         resumeSession.putExtra("table_number", tableSerial);
