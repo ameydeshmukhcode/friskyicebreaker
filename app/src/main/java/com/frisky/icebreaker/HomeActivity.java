@@ -15,7 +15,9 @@ import androidx.core.content.res.ResourcesCompat;
 import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.Menu;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -36,6 +38,7 @@ import static com.frisky.icebreaker.orders.OrderingAssistant.SESSION_ACTIVE;
 public class HomeActivity extends AppCompatActivity implements UIActivity {
 
     ConstraintLayout bottomSheet;
+    Button viewMenuButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -138,6 +141,14 @@ public class HomeActivity extends AppCompatActivity implements UIActivity {
                                 SESSION_ACTIVE = (boolean) document.get("session_active");
                                 if (SESSION_ACTIVE) {
                                     bottomSheet.setVisibility(View.VISIBLE);
+                                    
+                                    viewMenuButton = findViewById(R.id.button_view_menu);
+                                    viewMenuButton.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            startActivity(new Intent(getApplicationContext(), MenuActivity.class));
+                                        }
+                                    });
                                 }
                             }
                             else {
