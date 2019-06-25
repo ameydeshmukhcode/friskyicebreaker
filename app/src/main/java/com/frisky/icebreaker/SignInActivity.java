@@ -15,9 +15,7 @@ import android.widget.Toast;
 import com.frisky.icebreaker.ui.base.FormActivity;
 import com.frisky.icebreaker.profile.SetupProfileActivity;
 import com.frisky.icebreaker.ui.base.UIActivity;
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseNetworkException;
@@ -59,18 +57,18 @@ public class SignInActivity extends AppCompatActivity implements FormActivity, U
             verifyLogin();
         }
 
-        // Configure Google Sign In
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id))
-                .requestEmail()
-                .build();
-
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+//        Configure Google Sign In
+//        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+//                .requestIdToken(getString(R.string.default_web_client_id))
+//                .requestEmail()
+//                .build();
+//
+//        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
     }
 
     public void initUI() {
         mLoginButton = findViewById(R.id.button_login);
-        mGoogleButton = findViewById(R.id.button_google);
+//        mGoogleButton = findViewById(R.id.button_google);
         mSignUpLink = findViewById(R.id.link_sign_up);
         mErrorText = findViewById(R.id.text_error);
         mForgotPasswordLink = findViewById(R.id.link_forgot_password);
