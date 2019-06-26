@@ -3,8 +3,8 @@
     <item>
         <shape android:shape="rectangle">
             <solid android:color="@android:color/white"/>
-            <corners android:topLeftRadius="@dimen/bg_chat_radius"
-                android:topRightRadius="@dimen/bg_chat_radius"/>
+            <corners android:topLeftRadius="@dimen/bg_round_top_corners_radius"
+                android:topRightRadius="@dimen/bg_round_top_corners_radius"/>
         </shape>
     </item>
 </selector>
