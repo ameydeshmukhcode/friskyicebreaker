@@ -22,6 +22,8 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.zxing.Result;
 
+import static com.frisky.icebreaker.orders.OrderingAssistant.SESSION_ACTIVE;
+
 public class QRScanActivity extends AppCompatActivity {
 
     public static final int MY_PERMISSIONS_REQUEST_CAMERA = 1;
@@ -87,6 +89,10 @@ public class QRScanActivity extends AppCompatActivity {
                             Toast.makeText(getBaseContext(),"QR Code not recognised", Toast.LENGTH_LONG).show();
                             mCodeScanner.startPreview();
                         }
+                        else if (SESSION_ACTIVE) {
+                            Toast.makeText(getBaseContext(),"Session Already Active", Toast.LENGTH_LONG).show();
+                            mCodeScanner.startPreview();
+                        }
                         else {
                             final String restaurant = qrCodeData.split("\\+")[1];
                             final String table = qrCodeData.split("\\+")[2];
@@ -111,7 +117,7 @@ public class QRScanActivity extends AppCompatActivity {
                                             }
                                             if (!isOccupied) {
                                                 Intent showMenu = new Intent(getBaseContext(), MenuActivity.class);
-                                                showMenu.putExtra("qr_code_scanned", true);
+                                                showMenu.putExtra("start_new_session", true);
                                                 showMenu.putExtra("restaurant_id", restaurant);
                                                 showMenu.putExtra("table_id", table);
                                                 startActivity(showMenu);

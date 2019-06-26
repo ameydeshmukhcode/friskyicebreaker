@@ -7,7 +7,8 @@
     android:layout_height="wrap_content"
     android:clickable="true"
     android:focusable="true"
-    app:cardCornerRadius="0dp">
+    app:cardCornerRadius="0dp"
+    app:cardElevation="0dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -44,46 +45,50 @@
             app:layout_constraintStart_toEndOf="@+id/image_user"
             app:layout_constraintTop_toTopOf="@+id/image_user" />
 
-        <TextView
-            android:id="@+id/comma"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/museosans300"
-            android:text="@string/comma"
-            android:textColor="@color/textDark"
-            android:textSize="@dimen/text_title_size"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/text_name"
-            app:layout_constraintStart_toEndOf="@+id/text_name"
-            app:layout_constraintTop_toTopOf="@+id/text_name" />
+        <!--<TextView-->
+        <!--android:id="@+id/comma"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:fontFamily="@font/museosans300"-->
+        <!--android:text="@string/comma"-->
+        <!--android:textColor="@color/textDark"-->
+        <!--android:textSize="@dimen/text_title_size"-->
+        <!--android:textStyle="bold"-->
+        <!--app:layout_constraintBottom_toBottomOf="@+id/text_name"-->
+        <!--app:layout_constraintStart_toEndOf="@+id/text_name"-->
+        <!--app:layout_constraintTop_toTopOf="@+id/text_name" />-->
 
-        <TextView
-            android:id="@+id/text_age"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:fontFamily="@font/museosans300"
-            android:text="@string/placeholder_number"
-            android:textColor="@color/textDark"
-            android:textSize="@dimen/text_title_size"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/text_name"
-            app:layout_constraintStart_toEndOf="@+id/comma"
-            app:layout_constraintTop_toTopOf="@+id/text_name" />
+        <!--<TextView-->
+        <!--android:id="@+id/text_age"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginStart="4dp"-->
+        <!--android:fontFamily="@font/museosans300"-->
+        <!--android:text="@string/placeholder_number"-->
+        <!--android:textColor="@color/textDark"-->
+        <!--android:textSize="@dimen/text_title_size"-->
+        <!--android:textStyle="bold"-->
+        <!--app:layout_constraintBottom_toBottomOf="@+id/text_name"-->
+        <!--app:layout_constraintStart_toEndOf="@+id/comma"-->
+        <!--app:layout_constraintTop_toTopOf="@+id/text_name" />-->
 
         <ImageButton
             android:id="@+id/button_connect"
-            android:layout_width="@dimen/button_square_dimen"
-            android:layout_height="@dimen/button_square_dimen"
+            android:layout_width="@dimen/button_square_small_dimen"
+            android:layout_height="@dimen/button_square_small_dimen"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="20dp"
-            android:background="@android:color/transparent"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/background_circular"
+            android:backgroundTint="@color/backgroundDark"
             android:padding="8dp"
             android:scaleType="fitCenter"
+            android:tint="@color/appGreen"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/icebreaker" />
+            app:srcCompat="@drawable/round_favorite_24" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

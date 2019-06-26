@@ -36,6 +36,6 @@ public class RoundRectTransformation implements Transformation {
 
     @Override
     public String key() {
-        return "rounded-rectangle";
+        return "rounded_rectangle";
     }
 }

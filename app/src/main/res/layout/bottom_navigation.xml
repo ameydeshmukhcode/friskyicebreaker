@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="50dp"
     android:background="@android:color/background_light"
-    android:elevation="10dp">
+    android:elevation="4dp">
 
     <ImageButton
         android:id="@+id/button_nav_left"

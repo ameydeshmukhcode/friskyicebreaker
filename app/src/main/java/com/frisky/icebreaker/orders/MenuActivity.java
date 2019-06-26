@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.ui.base.UIActivity;
@@ -25,6 +24,8 @@ import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.frisky.icebreaker.orders.OrderingAssistant.SESSION_ACTIVE;
+
 public class MenuActivity extends AppCompatActivity implements UIActivity {
 
     ImageButton mBackButton;
@@ -35,7 +36,7 @@ public class MenuActivity extends AppCompatActivity implements UIActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (getIntent().hasExtra("qr_code_scanned")){
+        if (SESSION_ACTIVE || getIntent().hasExtra("start_new_session")) {
             setContentView(R.layout.activity_menu);
         }
         else {
@@ -55,73 +56,48 @@ public class MenuActivity extends AppCompatActivity implements UIActivity {
             }
         });
 
-        if (getIntent().hasExtra("qr_code_scanned")
-            && getIntent().hasExtra("table_id")
-            && getIntent().hasExtra("restaurant_id")){
-
-            final String restID = getIntent().getStringExtra("restaurant_id");;
-            final String tableID = getIntent().getStringExtra("table_id");;
-
+        if (SESSION_ACTIVE) {
             mRestName = findViewById(R.id.text_pub_name);
             mTableSerial = findViewById(R.id.text_table);
 
-            FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+            restoreUserSession();
+        } else if (getIntent().hasExtra("start_new_session")) {
+            if (getIntent().hasExtra("table_id")
+                    && getIntent().hasExtra("restaurant_id")) {
 
-            DocumentReference userRef = firebaseFirestore.collection("users")
-                    .document(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                mRestName = findViewById(R.id.text_pub_name);
+                mTableSerial = findViewById(R.id.text_table);
 
-            userRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                    if (task.isSuccessful()) {
-                        DocumentSnapshot document = task.getResult();
-                        if (document == null)
-                            return;
-                        if (document.exists()) {
-                            boolean isSessionActive = false;
-                            if (document.contains("sessionactive")) {
-                                isSessionActive = Boolean.parseBoolean(document.get("sessionactive").toString());
-                            }
-                            if (!isSessionActive) {
-                                Toast.makeText(getApplicationContext(), "SessionInactive", Toast.LENGTH_SHORT).show();
-                                initUserSession(restID, tableID);
-                                getRestaurantAndTableDetails(restID, tableID);
-                            }
-                            else {
-                                Toast.makeText(getApplicationContext(), "SessionActive", Toast.LENGTH_SHORT).show();
-                            }
-                            Log.i("Exists", "DocumentSnapshot data: " + document.getData());
-                        }
-                        else {
-                            Log.e("Doesn't exist", "No such document");
-                        }
-                    }
-                    else {
-                        Log.e("Task", "failed with ", task.getException());
-                    }
-                }
-            });
+                final String restID = getIntent().getStringExtra("restaurant_id");
+                final String tableID = getIntent().getStringExtra("table_id");
 
-            MenuFragment menuFragment = new MenuFragment();
-
-            Bundle bundle = new Bundle();
-            bundle.putString("restaurant_id", restID);
-            menuFragment.setArguments(bundle);
-
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.frame_menu, menuFragment)
-                    .commit();
+                getRestaurantAndTableDetails(restID, tableID);
+                initUserSession(restID, tableID);
+                sendRestaurantID(restID);
+            }
         }
+    }
+
+    private void sendRestaurantID(String restaurant) {
+        MenuFragment menuFragment = new MenuFragment();
+
+        Bundle bundle = new Bundle();
+        bundle.putString("restaurant_id", restaurant);
+        menuFragment.setArguments(bundle);
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.frame_menu, menuFragment)
+                .commitAllowingStateLoss();
     }
 
     private void initUserSession(final String restID, final String tableID) {
         final FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
 
         Map<String, Object> data = new HashMap<>();
-        data.put("tableid", tableID);
-        data.put("createdby", FirebaseAuth.getInstance().getCurrentUser().getUid());
-        data.put("starttime", new Timestamp(System.currentTimeMillis()));
-        data.put("isactive", true);
+        data.put("table_id", tableID);
+        data.put("created_by", FirebaseAuth.getInstance().getCurrentUser().getUid());
+        data.put("start_time", new Timestamp(System.currentTimeMillis()));
+        data.put("is_active", true);
 
         firebaseFirestore.collection("restaurants")
                 .document(restID)
@@ -130,13 +106,15 @@ public class MenuActivity extends AppCompatActivity implements UIActivity {
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
-                        String id = documentReference.getId();
+                        final String sessionID = documentReference.getId();
                         Log.e("", "DocumentSnapshot written with ID: " + documentReference.getId());
 
                         Map<String, Object> data = new HashMap<>();
-                        data.put("sessionactive", true);
-                        data.put("currentsession", id);
+                        data.put("session_active", true);
+                        data.put("current_session", sessionID);
                         data.put("restaurant", restID);
+
+                        SESSION_ACTIVE = true;
 
                         firebaseFirestore.collection("users")
                                 .document(FirebaseAuth.getInstance().getCurrentUser().getUid())
@@ -146,6 +124,7 @@ public class MenuActivity extends AppCompatActivity implements UIActivity {
                                     public void onSuccess(Void aVoid) {
                                         Map<String, Object> data = new HashMap<>();
                                         data.put("occupied", true);
+                                        data.put("session_id", sessionID);
 
                                         firebaseFirestore.collection("restaurants")
                                                 .document(restID)
@@ -155,8 +134,7 @@ public class MenuActivity extends AppCompatActivity implements UIActivity {
                                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                     @Override
                                                     public void onSuccess(Void aVoid) {
-                                                        Toast.makeText(getApplicationContext(),
-                                                                "Table Occupied", Toast.LENGTH_SHORT).show();
+                                                        Log.i("Success", "Table details updated");
                                                     }
                                                 });
                                     }
@@ -169,6 +147,16 @@ public class MenuActivity extends AppCompatActivity implements UIActivity {
                         Log.e("", "Error adding document", e);
                     }
                 });
+    }
+
+    private void restoreUserSession() {
+        if (getIntent().hasExtra("table_number")
+                && getIntent().hasExtra("restaurant_name")
+                && getIntent().hasExtra("restaurant_id")) {
+            mRestName.setText(getIntent().getStringExtra("restaurant_name"));
+            mTableSerial.setText(getIntent().getStringExtra("table_number"));
+            sendRestaurantID(getIntent().getStringExtra("restaurant_id"));
+        }
     }
 
     private void getRestaurantAndTableDetails(String restID, String tableID) {

@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.frisky.icebreaker.R;
+import com.frisky.icebreaker.ui.assistant.RoundRectTransformation;
 import com.frisky.icebreaker.ui.components.dialogs.PickImageDialog;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -50,7 +51,7 @@ public class EditImagesAdapter extends RecyclerView.Adapter<EditImagesAdapter.Im
                 .inflate(R.layout.view_edit_image, viewGroup, false);
 
         ImageView imageView = itemView.findViewById(R.id.image_edit);
-        Picasso.get().load(mImageList.get(i)).into(imageView);
+        Picasso.get().load(mImageList.get(i)).transform(new RoundRectTransformation()).into(imageView);
 
         return new ImageViewHolder(itemView);
     }
