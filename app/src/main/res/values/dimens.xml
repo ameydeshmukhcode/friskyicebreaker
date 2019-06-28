@@ -65,6 +65,7 @@
 
     <!-- Drawable -->
     <dimen name="bg_round_rect_radius">10dp</dimen>
+    <dimen name="bg_round_top_corners_radius">14dp</dimen>
     <dimen name="bg_chat_radius">22dp</dimen>
 
     <dimen name="sign_up_layout_height">64dp</dimen>
