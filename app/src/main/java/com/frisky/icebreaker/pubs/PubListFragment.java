@@ -78,7 +78,6 @@ public class PubListFragment extends Fragment {
                                 Log.i("Rest", name + " " + address + " " + tags);
                                 Pub pub = new Pub(Uri.parse(image), document.getId(), name, name, address,
                                         Arrays.asList(tags.substring(1, tags.length()-1)), 4.5);
-                                for (int i=0; i<10 ; i++)
                                 pubList.add(pub);
                                 mPubViewAdapter.notifyDataSetChanged();
                             }
