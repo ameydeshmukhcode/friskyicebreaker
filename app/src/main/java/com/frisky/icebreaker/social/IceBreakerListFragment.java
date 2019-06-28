@@ -24,6 +24,8 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.frisky.icebreaker.orders.OrderingAssistant.SESSION_ACTIVE;
+
 public class IceBreakerListFragment extends Fragment {
 
     protected List<User> usersList = new ArrayList<>();
@@ -38,6 +40,12 @@ public class IceBreakerListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_recycler_view, null);;
 
         mRecyclerUsersView = view.findViewById(R.id.recycler_view);
+
+        if (SESSION_ACTIVE) {
+            mRecyclerUsersView.setPadding(0, 0, 0, 0);
+            mRecyclerUsersView.setPadding(0, 0, 0, 225);
+            mRecyclerUsersView.setClipToPadding(false);
+        }
 
         // use a linear layout manager
         mUsersViewLayoutManager = new LinearLayoutManager(getContext());

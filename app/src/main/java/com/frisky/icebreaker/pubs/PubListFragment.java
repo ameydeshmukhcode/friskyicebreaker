@@ -24,6 +24,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.frisky.icebreaker.orders.OrderingAssistant.SESSION_ACTIVE;
+
 public class PubListFragment extends Fragment {
 
     private List<Pub> pubList = new ArrayList<>();
@@ -38,6 +40,12 @@ public class PubListFragment extends Fragment {
 
         RecyclerView mRecyclerPubView;
         mRecyclerPubView = view.findViewById(R.id.recycler_view);
+
+        if (SESSION_ACTIVE) {
+            mRecyclerPubView.setPadding(0, 0, 0, 0);
+            mRecyclerPubView.setPadding(0, 0, 0, 225);
+            mRecyclerPubView.setClipToPadding(false);
+        }
 
         RecyclerView.LayoutManager mPubViewLayoutManager;
         // use a linear layout manager
@@ -70,6 +78,7 @@ public class PubListFragment extends Fragment {
                                 Log.i("Rest", name + " " + address + " " + tags);
                                 Pub pub = new Pub(Uri.parse(image), document.getId(), name, name, address,
                                         Arrays.asList(tags.substring(1, tags.length()-1)), 4.5);
+                                for (int i=0; i<10 ; i++)
                                 pubList.add(pub);
                                 mPubViewAdapter.notifyDataSetChanged();
                             }
