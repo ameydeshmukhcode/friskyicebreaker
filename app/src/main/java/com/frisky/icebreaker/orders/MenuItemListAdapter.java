@@ -38,7 +38,8 @@ public class MenuItemListAdapter extends RecyclerView.Adapter<MenuItemListAdapte
         final View itemView = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.card_menu_item, viewGroup, false);
 
-        return new MenuItemListAdapter.MenuItemHolder(itemView);    }
+        return new MenuItemListAdapter.MenuItemHolder(itemView);
+    }
 
     @Override
     public void onBindViewHolder(@NonNull MenuItemHolder menuItemHolder, int i) {
