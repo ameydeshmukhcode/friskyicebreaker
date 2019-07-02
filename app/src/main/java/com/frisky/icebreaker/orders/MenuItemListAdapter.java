@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.frisky.icebreaker.R;
@@ -24,11 +25,13 @@ public class MenuItemListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private final int MENU_ITEM_VIEW = 88;
 
     static class MenuItemHolder extends RecyclerView.ViewHolder {
+        Button mAdd;
         TextView mName;
         TextView mDescription;
         TextView mPrice;
         MenuItemHolder(View v) {
             super(v);
+            mAdd = v.findViewById(R.id.button_add_item);
             mName = v.findViewById(R.id.text_name);
             mDescription = v.findViewById(R.id.text_description);
             mPrice = v.findViewById(R.id.text_price);
