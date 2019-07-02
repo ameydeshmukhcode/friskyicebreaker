@@ -3,7 +3,6 @@ package com.frisky.icebreaker.orders;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.frisky.icebreaker.R;
-import com.frisky.icebreaker.core.structures.menu.MenuItem;
+import com.frisky.icebreaker.core.structures.MenuItem;
 
 import java.util.HashMap;
 import java.util.List;

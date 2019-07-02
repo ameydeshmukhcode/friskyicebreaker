@@ -1,4 +1,4 @@
-package com.frisky.icebreaker.core.structures.menu;
+package com.frisky.icebreaker.core.structures;
 
 public class MenuItem {
     private String id;
