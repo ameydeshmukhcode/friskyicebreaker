@@ -167,8 +167,8 @@ public class HomeActivity extends AppCompatActivity implements UIActivity {
                             }
                             else {
                                 SESSION_ACTIVE = false;
+                                mBottomNavOrderButton.setEnabled(true);
                             }
-                            mBottomNavOrderButton.setEnabled(true);
                         }
                     }
                 });
@@ -241,6 +241,7 @@ public class HomeActivity extends AppCompatActivity implements UIActivity {
                                                                         resumeSession.putExtra("restaurant_id", restaurant);
                                                                         resumeSession.putExtra("restaurant_name", restaurantName.getText().toString());
                                                                         resumeSession.putExtra("table_number", tableSerial);
+                                                                        mBottomNavOrderButton.setEnabled(true);
                                                                     }
                                                                 }
                                                             });
