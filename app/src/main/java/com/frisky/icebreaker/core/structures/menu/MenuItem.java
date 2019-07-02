@@ -1,14 +1,20 @@
 package com.frisky.icebreaker.core.structures.menu;
 
 public class MenuItem {
+    private String id;
     private String name;
     private String description;
     private int price;
 
-    public MenuItem(String name, String description, int price) {
+    public MenuItem(String id, String name, String description, int price) {
+        this.id = id;
         this.name = name;
         this.description = description;
         this.price = price;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getName() {

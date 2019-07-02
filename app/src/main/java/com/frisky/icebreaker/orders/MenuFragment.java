@@ -95,10 +95,9 @@ public class MenuFragment extends Fragment {
                             category = currentCategory;
                             menu.add(currentCategory);
                         }
-                        //Log.i("Item", document.getId() + " => " + document.getData());
                         String name = document.getString("name");
                         String cost = document.getString("cost");
-                        MenuItem item = new MenuItem(name, name, Integer.parseInt(cost));
+                        MenuItem item = new MenuItem(document.getId(), name, name, Integer.parseInt(cost));
                         menu.add(item);
                         mMenuListViewAdapter.notifyDataSetChanged();
                     }
