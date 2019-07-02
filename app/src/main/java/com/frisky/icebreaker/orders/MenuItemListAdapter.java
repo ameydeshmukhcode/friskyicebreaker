@@ -12,11 +12,13 @@ import android.widget.TextView;
 import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.core.structures.menu.MenuItem;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class MenuItemListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<Object> menu;
+    private HashMap<String, String> categories;
 
     private final int CATEGORY_VIEW = 77;
     private final int MENU_ITEM_VIEW = 88;
@@ -41,8 +43,9 @@ public class MenuItemListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }
     }
 
-    MenuItemListAdapter(List<Object> menu) {
+    MenuItemListAdapter(List<Object> menu, HashMap<String, String> categories) {
         this.menu = menu;
+        this.categories = categories;
     }
 
     @Override
@@ -93,15 +96,13 @@ public class MenuItemListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         switch (CURRENT_VIEW) {
             case CATEGORY_VIEW:
-                Log.i("data", (String) menu.get(i));
                 MenuSubCategoryHolder view = (MenuSubCategoryHolder) viewHolder;
-                view.mName.setText((String) menu.get(i));
+                view.mName.setText(categories.get(menu.get(i)));
                 break;
 
             case MENU_ITEM_VIEW:
                 MenuItemHolder itemHolder = (MenuItemHolder) viewHolder;
                 MenuItem menuItem = (MenuItem) menu.get(i);
-                Log.i("data", menuItem.getName() + " " + menuItem.getPrice());
                 itemHolder.mName.setText(menuItem.getName());
                 itemHolder.mDescription.setText(menuItem.getDescription());
                 itemHolder.mPrice.setText(String.valueOf(menuItem.getPrice()));

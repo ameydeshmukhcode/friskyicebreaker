@@ -17,12 +17,16 @@ import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.core.structures.menu.MenuItem;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class MenuFragment extends Fragment {
@@ -30,6 +34,7 @@ public class MenuFragment extends Fragment {
     private String restID;
 
     private List<Object> menu = new ArrayList<>();
+    private HashMap<String, String> categories = new HashMap<>();
 
     private RecyclerView.Adapter mMenuListViewAdapter;
 
@@ -51,7 +56,7 @@ public class MenuFragment extends Fragment {
         mRecyclerMenuListView.setLayoutManager(mMenuListViewLayoutManager);
 
         // specify an adapter (see also next example)
-        mMenuListViewAdapter = new MenuItemListAdapter(menu);
+        mMenuListViewAdapter = new MenuItemListAdapter(menu, categories);
         mRecyclerMenuListView.setAdapter(mMenuListViewAdapter);
 
         prepareMenuData();
@@ -61,6 +66,20 @@ public class MenuFragment extends Fragment {
 
     private void prepareMenuData() {
         FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();
+
+        CollectionReference categoriesRef = mFirestore.collection("restaurants").document(restID)
+                .collection("categories");
+
+        categoriesRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (DocumentSnapshot document : task.getResult()) {
+                        categories.put(document.getId(), document.getString("name"));
+                    }
+                }
+            }
+        });
 
         Query itemsListRef = mFirestore.collection("restaurants").document(restID)
                 .collection("items").orderBy("category_id");
