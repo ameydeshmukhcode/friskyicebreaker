@@ -1,4 +1,4 @@
-package com.frisky.icebreaker.pubs;
+package com.frisky.icebreaker.restaurants;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,16 +13,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.frisky.icebreaker.R;
-import com.frisky.icebreaker.core.structures.Pub;
+import com.frisky.icebreaker.core.structures.Restaurant;
 import com.frisky.icebreaker.ui.assistant.UIAssistant;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class PubListAdapter extends RecyclerView.Adapter<PubListAdapter.PubViewHolder> {
+public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAdapter.PubViewHolder> {
 
     private final Context mContext;
-    private List<Pub> mPubList;
+    private List<Restaurant> mRestaurantList;
 
     static class PubViewHolder extends RecyclerView.ViewHolder {
         MaterialCardView mPubCard;
@@ -42,35 +42,35 @@ public class PubListAdapter extends RecyclerView.Adapter<PubListAdapter.PubViewH
         }
     }
 
-    PubListAdapter(List<Pub> pubList, Context context) {
-        this.mPubList = pubList;
+    RestaurantListAdapter(List<Restaurant> restaurantList, Context context) {
+        this.mRestaurantList = restaurantList;
         this.mContext = context;
     }
 
     @NonNull
     @Override
-    public PubListAdapter.PubViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, final int i) {
+    public RestaurantListAdapter.PubViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, final int i) {
         final View itemView = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.card_pub, viewGroup, false);
+                .inflate(R.layout.card_restaurant, viewGroup, false);
 
         return new PubViewHolder(itemView);
     }
 
     public void onBindViewHolder(@NonNull final PubViewHolder viewHolder, int i) {
         String tagList = "";
-        final Pub pub = mPubList.get(i);
+        final Restaurant restaurant = mRestaurantList.get(i);
 
-        Picasso.get().load(pub.getImageUri()).into(viewHolder.mImage);
+        Picasso.get().load(restaurant.getImageUri()).into(viewHolder.mImage);
 
-        viewHolder.mTitle.setText(pub.getName());
+        viewHolder.mTitle.setText(restaurant.getName());
 
-        for (String tag: pub.getTags()) {
+        for (String tag: restaurant.getTags()) {
             tagList = tagList.concat(tag + " | ");
         }
 
-        viewHolder.mLocation.setText(pub.getLocation());
+        viewHolder.mLocation.setText(restaurant.getLocation());
 
-        double pubRating = pub.getRating();
+        double pubRating = restaurant.getRating();
 
         viewHolder.mTags.setText(tagList.substring(0, tagList.length() - 3));
         viewHolder.mRating.setText(String.valueOf(pubRating));
@@ -81,8 +81,8 @@ public class PubListAdapter extends RecyclerView.Adapter<PubListAdapter.PubViewH
         viewHolder.mPubCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent pubView = new Intent(mContext, PubActivity.class);
-                pubView.putExtra("id", pub.getID());
+                Intent pubView = new Intent(mContext, RestaurantActivity.class);
+                pubView.putExtra("id", restaurant.getID());
                 pubView.putExtra("name", viewHolder.mTitle.getText());
                 pubView.putExtra("tags", viewHolder.mTags.getText());
                 pubView.putExtra("location", viewHolder.mLocation.getText());
@@ -94,6 +94,6 @@ public class PubListAdapter extends RecyclerView.Adapter<PubListAdapter.PubViewH
 
     @Override
     public int getItemCount() {
-        return mPubList.size();
+        return mRestaurantList.size();
     }
 }

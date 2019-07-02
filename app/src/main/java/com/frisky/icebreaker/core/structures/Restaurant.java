@@ -4,7 +4,7 @@ import android.net.Uri;
 
 import java.util.List;
 
-public class Pub {
+public class Restaurant {
     private Uri imageUri;
     private String mID;
     private String mName;
@@ -13,10 +13,10 @@ public class Pub {
     private List<String> mTags;
     private double mRating;
     
-    public Pub() {
+    public Restaurant() {
     }
 
-    public Pub(Uri image, String id, String name, String desc, String location, List<String> tags, double rating) {
+    public Restaurant(Uri image, String id, String name, String desc, String location, List<String> tags, double rating) {
         this.imageUri = image;
         this.mID = id;
         this.mName = name;

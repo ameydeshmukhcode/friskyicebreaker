@@ -1,4 +1,4 @@
-package com.frisky.icebreaker.pubs;
+package com.frisky.icebreaker.restaurants;
 
 import android.net.Uri;
 import android.os.Bundle;
@@ -13,7 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.frisky.icebreaker.R;
-import com.frisky.icebreaker.core.structures.Pub;
+import com.frisky.icebreaker.core.structures.Restaurant;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -26,9 +26,9 @@ import java.util.List;
 
 import static com.frisky.icebreaker.orders.OrderingAssistant.SESSION_ACTIVE;
 
-public class PubListFragment extends Fragment {
+public class RestaurantListFragment extends Fragment {
 
-    private List<Pub> pubList = new ArrayList<>();
+    private List<Restaurant> restaurantList = new ArrayList<>();
 
     private RecyclerView.Adapter mPubViewAdapter;
 
@@ -53,7 +53,7 @@ public class PubListFragment extends Fragment {
         mRecyclerPubView.setLayoutManager(mPubViewLayoutManager);
 
         // specify an adapter (see also next example)
-        mPubViewAdapter = new PubListAdapter(pubList, getContext());
+        mPubViewAdapter = new RestaurantListAdapter(restaurantList, getContext());
         mRecyclerPubView.setAdapter(mPubViewAdapter);
 
         preparePubData();
@@ -76,9 +76,9 @@ public class PubListFragment extends Fragment {
                                 String address = document.get("address").toString();
                                 String tags = document.get("cuisine").toString();
                                 Log.i("Rest", name + " " + address + " " + tags);
-                                Pub pub = new Pub(Uri.parse(image), document.getId(), name, name, address,
+                                Restaurant restaurant = new Restaurant(Uri.parse(image), document.getId(), name, name, address,
                                         Arrays.asList(tags.substring(1, tags.length()-1)), 4.5);
-                                pubList.add(pub);
+                                restaurantList.add(restaurant);
                                 mPubViewAdapter.notifyDataSetChanged();
                             }
                         }

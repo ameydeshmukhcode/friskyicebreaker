@@ -27,10 +27,10 @@
     <string name="terms">By signing up, you\'re agreeing to our Terms and Privacy Policies</string>
 
     <!--Home Page-->
-    <!--Pub View-->
+    <!--Restaurant View-->
     <string name="search_restaurants">Search restaurants&#8230;</string>
     <string name="filters">Filters</string>
-    <!-- Pub Filters -->
+    <!-- Restaurant Filters -->
     <string name="sort_by">Sort by</string>
     <string name="type">Type</string>
     <string name="city">City</string>
@@ -69,7 +69,7 @@
     <string name="enter_bio">Enter Bio</string>
     <string name="uploading_details">Uploading Details</string>
 
-    <!--Pub Activity-->
+    <!--Restaurant Activity-->
     <string name="live_count">Live count</string>
 
     <!--Chat Activity-->

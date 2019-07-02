@@ -1,4 +1,4 @@
-package com.frisky.icebreaker.pubs;
+package com.frisky.icebreaker.restaurants;
 
 import android.content.res.ColorStateList;
 import android.os.Bundle;
@@ -15,7 +15,7 @@ import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.ui.assistant.UIAssistant;
 import com.frisky.icebreaker.ui.base.UIActivity;
 
-public class PubActivity extends AppCompatActivity implements UIActivity {
+public class RestaurantActivity extends AppCompatActivity implements UIActivity {
 
     TextView mPubNameText;
     TextView mTagsText;
@@ -27,7 +27,7 @@ public class PubActivity extends AppCompatActivity implements UIActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pub);
+        setContentView(R.layout.activity_restaurant);
         initUI();
     }
 
@@ -78,7 +78,7 @@ public class PubActivity extends AppCompatActivity implements UIActivity {
             @Override
             public void onClick(View view) {
                 //TODO PUB CHAT ROOM
-                Snackbar.make(view, "Start Pub chat room here", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, "Start Restaurant chat room here", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });

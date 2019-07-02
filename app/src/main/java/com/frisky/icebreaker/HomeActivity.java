@@ -22,7 +22,7 @@ import android.widget.TextView;
 import com.frisky.icebreaker.orders.MenuActivity;
 import com.frisky.icebreaker.orders.QRScanActivity;
 import com.frisky.icebreaker.profile.ProfileActivity;
-import com.frisky.icebreaker.pubs.PubViewFragment;
+import com.frisky.icebreaker.restaurants.RestaurantViewFragment;
 import com.frisky.icebreaker.social.IceBreakerFragment;
 import com.frisky.icebreaker.social.SocialFragment;
 import com.frisky.icebreaker.ui.base.UIActivity;
@@ -48,7 +48,7 @@ public class HomeActivity extends AppCompatActivity implements UIActivity {
         setContentView(R.layout.activity_home);
         resumeSession = new Intent(getApplicationContext(), MenuActivity.class);
         initUI();
-        loadFragment(new PubViewFragment());
+        loadFragment(new RestaurantViewFragment());
     }
 
     @Override
@@ -99,7 +99,7 @@ public class HomeActivity extends AppCompatActivity implements UIActivity {
         mBottomNavHomeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadFragment(new PubViewFragment());
+                loadFragment(new RestaurantViewFragment());
             }
         });
 

@@ -1,4 +1,4 @@
-package com.frisky.icebreaker.pubs;
+package com.frisky.icebreaker.restaurants;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -14,7 +14,7 @@ import android.widget.ImageButton;
 import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.ui.components.dialogs.FiltersDialog;
 
-public class PubViewFragment extends Fragment {
+public class RestaurantViewFragment extends Fragment {
 
     ImageButton mFiltersButton;
 
@@ -22,7 +22,7 @@ public class PubViewFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view;
-        view = inflater.inflate(R.layout.fragment_pubs, null);
+        view = inflater.inflate(R.layout.fragment_restaurant, null);
 
         mFiltersButton = view.findViewById(R.id.button_filters);
         mFiltersButton.setOnClickListener(new View.OnClickListener() {
@@ -32,7 +32,7 @@ public class PubViewFragment extends Fragment {
             }
         });
 
-        Fragment pubListFragment = new PubListFragment();
+        Fragment pubListFragment = new RestaurantListFragment();
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_pubs, pubListFragment).commit();
 
