@@ -42,6 +42,8 @@ public class HomeActivity extends AppCompatActivity implements UIActivity {
 
     Intent resumeSession;
 
+    ImageButton mBottomNavOrderButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,7 +64,6 @@ public class HomeActivity extends AppCompatActivity implements UIActivity {
         ImageButton mScanQRCodeButton;
         ImageButton mBottomNavHomeButton;
         ImageButton mBottomNavProfileButton;
-        ImageButton mBottomNavOrderButton;
         ImageButton mBottomNavNotificationButton;
         ImageButton mIceBreakerButton;
         TextView mToolbarText;
@@ -104,6 +105,7 @@ public class HomeActivity extends AppCompatActivity implements UIActivity {
         });
 
         mBottomNavOrderButton = findViewById(R.id.button_nav_centre_left);
+        mBottomNavOrderButton.setEnabled(false);
         mBottomNavOrderButton.setImageResource(R.drawable.round_receipt_24);
         mBottomNavOrderButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -166,6 +168,7 @@ public class HomeActivity extends AppCompatActivity implements UIActivity {
                             else {
                                 SESSION_ACTIVE = false;
                             }
+                            mBottomNavOrderButton.setEnabled(true);
                         }
                     }
                 });
