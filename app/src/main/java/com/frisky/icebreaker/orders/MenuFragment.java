@@ -29,7 +29,7 @@ public class MenuFragment extends Fragment {
 
     private String restID;
 
-    private List<MenuItem> menu = new ArrayList<>();
+    private List<Object> menu = new ArrayList<>();
 
     private RecyclerView.Adapter mMenuListViewAdapter;
 
@@ -39,11 +39,11 @@ public class MenuFragment extends Fragment {
         View view;
         view = inflater.inflate(R.layout.fragment_recycler_view, null);
 
+        restID = getArguments().getString("restaurant_id");
+
         RecyclerView mRecyclerMenuListView;
         mRecyclerMenuListView = view.findViewById(R.id.recycler_view);
         mRecyclerMenuListView.setOverScrollMode(View.OVER_SCROLL_NEVER);
-
-        restID = getArguments().getString("restaurant_id");
 
         RecyclerView.LayoutManager mMenuListViewLayoutManager;
         // use a linear layout manager
@@ -69,8 +69,14 @@ public class MenuFragment extends Fragment {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
+                    String category = "";
                     for (QueryDocumentSnapshot document : task.getResult()) {
-                        Log.i("Item", document.getId() + " => " + document.getData());
+                        String currentCategory = document.getString("category_id");
+                        if (!category.equals(currentCategory)) {
+                            category = currentCategory;
+                            menu.add(currentCategory);
+                        }
+                        //Log.i("Item", document.getId() + " => " + document.getData());
                         String name = document.getString("name");
                         String cost = document.getString("cost");
                         MenuItem item = new MenuItem(name, name, Integer.parseInt(cost));
