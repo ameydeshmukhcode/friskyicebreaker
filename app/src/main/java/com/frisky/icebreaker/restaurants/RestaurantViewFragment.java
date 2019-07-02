@@ -16,7 +16,7 @@ import com.frisky.icebreaker.ui.components.dialogs.FiltersDialog;
 
 public class RestaurantViewFragment extends Fragment {
 
-    ImageButton mFiltersButton;
+//    ImageButton mFiltersButton;
 
     @Nullable
     @Override
@@ -24,13 +24,13 @@ public class RestaurantViewFragment extends Fragment {
         View view;
         view = inflater.inflate(R.layout.fragment_restaurant, null);
 
-        mFiltersButton = view.findViewById(R.id.button_filters);
-        mFiltersButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                launchFiltersDialog(getContext());
-            }
-        });
+//        mFiltersButton = view.findViewById(R.id.button_filters);
+//        mFiltersButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                launchFiltersDialog(getContext());
+//            }
+//        });
 
         Fragment pubListFragment = new RestaurantListFragment();
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
@@ -39,8 +39,8 @@ public class RestaurantViewFragment extends Fragment {
         return view;
     }
 
-    private void launchFiltersDialog (Context context) {
-        FiltersDialog filtersDialog = new FiltersDialog(context);
-        filtersDialog.show();
-    }
+//    private void launchFiltersDialog (Context context) {
+//        FiltersDialog filtersDialog = new FiltersDialog(context);
+//        filtersDialog.show();
+//    }
 }

@@ -60,7 +60,7 @@ public class HomeActivity extends AppCompatActivity implements UIActivity {
     }
 
     public void initUI() {
-        ImageButton mSocialButton;
+//        ImageButton mSocialButton;
         ImageButton mScanQRCodeButton;
         ImageButton mBottomNavHomeButton;
         ImageButton mBottomNavProfileButton;
@@ -77,14 +77,14 @@ public class HomeActivity extends AppCompatActivity implements UIActivity {
         Typeface typeface = ResourcesCompat.getFont(getApplicationContext(), R.font.ktfroadstar);
         mToolbarText.setTypeface(typeface);
 
-        mSocialButton = findViewById(R.id.button_app_bar_right);
-        mSocialButton.setImageResource(R.drawable.round_chat_24);
-        mSocialButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loadFragment(new SocialFragment());
-            }
-        });
+//        mSocialButton = findViewById(R.id.button_app_bar_right);
+//        mSocialButton.setImageResource(R.drawable.round_chat_24);
+//        mSocialButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                loadFragment(new SocialFragment());
+//            }
+//        });
 
         mScanQRCodeButton = findViewById(R.id.button_app_bar_left);
         mScanQRCodeButton.setImageResource(R.drawable.round_qr_code);
