@@ -315,7 +315,17 @@ public class SignInActivity extends AppCompatActivity implements FormActivity, U
                                 startActivity(launchHome);
                             }
                             else {
+                                String name = "";
+                                String bio = "";
+                                if (document.contains("name")) {
+                                    name = document.getString("name");
+                                }
+                                if (document.contains("bio")) {
+                                    bio = document.getString("bio");
+                                }
                                 Intent setupProfile = new Intent(getApplicationContext(), SetupProfileActivity.class);
+                                setupProfile.putExtra("name", name);
+                                setupProfile.putExtra("bio", bio);
                                 startActivity(setupProfile);
                             }
                             finish();
