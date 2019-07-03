@@ -1,5 +1,6 @@
 package com.frisky.icebreaker.profile;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -42,7 +43,10 @@ import com.squareup.picasso.Picasso;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class SetupProfileActivity extends AppCompatActivity implements FormActivity, UIActivity,
@@ -87,6 +91,14 @@ public class SetupProfileActivity extends AppCompatActivity implements FormActiv
         mProfileImage = findViewById(R.id.image_profile);
         mCancelButton = findViewById(R.id.button_cancel);
         mDoneButton = findViewById(R.id.button_done);
+
+        if (getIntent().hasExtra("name")) {
+            mNameInput.setText(getIntent().getStringExtra("name"));
+        }
+
+        if (getIntent().hasExtra("bio")) {
+            mBioInput.setText(getIntent().getStringExtra("bio"));
+        }
 
         mGenderSpinner = findViewById(R.id.spinner_gender);
 
@@ -135,6 +147,7 @@ public class SetupProfileActivity extends AppCompatActivity implements FormActiv
         mNameInput.setEnabled(false);
         mBioInput.setEnabled(false);
         mGenderSpinner.setEnabled(false);
+        mDateOfBirthInput.setEnabled(false);
     }
 
     @Override
@@ -142,6 +155,34 @@ public class SetupProfileActivity extends AppCompatActivity implements FormActiv
         mNameInput.setEnabled(true);
         mBioInput.setEnabled(true);
         mGenderSpinner.setEnabled(true);
+        mDateOfBirthInput.setEnabled(true);
+
+        Calendar calendar = Calendar.getInstance();
+
+        final DatePickerDialog.OnDateSetListener date = (view, year, monthOfYear, dayOfMonth) -> {
+            calendar.set(Calendar.YEAR, year);
+            calendar.set(Calendar.MONTH, monthOfYear);
+            calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+            String dateFormat = "dd/MM/yyyy";
+            SimpleDateFormat sdf = new SimpleDateFormat(dateFormat, Locale.US);
+            mDateOfBirthInput.setText(sdf.format(calendar.getTime()));
+        };
+
+        mDateOfBirthInput.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatePickerDialog datePickerDialog = new DatePickerDialog(v.getContext(), date,
+                        calendar.get(Calendar.YEAR),
+                        calendar.get(Calendar.MONTH),
+                        calendar.get(Calendar.DAY_OF_MONTH));
+
+                calendar.add(Calendar.YEAR, -18);
+                datePickerDialog.getDatePicker().setMaxDate(calendar.getTimeInMillis());
+                datePickerDialog.show();
+            }
+        });
+
         mDoneButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -186,6 +227,8 @@ public class SetupProfileActivity extends AppCompatActivity implements FormActiv
         firestoreUser.put("name", mNameInput.getText().toString());
         firestoreUser.put("bio", mBioInput.getText().toString());
         firestoreUser.put("gender", mGenderSpinner.getSelectedItem().toString());
+        firestoreUser.put("date_of_birth", mDateOfBirthInput.getText().toString());
+        firestoreUser.put("profile_setup_complete", true);
 
         mFirestore.collection("users")
                 .document(userUid)
