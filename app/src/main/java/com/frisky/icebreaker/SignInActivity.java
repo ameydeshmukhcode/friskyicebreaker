@@ -24,6 +24,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class SignInActivity extends AppCompatActivity implements FormActivity, UIActivity {
 
@@ -298,14 +300,27 @@ public class SignInActivity extends AppCompatActivity implements FormActivity, U
             return;
         }
 
-        if (user.getDisplayName() != null && !user.getDisplayName().equals("")) {
-            Intent launchHome = new Intent(getApplicationContext(), HomeActivity.class);
-            startActivity(launchHome);
-            finish();
-        }
-        else {
-            Intent setupProfile = new Intent(getApplicationContext(), SetupProfileActivity.class);
-            startActivity(setupProfile);
-        }
+        FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+
+        firebaseFirestore.collection("users")
+                .document(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            if (document.contains("profile_setup_complete")) {
+                                Intent launchHome = new Intent(getApplicationContext(), HomeActivity.class);
+                                startActivity(launchHome);
+                                finish();
+                            }
+                            else {
+                                Intent setupProfile = new Intent(getApplicationContext(), SetupProfileActivity.class);
+                                startActivity(setupProfile);
+                            }
+                        }
+                    }
+                });
     }
 }
