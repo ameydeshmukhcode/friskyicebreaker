@@ -48,15 +48,15 @@ public class SignInActivity extends AppCompatActivity implements FormActivity, U
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_in);
-
-        initUI();
 
         mAuth = FirebaseAuth.getInstance();
 
         FirebaseUser user = mAuth.getCurrentUser();
         if (user != null) {
             verifyLogin();
+        }
+        else {
+            setupActivityUI();
         }
 
 //        Configure Google Sign In
@@ -270,10 +270,16 @@ public class SignInActivity extends AppCompatActivity implements FormActivity, U
         });
     }
 
+    private void setupActivityUI() {
+        setContentView(R.layout.activity_sign_in);
+        initUI();
+    }
+
     private void verifyLogin() {
         final FirebaseUser user = mAuth.getCurrentUser();
 
         if (user == null) {
+            setupActivityUI();
             return;
         }
 
@@ -297,6 +303,7 @@ public class SignInActivity extends AppCompatActivity implements FormActivity, U
                             });
                 }
             });
+            setupActivityUI();
             return;
         }
 
