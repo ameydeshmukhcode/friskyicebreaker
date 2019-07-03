@@ -176,6 +176,7 @@ public class SetupProfileActivity extends AppCompatActivity implements FormActiv
         Map<String, Object> firestoreUser = new HashMap<>();
         firestoreUser.put("name", mNameInput.getText().toString());
         firestoreUser.put("bio", mBioInput.getText().toString());
+        firestoreUser.put("gender", mGenderSpinner.getSelectedItem().toString());
 
         mFirestore.collection("users")
                 .document(userUid)
