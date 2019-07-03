@@ -133,6 +133,7 @@ public class SetupProfileActivity extends AppCompatActivity implements FormActiv
         mCancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
                 SetupProfileActivity.super.onBackPressed();
             }
         });
