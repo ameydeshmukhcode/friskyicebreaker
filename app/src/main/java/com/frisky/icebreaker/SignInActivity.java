@@ -313,12 +313,12 @@ public class SignInActivity extends AppCompatActivity implements FormActivity, U
                             if (document.contains("profile_setup_complete")) {
                                 Intent launchHome = new Intent(getApplicationContext(), HomeActivity.class);
                                 startActivity(launchHome);
-                                finish();
                             }
                             else {
                                 Intent setupProfile = new Intent(getApplicationContext(), SetupProfileActivity.class);
                                 startActivity(setupProfile);
                             }
+                            finish();
                         }
                     }
                 });
