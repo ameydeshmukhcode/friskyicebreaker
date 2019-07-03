@@ -53,6 +53,7 @@ public class SetupProfileActivity extends AppCompatActivity implements FormActiv
     ImageButton mDoneButton;
     TextView mNameInput;
     TextView mBioInput;
+    TextView mDateOfBirthInput;
     ProgressBar mProgressBar;
     ConstraintLayout mProgressLayout;
     Spinner mGenderSpinner;
@@ -81,6 +82,7 @@ public class SetupProfileActivity extends AppCompatActivity implements FormActiv
     public void initUI() {
         mNameInput = findViewById(R.id.input_name);
         mBioInput = findViewById(R.id.input_bio);
+        mDateOfBirthInput = findViewById(R.id.input_date_of_birth);
         mProgressLayout = findViewById(R.id.layout_progress);
         mProfileImage = findViewById(R.id.image_profile);
         mCancelButton = findViewById(R.id.button_cancel);
@@ -102,9 +104,16 @@ public class SetupProfileActivity extends AppCompatActivity implements FormActiv
     public boolean validateForm() {
         String name = mNameInput.getText().toString();
         String bio = mBioInput.getText().toString();
+        String dob = mDateOfBirthInput.getText().toString();
 
         if (name.matches("")) {
             Toast.makeText(SetupProfileActivity.this, "Enter name",
+                    Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        
+        if (dob.matches("")) {
+            Toast.makeText(SetupProfileActivity.this, "Pick a Date of Birth",
                     Toast.LENGTH_SHORT).show();
             return false;
         }
