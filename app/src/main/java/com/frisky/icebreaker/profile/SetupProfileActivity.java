@@ -10,9 +10,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -53,6 +55,7 @@ public class SetupProfileActivity extends AppCompatActivity implements FormActiv
     TextView mBioInput;
     ProgressBar mProgressBar;
     ConstraintLayout mProgressLayout;
+    Spinner mGenderSpinner;
 
     PickImageDialog pickImageDialog;
 
@@ -82,6 +85,13 @@ public class SetupProfileActivity extends AppCompatActivity implements FormActiv
         mProfileImage = findViewById(R.id.image_profile);
         mCancelButton = findViewById(R.id.button_cancel);
         mDoneButton = findViewById(R.id.button_done);
+
+        mGenderSpinner = findViewById(R.id.spinner_gender);
+
+        ArrayAdapter adapter = ArrayAdapter.createFromResource(this, R.array.genders, R.layout.spinner_item);
+        adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
+        mGenderSpinner.setAdapter(adapter);
+
         mProgressBar = findViewById(R.id.progress_upload);
         mProgressLayout.setVisibility(View.GONE);
 
@@ -115,12 +125,14 @@ public class SetupProfileActivity extends AppCompatActivity implements FormActiv
         mCancelButton.setOnClickListener(null);
         mNameInput.setEnabled(false);
         mBioInput.setEnabled(false);
+        mGenderSpinner.setEnabled(false);
     }
 
     @Override
     public void enableForm() {
         mNameInput.setEnabled(true);
         mBioInput.setEnabled(true);
+        mGenderSpinner.setEnabled(true);
         mDoneButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
