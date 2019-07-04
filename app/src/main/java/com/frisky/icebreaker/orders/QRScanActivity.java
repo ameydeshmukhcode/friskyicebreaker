@@ -61,14 +61,15 @@ public class QRScanActivity extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            String permissions[], @NonNull int[] grantResults) {
-        if (requestCode == MY_PERMISSIONS_REQUEST_CAMERA) {
-            Log.i("Camera", "G : " + grantResults[0]);
-            // If request is cancelled, the result arrays are empty.
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                setupScannerView();
-            }
-            else {
-                super.onBackPressed();
+        if (grantResults.length > 0) {
+            if (requestCode == MY_PERMISSIONS_REQUEST_CAMERA) {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    setupScannerView();
+                }
+                else {
+                    super.onBackPressed();
+                }
             }
         }
     }
