@@ -1,23 +1,18 @@
 package com.frisky.icebreaker.ui.components.dialogs;
 
-import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 
 import com.frisky.icebreaker.R;
-
-import java.io.IOException;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -88,13 +83,13 @@ public class PickImageDialog extends DialogFragment {
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
+    public void onAttach(Context context) {
+        super.onAttach(context);
         try {
-            this.onImageUpdatedListener = (OnImageUpdatedListener)activity;
+            this.onImageUpdatedListener = (OnImageUpdatedListener) context;
         }
         catch (final ClassCastException e) {
-            throw new ClassCastException(activity.toString() + " must implement OnImageUpdatedListener");
+            throw new ClassCastException(context.toString() + " must implement OnImageUpdatedListener");
         }
     }
 }
