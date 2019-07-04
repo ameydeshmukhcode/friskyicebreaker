@@ -2,6 +2,9 @@ package com.frisky.icebreaker.orders;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -9,19 +12,26 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.frisky.icebreaker.R;
+import com.frisky.icebreaker.core.structures.MenuItem;
 import com.frisky.icebreaker.ui.base.UIActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static com.frisky.icebreaker.orders.OrderingAssistant.SESSION_ACTIVE;
@@ -31,6 +41,11 @@ public class MenuActivity extends AppCompatActivity implements UIActivity {
     ImageButton mBackButton;
     TextView mRestName;
     TextView mTableSerial;
+
+    private List<Object> menu = new ArrayList<>();
+    private HashMap<String, String> categories = new HashMap<>();
+
+    RecyclerView.Adapter mMenuListViewAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,15 +94,20 @@ public class MenuActivity extends AppCompatActivity implements UIActivity {
     }
 
     private void sendRestaurantID(String restaurant) {
-        MenuFragment menuFragment = new MenuFragment();
+        RecyclerView mRecyclerMenuListView;
+        mRecyclerMenuListView = findViewById(R.id.recycler_menu);
+        mRecyclerMenuListView.setOverScrollMode(View.OVER_SCROLL_NEVER);
 
-        Bundle bundle = new Bundle();
-        bundle.putString("restaurant_id", restaurant);
-        menuFragment.setArguments(bundle);
+        RecyclerView.LayoutManager mMenuListViewLayoutManager;
+        // use a linear layout manager
+        mMenuListViewLayoutManager = new LinearLayoutManager(getApplicationContext());
+        mRecyclerMenuListView.setLayoutManager(mMenuListViewLayoutManager);
 
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.frame_menu, menuFragment)
-                .commitAllowingStateLoss();
+        // specify an adapter (see also next example)
+        mMenuListViewAdapter = new MenuItemListAdapter(menu, categories);
+        mRecyclerMenuListView.setAdapter(mMenuListViewAdapter);
+
+        prepareMenuData(restaurant);
     }
 
     private void initUserSession(final String restID, final String tableID) {
@@ -208,6 +228,51 @@ public class MenuActivity extends AppCompatActivity implements UIActivity {
                 }
                 else {
                     Log.e("Task", "failed with ", task.getException());
+                }
+            }
+        });
+    }
+
+    private void prepareMenuData(String restID) {
+        FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();
+
+        CollectionReference categoriesRef = mFirestore.collection("restaurants").document(restID)
+                .collection("categories");
+
+        categoriesRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (DocumentSnapshot document : task.getResult()) {
+                        categories.put(document.getId(), document.getString("name"));
+                    }
+                }
+            }
+        });
+
+        Query itemsListRef = mFirestore.collection("restaurants").document(restID)
+                .collection("items").orderBy("category_id");
+
+        itemsListRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    String category = "";
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        String currentCategory = document.getString("category_id");
+                        if (!category.equals(currentCategory)) {
+                            category = currentCategory;
+                            menu.add(currentCategory);
+                        }
+                        String name = document.getString("name");
+                        String cost = document.getString("cost");
+                        MenuItem item = new MenuItem(document.getId(), name, name, Integer.parseInt(cost));
+                        menu.add(item);
+                        mMenuListViewAdapter.notifyDataSetChanged();
+                    }
+                }
+                else {
+                    Log.e("error", "Error getting documents: ", task.getException());
                 }
             }
         });
