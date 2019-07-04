@@ -215,10 +215,10 @@ public class MenuActivity extends AppCompatActivity implements UIActivity {
             }
         });
     }
-    
+
     private void setMenu(String restaurant) {
         RecyclerView mRecyclerMenuListView;
-        mRecyclerMenuListView = findViewById(R.id.recycler_menu);
+        mRecyclerMenuListView = findViewById(R.id.recycler_view);
         mRecyclerMenuListView.setOverScrollMode(View.OVER_SCROLL_NEVER);
 
         RecyclerView.LayoutManager mMenuListViewLayoutManager;
