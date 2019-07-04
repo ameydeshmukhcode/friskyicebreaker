@@ -88,26 +88,9 @@ public class MenuActivity extends AppCompatActivity implements UIActivity {
 
                 getRestaurantAndTableDetails(restID, tableID);
                 initUserSession(restID, tableID);
-                sendRestaurantID(restID);
+                setMenu(restID);
             }
         }
-    }
-
-    private void sendRestaurantID(String restaurant) {
-        RecyclerView mRecyclerMenuListView;
-        mRecyclerMenuListView = findViewById(R.id.recycler_menu);
-        mRecyclerMenuListView.setOverScrollMode(View.OVER_SCROLL_NEVER);
-
-        RecyclerView.LayoutManager mMenuListViewLayoutManager;
-        // use a linear layout manager
-        mMenuListViewLayoutManager = new LinearLayoutManager(getApplicationContext());
-        mRecyclerMenuListView.setLayoutManager(mMenuListViewLayoutManager);
-
-        // specify an adapter (see also next example)
-        mMenuListViewAdapter = new MenuItemListAdapter(menu, categories);
-        mRecyclerMenuListView.setAdapter(mMenuListViewAdapter);
-
-        prepareMenuData(restaurant);
     }
 
     private void initUserSession(final String restID, final String tableID) {
@@ -175,7 +158,7 @@ public class MenuActivity extends AppCompatActivity implements UIActivity {
                 && getIntent().hasExtra("restaurant_id")) {
             mRestName.setText(getIntent().getStringExtra("restaurant_name"));
             mTableSerial.setText(getIntent().getStringExtra("table_number"));
-            sendRestaurantID(getIntent().getStringExtra("restaurant_id"));
+            setMenu(getIntent().getStringExtra("restaurant_id"));
         }
     }
 
@@ -231,6 +214,23 @@ public class MenuActivity extends AppCompatActivity implements UIActivity {
                 }
             }
         });
+    }
+    
+    private void setMenu(String restaurant) {
+        RecyclerView mRecyclerMenuListView;
+        mRecyclerMenuListView = findViewById(R.id.recycler_menu);
+        mRecyclerMenuListView.setOverScrollMode(View.OVER_SCROLL_NEVER);
+
+        RecyclerView.LayoutManager mMenuListViewLayoutManager;
+        // use a linear layout manager
+        mMenuListViewLayoutManager = new LinearLayoutManager(getApplicationContext());
+        mRecyclerMenuListView.setLayoutManager(mMenuListViewLayoutManager);
+
+        // specify an adapter (see also next example)
+        mMenuListViewAdapter = new MenuItemListAdapter(menu, categories);
+        mRecyclerMenuListView.setAdapter(mMenuListViewAdapter);
+
+        prepareMenuData(restaurant);
     }
 
     private void prepareMenuData(String restID) {
