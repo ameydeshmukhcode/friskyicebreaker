@@ -8,6 +8,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.core.content.res.ResourcesCompat;
@@ -29,7 +30,9 @@ import com.frisky.icebreaker.ui.base.UIActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import static com.frisky.icebreaker.orders.OrderingAssistant.SESSION_ACTIVE;
 
@@ -51,6 +54,7 @@ public class HomeActivity extends AppCompatActivity implements UIActivity {
         resumeSession = new Intent(getApplicationContext(), MenuActivity.class);
         initUI();
         loadFragment(new RestaurantViewFragment());
+        addListenerForSessionChange();
     }
 
     @Override
@@ -164,9 +168,14 @@ public class HomeActivity extends AppCompatActivity implements UIActivity {
                                         }
                                     });
                                 }
+                                else {
+                                    bottomSheet.setVisibility(View.GONE);
+                                    mBottomNavOrderButton.setEnabled(true);
+                                }
                             }
                             else {
                                 SESSION_ACTIVE = false;
+                                bottomSheet.setVisibility(View.GONE);
                                 mBottomNavOrderButton.setEnabled(true);
                             }
                         }
@@ -252,6 +261,29 @@ public class HomeActivity extends AppCompatActivity implements UIActivity {
                                 }
                             });
                     }
+                }
+            }
+        });
+    }
+
+    private void addListenerForSessionChange() {
+        final DocumentReference docRef = FirebaseFirestore.getInstance().collection("users")
+                .document(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot snapshot,
+                                @Nullable FirebaseFirestoreException e) {
+                if (e != null) {
+                    Log.w("Failed", "Listen failed.", e);
+                    return;
+                }
+
+                if (snapshot != null && snapshot.exists()) {
+                    checkSessionStatus();
+                    Log.d("Snapshot Exists", "Current data: " + snapshot.getData());
+                }
+                else {
+                    Log.d("No Snapshot", "Current data: null");
                 }
             }
         });
