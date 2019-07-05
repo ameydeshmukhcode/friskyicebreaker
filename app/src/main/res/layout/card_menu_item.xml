@@ -66,26 +66,30 @@
             android:id="@+id/button_remove"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:layout_marginEnd="24dp"
-            android:background="@drawable/background_outline"
+            android:layout_marginEnd="4dp"
+            android:background="@drawable/background_round_rect"
             android:backgroundTint="@color/appGreen"
             android:src="@drawable/round_remove_24"
             android:tint="@color/tintLight"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="h,1:1"
-            app:layout_constraintEnd_toStartOf="@+id/button_add"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintEnd_toStartOf="@+id/text_item_count"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.512" />
 
         <TextView
             android:id="@+id/text_item_count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="4dp"
+            android:background="@drawable/background_round_rect"
             android:fontFamily="@font/museosans700"
-            android:text="0"
+            android:gravity="center"
+            android:text="@string/default_count"
             android:textSize="@dimen/text_menu_item_price"
             app:layout_constraintBottom_toBottomOf="@+id/button_add"
+            app:layout_constraintDimensionRatio="w,1:1"
             app:layout_constraintEnd_toStartOf="@+id/button_add"
-            app:layout_constraintStart_toEndOf="@+id/button_remove"
             app:layout_constraintTop_toTopOf="@+id/button_add" />
 
         <ImageButton
@@ -93,7 +97,7 @@
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_marginEnd="24dp"
-            android:background="@drawable/background_outline"
+            android:background="@drawable/background_round_rect"
             android:backgroundTint="@color/appGreen"
             android:src="@drawable/round_add_24"
             android:tint="@color/tintLight"
