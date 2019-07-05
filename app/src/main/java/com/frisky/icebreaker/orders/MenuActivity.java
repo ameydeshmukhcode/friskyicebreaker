@@ -2,6 +2,7 @@ package com.frisky.icebreaker.orders;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -51,6 +52,9 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
 
     int orderAmount = 0;
 
+    ConstraintLayout bottomSheetOrder;
+    TextView orderAmountText;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,6 +78,11 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
                 MenuActivity.super.onBackPressed();
             }
         });
+
+        bottomSheetOrder = findViewById(R.id.bottom_sheet_order);
+        bottomSheetOrder.setVisibility(View.GONE);
+
+        orderAmountText = findViewById(R.id.text_order_amount);
 
         if (SESSION_ACTIVE) {
             mRestName = findViewById(R.id.text_pub_name);
@@ -284,10 +293,23 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
     @Override
     public void addToOrder(String s) {
         orderAmount += Integer.parseInt(s);
+        bottomSheetOrder.setVisibility(View.VISIBLE);
+        orderAmountText.setText(String.valueOf(orderAmount));
+        mRecyclerMenuListView.setPadding(0, 0, 0, 0);
+        mRecyclerMenuListView.setPadding(0, 0, 0, 225);
+        mRecyclerMenuListView.setClipToPadding(false);
     }
 
     @Override
     public void removeFromOrder(String s) {
         orderAmount -= Integer.parseInt(s);
+        if (orderAmount > 0) {
+            orderAmountText.setText(String.valueOf(orderAmount));
+        }
+        else {
+            bottomSheetOrder.setVisibility(View.GONE);
+            mRecyclerMenuListView.setPadding(0, 0, 0, 0);
+            mRecyclerMenuListView.setClipToPadding(false);
+        }
     }
 }
