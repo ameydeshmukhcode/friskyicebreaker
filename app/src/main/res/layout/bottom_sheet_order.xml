@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/background_top_corners_rounded">
+
+    <TextView
+        android:id="@+id/order_active"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/museosans300"
+        android:text="@string/order_active"
+        android:textColor="@color/textDark"
+        android:textSize="@dimen/text_subtitle_size"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/your_total"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp"
+        android:text="@string/your_total"
+        android:textSize="@dimen/text_subtitle_size"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/order_active" />
+
+    <TextView
+        android:id="@+id/rupee"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:fontFamily="@font/museosans700"
+        android:text="@string/rupee"
+        android:textColor="@color/appRed"
+        android:textSize="@dimen/text_subtitle_size"
+        app:layout_constraintBottom_toBottomOf="@+id/your_total"
+        app:layout_constraintStart_toEndOf="@+id/your_total"
+        app:layout_constraintTop_toTopOf="@+id/your_total" />
+
+    <TextView
+        android:id="@+id/text_order_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:fontFamily="@font/museosans700"
+        android:text="@string/placeholder_number"
+        android:textColor="@color/appRed"
+        app:layout_constraintBottom_toBottomOf="@+id/your_total"
+        app:layout_constraintStart_toEndOf="@+id/rupee"
+        app:layout_constraintTop_toTopOf="@+id/your_total" />
+
+    <Button
+        android:id="@+id/button_view_order"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginEnd="16dp"
+        android:background="@color/transparent"
+        android:fontFamily="@font/museosans700"
+        android:text="@string/view"
+        android:textAllCaps="false"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/text_title_size"
+        app:layout_constraintBottom_toBottomOf="@+id/your_total"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/order_active" />
+</androidx.constraintlayout.widget.ConstraintLayout>
