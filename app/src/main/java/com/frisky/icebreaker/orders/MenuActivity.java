@@ -6,9 +6,11 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -54,6 +56,7 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
 
     ConstraintLayout bottomSheetOrder;
     TextView orderAmountText;
+    Button viewOrderButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +86,13 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
         bottomSheetOrder.setVisibility(View.GONE);
 
         orderAmountText = findViewById(R.id.text_order_amount);
+        viewOrderButton = findViewById(R.id.button_view_order);
+        viewOrderButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), OrderActivity.class));
+            }
+        });
 
         if (SESSION_ACTIVE) {
             mRestName = findViewById(R.id.text_pub_name);
