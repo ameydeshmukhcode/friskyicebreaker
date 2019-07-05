@@ -36,7 +36,8 @@ import java.util.Map;
 
 import static com.frisky.icebreaker.orders.OrderingAssistant.SESSION_ACTIVE;
 
-public class MenuActivity extends AppCompatActivity implements UIActivity {
+public class MenuActivity extends AppCompatActivity implements UIActivity,
+        MenuItemListAdapter.OnOrderListChangeListener {
 
     ImageButton mBackButton;
     TextView mRestName;
@@ -46,6 +47,9 @@ public class MenuActivity extends AppCompatActivity implements UIActivity {
     private HashMap<String, String> categories = new HashMap<>();
 
     RecyclerView.Adapter mMenuListViewAdapter;
+    RecyclerView mRecyclerMenuListView;
+
+    int orderAmount = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -217,7 +221,6 @@ public class MenuActivity extends AppCompatActivity implements UIActivity {
     }
 
     private void setMenu(String restaurant) {
-        RecyclerView mRecyclerMenuListView;
         mRecyclerMenuListView = findViewById(R.id.recycler_view);
         mRecyclerMenuListView.setOverScrollMode(View.OVER_SCROLL_NEVER);
 
@@ -227,7 +230,7 @@ public class MenuActivity extends AppCompatActivity implements UIActivity {
         mRecyclerMenuListView.setLayoutManager(mMenuListViewLayoutManager);
 
         // specify an adapter (see also next example)
-        mMenuListViewAdapter = new MenuItemListAdapter(menu, categories);
+        mMenuListViewAdapter = new MenuItemListAdapter(menu, categories, this);
         mRecyclerMenuListView.setAdapter(mMenuListViewAdapter);
 
         prepareMenuData(restaurant);
@@ -276,5 +279,15 @@ public class MenuActivity extends AppCompatActivity implements UIActivity {
                 }
             }
         });
+    }
+
+    @Override
+    public void addToOrder(String s) {
+        orderAmount += Integer.parseInt(s);
+    }
+
+    @Override
+    public void removeFromOrder(String s) {
+        orderAmount -= Integer.parseInt(s);
     }
 }

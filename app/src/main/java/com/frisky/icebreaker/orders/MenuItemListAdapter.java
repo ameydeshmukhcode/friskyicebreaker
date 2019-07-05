@@ -3,7 +3,6 @@ package com.frisky.icebreaker.orders;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +22,8 @@ public class MenuItemListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     private final int CATEGORY_VIEW = 77;
     private final int MENU_ITEM_VIEW = 88;
+
+    OnOrderListChangeListener orderListChangeListener;
 
     static class MenuItemHolder extends RecyclerView.ViewHolder {
         ImageButton mAdd;
@@ -50,9 +51,10 @@ public class MenuItemListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }
     }
 
-    MenuItemListAdapter(List<Object> menu, HashMap<String, String> categories) {
+    MenuItemListAdapter(List<Object> menu, HashMap<String, String> categories, OnOrderListChangeListener listener) {
         this.menu = menu;
         this.categories = categories;
+        this.orderListChangeListener = listener;
     }
 
     @Override
@@ -118,6 +120,7 @@ public class MenuItemListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     public void onClick(View v) {
                         int countInc = Integer.parseInt(itemHolder.mCount.getText().toString()) + 1;
                         itemHolder.mCount.setText(String.valueOf(countInc));
+                        orderListChangeListener.addToOrder(String.valueOf(menuItem.getPrice()));
                     }
                 });
                 itemHolder.mRemove.setOnClickListener(new View.OnClickListener() {
@@ -126,6 +129,7 @@ public class MenuItemListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                         if (Integer.parseInt(itemHolder.mCount.getText().toString()) > 0) {
                             int countDec = Integer.parseInt(itemHolder.mCount.getText().toString()) - 1;
                             itemHolder.mCount.setText(String.valueOf(countDec));
+                            orderListChangeListener.removeFromOrder(String.valueOf(menuItem.getPrice()));
                         }
                     }
                 });
@@ -136,5 +140,10 @@ public class MenuItemListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     @Override
     public int getItemCount() {
         return menu.size();
+    }
+
+    interface OnOrderListChangeListener {
+        void addToOrder(String s);
+        void removeFromOrder(String s);
     }
 }
