@@ -3,10 +3,11 @@ package com.frisky.icebreaker.orders;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.frisky.icebreaker.R;
@@ -24,16 +25,20 @@ public class MenuItemListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private final int MENU_ITEM_VIEW = 88;
 
     static class MenuItemHolder extends RecyclerView.ViewHolder {
-        Button mAdd;
+        ImageButton mAdd;
+        ImageButton mRemove;
         TextView mName;
         TextView mDescription;
         TextView mPrice;
+        TextView mCount;
         MenuItemHolder(View v) {
             super(v);
-            mAdd = v.findViewById(R.id.button_add_item);
+            mAdd = v.findViewById(R.id.button_add);
+            mRemove = v.findViewById(R.id.button_remove);
             mName = v.findViewById(R.id.text_name);
             mDescription = v.findViewById(R.id.text_description);
             mPrice = v.findViewById(R.id.text_price);
+            mCount = v.findViewById(R.id.text_item_count);
         }
     }
 
@@ -108,6 +113,22 @@ public class MenuItemListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 itemHolder.mName.setText(menuItem.getName());
                 itemHolder.mDescription.setText(menuItem.getDescription());
                 itemHolder.mPrice.setText(String.valueOf(menuItem.getPrice()));
+                itemHolder.mAdd.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        int countInc = Integer.parseInt(itemHolder.mCount.getText().toString()) + 1;
+                        itemHolder.mCount.setText(String.valueOf(countInc));
+                    }
+                });
+                itemHolder.mRemove.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (Integer.parseInt(itemHolder.mCount.getText().toString()) > 0) {
+                            int countDec = Integer.parseInt(itemHolder.mCount.getText().toString()) - 1;
+                            itemHolder.mCount.setText(String.valueOf(countDec));
+                        }
+                    }
+                });
                 break;
         }
     }
