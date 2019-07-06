@@ -47,7 +47,7 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
     private HashMap<String, String> categories = new HashMap<>();
 
     int orderAmount = 0;
-    Map<String, MutableInt> orderList = new HashMap<>();
+    HashMap<String, MutableInt> orderList = new HashMap<>();
 
     RecyclerView.Adapter mMenuListViewAdapter;
     RecyclerView mRecyclerMenuListView;
@@ -87,6 +87,7 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
             viewOrderButton.setOnClickListener(v -> {
                 Intent showOrder = new Intent(getApplicationContext(), OrderActivity.class);
                 showOrder.putExtra("table_id", mTableSerial.getText().toString());
+                showOrder.putExtra("order_list", orderList);
                 startActivity(showOrder);
             });
 
