@@ -84,7 +84,11 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
 
             orderAmountText = findViewById(R.id.text_order_amount);
             viewOrderButton = findViewById(R.id.button_view_order);
-            viewOrderButton.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), OrderActivity.class)));
+            viewOrderButton.setOnClickListener(v -> {
+                Intent showOrder = new Intent(getApplicationContext(), OrderActivity.class);
+                showOrder.putExtra("table_id", mTableSerial.getText().toString());
+                startActivity(showOrder);
+            });
 
             restoreUserSession();
         } else if (getIntent().hasExtra("start_new_session")) {
