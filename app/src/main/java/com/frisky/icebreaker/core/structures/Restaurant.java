@@ -2,27 +2,25 @@ package com.frisky.icebreaker.core.structures;
 
 import android.net.Uri;
 
-import java.util.List;
-
 public class Restaurant {
     private Uri imageUri;
     private String id;
     private String name;
     private String description;
     private String location;
-    private List<String> cuisine;
+    private String cuisine;
     private double rating;
     
     public Restaurant() {
     }
 
-    public Restaurant(Uri image, String id, String name, String desc, String location, List<String> tags, double rating) {
+    public Restaurant(Uri image, String id, String name, String desc, String location, String cuisine, double rating) {
         this.imageUri = image;
         this.id = id;
         this.name = name;
         this.description = desc;
         this.location = location;
-        this.cuisine = tags;
+        this.cuisine = cuisine;
         this.rating = rating;
     }
 
@@ -58,11 +56,11 @@ public class Restaurant {
         this.description = description;
     }
 
-    public List<String> getTags() {
+    public String getCuisine() {
         return cuisine;
     }
 
-    public void setTags(List<String> cuisine) {
+    public void setCuisine(String cuisine) {
         this.cuisine = cuisine;
     }
 

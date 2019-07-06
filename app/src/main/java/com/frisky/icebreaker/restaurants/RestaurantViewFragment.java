@@ -78,7 +78,7 @@ public class RestaurantViewFragment extends Fragment {
                                 String tags = document.get("cuisine").toString();
                                 Log.i("Rest", name + " " + address + " " + tags);
                                 Restaurant restaurant = new Restaurant(Uri.parse(image), document.getId(), name, name, address,
-                                        Arrays.asList(tags.substring(1, tags.length()-1)), 4.5);
+                                        tags.substring(1, tags.length()-1), 4.5);
                                 restaurantList.add(restaurant);
                                 mPubViewAdapter.notifyDataSetChanged();
                             }

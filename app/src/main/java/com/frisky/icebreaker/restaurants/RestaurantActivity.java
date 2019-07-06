@@ -33,7 +33,7 @@ public class RestaurantActivity extends AppCompatActivity implements UIActivity 
 
     public void initUI() {
         mPubNameText = findViewById(R.id.text_pub_name);
-        mTagsText = findViewById(R.id.text_tags);
+        mTagsText = findViewById(R.id.text_cuisine);
         mRatingText = findViewById(R.id.text_rating);
         mLocationText = findViewById(R.id.text_location);
         mAppBarLayout = findViewById(R.id.app_bar_container);
@@ -63,8 +63,8 @@ public class RestaurantActivity extends AppCompatActivity implements UIActivity 
             String pubRatingText = getIntent().getStringExtra("rating");
             double pubRating = Double.parseDouble(pubRatingText);
             mRatingText.setText(getIntent().getStringExtra("rating"));
-            mRatingText.setBackgroundTintList(ColorStateList.valueOf(getApplicationContext().getResources().
-                    getColor(UIAssistant.getInstance().getRatingBadgeColor(pubRating))));
+            mRatingText.setBackgroundTintList(ColorStateList.valueOf(getApplicationContext()
+                    .getColor(UIAssistant.getInstance().getRatingBadgeColor(pubRating))));
             mAppBarLayout.setBackgroundResource(UIAssistant.getInstance().getRatingBadgeColor(pubRating));
         }
 

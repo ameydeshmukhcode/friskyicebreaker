@@ -28,14 +28,14 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
         MaterialCardView mPubCard;
         ImageView mImage;
         TextView mTitle;
-        TextView mTags;
+        TextView mCuisine;
         TextView mRating;
         TextView mLocation;
         PubViewHolder(View v) {
             super(v);
             mImage = v.findViewById(R.id.image_pub);
             mTitle = v.findViewById(R.id.text_title);
-            mTags = v.findViewById(R.id.text_tag_list);
+            mCuisine = v.findViewById(R.id.text_cuisine);
             mRating = v.findViewById(R.id.text_rating);
             mLocation = v.findViewById(R.id.text_location);
             mPubCard = v.findViewById(R.id.card_pub);
@@ -57,26 +57,20 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
     }
 
     public void onBindViewHolder(@NonNull final PubViewHolder viewHolder, int i) {
-        String tagList = "";
         final Restaurant restaurant = mRestaurantList.get(i);
 
         Picasso.get().load(restaurant.getImageUri()).into(viewHolder.mImage);
 
         viewHolder.mTitle.setText(restaurant.getName());
-
-        for (String tag: restaurant.getTags()) {
-            tagList = tagList.concat(tag + " | ");
-        }
-
         viewHolder.mLocation.setText(restaurant.getLocation());
 
         double pubRating = restaurant.getRating();
 
-        viewHolder.mTags.setText(tagList.substring(0, tagList.length() - 3));
+        viewHolder.mCuisine.setText(restaurant.getCuisine());
         viewHolder.mRating.setText(String.valueOf(pubRating));
 
-        viewHolder.mRating.setBackgroundTintList(ColorStateList.valueOf(mContext.getResources().
-                getColor(UIAssistant.getInstance().getRatingBadgeColor(pubRating))));
+        viewHolder.mRating.setBackgroundTintList(ColorStateList.valueOf(mContext
+                .getColor(UIAssistant.getInstance().getRatingBadgeColor(pubRating))));
 
         viewHolder.mPubCard.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,7 +78,7 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
                 Intent pubView = new Intent(mContext, RestaurantActivity.class);
                 pubView.putExtra("id", restaurant.getID());
                 pubView.putExtra("name", viewHolder.mTitle.getText());
-                pubView.putExtra("tags", viewHolder.mTags.getText());
+                pubView.putExtra("tags", viewHolder.mCuisine.getText());
                 pubView.putExtra("location", viewHolder.mLocation.getText());
                 pubView.putExtra("rating", viewHolder.mRating.getText());
                 mContext.startActivity(pubView);
