@@ -1,7 +1,10 @@
 package com.frisky.icebreaker;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -10,6 +13,8 @@ import com.google.android.gms.tasks.Task;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.appcompat.app.AppCompatActivity;
@@ -47,11 +52,27 @@ public class HomeActivity extends AppCompatActivity implements UIActivity {
 
     ImageButton mBottomNavOrderButton;
 
+    private final int sessionActiveId = 1001;
+    private final int sessionEndedId = 1002;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         resumeSession = new Intent(getApplicationContext(), MenuActivity.class);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "RES";
+            String description = "desc";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel("RES", name, importance);
+            channel.setDescription(description);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+
         initUI();
         loadFragment(new RestaurantViewFragment());
         addListenerForSessionChange();
@@ -171,6 +192,7 @@ public class HomeActivity extends AppCompatActivity implements UIActivity {
                                 else {
                                     bottomSheet.setVisibility(View.GONE);
                                     mBottomNavOrderButton.setEnabled(true);
+                                    //showSessionEndedNotification();
                                 }
                             }
                             else {
@@ -181,6 +203,32 @@ public class HomeActivity extends AppCompatActivity implements UIActivity {
                         }
                     }
                 });
+    }
+
+    private void showSessionActiveNotification() {
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "RES")
+                .setSmallIcon(R.drawable.logo)
+                .setContentTitle("Title")
+                .setContentText("Content text Active")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+
+        // notificationId is a unique int for each notification that you must define
+        notificationManager.notify(sessionActiveId, builder.build());
+    }
+
+    private void showSessionEndedNotification() {
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "RES")
+                .setSmallIcon(R.drawable.logo)
+                .setContentTitle("Title")
+                .setContentText("Content text Ended")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+
+        // notificationId is a unique int for each notification that you must define
+        notificationManager.notify(sessionEndedId, builder.build());
     }
 
     private void getSessionDetails() {
@@ -251,6 +299,7 @@ public class HomeActivity extends AppCompatActivity implements UIActivity {
                                                                         resumeSession.putExtra("restaurant_name", restaurantName.getText().toString());
                                                                         resumeSession.putExtra("table_number", tableSerial);
                                                                         mBottomNavOrderButton.setEnabled(true);
+                                                                        //showSessionActiveNotification();
                                                                     }
                                                                 }
                                                             });
