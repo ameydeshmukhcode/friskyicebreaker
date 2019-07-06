@@ -62,6 +62,9 @@
         <item>@string/female</item>
         <item>@string/other</item>
     </string-array>
+    <!-- Notifications -->
+    <string name="clear_all">Clear All</string>
+    <string name="unread">Unread:</string>
 
     <!--Setup Profile-->
     <string name="update_image">Click the image above to upload your profile picture</string>

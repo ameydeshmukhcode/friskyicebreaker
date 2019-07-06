@@ -7,6 +7,7 @@ import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 
+import com.frisky.icebreaker.notifications.NotificationsFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
@@ -141,6 +142,12 @@ public class HomeActivity extends AppCompatActivity implements UIActivity {
 
         mBottomNavNotificationButton = findViewById(R.id.button_nav_centre_right);
         mBottomNavNotificationButton.setImageResource(R.drawable.round_notifications_none_24);
+        mBottomNavNotificationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadFragment(new NotificationsFragment());
+            }
+        });
 
         mBottomNavProfileButton = findViewById(R.id.button_nav_right);
         mBottomNavProfileButton.setImageResource(R.drawable.round_person_24);
