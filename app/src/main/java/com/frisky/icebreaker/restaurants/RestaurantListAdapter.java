@@ -72,17 +72,14 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
         viewHolder.mRating.setBackgroundTintList(ColorStateList.valueOf(mContext
                 .getColor(UIAssistant.getInstance().getRatingBadgeColor(pubRating))));
 
-        viewHolder.mPubCard.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent pubView = new Intent(mContext, RestaurantActivity.class);
-                pubView.putExtra("id", restaurant.getID());
-                pubView.putExtra("name", viewHolder.mTitle.getText());
-                pubView.putExtra("tags", viewHolder.mCuisine.getText());
-                pubView.putExtra("location", viewHolder.mLocation.getText());
-                pubView.putExtra("rating", viewHolder.mRating.getText());
-                mContext.startActivity(pubView);
-            }
+        viewHolder.mPubCard.setOnClickListener(v -> {
+            Intent pubView = new Intent(mContext, RestaurantActivity.class);
+            pubView.putExtra("id", restaurant.getID());
+            pubView.putExtra("name", viewHolder.mTitle.getText());
+            pubView.putExtra("tags", viewHolder.mCuisine.getText());
+            pubView.putExtra("location", viewHolder.mLocation.getText());
+            pubView.putExtra("rating", viewHolder.mRating.getText());
+            mContext.startActivity(pubView);
         });
     }
 

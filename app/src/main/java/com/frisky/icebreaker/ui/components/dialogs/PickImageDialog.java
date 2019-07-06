@@ -8,7 +8,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
-import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 
@@ -18,27 +17,23 @@ import static android.app.Activity.RESULT_OK;
 
 public class PickImageDialog extends DialogFragment {
 
-    Button galleryButton;
-    Button cameraButton;
-
+    //Button cameraButton;
     private OnImageUpdatedListener onImageUpdatedListener;
 
-    final int PICK_IMAGE_GALLERY = 0;
-    final int PICK_IMAGE_CAMERA = 1;
+    private final int PICK_IMAGE_GALLERY = 0;
+
+    //private final int PICK_IMAGE_CAMERA = 1;
 
     @Override
     public void onStart() {
         super.onStart();
-        galleryButton = getDialog().findViewById(R.id.button_gallery);
-        galleryButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent getImageFromDevice = new Intent(
-                        Intent.ACTION_PICK,
-                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        Button galleryButton = getDialog().findViewById(R.id.button_gallery);
+        galleryButton.setOnClickListener(v -> {
+            Intent getImageFromDevice = new Intent(
+                    Intent.ACTION_PICK,
+                    android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 
-                startActivityForResult(getImageFromDevice, PICK_IMAGE_GALLERY);
-            }
+            startActivityForResult(getImageFromDevice, PICK_IMAGE_GALLERY);
         });
 
 //        cameraButton = getDialog().findViewById(R.id.button_camera);
@@ -71,9 +66,9 @@ public class PickImageDialog extends DialogFragment {
                 this.onImageUpdatedListener.imageUpdated(selectedImage);
                 dismiss();
             }
-            else if (requestCode == PICK_IMAGE_CAMERA) {
-
-            }
+//            else if (requestCode == PICK_IMAGE_CAMERA) {
+//
+//            }
             dismiss();
         }
     }

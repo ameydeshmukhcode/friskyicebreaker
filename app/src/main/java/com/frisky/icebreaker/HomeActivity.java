@@ -8,14 +8,8 @@ import android.os.Build;
 import android.os.Bundle;
 
 import com.frisky.icebreaker.notifications.NotificationsFragment;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.appcompat.app.AppCompatActivity;
@@ -34,11 +28,10 @@ import com.frisky.icebreaker.social.IceBreakerFragment;
 import com.frisky.icebreaker.social.SocialFragment;
 import com.frisky.icebreaker.ui.base.UIActivity;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import static com.frisky.icebreaker.orders.OrderingAssistant.SESSION_ACTIVE;
 
@@ -53,8 +46,7 @@ public class HomeActivity extends AppCompatActivity implements UIActivity {
 
     ImageButton mBottomNavOrderButton;
 
-    private final int sessionActiveId = 1001;
-    private final int sessionEndedId = 1002;
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,218 +97,200 @@ public class HomeActivity extends AppCompatActivity implements UIActivity {
 
         mSocialButton = findViewById(R.id.button_app_bar_right);
         mSocialButton.setImageResource(R.drawable.round_chat_24);
-        mSocialButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loadFragment(new SocialFragment());
-            }
-        });
+        mSocialButton.setOnClickListener(v -> loadFragment(new SocialFragment()));
 
         mScanQRCodeButton = findViewById(R.id.button_app_bar_left);
         mScanQRCodeButton.setImageResource(R.drawable.round_qr_code);
-        mScanQRCodeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), QRScanActivity.class));
-            }
-        });
+        mScanQRCodeButton.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), QRScanActivity.class)));
 
         mBottomNavHomeButton = findViewById(R.id.button_nav_left);
         mBottomNavHomeButton.setImageResource(R.drawable.round_home_24);
-        mBottomNavHomeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loadFragment(new RestaurantViewFragment());
-            }
-        });
+        mBottomNavHomeButton.setOnClickListener(v -> loadFragment(new RestaurantViewFragment()));
 
         mBottomNavOrderButton = findViewById(R.id.button_nav_centre_left);
         mBottomNavOrderButton.setEnabled(false);
         mBottomNavOrderButton.setImageResource(R.drawable.round_receipt_24);
-        mBottomNavOrderButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(resumeSession);
-            }
-        });
+        mBottomNavOrderButton.setOnClickListener(v -> startActivity(resumeSession));
 
         mBottomNavNotificationButton = findViewById(R.id.button_nav_centre_right);
         mBottomNavNotificationButton.setImageResource(R.drawable.round_notifications_none_24);
-        mBottomNavNotificationButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loadFragment(new NotificationsFragment());
-            }
-        });
+        mBottomNavNotificationButton.setOnClickListener(v -> loadFragment(new NotificationsFragment()));
 
         mBottomNavProfileButton = findViewById(R.id.button_nav_right);
         mBottomNavProfileButton.setImageResource(R.drawable.round_person_24);
-        mBottomNavProfileButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent startProfileActivity = new Intent(getApplicationContext(), ProfileActivity.class);
-                startActivity(startProfileActivity);
-            }
+        mBottomNavProfileButton.setOnClickListener(v -> {
+            Intent startProfileActivity = new Intent(getApplicationContext(), ProfileActivity.class);
+            startActivity(startProfileActivity);
         });
 
         mIceBreakerButton = findViewById(R.id.button_icebreaker);
-        mIceBreakerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loadFragment(new IceBreakerFragment());
-            }
-        });
+        mIceBreakerButton.setOnClickListener(v -> loadFragment(new IceBreakerFragment()));
     }
 
     private void checkSessionStatus() {
         FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
 
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        if (user == null)
+            return;
+
         firebaseFirestore.collection("users")
-                .document(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .document(user.getUid())
                 .get()
-                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if (task.isSuccessful()) {
-                            DocumentSnapshot document = task.getResult();
-                            if (document.contains("session_active")) {
-                                SESSION_ACTIVE = (boolean) document.get("session_active");
-                                if (SESSION_ACTIVE) {
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        if (document == null)
+                            return;
+                        if (document.contains("session_active")) {
+                            SESSION_ACTIVE = (boolean) document.get("session_active");
+                            if (SESSION_ACTIVE) {
 
-                                    restaurantName = findViewById(R.id.text_restaurant);
-                                    tableName = findViewById(R.id.text_table);
+                                restaurantName = findViewById(R.id.text_restaurant);
+                                tableName = findViewById(R.id.text_table);
 
-                                    getSessionDetails();
+                                getSessionDetails();
 
-                                    viewMenuButton = findViewById(R.id.button_view_menu);
-                                    viewMenuButton.setOnClickListener(new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View v) {
-                                            startActivity(resumeSession);
-                                        }
-                                    });
-                                }
-                                else {
-                                    bottomSheet.setVisibility(View.GONE);
-                                    mBottomNavOrderButton.setEnabled(true);
-                                    //showSessionEndedNotification();
-                                }
+                                viewMenuButton = findViewById(R.id.button_view_menu);
+                                viewMenuButton.setOnClickListener(v -> startActivity(resumeSession));
                             }
                             else {
-                                SESSION_ACTIVE = false;
                                 bottomSheet.setVisibility(View.GONE);
                                 mBottomNavOrderButton.setEnabled(true);
+                                //showSessionEndedNotification();
                             }
+                        }
+                        else {
+                            SESSION_ACTIVE = false;
+                            bottomSheet.setVisibility(View.GONE);
+                            mBottomNavOrderButton.setEnabled(true);
                         }
                     }
                 });
     }
 
-    private void showSessionActiveNotification() {
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "RES")
-                .setSmallIcon(R.drawable.logo)
-                .setContentTitle("Title")
-                .setContentText("Content text Active")
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-
-        // notificationId is a unique int for each notification that you must define
-        notificationManager.notify(sessionActiveId, builder.build());
-    }
-
-    private void showSessionEndedNotification() {
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "RES")
-                .setSmallIcon(R.drawable.logo)
-                .setContentTitle("Title")
-                .setContentText("Content text Ended")
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-
-        // notificationId is a unique int for each notification that you must define
-        notificationManager.notify(sessionEndedId, builder.build());
-    }
+//    private void showSessionActiveNotification() {
+//        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "RES")
+//                .setSmallIcon(R.drawable.logo)
+//                .setContentTitle("Title")
+//                .setContentText("Content text Active")
+//                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+//
+//        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+//
+//        // notificationId is a unique int for each notification that you must define
+//        int sessionActiveId = 1001;
+//        notificationManager.notify(sessionActiveId, builder.build());
+//    }
+//
+//    private void showSessionEndedNotification() {
+//        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "RES")
+//                .setSmallIcon(R.drawable.logo)
+//                .setContentTitle("Title")
+//                .setContentText("Content text Ended")
+//                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+//
+//        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+//
+//        // notificationId is a unique int for each notification that you must define
+//        int sessionEndedId = 1002;
+//        notificationManager.notify(sessionEndedId, builder.build());
+//    }
 
     private void getSessionDetails() {
         final FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
 
+        if (user == null)
+            return;
+
         DocumentReference userRef = firebaseFirestore
                 .collection("users")
-                .document(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                .document(user.getUid());
 
-        userRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot doc = task.getResult();
-                    if (doc.contains("restaurant") && doc.contains("current_session")) {
-                        final String restaurant = doc.getString("restaurant");
-                        final String currentSession = doc.getString("current_session");
+        userRef.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                DocumentSnapshot doc = task.getResult();
+                if (doc == null)
+                    return;
+                if (doc.contains("restaurant") && doc.contains("current_session")) {
+                    final String restaurant = doc.getString("restaurant");
+                    final String currentSession = doc.getString("current_session");
 
-                        DocumentReference restaurantRef = firebaseFirestore
-                                .collection("restaurants")
-                                .document(restaurant);
+                    if (restaurant == null)
+                        return;
 
-                        restaurantRef.get()
-                            .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                @Override
-                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                    if (task.isSuccessful()) {
-                                        DocumentSnapshot doc = task.getResult();
-                                        if (doc.contains("name")) {
-                                            restaurantName.setText(doc.getString("name"));
+                    DocumentReference restaurantRef = firebaseFirestore
+                            .collection("restaurants")
+                            .document(restaurant);
+
+                    restaurantRef.get()
+                        .addOnCompleteListener(task1 -> {
+                            if (task1.isSuccessful()) {
+                                DocumentSnapshot doc1 = task1.getResult();
+
+                                if (doc1 == null)
+                                    return;
+
+                                if (doc1.contains("name")) {
+                                    restaurantName.setText(doc1.getString("name"));
+                                }
+                            }
+
+                            if (currentSession == null)
+                                return;
+
+                            DocumentReference sessionRef = firebaseFirestore
+                                    .collection("restaurants")
+                                    .document(restaurant)
+                                    .collection("sessions")
+                                    .document(currentSession);
+
+                            sessionRef.get()
+                                .addOnCompleteListener(task11 -> {
+                                    if (task11.isSuccessful()) {
+                                        DocumentSnapshot doc1 = task11.getResult();
+
+                                        if (doc1 == null)
+                                            return;
+
+                                        if (doc1.contains("table_id")) {
+                                            final String tableid = doc1.getString("table_id");
+
+                                            if (tableid == null)
+                                                return;
+
+                                            DocumentReference tableRef = firebaseFirestore
+                                                    .collection("restaurants")
+                                                    .document(restaurant)
+                                                    .collection("tables")
+                                                    .document(tableid);
+
+                                            tableRef.get()
+                                                .addOnCompleteListener(task111 -> {
+                                                    if (task111.isSuccessful()) {
+                                                        DocumentSnapshot doc11 = task111.getResult();
+                                                        String tableSerial = "";
+
+                                                        if (doc11 == null)
+                                                            return;
+
+                                                        if (doc11.contains("number")) {
+                                                            tableSerial = "Table " + doc11.get("number");
+                                                            tableName.setText(tableSerial);
+                                                        }
+                                                        bottomSheet.setVisibility(View.VISIBLE);
+                                                        resumeSession.putExtra("restaurant_id", restaurant);
+                                                        resumeSession.putExtra("restaurant_name", restaurantName.getText().toString());
+                                                        resumeSession.putExtra("table_number", tableSerial);
+                                                        mBottomNavOrderButton.setEnabled(true);
+                                                        //showSessionActiveNotification();
+                                                    }
+                                                });
                                         }
                                     }
-
-                                    DocumentReference sessionRef = firebaseFirestore
-                                            .collection("restaurants")
-                                            .document(restaurant)
-                                            .collection("sessions")
-                                            .document(currentSession);
-
-                                    sessionRef.get()
-                                        .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                                if (task.isSuccessful()) {
-                                                    DocumentSnapshot doc = task.getResult();
-                                                    if (doc.contains("table_id")) {
-                                                        final String tableid = doc.getString("table_id");
-
-                                                        DocumentReference tableRef = firebaseFirestore
-                                                                .collection("restaurants")
-                                                                .document(restaurant)
-                                                                .collection("tables")
-                                                                .document(tableid);
-
-                                                        tableRef.get()
-                                                            .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                                                @Override
-                                                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                                                    if (task.isSuccessful()) {
-                                                                        DocumentSnapshot doc = task.getResult();
-                                                                        String tableSerial = "";
-                                                                        if (doc.contains("number")) {
-                                                                            tableSerial = "Table " + doc.get("number");
-                                                                            tableName.setText(tableSerial);
-                                                                        }
-                                                                        bottomSheet.setVisibility(View.VISIBLE);
-                                                                        resumeSession.putExtra("restaurant_id", restaurant);
-                                                                        resumeSession.putExtra("restaurant_name", restaurantName.getText().toString());
-                                                                        resumeSession.putExtra("table_number", tableSerial);
-                                                                        mBottomNavOrderButton.setEnabled(true);
-                                                                        //showSessionActiveNotification();
-                                                                    }
-                                                                }
-                                                            });
-                                                    }
-                                                }
-                                            }
-                                        });
-                                }
-                            });
-                    }
+                                });
+                        });
                 }
             }
         });
@@ -324,23 +298,20 @@ public class HomeActivity extends AppCompatActivity implements UIActivity {
 
     private void addListenerForSessionChange() {
         final DocumentReference docRef = FirebaseFirestore.getInstance().collection("users")
-                .document(FirebaseAuth.getInstance().getCurrentUser().getUid());
-        docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
-            @Override
-            public void onEvent(@Nullable DocumentSnapshot snapshot,
-                                @Nullable FirebaseFirestoreException e) {
-                if (e != null) {
-                    Log.w("Failed", "Listen failed.", e);
-                    return;
-                }
+                .document(user.getUid());
 
-                if (snapshot != null && snapshot.exists()) {
-                    checkSessionStatus();
-                    Log.d("Snapshot Exists", "Current data: " + snapshot.getData());
-                }
-                else {
-                    Log.d("No Snapshot", "Current data: null");
-                }
+        docRef.addSnapshotListener((snapshot, e) -> {
+            if (e != null) {
+                Log.w("Failed", "Listen failed.", e);
+                return;
+            }
+
+            if (snapshot != null && snapshot.exists()) {
+                checkSessionStatus();
+                Log.d("Snapshot Exists", "Current data: " + snapshot.getData());
+            }
+            else {
+                Log.d("No Snapshot", "Current data: null");
             }
         });
     }

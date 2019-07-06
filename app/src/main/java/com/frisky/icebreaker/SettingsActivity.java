@@ -6,7 +6,6 @@ import androidx.core.content.res.ResourcesCompat;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.TypedValue;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -39,12 +38,7 @@ public class SettingsActivity extends AppCompatActivity implements UIActivity {
     public void initUI() {
         mBackButton = findViewById(R.id.button_app_bar_left);
         mBackButton.setImageResource(R.drawable.round_arrow_back_24);
-        mBackButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SettingsActivity.super.onBackPressed();
-            }
-        });
+        mBackButton.setOnClickListener(v -> SettingsActivity.super.onBackPressed());
 
         mToolbarText = findViewById(R.id.text_app_bar);
         mToolbarText.setText(R.string.settings);
@@ -53,20 +47,17 @@ public class SettingsActivity extends AppCompatActivity implements UIActivity {
         mToolbarText.setTypeface(typeface);
 
         mLogoutButton = findViewById(R.id.button_logout);
-        mLogoutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mAuth.signOut();
+        mLogoutButton.setOnClickListener(v -> {
+            mAuth.signOut();
 
-                FirebaseUser user = mAuth.getCurrentUser();
-                if (user == null) {
-                    Intent signOutIntent = new Intent(getApplicationContext(), SignInActivity.class);
-                    signOutIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
-                            Intent.FLAG_ACTIVITY_CLEAR_TASK |
-                            Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(signOutIntent);
-                    finish();
-                }
+            FirebaseUser user = mAuth.getCurrentUser();
+            if (user == null) {
+                Intent signOutIntent = new Intent(getApplicationContext(), SignInActivity.class);
+                signOutIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
+                        Intent.FLAG_ACTIVITY_CLEAR_TASK |
+                        Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(signOutIntent);
+                finish();
             }
         });
 

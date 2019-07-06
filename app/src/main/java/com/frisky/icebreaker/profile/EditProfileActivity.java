@@ -41,12 +41,7 @@ public class EditProfileActivity extends AppCompatActivity implements UIActivity
 
         mBackButton = findViewById(R.id.button_app_bar_left);
         mBackButton.setImageResource(R.drawable.round_arrow_back_24);
-        mBackButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                EditProfileActivity.super.onBackPressed();
-            }
-        });
+        mBackButton.setOnClickListener(v -> EditProfileActivity.super.onBackPressed());
 
         RecyclerView mRecyclerImageGridView;
         RecyclerView.LayoutManager mEditImagesGridLayoutManager;
@@ -62,7 +57,7 @@ public class EditProfileActivity extends AppCompatActivity implements UIActivity
         mRecyclerImageGridView.setLayoutManager(mEditImagesGridLayoutManager);
 
         // specify an adapter (see also next example)
-        mImageGridAdapter = new EditImagesAdapter(getApplicationContext(), this);
+        mImageGridAdapter = new EditImagesAdapter(this);
         mRecyclerImageGridView.setAdapter(mImageGridAdapter);
 
         mDoneButton = findViewById(R.id.button_app_bar_right);

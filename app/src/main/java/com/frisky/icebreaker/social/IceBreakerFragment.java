@@ -14,13 +14,10 @@ import android.view.ViewGroup;
 
 import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.core.structures.User;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +33,7 @@ public class IceBreakerFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view;
-        view = inflater.inflate(R.layout.fragment_icebreaker, null);
+        view = inflater.inflate(R.layout.fragment_icebreaker, container, false);
 
         RecyclerView mRecyclerUsersView;
         RecyclerView.LayoutManager mUsersViewLayoutManager;
@@ -68,24 +65,23 @@ public class IceBreakerFragment extends Fragment {
 
         mFirestore.collection("users")
                 .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        if (task.getResult() != null) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Log.i("User", document.getId() + " => " + document.getData());
                                 String name = document.getString("name");
                                 String bio = document.getString("bio");
                                 User user = new User(document.getId(), name, bio, 0, null);
-                                if (!document.getId().equals(firebaseUser.getUid())) {
+                                if (firebaseUser != null && !document.getId().equals(firebaseUser.getUid())) {
                                     usersList.add(user);
                                     iceBreakerAdapter.notifyDataSetChanged();
                                 }
                             }
                         }
-                        else {
-                            Log.e("error", "Error getting documents: ", task.getException());
-                        }
+                    }
+                    else {
+                        Log.e("error", "Error getting documents: ", task.getException());
                     }
                 });
     }

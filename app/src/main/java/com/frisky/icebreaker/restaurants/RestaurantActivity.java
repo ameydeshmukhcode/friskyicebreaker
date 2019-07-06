@@ -8,7 +8,6 @@ import com.google.android.material.snackbar.Snackbar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
-import android.view.View;
 import android.widget.TextView;
 
 import com.frisky.icebreaker.R;
@@ -40,12 +39,7 @@ public class RestaurantActivity extends AppCompatActivity implements UIActivity 
         mToolbar = findViewById(R.id.app_bar_pub);
 
         mToolbar.setNavigationIcon(R.drawable.round_arrow_back_24);
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+        mToolbar.setNavigationOnClickListener(v -> onBackPressed());
 
         if (getIntent().hasExtra("name")){
             mPubNameText.setText(getIntent().getStringExtra("name"));
@@ -74,13 +68,10 @@ public class RestaurantActivity extends AppCompatActivity implements UIActivity 
         }
 
         FloatingActionButton fab = findViewById(R.id.fab_chat_room);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //TODO PUB CHAT ROOM
-                Snackbar.make(view, "Start Restaurant chat room here", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
+        fab.setOnClickListener(view -> {
+            //TODO PUB CHAT ROOM
+            Snackbar.make(view, "Start Restaurant chat room here", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
         });
     }
 }

@@ -2,7 +2,6 @@ package com.frisky.icebreaker.orders;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageButton;
 
 import com.frisky.icebreaker.R;
@@ -22,11 +21,6 @@ public class OrderActivity extends AppCompatActivity implements UIActivity {
     @Override
     public void initUI() {
         mBackButton = findViewById(R.id.button_back);
-        mBackButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                OrderActivity.super.onBackPressed();
-            }
-        });
+        mBackButton.setOnClickListener(v -> OrderActivity.super.onBackPressed());
     }
 }

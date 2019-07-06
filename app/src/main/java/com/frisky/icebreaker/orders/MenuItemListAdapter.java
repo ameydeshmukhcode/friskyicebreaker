@@ -23,7 +23,7 @@ public class MenuItemListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private final int CATEGORY_VIEW = 77;
     private final int MENU_ITEM_VIEW = 88;
 
-    OnOrderListChangeListener orderListChangeListener;
+    private OnOrderListChangeListener orderListChangeListener;
 
     static class MenuItemHolder extends RecyclerView.ViewHolder {
         ImageButton mAdd;
@@ -106,7 +106,7 @@ public class MenuItemListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         switch (CURRENT_VIEW) {
             case CATEGORY_VIEW:
                 MenuSubCategoryHolder view = (MenuSubCategoryHolder) viewHolder;
-                view.mName.setText(categories.get(menu.get(i)));
+                view.mName.setText(categories.get(menu.get(i).toString()));
                 break;
 
             case MENU_ITEM_VIEW:
@@ -115,22 +115,16 @@ public class MenuItemListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 itemHolder.mName.setText(menuItem.getName());
                 itemHolder.mDescription.setText(menuItem.getDescription());
                 itemHolder.mPrice.setText(String.valueOf(menuItem.getPrice()));
-                itemHolder.mAdd.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        int countInc = Integer.parseInt(itemHolder.mCount.getText().toString()) + 1;
-                        itemHolder.mCount.setText(String.valueOf(countInc));
-                        orderListChangeListener.addToOrder(String.valueOf(menuItem.getPrice()));
-                    }
+                itemHolder.mAdd.setOnClickListener(v -> {
+                    int countInc = Integer.parseInt(itemHolder.mCount.getText().toString()) + 1;
+                    itemHolder.mCount.setText(String.valueOf(countInc));
+                    orderListChangeListener.addToOrder(String.valueOf(menuItem.getPrice()));
                 });
-                itemHolder.mRemove.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (Integer.parseInt(itemHolder.mCount.getText().toString()) > 0) {
-                            int countDec = Integer.parseInt(itemHolder.mCount.getText().toString()) - 1;
-                            itemHolder.mCount.setText(String.valueOf(countDec));
-                            orderListChangeListener.removeFromOrder(String.valueOf(menuItem.getPrice()));
-                        }
+                itemHolder.mRemove.setOnClickListener(v -> {
+                    if (Integer.parseInt(itemHolder.mCount.getText().toString()) > 0) {
+                        int countDec = Integer.parseInt(itemHolder.mCount.getText().toString()) - 1;
+                        itemHolder.mCount.setText(String.valueOf(countDec));
+                        orderListChangeListener.removeFromOrder(String.valueOf(menuItem.getPrice()));
                     }
                 });
                 break;

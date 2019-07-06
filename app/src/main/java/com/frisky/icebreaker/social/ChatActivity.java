@@ -5,7 +5,6 @@ import androidx.core.content.res.ResourcesCompat;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.TypedValue;
-import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -37,12 +36,7 @@ public class ChatActivity extends AppCompatActivity implements UIActivity {
 
         mBackButton = findViewById(R.id.button_app_bar_left);
         mBackButton.setImageResource(R.drawable.round_arrow_back_24);
-        mBackButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ChatActivity.super.onBackPressed();
-            }
-        });
+        mBackButton.setOnClickListener(v -> ChatActivity.super.onBackPressed());
 
         mMenuButton = findViewById(R.id.button_app_bar_right);
         mMenuButton.setImageResource(R.drawable.round_more_vert_24);
