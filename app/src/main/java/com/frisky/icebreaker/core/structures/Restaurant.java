@@ -6,24 +6,24 @@ import java.util.List;
 
 public class Restaurant {
     private Uri imageUri;
-    private String mID;
-    private String mName;
-    private String mDesc;
-    private String mLocation;
-    private List<String> mTags;
-    private double mRating;
+    private String id;
+    private String name;
+    private String description;
+    private String location;
+    private List<String> cuisine;
+    private double rating;
     
     public Restaurant() {
     }
 
     public Restaurant(Uri image, String id, String name, String desc, String location, List<String> tags, double rating) {
         this.imageUri = image;
-        this.mID = id;
-        this.mName = name;
-        this.mDesc = desc;
-        this.mLocation = location;
-        this.mTags = tags;
-        this.mRating = rating;
+        this.id = id;
+        this.name = name;
+        this.description = desc;
+        this.location = location;
+        this.cuisine = tags;
+        this.rating = rating;
     }
 
     public Uri getImageUri() {
@@ -35,42 +35,42 @@ public class Restaurant {
     }
 
     public String getID() {
-        return mID;
+        return id;
     }
 
-    public String getLocation() { return mLocation; }
+    public String getLocation() { return location; }
 
-    public void setLocation(String mLocation) { this.mLocation = mLocation; }
+    public void setLocation(String location) { this.location = location; }
 
     public String getName() {
-        return mName;
+        return name;
     }
 
-    public void setName(String mName) {
-        this.mName = mName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getDesc() {
-        return mDesc;
+        return description;
     }
 
-    public void setDesc(String mDesc) {
-        this.mDesc = mDesc;
+    public void setDesc(String description) {
+        this.description = description;
     }
 
     public List<String> getTags() {
-        return mTags;
+        return cuisine;
     }
 
-    public void setTags(List<String> mTags) {
-        this.mTags = mTags;
+    public void setTags(List<String> cuisine) {
+        this.cuisine = cuisine;
     }
 
     public double getRating() {
-        return mRating;
+        return rating;
     }
 
-    public void setRating(float mRating) {
-        this.mRating = mRating;
+    public void setRating(float rating) {
+        this.rating = rating;
     }
 }
