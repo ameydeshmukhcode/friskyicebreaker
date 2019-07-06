@@ -1,7 +1,7 @@
 package com.frisky.icebreaker.core.structures;
 
 public class MutableInt {
-    private int value = 0;
+    private int value = 1;
     public void increment() {
         ++value;
     }

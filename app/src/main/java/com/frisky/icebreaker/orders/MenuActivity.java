@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.core.structures.MenuItem;
+import com.frisky.icebreaker.core.structures.MutableInt;
 import com.frisky.icebreaker.ui.base.UIActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -45,10 +46,11 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
     private List<Object> menu = new ArrayList<>();
     private HashMap<String, String> categories = new HashMap<>();
 
+    int orderAmount = 0;
+    Map<String, MutableInt> orderList = new HashMap<>();
+
     RecyclerView.Adapter mMenuListViewAdapter;
     RecyclerView mRecyclerMenuListView;
-
-    int orderAmount = 0;
 
     ConstraintLayout bottomSheetOrder;
     TextView orderAmountText;
@@ -273,6 +275,15 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
         orderAmount += item.getPrice();
         bottomSheetOrder.setVisibility(View.VISIBLE);
         orderAmountText.setText(String.valueOf(orderAmount));
+
+        MutableInt count = orderList.get(item.getId());
+        if (count == null) {
+            orderList.put(item.getId(), new MutableInt());
+        }
+        else {
+            count.increment();
+        }
+
         mRecyclerMenuListView.setPadding(0, 0, 0, 0);
         mRecyclerMenuListView.setPadding(0, 0, 0, 225);
         mRecyclerMenuListView.setClipToPadding(false);
@@ -281,6 +292,15 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
     @Override
     public void removeFromOrder(MenuItem item) {
         orderAmount -= item.getPrice();
+
+        MutableInt count = orderList.get(item.getId());
+        if (count != null) {
+            count.decrement();
+            if (count.getValue() == 0) {
+                orderList.remove(item.getId());
+            }
+        }
+
         if (orderAmount > 0) {
             orderAmountText.setText(String.valueOf(orderAmount));
         }
