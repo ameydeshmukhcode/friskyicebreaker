@@ -1,6 +1,8 @@
 package com.frisky.icebreaker.core.structures;
 
-public class MutableInt {
+import java.io.Serializable;
+
+public class MutableInt implements Serializable {
     private int value = 1;
     public void increment() {
         ++value;
