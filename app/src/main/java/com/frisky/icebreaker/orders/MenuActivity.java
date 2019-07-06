@@ -91,7 +91,8 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
             });
 
             restoreUserSession();
-        } else if (getIntent().hasExtra("start_new_session")) {
+        }
+        else if (getIntent().hasExtra("start_new_session")) {
             if (getIntent().hasExtra("table_id")
                     && getIntent().hasExtra("restaurant_id")) {
 
