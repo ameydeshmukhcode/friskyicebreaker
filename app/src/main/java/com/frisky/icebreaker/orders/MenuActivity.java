@@ -82,21 +82,21 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
             }
         });
 
-        bottomSheetOrder = findViewById(R.id.bottom_sheet_order);
-        bottomSheetOrder.setVisibility(View.GONE);
-
-        orderAmountText = findViewById(R.id.text_order_amount);
-        viewOrderButton = findViewById(R.id.button_view_order);
-        viewOrderButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), OrderActivity.class));
-            }
-        });
-
         if (SESSION_ACTIVE) {
             mRestName = findViewById(R.id.text_pub_name);
             mTableSerial = findViewById(R.id.text_table);
+
+            bottomSheetOrder = findViewById(R.id.bottom_sheet_order);
+            bottomSheetOrder.setVisibility(View.GONE);
+
+            orderAmountText = findViewById(R.id.text_order_amount);
+            viewOrderButton = findViewById(R.id.button_view_order);
+            viewOrderButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(getApplicationContext(), OrderActivity.class));
+                }
+            });
 
             restoreUserSession();
         } else if (getIntent().hasExtra("start_new_session")) {
