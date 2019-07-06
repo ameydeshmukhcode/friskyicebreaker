@@ -269,8 +269,8 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
     }
 
     @Override
-    public void addToOrder(String s) {
-        orderAmount += Integer.parseInt(s);
+    public void addToOrder(MenuItem item) {
+        orderAmount += item.getPrice();
         bottomSheetOrder.setVisibility(View.VISIBLE);
         orderAmountText.setText(String.valueOf(orderAmount));
         mRecyclerMenuListView.setPadding(0, 0, 0, 0);
@@ -279,8 +279,8 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
     }
 
     @Override
-    public void removeFromOrder(String s) {
-        orderAmount -= Integer.parseInt(s);
+    public void removeFromOrder(MenuItem item) {
+        orderAmount -= item.getPrice();
         if (orderAmount > 0) {
             orderAmountText.setText(String.valueOf(orderAmount));
         }

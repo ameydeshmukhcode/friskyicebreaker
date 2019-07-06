@@ -118,13 +118,13 @@ public class MenuItemListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 itemHolder.mAdd.setOnClickListener(v -> {
                     int countInc = Integer.parseInt(itemHolder.mCount.getText().toString()) + 1;
                     itemHolder.mCount.setText(String.valueOf(countInc));
-                    orderListChangeListener.addToOrder(String.valueOf(menuItem.getPrice()));
+                    orderListChangeListener.addToOrder(menuItem);
                 });
                 itemHolder.mRemove.setOnClickListener(v -> {
                     if (Integer.parseInt(itemHolder.mCount.getText().toString()) > 0) {
                         int countDec = Integer.parseInt(itemHolder.mCount.getText().toString()) - 1;
                         itemHolder.mCount.setText(String.valueOf(countDec));
-                        orderListChangeListener.removeFromOrder(String.valueOf(menuItem.getPrice()));
+                        orderListChangeListener.removeFromOrder(menuItem);
                     }
                 });
                 break;
@@ -137,7 +137,7 @@ public class MenuItemListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
     interface OnOrderListChangeListener {
-        void addToOrder(String s);
-        void removeFromOrder(String s);
+        void addToOrder(MenuItem item);
+        void removeFromOrder(MenuItem item);
     }
 }
