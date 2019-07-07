@@ -8,7 +8,7 @@ public class SocialPagerAdapter extends FragmentStatePagerAdapter {
 
     private static final int SOCIAL_TAB_COUNT = 2;
 
-    public SocialPagerAdapter(FragmentManager fm) {
+    SocialPagerAdapter(FragmentManager fm) {
         super(fm);
     }
 

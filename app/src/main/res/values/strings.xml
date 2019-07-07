@@ -27,10 +27,10 @@
     <string name="terms">By signing up, you\'re agreeing to our Terms and Privacy Policies</string>
 
     <!--Home Page-->
-    <!--Pub View-->
+    <!--Restaurant View-->
     <string name="search_restaurants">Search restaurants&#8230;</string>
     <string name="filters">Filters</string>
-    <!-- Pub Filters -->
+    <!-- Restaurant Filters -->
     <string name="sort_by">Sort by</string>
     <string name="type">Type</string>
     <string name="city">City</string>
@@ -62,6 +62,9 @@
         <item>@string/female</item>
         <item>@string/other</item>
     </string-array>
+    <!-- Notifications -->
+    <string name="clear_all">Clear All</string>
+    <string name="unread">Unread:</string>
 
     <!--Setup Profile-->
     <string name="update_image">Click the image above to upload your profile picture</string>
@@ -69,7 +72,7 @@
     <string name="enter_bio">Enter Bio</string>
     <string name="uploading_details">Uploading Details</string>
 
-    <!--Pub Activity-->
+    <!--Restaurant Activity-->
     <string name="live_count">Live count</string>
 
     <!--Chat Activity-->
@@ -91,6 +94,11 @@
     <string name="view">View</string>
     <string name="add">Add</string>
     <string name="menu">Menu</string>
+    <!-- Status -->
+    <string name="status_pending">Pending</string>
+    <string name="status_accepted">Accepted</string>
+    <string name="status_rejected">Rejected</string>
+    <string name="status_cancelled">Cancelled</string>
 
     <!--Image Picker Dialog-->
     <string name="pick_image">Pick Image</string>
@@ -113,6 +121,7 @@
         scan the QR code on the table.</string>
 
     <string name="dash">-</string>
+    <string name="default_count">0</string>
 
     <string name="placeholder">dummy</string>
     <string name="placeholder_number">23</string>

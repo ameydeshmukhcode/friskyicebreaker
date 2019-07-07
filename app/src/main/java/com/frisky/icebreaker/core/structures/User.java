@@ -3,55 +3,55 @@ package com.frisky.icebreaker.core.structures;
 import java.util.Date;
 
 public class User {
-    private String mID;
-    private String mName;
-    private String mBio;
-    private int mAge;
-    private Date mDateOfBirth;
+    private String id;
+    private String name;
+    private String bio;
+    private int age;
+    private Date dateOfBirth;
     public User() {
     }
 
-    public User(String id, String mName, String mBio, int mAge, Date mDateOfBirth) {
-        this.mID = id;
-        this.mName = mName;
-        this.mBio = mBio;
-        this.mAge = mAge;
-        this.mDateOfBirth = mDateOfBirth;
+    public User(String id, String name, String bio, int age, Date dateOfBirth) {
+        this.id = id;
+        this.name = name;
+        this.bio = bio;
+        this.age = age;
+        this.dateOfBirth = dateOfBirth;
     }
 
     public String getID() {
-        return mID;
+        return id;
     }
 
     public String getName() {
-        return mName;
+        return name;
     }
 
-    public void setName(String mName) {
-        this.mName = mName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getBio() {
-        return mBio;
+        return bio;
     }
 
-    public void setBio(String mBio) {
-        this.mBio = mBio;
+    public void setBio(String bio) {
+        this.bio = bio;
     }
 
     public int getAge() {
-        return mAge;
+        return age;
     }
 
-    public void setAge(int mAge) {
-        this.mAge = mAge;
+    public void setAge(int age) {
+        this.age = age;
     }
 
     public Date getDateOfBirth() {
-        return mDateOfBirth;
+        return dateOfBirth;
     }
 
-    public void setDateOfBirth(Date mDateOfBirth) {
-        this.mDateOfBirth = mDateOfBirth;
+    public void setDateOfBirth(Date dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
     }
 }

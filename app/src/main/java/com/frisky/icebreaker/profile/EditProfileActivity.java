@@ -1,11 +1,13 @@
 package com.frisky.icebreaker.profile;
 
-import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.EditText;
@@ -39,17 +41,24 @@ public class EditProfileActivity extends AppCompatActivity implements UIActivity
 
         mBackButton = findViewById(R.id.button_app_bar_left);
         mBackButton.setImageResource(R.drawable.round_arrow_back_24);
-        mBackButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                EditProfileActivity.super.onBackPressed();
-            }
-        });
+        mBackButton.setOnClickListener(v -> EditProfileActivity.super.onBackPressed());
 
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.frame_image_grid, new EditImagesFragment())
-                .commit();
+        RecyclerView mRecyclerImageGridView;
+        RecyclerView.LayoutManager mEditImagesGridLayoutManager;
+        RecyclerView.Adapter mImageGridAdapter;
+
+        mRecyclerImageGridView = findViewById(R.id.recycler_view);
+
+        mRecyclerImageGridView.setHasFixedSize(true);
+        mRecyclerImageGridView.setOverScrollMode(View.OVER_SCROLL_NEVER);
+
+        // use a grid layout manager
+        mEditImagesGridLayoutManager = new GridLayoutManager(getApplicationContext(), 3);
+        mRecyclerImageGridView.setLayoutManager(mEditImagesGridLayoutManager);
+
+        // specify an adapter (see also next example)
+        mImageGridAdapter = new EditImagesAdapter(this);
+        mRecyclerImageGridView.setAdapter(mImageGridAdapter);
 
         mDoneButton = findViewById(R.id.button_app_bar_right);
         mDoneButton.setImageResource(R.drawable.round_done_24);

@@ -1,6 +1,5 @@
 package com.frisky.icebreaker.profile;
 
-import android.content.Context;
 import android.net.Uri;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
@@ -14,8 +13,6 @@ import android.widget.ImageView;
 import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.ui.assistant.RoundRectTransformation;
 import com.frisky.icebreaker.ui.components.dialogs.PickImageDialog;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -39,7 +36,7 @@ public class EditImagesAdapter extends RecyclerView.Adapter<EditImagesAdapter.Im
         }
     }
 
-    EditImagesAdapter(Context context, FragmentActivity activity) {
+    EditImagesAdapter(FragmentActivity activity) {
         mActivity = activity;
         getProfileImage();
     }
@@ -57,12 +54,9 @@ public class EditImagesAdapter extends RecyclerView.Adapter<EditImagesAdapter.Im
     }
 
     public void onBindViewHolder(@NonNull final ImageViewHolder viewHolder, int i) {
-        viewHolder.mImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                pickImageDialog = new PickImageDialog();
-                pickImageDialog.show(mActivity.getSupportFragmentManager(), "pick image dialog");
-            }
+        viewHolder.mImage.setOnClickListener(v -> {
+            pickImageDialog = new PickImageDialog();
+            pickImageDialog.show(mActivity.getSupportFragmentManager(), "pick image dialog");
         });
     }
 
@@ -71,7 +65,7 @@ public class EditImagesAdapter extends RecyclerView.Adapter<EditImagesAdapter.Im
         return mImageList.size();
     }
 
-    public void addToImageList(Uri image) {
+    private void addToImageList(Uri image) {
         mImageList.add(image);
     }
 
@@ -79,21 +73,17 @@ public class EditImagesAdapter extends RecyclerView.Adapter<EditImagesAdapter.Im
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageReference = storage.getReference();
+        StorageReference profileImageRef = null;
 
-        StorageReference profileImageRef = storageReference.child("profile_images").child(auth.getCurrentUser().getUid());
+        if (auth.getCurrentUser() != null)
+            profileImageRef = storageReference.child("profile_images").child(auth.getCurrentUser().getUid());
 
-        profileImageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
+        if (profileImageRef != null) {
+            profileImageRef.getDownloadUrl().addOnSuccessListener(uri -> {
                 addToImageList(uri);
                 notifyDataSetChanged();
                 Log.i("Image Uri Downloaded", uri.toString());
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.e("Uri Download Failed", e.getMessage());
-            }
-        });
+            }).addOnFailureListener(e -> Log.e("Uri Download Failed", e.getMessage()));
+        }
     }
 }

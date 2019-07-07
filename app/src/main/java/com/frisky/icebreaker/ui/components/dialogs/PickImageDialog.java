@@ -1,49 +1,39 @@
 package com.frisky.icebreaker.ui.components.dialogs;
 
-import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
-import android.util.Log;
-import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 
 import com.frisky.icebreaker.R;
 
-import java.io.IOException;
-
 import static android.app.Activity.RESULT_OK;
 
 public class PickImageDialog extends DialogFragment {
 
-    Button galleryButton;
-    Button cameraButton;
-
+    //Button cameraButton;
     private OnImageUpdatedListener onImageUpdatedListener;
 
-    final int PICK_IMAGE_GALLERY = 0;
-    final int PICK_IMAGE_CAMERA = 1;
+    private final int PICK_IMAGE_GALLERY = 0;
+
+    //private final int PICK_IMAGE_CAMERA = 1;
 
     @Override
     public void onStart() {
         super.onStart();
-        galleryButton = getDialog().findViewById(R.id.button_gallery);
-        galleryButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent getImageFromDevice = new Intent(
-                        Intent.ACTION_PICK,
-                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        Button galleryButton = getDialog().findViewById(R.id.button_gallery);
+        galleryButton.setOnClickListener(v -> {
+            Intent getImageFromDevice = new Intent(
+                    Intent.ACTION_PICK,
+                    android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 
-                startActivityForResult(getImageFromDevice, PICK_IMAGE_GALLERY);
-            }
+            startActivityForResult(getImageFromDevice, PICK_IMAGE_GALLERY);
         });
 
 //        cameraButton = getDialog().findViewById(R.id.button_camera);
@@ -76,9 +66,9 @@ public class PickImageDialog extends DialogFragment {
                 this.onImageUpdatedListener.imageUpdated(selectedImage);
                 dismiss();
             }
-            else if (requestCode == PICK_IMAGE_CAMERA) {
-
-            }
+//            else if (requestCode == PICK_IMAGE_CAMERA) {
+//
+//            }
             dismiss();
         }
     }
@@ -88,13 +78,13 @@ public class PickImageDialog extends DialogFragment {
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
+    public void onAttach(Context context) {
+        super.onAttach(context);
         try {
-            this.onImageUpdatedListener = (OnImageUpdatedListener)activity;
+            this.onImageUpdatedListener = (OnImageUpdatedListener) context;
         }
         catch (final ClassCastException e) {
-            throw new ClassCastException(activity.toString() + " must implement OnImageUpdatedListener");
+            throw new ClassCastException(context.toString() + " must implement OnImageUpdatedListener");
         }
     }
 }

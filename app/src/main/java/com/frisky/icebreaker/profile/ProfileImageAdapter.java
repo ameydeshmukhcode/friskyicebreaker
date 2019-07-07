@@ -22,7 +22,7 @@ public class ProfileImageAdapter extends PagerAdapter {
     private LayoutInflater mLayoutInflater;
     private List<Uri> mImageList = new ArrayList<>();
 
-    public ProfileImageAdapter(Context context) {
+    ProfileImageAdapter(Context context) {
         mLayoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
@@ -53,7 +53,7 @@ public class ProfileImageAdapter extends PagerAdapter {
         container.removeView((ImageView) object);
     }
 
-    public void addToImageList(Uri image) {
+    void addToImageList(Uri image) {
         mImageList.add(image);
     }
 }
