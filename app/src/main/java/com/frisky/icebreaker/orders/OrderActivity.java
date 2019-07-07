@@ -1,8 +1,12 @@
 package com.frisky.icebreaker.orders;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -45,5 +49,21 @@ public class OrderActivity extends AppCompatActivity implements UIActivity {
         for (Map.Entry<MenuItem, MutableInt> entry : orderList.entrySet()) {
             Log.i("List", entry.getKey().getName() + " " + entry.getValue().getValue());
         }
+
+        if (getIntent().hasExtra("order_total")) {
+            mTotal.setText(String.valueOf(getIntent().getIntExtra("order_total", 0)));
+        }
+
+        RecyclerView mRecyclerOrderListView = findViewById(R.id.recycler_view_order_list);
+        mRecyclerOrderListView.setOverScrollMode(View.OVER_SCROLL_NEVER);
+
+        RecyclerView.LayoutManager mMenuListViewLayoutManager;
+        // use a linear layout manager
+        mMenuListViewLayoutManager = new LinearLayoutManager(getApplicationContext());
+        mRecyclerOrderListView.setLayoutManager(mMenuListViewLayoutManager);
+
+        // specify an adapter (see also next example)
+        OrderListAdapter orderListAdapter = new OrderListAdapter(getApplicationContext(), orderList);
+        mRecyclerOrderListView.setAdapter(orderListAdapter);
     }
 }
