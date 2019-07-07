@@ -46,8 +46,8 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
     private List<Object> menu = new ArrayList<>();
     private HashMap<String, String> categories = new HashMap<>();
 
-    int orderAmount = 0;
-    HashMap<MenuItem, MutableInt> orderList = new HashMap<>();
+    int mOrderTotal = 0;
+    HashMap<MenuItem, MutableInt> mOrderList = new HashMap<>();
 
     RecyclerView.Adapter mMenuListViewAdapter;
     RecyclerView mRecyclerMenuListView;
@@ -87,7 +87,8 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
             viewOrderButton.setOnClickListener(v -> {
                 Intent showOrder = new Intent(getApplicationContext(), OrderActivity.class);
                 showOrder.putExtra("table_id", mTableSerial.getText().toString());
-                showOrder.putExtra("order_list", orderList);
+                showOrder.putExtra("order_list", mOrderList);
+                showOrder.putExtra("order_total", mOrderTotal);
                 startActivity(showOrder);
             });
 
@@ -278,16 +279,16 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
 
     @Override
     public void addToOrder(MenuItem item) {
-        orderAmount += item.getPrice();
+        mOrderTotal += item.getPrice();
         bottomSheetOrder.setVisibility(View.VISIBLE);
-        orderAmountText.setText(String.valueOf(orderAmount));
+        orderAmountText.setText(String.valueOf(mOrderTotal));
 
-        if (orderList.size() == 0) {
-            orderList.put(item, new MutableInt());
+        if (mOrderList.size() == 0) {
+            mOrderList.put(item, new MutableInt());
         }
         else {
             boolean updatedItem = false;
-            for (Map.Entry<MenuItem, MutableInt> entry : orderList.entrySet()) {
+            for (Map.Entry<MenuItem, MutableInt> entry : mOrderList.entrySet()) {
                 if (entry.getKey().getId().equals(item.getId())) {
                     MutableInt count = entry.getValue();
                     count.increment();
@@ -295,7 +296,7 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
                 }
             }
             if (!updatedItem) {
-                orderList.put(item, new MutableInt());
+                mOrderList.put(item, new MutableInt());
             }
         }
 
@@ -306,21 +307,21 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
 
     @Override
     public void removeFromOrder(MenuItem item) {
-        orderAmount -= item.getPrice();
+        mOrderTotal -= item.getPrice();
 
-        for (Map.Entry<MenuItem, MutableInt> entry : orderList.entrySet()) {
+        for (Map.Entry<MenuItem, MutableInt> entry : mOrderList.entrySet()) {
             if (entry.getKey().getId().equals(item.getId())) {
                 MutableInt count = entry.getValue();
                 count.decrement();
                 if (count.getValue() == 0) {
-                    orderList.remove(entry.getKey());
+                    mOrderList.remove(entry.getKey());
                 }
                 break;
             }
         }
 
-        if (orderAmount > 0) {
-            orderAmountText.setText(String.valueOf(orderAmount));
+        if (mOrderTotal > 0) {
+            orderAmountText.setText(String.valueOf(mOrderTotal));
         }
         else {
             bottomSheetOrder.setVisibility(View.GONE);
