@@ -2,19 +2,22 @@ package com.frisky.icebreaker.orders;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.frisky.icebreaker.R;
+import com.frisky.icebreaker.core.structures.MenuItem;
 import com.frisky.icebreaker.core.structures.MutableInt;
 import com.frisky.icebreaker.ui.base.UIActivity;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class OrderActivity extends AppCompatActivity implements UIActivity {
 
     ImageButton mBackButton;
-    HashMap<String, MutableInt> orderList = new HashMap<>();
+    HashMap<MenuItem, MutableInt> orderList = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +39,11 @@ public class OrderActivity extends AppCompatActivity implements UIActivity {
         }
 
         if (getIntent().hasExtra("order_list")) {
-            orderList = (HashMap<String, MutableInt>) getIntent().getSerializableExtra("order_list");
+            orderList = (HashMap<MenuItem, MutableInt>) getIntent().getSerializableExtra("order_list");
+        }
+
+        for (Map.Entry<MenuItem, MutableInt> entry : orderList.entrySet()) {
+            Log.i("List", entry.getKey().getName() + " " + entry.getValue().getValue());
         }
     }
 }

@@ -47,7 +47,7 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
     private HashMap<String, String> categories = new HashMap<>();
 
     int orderAmount = 0;
-    HashMap<String, MutableInt> orderList = new HashMap<>();
+    HashMap<MenuItem, MutableInt> orderList = new HashMap<>();
 
     RecyclerView.Adapter mMenuListViewAdapter;
     RecyclerView mRecyclerMenuListView;
@@ -282,12 +282,21 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
         bottomSheetOrder.setVisibility(View.VISIBLE);
         orderAmountText.setText(String.valueOf(orderAmount));
 
-        MutableInt count = orderList.get(item.getId());
-        if (count == null) {
-            orderList.put(item.getId(), new MutableInt());
+        if (orderList.size() == 0) {
+            orderList.put(item, new MutableInt());
         }
         else {
-            count.increment();
+            boolean updatedItem = false;
+            for (Map.Entry<MenuItem, MutableInt> entry : orderList.entrySet()) {
+                if (entry.getKey().getId().equals(item.getId())) {
+                    MutableInt count = entry.getValue();
+                    count.increment();
+                    updatedItem = true;
+                }
+            }
+            if (!updatedItem) {
+                orderList.put(item, new MutableInt());
+            }
         }
 
         mRecyclerMenuListView.setPadding(0, 0, 0, 0);
@@ -299,11 +308,14 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
     public void removeFromOrder(MenuItem item) {
         orderAmount -= item.getPrice();
 
-        MutableInt count = orderList.get(item.getId());
-        if (count != null) {
-            count.decrement();
-            if (count.getValue() == 0) {
-                orderList.remove(item.getId());
+        for (Map.Entry<MenuItem, MutableInt> entry : orderList.entrySet()) {
+            if (entry.getKey().getId().equals(item.getId())) {
+                MutableInt count = entry.getValue();
+                count.decrement();
+                if (count.getValue() == 0) {
+                    orderList.remove(entry.getKey());
+                }
+                break;
             }
         }
 
