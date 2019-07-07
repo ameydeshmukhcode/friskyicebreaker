@@ -94,6 +94,11 @@
     <string name="view">View</string>
     <string name="add">Add</string>
     <string name="menu">Menu</string>
+    <!-- Status -->
+    <string name="status_pending">Pending</string>
+    <string name="status_accepted">Accepted</string>
+    <string name="status_rejected">Rejected</string>
+    <string name="status_cancelled">Cancelled</string>
 
     <!--Image Picker Dialog-->
     <string name="pick_image">Pick Image</string>
