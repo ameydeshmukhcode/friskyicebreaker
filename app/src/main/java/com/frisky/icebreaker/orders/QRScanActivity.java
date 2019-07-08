@@ -103,7 +103,7 @@ public class QRScanActivity extends AppCompatActivity {
                         if (document.exists()) {
                             boolean isOccupied = false;
                             if (document.contains("occupied")) {
-                                isOccupied = Boolean.parseBoolean(document.getString("occupied"));
+                                isOccupied = (boolean) document.get("occupied");
                             }
                             if (!isOccupied) {
                                 Intent showMenu = new Intent(getBaseContext(), MenuActivity.class);
