@@ -101,6 +101,9 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
                 mRestName = findViewById(R.id.text_pub_name);
                 mTableSerial = findViewById(R.id.text_table);
 
+                bottomSheetOrder = findViewById(R.id.bottom_sheet_order);
+                bottomSheetOrder.setVisibility(View.GONE);
+
                 final String restID = getIntent().getStringExtra("restaurant_id");
                 final String tableID = getIntent().getStringExtra("table_id");
 
