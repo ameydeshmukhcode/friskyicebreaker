@@ -10,6 +10,8 @@ import android.os.Bundle;
 import com.frisky.icebreaker.notifications.NotificationsFragment;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.appcompat.app.AppCompatActivity;
@@ -146,57 +148,47 @@ public class HomeActivity extends AppCompatActivity implements UIActivity {
                         if (document.contains("session_active")) {
                             SESSION_ACTIVE = (boolean) document.get("session_active");
                             if (SESSION_ACTIVE) {
-
-                                restaurantName = findViewById(R.id.text_restaurant);
-                                tableName = findViewById(R.id.text_table);
-
-                                getSessionDetails();
-
-                                viewMenuButton = findViewById(R.id.button_view_menu);
-                                viewMenuButton.setOnClickListener(v -> startActivity(resumeSession));
+                                enableSession();
                             }
                             else {
-                                bottomSheet.setVisibility(View.GONE);
-                                mBottomNavOrderButton.setEnabled(true);
+                                disableSession();
                                 //showSessionEndedNotification();
                             }
                         }
                         else {
-                            SESSION_ACTIVE = false;
-                            bottomSheet.setVisibility(View.GONE);
-                            mBottomNavOrderButton.setEnabled(true);
+                            disableSession();
                         }
                     }
                 });
     }
 
-//    private void showSessionActiveNotification() {
-//        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "RES")
-//                .setSmallIcon(R.drawable.logo)
-//                .setContentTitle("Title")
-//                .setContentText("Content text Active")
-//                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-//
-//        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-//
-//        // notificationId is a unique int for each notification that you must define
-//        int sessionActiveId = 1001;
-//        notificationManager.notify(sessionActiveId, builder.build());
-//    }
-//
-//    private void showSessionEndedNotification() {
-//        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "RES")
-//                .setSmallIcon(R.drawable.logo)
-//                .setContentTitle("Title")
-//                .setContentText("Content text Ended")
-//                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-//
-//        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-//
-//        // notificationId is a unique int for each notification that you must define
-//        int sessionEndedId = 1002;
-//        notificationManager.notify(sessionEndedId, builder.build());
-//    }
+    private void showSessionActiveNotification() {
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "RES")
+                .setSmallIcon(R.drawable.logo)
+                .setContentTitle("Session Active")
+                .setContentText("Restaurant name + table")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+
+        // notificationId is a unique int for each notification that you must define
+        int sessionActiveId = 1001;
+        notificationManager.notify(sessionActiveId, builder.build());
+    }
+
+    private void showSessionEndedNotification() {
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "RES")
+                .setSmallIcon(R.drawable.logo)
+                .setContentTitle("Session Ended")
+                .setContentText("Bill Details? Rating?")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+
+        // notificationId is a unique int for each notification that you must define
+        int sessionEndedId = 1002;
+        notificationManager.notify(sessionEndedId, builder.build());
+    }
 
     private void getSessionDetails() {
         final FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
@@ -307,13 +299,39 @@ public class HomeActivity extends AppCompatActivity implements UIActivity {
             }
 
             if (snapshot != null && snapshot.exists()) {
-                checkSessionStatus();
+                boolean sessionActive = (boolean) snapshot.get("session_active");
+                
+                if (sessionActive) {
+                    enableSession();
+                    showSessionActiveNotification();
+                }
+                else if (SESSION_ACTIVE){
+                    disableSession();
+                    showSessionEndedNotification();
+                }
+                
                 Log.d("Snapshot Exists", "Current data: " + snapshot.getData());
             }
             else {
                 Log.d("No Snapshot", "Current data: null");
             }
         });
+    }
+
+    private void enableSession() {
+        restaurantName = findViewById(R.id.text_restaurant);
+        tableName = findViewById(R.id.text_table);
+
+        getSessionDetails();
+
+        viewMenuButton = findViewById(R.id.button_view_menu);
+        viewMenuButton.setOnClickListener(v -> startActivity(resumeSession));
+    }
+
+    private void disableSession() {
+        SESSION_ACTIVE = false;
+        bottomSheet.setVisibility(View.GONE);
+        mBottomNavOrderButton.setEnabled(true);
     }
 
     private void loadFragment(Fragment fragment) {
