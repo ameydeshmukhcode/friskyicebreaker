@@ -17,8 +17,8 @@ import java.util.List;
 
 public class MenuItemListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private List<Object> menu;
-    private HashMap<String, String> categories;
+    private List<Object> mMenu;
+    private HashMap<String, String> mCategories;
 
     private final int CATEGORY_VIEW = 77;
     private final int MENU_ITEM_VIEW = 88;
@@ -45,24 +45,24 @@ public class MenuItemListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     static class MenuSubCategoryHolder extends RecyclerView.ViewHolder {
         TextView mName;
-        MenuSubCategoryHolder(View v) {
-            super(v);
-            mName = v.findViewById(R.id.text_category_name);
+        MenuSubCategoryHolder(View view) {
+            super(view);
+            mName = view.findViewById(R.id.text_category_name);
         }
     }
 
     MenuItemListAdapter(List<Object> menu, HashMap<String, String> categories, OnOrderListChangeListener listener) {
-        this.menu = menu;
-        this.categories = categories;
+        this.mMenu = menu;
+        this.mCategories = categories;
         this.orderListChangeListener = listener;
     }
 
     @Override
     public int getItemViewType(int position) {
-        if (menu.get(position) instanceof String) {
+        if (mMenu.get(position) instanceof String) {
             return CATEGORY_VIEW;
         }
-        else if (menu.get(position) instanceof MenuItem) {
+        else if (mMenu.get(position) instanceof MenuItem) {
             return MENU_ITEM_VIEW;
         }
         return super.getItemViewType(position);
@@ -70,9 +70,9 @@ public class MenuItemListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         View itemView;
-        switch (i) {
+        switch (viewType) {
             case CATEGORY_VIEW:
                 itemView = LayoutInflater.from(viewGroup.getContext())
                     .inflate(R.layout.card_menu_category, viewGroup, false);
@@ -93,25 +93,25 @@ public class MenuItemListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder viewHolder, int position) {
         int CURRENT_VIEW = 0;
 
-        if (menu.get(i) instanceof String) {
+        if (mMenu.get(position) instanceof String) {
             CURRENT_VIEW = CATEGORY_VIEW;
         }
-        else if (menu.get(i) instanceof MenuItem) {
+        else if (mMenu.get(position) instanceof MenuItem) {
             CURRENT_VIEW = MENU_ITEM_VIEW;
         }
 
         switch (CURRENT_VIEW) {
             case CATEGORY_VIEW:
                 MenuSubCategoryHolder view = (MenuSubCategoryHolder) viewHolder;
-                view.mName.setText(categories.get(menu.get(i).toString()));
+                view.mName.setText(mCategories.get(mMenu.get(position).toString()));
                 break;
 
             case MENU_ITEM_VIEW:
                 MenuItemHolder itemHolder = (MenuItemHolder) viewHolder;
-                MenuItem menuItem = (MenuItem) menu.get(i);
+                MenuItem menuItem = (MenuItem) mMenu.get(position);
                 itemHolder.mName.setText(menuItem.getName());
                 itemHolder.mDescription.setText(menuItem.getDescription());
                 itemHolder.mPrice.setText(String.valueOf(menuItem.getPrice()));
@@ -133,7 +133,7 @@ public class MenuItemListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public int getItemCount() {
-        return menu.size();
+        return mMenu.size();
     }
 
     interface OnOrderListChangeListener {

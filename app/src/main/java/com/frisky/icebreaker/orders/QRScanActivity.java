@@ -73,6 +73,7 @@ public class QRScanActivity extends AppCompatActivity {
     private void setupScannerView() {
         CodeScannerView scannerView = findViewById(R.id.scanner_view);
         mCodeScanner = new CodeScanner(this, scannerView);
+
         mCodeScanner.setDecodeCallback(result -> runOnUiThread(() -> {
             FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
             final String qrCodeData = result.getText();

@@ -30,9 +30,9 @@ public class EditImagesAdapter extends RecyclerView.Adapter<EditImagesAdapter.Im
 
     static class ImageViewHolder extends RecyclerView.ViewHolder {
         ImageView mImage;
-        ImageViewHolder(View v) {
-            super(v);
-            mImage = v.findViewById(R.id.image_edit);
+        ImageViewHolder(View view) {
+            super(view);
+            mImage = view.findViewById(R.id.image_edit);
         }
     }
 
@@ -43,17 +43,17 @@ public class EditImagesAdapter extends RecyclerView.Adapter<EditImagesAdapter.Im
 
     @NonNull
     @Override
-    public EditImagesAdapter.ImageViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, final int i) {
+    public EditImagesAdapter.ImageViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, final int viewType) {
         final View itemView = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.view_edit_image, viewGroup, false);
 
         ImageView imageView = itemView.findViewById(R.id.image_edit);
-        Picasso.get().load(mImageList.get(i)).transform(new RoundRectTransformation()).into(imageView);
+        Picasso.get().load(mImageList.get(viewType)).transform(new RoundRectTransformation()).into(imageView);
 
         return new ImageViewHolder(itemView);
     }
 
-    public void onBindViewHolder(@NonNull final ImageViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull final ImageViewHolder viewHolder, int position) {
         viewHolder.mImage.setOnClickListener(v -> {
             pickImageDialog = new PickImageDialog();
             pickImageDialog.show(mActivity.getSupportFragmentManager(), "pick image dialog");
@@ -70,13 +70,13 @@ public class EditImagesAdapter extends RecyclerView.Adapter<EditImagesAdapter.Im
     }
 
     private void getProfileImage() {
-        FirebaseAuth auth = FirebaseAuth.getInstance();
-        FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference storageReference = storage.getReference();
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
+        StorageReference storageReference = firebaseStorage.getReference();
         StorageReference profileImageRef = null;
 
-        if (auth.getCurrentUser() != null)
-            profileImageRef = storageReference.child("profile_images").child(auth.getCurrentUser().getUid());
+        if (firebaseAuth.getCurrentUser() != null)
+            profileImageRef = storageReference.child("profile_images").child(firebaseAuth.getCurrentUser().getUid());
 
         if (profileImageRef != null) {
             profileImageRef.getDownloadUrl().addOnSuccessListener(uri -> {

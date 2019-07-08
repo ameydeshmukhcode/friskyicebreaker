@@ -13,8 +13,8 @@ public class SocialPagerAdapter extends FragmentStatePagerAdapter {
     }
 
     @Override
-    public Fragment getItem(int i) {
-        switch (i) {
+    public Fragment getItem(int position) {
+        switch (position) {
             case 0: return new ChatsFragment();
             case 1: return new PendingFragment();
         }

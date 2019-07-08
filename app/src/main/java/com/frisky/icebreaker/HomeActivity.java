@@ -39,28 +39,29 @@ import static com.frisky.icebreaker.orders.OrderingAssistant.SESSION_ACTIVE;
 
 public class HomeActivity extends AppCompatActivity implements UIActivity {
 
-    ConstraintLayout bottomSheet;
-    Button viewMenuButton;
-    TextView restaurantName;
-    TextView tableName;
+    ConstraintLayout mBottomSheet;
+    Button mViewMenuButton;
 
-    Intent resumeSession;
+    TextView mRestaurantName;
+    TextView mTableName;
+
+    Intent mResumeSessionIntent;
 
     ImageButton mBottomNavOrderButton;
 
-    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        resumeSession = new Intent(getApplicationContext(), MenuActivity.class);
+        mResumeSessionIntent = new Intent(getApplicationContext(), MenuActivity.class);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = "RES";
-            String description = "desc";
+            CharSequence name = "Alerts";
+            String description = "Alerts related to your orders.";
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel("RES", name, importance);
+            NotificationChannel channel = new NotificationChannel("Alerts", name, importance);
             channel.setDescription(description);
             // Register the channel with the system; you can't change the importance
             // or other notification behaviors after this
@@ -88,8 +89,8 @@ public class HomeActivity extends AppCompatActivity implements UIActivity {
         ImageButton mIceBreakerButton;
         TextView mToolbarText;
 
-        bottomSheet = findViewById(R.id.bottom_sheet_session);
-        bottomSheet.setVisibility(View.GONE);
+        mBottomSheet = findViewById(R.id.bottom_sheet_session);
+        mBottomSheet.setVisibility(View.GONE);
 
         mToolbarText = findViewById(R.id.text_app_bar);
         mToolbarText.setText(R.string.app_name);
@@ -112,7 +113,7 @@ public class HomeActivity extends AppCompatActivity implements UIActivity {
         mBottomNavOrderButton = findViewById(R.id.button_nav_centre_left);
         mBottomNavOrderButton.setEnabled(false);
         mBottomNavOrderButton.setImageResource(R.drawable.round_receipt_24);
-        mBottomNavOrderButton.setOnClickListener(v -> startActivity(resumeSession));
+        mBottomNavOrderButton.setOnClickListener(v -> startActivity(mResumeSessionIntent));
 
         mBottomNavNotificationButton = findViewById(R.id.button_nav_centre_right);
         mBottomNavNotificationButton.setImageResource(R.drawable.round_notifications_none_24);
@@ -152,7 +153,6 @@ public class HomeActivity extends AppCompatActivity implements UIActivity {
                             }
                             else {
                                 disableSession();
-                                //showSessionEndedNotification();
                             }
                         }
                         else {
@@ -193,12 +193,12 @@ public class HomeActivity extends AppCompatActivity implements UIActivity {
     private void getSessionDetails() {
         final FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
 
-        if (user == null)
+        if (mUser == null)
             return;
 
         DocumentReference userRef = firebaseFirestore
                 .collection("users")
-                .document(user.getUid());
+                .document(mUser.getUid());
 
         userRef.get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
@@ -225,7 +225,7 @@ public class HomeActivity extends AppCompatActivity implements UIActivity {
                                     return;
 
                                 if (doc1.contains("name")) {
-                                    restaurantName.setText(doc1.getString("name"));
+                                    mRestaurantName.setText(doc1.getString("name"));
                                 }
                             }
 
@@ -269,12 +269,12 @@ public class HomeActivity extends AppCompatActivity implements UIActivity {
 
                                                         if (doc11.contains("number")) {
                                                             tableSerial = "Table " + doc11.get("number");
-                                                            tableName.setText(tableSerial);
+                                                            mTableName.setText(tableSerial);
                                                         }
-                                                        bottomSheet.setVisibility(View.VISIBLE);
-                                                        resumeSession.putExtra("restaurant_id", restaurant);
-                                                        resumeSession.putExtra("restaurant_name", restaurantName.getText().toString());
-                                                        resumeSession.putExtra("table_number", tableSerial);
+                                                        mBottomSheet.setVisibility(View.VISIBLE);
+                                                        mResumeSessionIntent.putExtra("restaurant_id", restaurant);
+                                                        mResumeSessionIntent.putExtra("restaurant_name", mRestaurantName.getText().toString());
+                                                        mResumeSessionIntent.putExtra("table_number", tableSerial);
                                                         mBottomNavOrderButton.setEnabled(true);
                                                         //showSessionActiveNotification();
                                                     }
@@ -290,7 +290,7 @@ public class HomeActivity extends AppCompatActivity implements UIActivity {
 
     private void addListenerForSessionChange() {
         final DocumentReference docRef = FirebaseFirestore.getInstance().collection("users")
-                .document(user.getUid());
+                .document(mUser.getUid());
 
         docRef.addSnapshotListener((snapshot, e) -> {
             if (e != null) {
@@ -319,18 +319,18 @@ public class HomeActivity extends AppCompatActivity implements UIActivity {
     }
 
     private void enableSession() {
-        restaurantName = findViewById(R.id.text_restaurant);
-        tableName = findViewById(R.id.text_table);
+        mRestaurantName = findViewById(R.id.text_restaurant);
+        mTableName = findViewById(R.id.text_table);
 
         getSessionDetails();
 
-        viewMenuButton = findViewById(R.id.button_view_menu);
-        viewMenuButton.setOnClickListener(v -> startActivity(resumeSession));
+        mViewMenuButton = findViewById(R.id.button_view_menu);
+        mViewMenuButton.setOnClickListener(v -> startActivity(mResumeSessionIntent));
     }
 
     private void disableSession() {
         SESSION_ACTIVE = false;
-        bottomSheet.setVisibility(View.GONE);
+        mBottomSheet.setVisibility(View.GONE);
         mBottomNavOrderButton.setEnabled(true);
     }
 

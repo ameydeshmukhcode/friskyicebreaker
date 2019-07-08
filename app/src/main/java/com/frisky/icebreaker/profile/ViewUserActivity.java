@@ -26,11 +26,11 @@ public class ViewUserActivity extends AppCompatActivity implements UIActivity {
     ImageButton mBackButton;
     TextView mBioText;
 
-    String UID;
+    String mUserId;
 
     FirebaseStorage mStorage;
-    StorageReference storageReference;
-    FirebaseFirestore firebaseFirestore;
+    StorageReference mStorageReference;
+    FirebaseFirestore mFirebaseFirestore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +38,8 @@ public class ViewUserActivity extends AppCompatActivity implements UIActivity {
         setContentView(R.layout.activity_view_user);
 
         mStorage = FirebaseStorage.getInstance();
-        storageReference = mStorage.getReference();
-        firebaseFirestore = FirebaseFirestore.getInstance();
+        mStorageReference = mStorage.getReference();
+        mFirebaseFirestore = FirebaseFirestore.getInstance();
 
         initUI();
     }
@@ -57,7 +57,7 @@ public class ViewUserActivity extends AppCompatActivity implements UIActivity {
 
         if (getIntent().hasExtra("id")) {
             String id = getIntent().getStringExtra("id");
-            this.UID = id;
+            this.mUserId = id;
             Log.i("ID", id);
         }
 
@@ -78,7 +78,7 @@ public class ViewUserActivity extends AppCompatActivity implements UIActivity {
         });
 
         mBioText = findViewById(R.id.text_bio);
-        DocumentReference docRef = firebaseFirestore.collection("users").document(UID);
+        DocumentReference docRef = mFirebaseFirestore.collection("users").document(mUserId);
         docRef.get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 DocumentSnapshot document = task.getResult();
@@ -103,7 +103,7 @@ public class ViewUserActivity extends AppCompatActivity implements UIActivity {
     private void getProfileImage() {
         StorageReference storageReference = FirebaseStorage.getInstance().getReference();
 
-        StorageReference profileImageRef = storageReference.child("profile_images").child(UID);
+        StorageReference profileImageRef = storageReference.child("profile_images").child(mUserId);
 
         profileImageRef.getDownloadUrl().addOnSuccessListener(uri -> {
             mProfileImageAdapter.addToImageList(uri);

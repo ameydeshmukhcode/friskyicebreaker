@@ -33,8 +33,8 @@ public class ProfileActivity extends AppCompatActivity implements UIActivity {
 
     FirebaseAuth mAuth;
     FirebaseStorage mStorage;
-    StorageReference storageReference;
-    FirebaseFirestore firebaseFirestore;
+    StorageReference mStorageReference;
+    FirebaseFirestore mFirebaseFirestore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,8 +43,8 @@ public class ProfileActivity extends AppCompatActivity implements UIActivity {
 
         mAuth = FirebaseAuth.getInstance();
         mStorage = FirebaseStorage.getInstance();
-        storageReference = mStorage.getReference();
-        firebaseFirestore = FirebaseFirestore.getInstance();
+        mStorageReference = mStorage.getReference();
+        mFirebaseFirestore = FirebaseFirestore.getInstance();
 
         initUI();
     }
@@ -82,7 +82,7 @@ public class ProfileActivity extends AppCompatActivity implements UIActivity {
             mNameText.setText(user.getDisplayName());
 
         mBioText = findViewById(R.id.text_bio);
-        DocumentReference docRef = firebaseFirestore.collection("users").document(mAuth.getCurrentUser().getUid());
+        DocumentReference docRef = mFirebaseFirestore.collection("users").document(mAuth.getCurrentUser().getUid());
         docRef.get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 DocumentSnapshot document = task.getResult();
@@ -110,7 +110,7 @@ public class ProfileActivity extends AppCompatActivity implements UIActivity {
         if (user == null)
             return;
 
-        StorageReference profileImageRef = storageReference.child("profile_images").child(mAuth.getCurrentUser().getUid());
+        StorageReference profileImageRef = mStorageReference.child("profile_images").child(mAuth.getCurrentUser().getUid());
 
         profileImageRef.getDownloadUrl().addOnSuccessListener(uri -> {
             mProfileImageAdapter.addToImageList(uri);

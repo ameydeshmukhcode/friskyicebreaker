@@ -31,14 +31,14 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
         TextView mCuisine;
         TextView mRating;
         TextView mLocation;
-        PubViewHolder(View v) {
-            super(v);
-            mImage = v.findViewById(R.id.image_pub);
-            mTitle = v.findViewById(R.id.text_title);
-            mCuisine = v.findViewById(R.id.text_cuisine);
-            mRating = v.findViewById(R.id.text_rating);
-            mLocation = v.findViewById(R.id.text_location);
-            mPubCard = v.findViewById(R.id.card_pub);
+        PubViewHolder(View view) {
+            super(view);
+            mImage = view.findViewById(R.id.image_pub);
+            mTitle = view.findViewById(R.id.text_title);
+            mCuisine = view.findViewById(R.id.text_cuisine);
+            mRating = view.findViewById(R.id.text_rating);
+            mLocation = view.findViewById(R.id.text_location);
+            mPubCard = view.findViewById(R.id.card_pub);
         }
     }
 
@@ -49,15 +49,15 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
 
     @NonNull
     @Override
-    public RestaurantListAdapter.PubViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, final int i) {
+    public RestaurantListAdapter.PubViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, final int viewType) {
         final View itemView = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.card_restaurant, viewGroup, false);
 
         return new PubViewHolder(itemView);
     }
 
-    public void onBindViewHolder(@NonNull final PubViewHolder viewHolder, int i) {
-        final Restaurant restaurant = mRestaurantList.get(i);
+    public void onBindViewHolder(@NonNull final PubViewHolder viewHolder, int position) {
+        final Restaurant restaurant = mRestaurantList.get(position);
 
         Picasso.get().load(restaurant.getImageUri()).into(viewHolder.mImage);
 

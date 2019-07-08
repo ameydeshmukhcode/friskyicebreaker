@@ -16,9 +16,9 @@ public class SocialFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup viewGroup, @Nullable Bundle savedInstanceState) {
         View view;
-        view = inflater.inflate(R.layout.fragment_social, container, false);
+        view = inflater.inflate(R.layout.fragment_social, viewGroup, false);
 
         final ViewPager viewPager = view.findViewById(R.id.pager_social);
         SocialPagerAdapter myPagerAdapter = new SocialPagerAdapter(getFragmentManager());

@@ -26,14 +26,14 @@ import static com.frisky.icebreaker.orders.OrderingAssistant.SESSION_ACTIVE;
 
 public class IceBreakerFragment extends Fragment {
 
-    private List<User> usersList = new ArrayList<>();
-    private RecyclerView.Adapter iceBreakerAdapter;
+    private List<User> mUsersList = new ArrayList<>();
+    private RecyclerView.Adapter mIceBreakerAdapter;
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup viewGroup, @Nullable Bundle savedInstanceState) {
         View view;
-        view = inflater.inflate(R.layout.fragment_icebreaker, container, false);
+        view = inflater.inflate(R.layout.fragment_icebreaker, viewGroup, false);
 
         RecyclerView mRecyclerUsersView;
         RecyclerView.LayoutManager mUsersViewLayoutManager;
@@ -52,8 +52,8 @@ public class IceBreakerFragment extends Fragment {
 
         prepareUserData();
 
-        iceBreakerAdapter = new IceBreakerListViewAdapter(usersList, getContext());
-        mRecyclerUsersView.setAdapter(iceBreakerAdapter);
+        mIceBreakerAdapter = new IceBreakerListViewAdapter(mUsersList, getContext());
+        mRecyclerUsersView.setAdapter(mIceBreakerAdapter);
 
         return view;
     }
@@ -74,8 +74,8 @@ public class IceBreakerFragment extends Fragment {
                                 String bio = document.getString("bio");
                                 User user = new User(document.getId(), name, bio, 0, null);
                                 if (firebaseUser != null && !document.getId().equals(firebaseUser.getUid())) {
-                                    usersList.add(user);
-                                    iceBreakerAdapter.notifyDataSetChanged();
+                                    mUsersList.add(user);
+                                    mIceBreakerAdapter.notifyDataSetChanged();
                                 }
                             }
                         }

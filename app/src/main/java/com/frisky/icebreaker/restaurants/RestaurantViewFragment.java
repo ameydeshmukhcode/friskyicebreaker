@@ -29,15 +29,15 @@ import static com.frisky.icebreaker.orders.OrderingAssistant.SESSION_ACTIVE;
 
 public class RestaurantViewFragment extends Fragment {
 
-    private List<Restaurant> restaurantList = new ArrayList<>();
+    private List<Restaurant> mRestaurantList = new ArrayList<>();
 
     private RecyclerView.Adapter mPubViewAdapter;
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup viewGroup, @Nullable Bundle savedInstanceState) {
         View view;
-        view = inflater.inflate(R.layout.fragment_restaurant, container, false);
+        view = inflater.inflate(R.layout.fragment_restaurant, viewGroup, false);
 
         RecyclerView mRecyclerPubView;
         mRecyclerPubView = view.findViewById(R.id.recycler_view);
@@ -64,7 +64,7 @@ public class RestaurantViewFragment extends Fragment {
         mRecyclerPubView.setLayoutManager(mPubViewLayoutManager);
 
         // specify an adapter (see also next example)
-        mPubViewAdapter = new RestaurantListAdapter(restaurantList, getContext());
+        mPubViewAdapter = new RestaurantListAdapter(mRestaurantList, getContext());
         mRecyclerPubView.setAdapter(mPubViewAdapter);
 
         preparePubData();
@@ -90,7 +90,7 @@ public class RestaurantViewFragment extends Fragment {
 
                                 Restaurant restaurant = new Restaurant(Uri.parse(image), document.getId(), name, name, address,
                                         tags.substring(1, tags.length() - 1), 4.5);
-                                restaurantList.add(restaurant);
+                                mRestaurantList.add(restaurant);
 
                                 mPubViewAdapter.notifyDataSetChanged();
                             }
