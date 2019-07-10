@@ -54,18 +54,6 @@
             app:layout_constraintTop_toTopOf="@+id/rupee" />
 
         <TextView
-            android:id="@+id/text_status"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="24dp"
-            android:fontFamily="@font/museosans700"
-            android:text="@string/placeholder"
-            android:textSize="@dimen/text_title_size"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
             android:id="@+id/count_indicator"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
@@ -90,5 +78,29 @@
             app:layout_constraintBottom_toBottomOf="@+id/text_name"
             app:layout_constraintStart_toEndOf="@+id/count_indicator"
             app:layout_constraintTop_toTopOf="@+id/text_name" />
+
+        <ImageView
+            android:id="@+id/image_status"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="4dp"
+            app:layout_constraintBottom_toBottomOf="@+id/text_status"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@+id/text_status"
+            app:layout_constraintTop_toTopOf="@+id/text_status"
+            app:srcCompat="@drawable/round_done_24" />
+
+        <TextView
+            android:id="@+id/text_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            android:fontFamily="@font/museosans700"
+            android:text="@string/placeholder"
+            android:textSize="@dimen/text_title_size"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>
