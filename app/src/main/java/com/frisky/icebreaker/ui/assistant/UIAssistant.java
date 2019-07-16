@@ -40,6 +40,8 @@ public class UIAssistant {
         switch (status) {
             case PENDING: return R.color.rating_low;
             case ACCEPTED: return R.color.rating_high;
+            case REJECTED:
+            case CANCELLED: return R.color.rating_very_low;
         }
 
         return R.color.rating_very_low;
@@ -49,6 +51,8 @@ public class UIAssistant {
         switch (status) {
             case PENDING: return R.drawable.round_pending_24;
             case ACCEPTED: return R.drawable.round_accepted_24;
+            case REJECTED:
+            case CANCELLED: return R.drawable.round_rejected_24;
         }
 
         return R.drawable.round_rejected_24;
