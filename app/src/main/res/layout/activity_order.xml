@@ -57,6 +57,45 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_table" />
 
+    <Button
+        android:id="@+id/button_confirm_order"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/button_square_small_dimen"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/background_round_rect"
+        android:backgroundTint="@color/appGreen"
+        android:fontFamily="@font/museosans700"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:text="Confirm Order"
+        android:textAllCaps="false"
+        android:textColor="@color/textLight"
+        android:textSize="@dimen/text_menu_item_description"
+        app:layout_constraintBottom_toTopOf="@+id/divider_bottom"
+        app:layout_constraintEnd_toStartOf="@+id/button_add_more"
+        app:layout_constraintStart_toStartOf="@+id/divider_bottom" />
+
+    <Button
+        android:id="@+id/button_add_more"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/button_square_small_dimen"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/background_round_rect"
+        android:fontFamily="@font/museosans700"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:text="Add More"
+        android:textAllCaps="false"
+        android:textColor="@color/textDark"
+        android:textSize="@dimen/text_menu_item_description"
+        app:layout_constraintBottom_toTopOf="@+id/divider_bottom"
+        app:layout_constraintEnd_toEndOf="@+id/divider_bottom"
+        app:layout_constraintStart_toEndOf="@+id/button_confirm_order" />
+
     <View
         android:id="@+id/divider_bottom"
         android:layout_width="0dp"
@@ -114,7 +153,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="16dp"
-        android:background="@drawable/background_circular"
+        android:background="@drawable/background_round_rect"
         android:backgroundTint="@color/appGreen"
         android:fontFamily="@font/museosans700"
         android:text="@string/clear_bill"
@@ -128,10 +167,15 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_order_list"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_margin="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:padding="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/button_confirm_order"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider" />
+        app:layout_constraintTop_toBottomOf="@+id/divider"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
