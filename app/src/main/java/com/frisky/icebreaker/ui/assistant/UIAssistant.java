@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 
 import com.frisky.icebreaker.R;
+import com.frisky.icebreaker.core.structures.OrderStatus;
 
 import java.io.File;
 import java.io.IOException;
@@ -33,6 +34,35 @@ public class UIAssistant {
         else {
             return R.color.rating_very_low;
         }
+    }
+
+    public int getStatusColor(OrderStatus status) {
+        switch (status) {
+            case PENDING: return R.color.rating_low;
+            case ACCEPTED: return R.color.rating_high;
+        }
+
+        return R.color.rating_very_low;
+    }
+
+    public int getStatusIcon(OrderStatus status) {
+        switch (status) {
+            case PENDING: return R.drawable.round_pending_24;
+            case ACCEPTED: return R.drawable.round_accepted_24;
+        }
+
+        return R.drawable.round_rejected_24;
+    }
+
+    public String getStatusText(OrderStatus status) {
+        switch (status) {
+            case PENDING: return "Pending";
+            case ACCEPTED: return "Accepted";
+            case REJECTED: return "Rejected";
+            case CANCELLED: return "Cancelled";
+        }
+
+        return "";
     }
 
     public File compressImage(File file, Context context) throws IOException {
