@@ -87,8 +87,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/text_status"
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintEnd_toStartOf="@+id/text_status"
-            app:layout_constraintTop_toTopOf="@+id/text_status"
-            app:srcCompat="@drawable/round_done_24" />
+            app:layout_constraintTop_toTopOf="@+id/text_status" />
 
         <TextView
             android:id="@+id/text_status"
@@ -96,7 +95,6 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="24dp"
             android:fontFamily="@font/museosans700"
-            android:text="@string/placeholder"
             android:textSize="@dimen/text_title_size"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
