@@ -1,7 +1,6 @@
 package com.frisky.icebreaker.orders;
 
 import android.content.Context;
-import android.content.res.ColorStateList;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,8 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.core.structures.MenuItem;
 import com.frisky.icebreaker.core.structures.MutableInt;
-import com.frisky.icebreaker.core.structures.OrderStatus;
-import com.frisky.icebreaker.ui.assistant.UIAssistant;
 
 import java.util.HashMap;
 import java.util.Objects;
@@ -60,16 +57,11 @@ public class OrderListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
         OrderListViewHolder orderHolder = (OrderListViewHolder) viewHolder;
-        OrderStatus status = OrderStatus.PENDING;
         MenuItem item = (MenuItem) Objects.requireNonNull(mOrderList.keySet().toArray())[position];
         MutableInt count = (MutableInt) mOrderList.values().toArray()[position];
         orderHolder.mName.setText(item.getName());
         orderHolder.mCount.setText(String.valueOf(count.getValue()));
         orderHolder.mPrice.setText(String.valueOf(item.getPrice() * count.getValue()));
-        orderHolder.mStatus.setTextColor(ColorStateList.valueOf(mContext
-                .getColor(UIAssistant.getInstance().getStatusColor(status))));
-        orderHolder.mStatus.setText(UIAssistant.getInstance().getStatusText(status));
-        orderHolder.mImageStatus.setImageResource(UIAssistant.getInstance().getStatusIcon(status));
     }
 
     @Override
