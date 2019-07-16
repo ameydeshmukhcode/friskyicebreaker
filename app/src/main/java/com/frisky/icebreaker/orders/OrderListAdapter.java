@@ -5,6 +5,7 @@ import android.content.res.ColorStateList;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,6 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.core.structures.MenuItem;
 import com.frisky.icebreaker.core.structures.MutableInt;
+import com.frisky.icebreaker.core.structures.OrderStatus;
+import com.frisky.icebreaker.ui.assistant.UIAssistant;
 
 import java.util.HashMap;
 import java.util.Objects;
@@ -33,12 +36,14 @@ public class OrderListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         TextView mPrice;
         TextView mStatus;
         TextView mCount;
+        ImageView mImageStatus;
 
         OrderListViewHolder(@NonNull View view) {
             super(view);
             mName = view.findViewById(R.id.text_name);
             mPrice = view.findViewById(R.id.text_price);
             mStatus = view.findViewById(R.id.text_status);
+            mImageStatus = view.findViewById(R.id.image_status);
             mCount = view.findViewById(R.id.text_count);
         }
     }
@@ -55,13 +60,16 @@ public class OrderListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
         OrderListViewHolder orderHolder = (OrderListViewHolder) viewHolder;
+        OrderStatus status = OrderStatus.PENDING;
         MenuItem item = (MenuItem) Objects.requireNonNull(mOrderList.keySet().toArray())[position];
         MutableInt count = (MutableInt) mOrderList.values().toArray()[position];
         orderHolder.mName.setText(item.getName());
         orderHolder.mCount.setText(String.valueOf(count.getValue()));
         orderHolder.mPrice.setText(String.valueOf(item.getPrice() * count.getValue()));
-        orderHolder.mStatus.setTextColor(ColorStateList.valueOf(mContext.getColor(R.color.rating_low)));
-        orderHolder.mStatus.setText(R.string.status_pending);
+        orderHolder.mStatus.setTextColor(ColorStateList.valueOf(mContext
+                .getColor(UIAssistant.getInstance().getStatusColor(status))));
+        orderHolder.mStatus.setText(UIAssistant.getInstance().getStatusText(status));
+        orderHolder.mImageStatus.setImageResource(UIAssistant.getInstance().getStatusIcon(status));
     }
 
     @Override
