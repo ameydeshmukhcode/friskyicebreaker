@@ -1,5 +1,7 @@
 package com.frisky.icebreaker.restaurants;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
@@ -25,12 +27,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static com.frisky.icebreaker.orders.OrderingAssistant.SESSION_ACTIVE;
-
 public class RestaurantViewFragment extends Fragment {
 
     private List<Restaurant> mRestaurantList = new ArrayList<>();
-
     private RecyclerView.Adapter mPubViewAdapter;
 
     @Nullable
@@ -38,6 +37,11 @@ public class RestaurantViewFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup viewGroup, @Nullable Bundle savedInstanceState) {
         View view;
         view = inflater.inflate(R.layout.fragment_restaurant, viewGroup, false);
+
+        SharedPreferences sharedPreferences = Objects.requireNonNull(getActivity())
+                .getSharedPreferences(getString(R.string.app_name), Context.MODE_PRIVATE);
+
+        boolean isSessionActive = sharedPreferences.getBoolean("session_active", false);
 
         RecyclerView mRecyclerPubView;
         mRecyclerPubView = view.findViewById(R.id.recycler_view);
@@ -52,7 +56,7 @@ public class RestaurantViewFragment extends Fragment {
                 filtersDialog.show(fragmentManager, "pick image dialog");
         });
 
-        if (SESSION_ACTIVE) {
+        if (isSessionActive) {
             mRecyclerPubView.setPadding(0, 0, 0, 0);
             mRecyclerPubView.setPadding(0, 0, 0, 225);
             mRecyclerPubView.setClipToPadding(false);

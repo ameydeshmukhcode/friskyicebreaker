@@ -1,6 +1,7 @@
 package com.frisky.icebreaker;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
@@ -29,8 +30,6 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import static com.frisky.icebreaker.orders.OrderingAssistant.SESSION_ACTIVE;
-
 public class HomeActivity extends AppCompatActivity implements UIActivity {
 
     ConstraintLayout mBottomSheet;
@@ -45,11 +44,15 @@ public class HomeActivity extends AppCompatActivity implements UIActivity {
 
     FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
 
+    SharedPreferences sharedPreferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         mResumeSessionIntent = new Intent(getApplicationContext(), MenuActivity.class);
+        sharedPreferences = getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE);
+
         initUI();
         loadFragment(new RestaurantViewFragment());
         addListenerForSessionChange();
@@ -128,8 +131,15 @@ public class HomeActivity extends AppCompatActivity implements UIActivity {
                         if (document == null)
                             return;
                         if (document.contains("session_active")) {
-                            SESSION_ACTIVE = (boolean) document.get("session_active");
-                            if (SESSION_ACTIVE) {
+                            boolean value = (boolean) document.get("session_active");
+                            sharedPreferences.edit()
+                                    .putBoolean("session_active", value)
+                                    .apply();
+
+                            boolean isSessionActive = getSharedPreferences(getString(R.string.app_name),
+                                    MODE_PRIVATE).getBoolean("session_active", false);
+
+                            if (isSessionActive) {
                                 enableSession();
                             }
                             else {
@@ -252,11 +262,14 @@ public class HomeActivity extends AppCompatActivity implements UIActivity {
 
             if (snapshot != null && snapshot.exists()) {
                 boolean sessionActive = (boolean) snapshot.get("session_active");
+
+                boolean isSessionActive = getSharedPreferences(getString(R.string.app_name),
+                        MODE_PRIVATE).getBoolean("session_active", false);
                 
                 if (sessionActive) {
                     enableSession();
                 }
-                else if (SESSION_ACTIVE){
+                else if (isSessionActive){
                     disableSession();
                 }
                 
@@ -279,9 +292,11 @@ public class HomeActivity extends AppCompatActivity implements UIActivity {
     }
 
     private void disableSession() {
-        SESSION_ACTIVE = false;
         mBottomSheet.setVisibility(View.GONE);
         mBottomNavOrderButton.setEnabled(true);
+        sharedPreferences.edit()
+                .putBoolean("session_active", false)
+                .apply();
     }
 
     private void loadFragment(Fragment fragment) {

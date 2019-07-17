@@ -1,5 +1,7 @@
 package com.frisky.icebreaker.social;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,8 +23,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.frisky.icebreaker.orders.OrderingAssistant.SESSION_ACTIVE;
+import java.util.Objects;
 
 public class IceBreakerFragment extends Fragment {
 
@@ -35,12 +36,17 @@ public class IceBreakerFragment extends Fragment {
         View view;
         view = inflater.inflate(R.layout.fragment_icebreaker, viewGroup, false);
 
+        SharedPreferences sharedPreferences = Objects.requireNonNull(getActivity())
+                .getSharedPreferences(getString(R.string.app_name), Context.MODE_PRIVATE);
+
+        boolean isSessionActive = sharedPreferences.getBoolean("session_active", false);
+
         RecyclerView mRecyclerUsersView;
         RecyclerView.LayoutManager mUsersViewLayoutManager;
 
         mRecyclerUsersView = view.findViewById(R.id.recycler_view);
 
-        if (SESSION_ACTIVE) {
+        if (isSessionActive) {
             mRecyclerUsersView.setPadding(0, 0, 0, 0);
             mRecyclerUsersView.setPadding(0, 0, 0, 225);
             mRecyclerUsersView.setClipToPadding(false);

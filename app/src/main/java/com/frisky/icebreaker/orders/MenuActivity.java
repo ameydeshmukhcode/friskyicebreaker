@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -34,10 +35,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import static com.frisky.icebreaker.orders.OrderingAssistant.SESSION_ACTIVE;
-
 public class MenuActivity extends AppCompatActivity implements UIActivity,
         MenuItemListAdapter.OnOrderListChangeListener {
+
+    SharedPreferences sharedPreferences;
 
     ImageButton mBackButton;
     TextView mRestName;
@@ -56,11 +57,18 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
     TextView mOrderTotalText;
     Button mViewOrderButton;
 
+    boolean isSessionActive;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (SESSION_ACTIVE || getIntent().hasExtra("start_new_session")) {
+        sharedPreferences = getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE);
+
+        isSessionActive = getSharedPreferences(getString(R.string.app_name),
+                MODE_PRIVATE).getBoolean("session_active", false);
+
+        if (isSessionActive || getIntent().hasExtra("start_new_session")) {
             setContentView(R.layout.activity_menu);
         }
         else {
@@ -75,7 +83,7 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
         mBackButton = findViewById(R.id.button_back);
         mBackButton.setOnClickListener(v -> MenuActivity.super.onBackPressed());
 
-        if (SESSION_ACTIVE) {
+        if (isSessionActive) {
             mRestName = findViewById(R.id.text_pub_name);
             mTableSerial = findViewById(R.id.text_table);
 
@@ -140,7 +148,9 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
                     userSessionDetails.put("current_session", sessionID);
                     userSessionDetails.put("restaurant", restID);
 
-                    SESSION_ACTIVE = true;
+                    sharedPreferences.edit()
+                            .putBoolean("session_active", true)
+                            .apply();
 
                     firebaseFirestore.collection("users")
                             .document(FirebaseAuth.getInstance().getCurrentUser().getUid())

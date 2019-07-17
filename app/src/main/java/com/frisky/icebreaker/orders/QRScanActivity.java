@@ -2,6 +2,7 @@ package com.frisky.icebreaker.orders;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
@@ -18,17 +19,19 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import static com.frisky.icebreaker.orders.OrderingAssistant.SESSION_ACTIVE;
-
 public class QRScanActivity extends AppCompatActivity {
 
     public static final int MY_PERMISSIONS_REQUEST_CAMERA = 1;
     CodeScanner mCodeScanner;
 
+    SharedPreferences sharedPreferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qr_scan);
+
+        sharedPreferences = getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE);
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -78,11 +81,14 @@ public class QRScanActivity extends AppCompatActivity {
             FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
             final String qrCodeData = result.getText();
 
+            boolean isSessionActive = getSharedPreferences(getString(R.string.app_name),
+                    MODE_PRIVATE).getBoolean("session_active", false);
+
             if (!qrCodeData.contains("frisky")) {
                 Toast.makeText(getBaseContext(),"QR Code not recognised", Toast.LENGTH_LONG).show();
                 mCodeScanner.startPreview();
             }
-            else if (SESSION_ACTIVE) {
+            else if (isSessionActive) {
                 Toast.makeText(getBaseContext(),"Session Already Active", Toast.LENGTH_LONG).show();
                 mCodeScanner.startPreview();
             }
