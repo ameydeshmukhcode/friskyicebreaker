@@ -19,7 +19,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             android:fontFamily="@font/museosans700"
-            android:text="@string/placeholder"
+            android:text="@string/placeholder_text"
             android:textSize="@dimen/text_title_size"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

@@ -37,7 +37,7 @@
         android:fontFamily="@font/museosans700"
         android:gravity="center"
         android:padding="@dimen/bg_round_rect_radius"
-        android:text="@string/placeholder"
+        android:text="@string/placeholder_text"
         android:textAllCaps="true"
         android:textColor="@color/textDark"
         android:textSize="@dimen/text_large_banner_size"

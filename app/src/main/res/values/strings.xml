@@ -123,6 +123,6 @@
     <string name="dash">-</string>
     <string name="default_count">0</string>
 
-    <string name="placeholder">dummy</string>
+    <string name="placeholder_text">Some text</string>
     <string name="placeholder_number">23</string>
 </resources>
