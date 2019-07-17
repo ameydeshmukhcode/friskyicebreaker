@@ -29,7 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="8dp"
             android:fontFamily="@font/museosans700"
             android:text="@string/placeholder_text"
             android:textSize="@dimen/text_menu_item_title"
@@ -41,37 +41,36 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:layout_marginBottom="12dp"
+            android:layout_marginBottom="8dp"
             android:fontFamily="@font/museosans300"
             android:text="@string/placeholder_text"
             android:textSize="@dimen/text_menu_item_description"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/text_name"
-            app:layout_constraintTop_toBottomOf="@+id/text_name" />
+            app:layout_constraintTop_toBottomOf="@+id/rupee" />
 
         <TextView
             android:id="@+id/rupee"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="4dp"
+            android:layout_marginTop="4dp"
             android:fontFamily="@font/museosans700"
             android:text="@string/rupee"
             android:textSize="@dimen/text_menu_item_price"
-            app:layout_constraintBottom_toBottomOf="@+id/button_add"
-            app:layout_constraintEnd_toStartOf="@+id/text_price"
-            app:layout_constraintTop_toTopOf="@+id/button_add" />
+            app:layout_constraintStart_toStartOf="@+id/text_name"
+            app:layout_constraintTop_toBottomOf="@+id/text_name" />
 
         <TextView
             android:id="@+id/text_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
+            android:layout_marginStart="4dp"
             android:fontFamily="@font/museosans700"
             android:text="@string/placeholder_number"
             android:textSize="@dimen/text_menu_item_price"
-            app:layout_constraintBottom_toBottomOf="@+id/button_add"
-            app:layout_constraintEnd_toStartOf="@+id/button_remove"
-            app:layout_constraintTop_toTopOf="@+id/button_add" />
+            app:layout_constraintBottom_toBottomOf="@+id/rupee"
+            app:layout_constraintStart_toEndOf="@+id/rupee"
+            app:layout_constraintTop_toTopOf="@+id/rupee" />
 
         <ImageButton
             android:id="@+id/button_remove"
@@ -82,10 +81,10 @@
             android:backgroundTint="@color/appGreen"
             android:src="@drawable/round_remove_24"
             android:tint="@color/tintLight"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/text_item_count"
             app:layout_constraintDimensionRatio="h,1:1"
             app:layout_constraintEnd_toStartOf="@+id/text_item_count"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/text_item_count"
             app:layout_constraintVertical_bias="0.512" />
 
         <TextView
