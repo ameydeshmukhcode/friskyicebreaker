@@ -6,11 +6,13 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.res.ResourcesCompat;
@@ -24,13 +26,14 @@ import com.frisky.icebreaker.restaurants.RestaurantViewFragment;
 import com.frisky.icebreaker.social.IceBreakerFragment;
 import com.frisky.icebreaker.social.SocialFragment;
 import com.frisky.icebreaker.ui.base.UIActivity;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-public class HomeActivity extends AppCompatActivity implements UIActivity {
+public class HomeActivity extends AppCompatActivity implements UIActivity, BottomNavigationView.OnNavigationItemSelectedListener {
 
     ConstraintLayout mBottomSheet;
     Button mViewMenuButton;
@@ -64,12 +67,33 @@ public class HomeActivity extends AppCompatActivity implements UIActivity {
         checkSessionStatus();
     }
 
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        switch (menuItem.getItemId()) {
+            case R.id.bottom_nav_home:
+                loadFragment(new RestaurantViewFragment());
+                break;
+
+            case R.id.bottom_nav_menu:
+                startActivity(mResumeSessionIntent);
+                break;
+
+            case R.id.bottom_nav_notifications:
+                loadFragment(new NotificationsFragment());
+                break;
+
+            case R.id.bottom_nav_profile:
+                Intent startProfileActivity = new Intent(getApplicationContext(), ProfileActivity.class);
+                startActivity(startProfileActivity);
+                break;
+        }
+
+        return false;
+    }
+
     public void initUI() {
         ImageButton mSocialButton;
         ImageButton mScanQRCodeButton;
-        ImageButton mBottomNavHomeButton;
-        ImageButton mBottomNavProfileButton;
-        ImageButton mBottomNavNotificationButton;
         ImageButton mIceBreakerButton;
         TextView mToolbarText;
 
@@ -90,25 +114,8 @@ public class HomeActivity extends AppCompatActivity implements UIActivity {
         mScanQRCodeButton.setImageResource(R.drawable.round_qr_code);
         mScanQRCodeButton.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), QRScanActivity.class)));
 
-        mBottomNavHomeButton = findViewById(R.id.button_nav_left);
-        mBottomNavHomeButton.setImageResource(R.drawable.round_home_24);
-        mBottomNavHomeButton.setOnClickListener(v -> loadFragment(new RestaurantViewFragment()));
-
-        mBottomNavOrderButton = findViewById(R.id.button_nav_centre_left);
-        mBottomNavOrderButton.setEnabled(false);
-        mBottomNavOrderButton.setImageResource(R.drawable.round_receipt_24);
-        mBottomNavOrderButton.setOnClickListener(v -> startActivity(mResumeSessionIntent));
-
-        mBottomNavNotificationButton = findViewById(R.id.button_nav_centre_right);
-        mBottomNavNotificationButton.setImageResource(R.drawable.round_notifications_none_24);
-        mBottomNavNotificationButton.setOnClickListener(v -> loadFragment(new NotificationsFragment()));
-
-        mBottomNavProfileButton = findViewById(R.id.button_nav_right);
-        mBottomNavProfileButton.setImageResource(R.drawable.round_person_24);
-        mBottomNavProfileButton.setOnClickListener(v -> {
-            Intent startProfileActivity = new Intent(getApplicationContext(), ProfileActivity.class);
-            startActivity(startProfileActivity);
-        });
+        BottomNavigationView navigation = findViewById(R.id.bottom_navigation);
+        navigation.setOnNavigationItemSelectedListener(this);
 
         mIceBreakerButton = findViewById(R.id.button_icebreaker);
         mIceBreakerButton.setOnClickListener(v -> loadFragment(new IceBreakerFragment()));
@@ -238,7 +245,6 @@ public class HomeActivity extends AppCompatActivity implements UIActivity {
                                                         mResumeSessionIntent.putExtra("restaurant_id", restaurant);
                                                         mResumeSessionIntent.putExtra("restaurant_name", mRestaurantName.getText().toString());
                                                         mResumeSessionIntent.putExtra("table_number", tableSerial);
-                                                        mBottomNavOrderButton.setEnabled(true);
                                                     }
                                                 });
                                         }
