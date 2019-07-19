@@ -20,7 +20,7 @@
         android:id="@+id/home_activity_fragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_nav_home"
+        app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/app_bar_home">
@@ -28,23 +28,25 @@
     </FrameLayout>
 
     <include
-        android:id="@+id/bottom_nav_home"
-        layout="@layout/bottom_navigation"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/bottom_nav_height"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <include
         android:id="@+id/bottom_sheet_session"
         layout="@layout/bottom_sheet_session"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/tintLight"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_nav_home"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="@color/tintLight"
+        app:menu="@menu/menu_bottom_nav"
+        app:labelVisibilityMode="unlabeled" />
 
     <ImageButton
         android:id="@+id/button_icebreaker"
