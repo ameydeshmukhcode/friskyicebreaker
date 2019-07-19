@@ -87,14 +87,6 @@ public class SetupProfileActivity extends AppCompatActivity implements FormActiv
         mCancelButton = findViewById(R.id.button_cancel);
         mDoneButton = findViewById(R.id.button_done);
 
-        if (getIntent().hasExtra("name")) {
-            mNameInput.setText(getIntent().getStringExtra("name"));
-        }
-
-        if (getIntent().hasExtra("bio")) {
-            mBioInput.setText(getIntent().getStringExtra("bio"));
-        }
-
         mGenderSpinner = findViewById(R.id.spinner_gender);
 
         ArrayAdapter adapter = ArrayAdapter.createFromResource(this, R.array.genders, R.layout.spinner_item);

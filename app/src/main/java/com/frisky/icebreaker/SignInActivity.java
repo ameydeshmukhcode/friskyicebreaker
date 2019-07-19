@@ -1,9 +1,12 @@
 package com.frisky.icebreaker;
 
 import android.content.Intent;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -12,13 +15,13 @@ import android.widget.Toast;
 import com.frisky.icebreaker.ui.base.FormActivity;
 import com.frisky.icebreaker.profile.SetupProfileActivity;
 import com.frisky.icebreaker.ui.base.UIActivity;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseNetworkException;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 public class SignInActivity extends AppCompatActivity implements FormActivity, UIActivity {
 
@@ -257,7 +260,6 @@ public class SignInActivity extends AppCompatActivity implements FormActivity, U
         final FirebaseUser user = mAuth.getCurrentUser();
 
         if (user == null) {
-            setupActivityUI();
             return;
         }
 
@@ -273,42 +275,17 @@ public class SignInActivity extends AppCompatActivity implements FormActivity, U
                                     Toast.LENGTH_SHORT).show();
                         }
                     }));
-            setupActivityUI();
             return;
         }
 
-        FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
-
-        firebaseFirestore.collection("users")
-                .document(user.getUid())
-                .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        DocumentSnapshot document = task.getResult();
-
-                        if (document == null)
-                            return;
-
-                        if (document.contains("profile_setup_complete")) {
-                            Intent launchHome = new Intent(getApplicationContext(), HomeActivity.class);
-                            startActivity(launchHome);
-                        }
-                        else {
-                            String name = "";
-                            String bio = "";
-                            if (document.contains("name")) {
-                                name = document.getString("name");
-                            }
-                            if (document.contains("bio")) {
-                                bio = document.getString("bio");
-                            }
-                            Intent setupProfile = new Intent(getApplicationContext(), SetupProfileActivity.class);
-                            setupProfile.putExtra("name", name);
-                            setupProfile.putExtra("bio", bio);
-                            startActivity(setupProfile);
-                        }
-                        finish();
-                    }
-                });
+        if (user.getDisplayName() != null && !user.getDisplayName().equals("")) {
+            Intent launchHome = new Intent(getApplicationContext(), HomeActivity.class);
+            startActivity(launchHome);
+            finish();
+        }
+        else {
+            Intent setupProfile = new Intent(getApplicationContext(), SetupProfileActivity.class);
+            startActivity(setupProfile);
+        }
     }
 }
