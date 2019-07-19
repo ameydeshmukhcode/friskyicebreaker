@@ -1,18 +1,9 @@
 package com.frisky.icebreaker;
 
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
-import android.os.Build;
 import android.os.Bundle;
-
-import com.frisky.icebreaker.notifications.NotificationsFragment;
-
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.Fragment;
-import androidx.core.content.res.ResourcesCompat;
-import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
@@ -20,6 +11,12 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.res.ResourcesCompat;
+import androidx.fragment.app.Fragment;
+
+import com.frisky.icebreaker.notifications.NotificationsFragment;
 import com.frisky.icebreaker.orders.MenuActivity;
 import com.frisky.icebreaker.orders.QRScanActivity;
 import com.frisky.icebreaker.profile.ProfileActivity;
@@ -33,38 +30,28 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import static com.frisky.icebreaker.orders.OrderingAssistant.SESSION_ACTIVE;
-
 public class HomeActivity extends AppCompatActivity implements UIActivity {
 
-    ConstraintLayout bottomSheet;
-    Button viewMenuButton;
-    TextView restaurantName;
-    TextView tableName;
+    ConstraintLayout mBottomSheet;
+    Button mViewMenuButton;
 
-    Intent resumeSession;
+    TextView mRestaurantName;
+    TextView mTableName;
+
+    Intent mResumeSessionIntent;
 
     ImageButton mBottomNavOrderButton;
 
-    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
+
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        resumeSession = new Intent(getApplicationContext(), MenuActivity.class);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = "RES";
-            String description = "desc";
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel("RES", name, importance);
-            channel.setDescription(description);
-            // Register the channel with the system; you can't change the importance
-            // or other notification behaviors after this
-            NotificationManager notificationManager = getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
-        }
+        mResumeSessionIntent = new Intent(getApplicationContext(), MenuActivity.class);
+        sharedPreferences = getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE);
 
         initUI();
         loadFragment(new RestaurantViewFragment());
@@ -86,8 +73,8 @@ public class HomeActivity extends AppCompatActivity implements UIActivity {
         ImageButton mIceBreakerButton;
         TextView mToolbarText;
 
-        bottomSheet = findViewById(R.id.bottom_sheet_session);
-        bottomSheet.setVisibility(View.GONE);
+        mBottomSheet = findViewById(R.id.bottom_sheet_session);
+        mBottomSheet.setVisibility(View.GONE);
 
         mToolbarText = findViewById(R.id.text_app_bar);
         mToolbarText.setText(R.string.app_name);
@@ -110,7 +97,7 @@ public class HomeActivity extends AppCompatActivity implements UIActivity {
         mBottomNavOrderButton = findViewById(R.id.button_nav_centre_left);
         mBottomNavOrderButton.setEnabled(false);
         mBottomNavOrderButton.setImageResource(R.drawable.round_receipt_24);
-        mBottomNavOrderButton.setOnClickListener(v -> startActivity(resumeSession));
+        mBottomNavOrderButton.setOnClickListener(v -> startActivity(mResumeSessionIntent));
 
         mBottomNavNotificationButton = findViewById(R.id.button_nav_centre_right);
         mBottomNavNotificationButton.setImageResource(R.drawable.round_notifications_none_24);
@@ -144,69 +131,37 @@ public class HomeActivity extends AppCompatActivity implements UIActivity {
                         if (document == null)
                             return;
                         if (document.contains("session_active")) {
-                            SESSION_ACTIVE = (boolean) document.get("session_active");
-                            if (SESSION_ACTIVE) {
+                            boolean value = (boolean) document.get("session_active");
+                            sharedPreferences.edit()
+                                    .putBoolean("session_active", value)
+                                    .apply();
 
-                                restaurantName = findViewById(R.id.text_restaurant);
-                                tableName = findViewById(R.id.text_table);
+                            boolean isSessionActive = getSharedPreferences(getString(R.string.app_name),
+                                    MODE_PRIVATE).getBoolean("session_active", false);
 
-                                getSessionDetails();
-
-                                viewMenuButton = findViewById(R.id.button_view_menu);
-                                viewMenuButton.setOnClickListener(v -> startActivity(resumeSession));
+                            if (isSessionActive) {
+                                enableSession();
                             }
                             else {
-                                bottomSheet.setVisibility(View.GONE);
-                                mBottomNavOrderButton.setEnabled(true);
-                                //showSessionEndedNotification();
+                                disableSession();
                             }
                         }
                         else {
-                            SESSION_ACTIVE = false;
-                            bottomSheet.setVisibility(View.GONE);
-                            mBottomNavOrderButton.setEnabled(true);
+                            disableSession();
                         }
                     }
                 });
     }
 
-//    private void showSessionActiveNotification() {
-//        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "RES")
-//                .setSmallIcon(R.drawable.logo)
-//                .setContentTitle("Title")
-//                .setContentText("Content text Active")
-//                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-//
-//        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-//
-//        // notificationId is a unique int for each notification that you must define
-//        int sessionActiveId = 1001;
-//        notificationManager.notify(sessionActiveId, builder.build());
-//    }
-//
-//    private void showSessionEndedNotification() {
-//        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "RES")
-//                .setSmallIcon(R.drawable.logo)
-//                .setContentTitle("Title")
-//                .setContentText("Content text Ended")
-//                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-//
-//        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-//
-//        // notificationId is a unique int for each notification that you must define
-//        int sessionEndedId = 1002;
-//        notificationManager.notify(sessionEndedId, builder.build());
-//    }
-
     private void getSessionDetails() {
         final FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
 
-        if (user == null)
+        if (mUser == null)
             return;
 
         DocumentReference userRef = firebaseFirestore
                 .collection("users")
-                .document(user.getUid());
+                .document(mUser.getUid());
 
         userRef.get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
@@ -233,7 +188,7 @@ public class HomeActivity extends AppCompatActivity implements UIActivity {
                                     return;
 
                                 if (doc1.contains("name")) {
-                                    restaurantName.setText(doc1.getString("name"));
+                                    mRestaurantName.setText(doc1.getString("name"));
                                 }
                             }
 
@@ -277,14 +232,13 @@ public class HomeActivity extends AppCompatActivity implements UIActivity {
 
                                                         if (doc11.contains("number")) {
                                                             tableSerial = "Table " + doc11.get("number");
-                                                            tableName.setText(tableSerial);
+                                                            mTableName.setText(tableSerial);
                                                         }
-                                                        bottomSheet.setVisibility(View.VISIBLE);
-                                                        resumeSession.putExtra("restaurant_id", restaurant);
-                                                        resumeSession.putExtra("restaurant_name", restaurantName.getText().toString());
-                                                        resumeSession.putExtra("table_number", tableSerial);
+                                                        mBottomSheet.setVisibility(View.VISIBLE);
+                                                        mResumeSessionIntent.putExtra("restaurant_id", restaurant);
+                                                        mResumeSessionIntent.putExtra("restaurant_name", mRestaurantName.getText().toString());
+                                                        mResumeSessionIntent.putExtra("table_number", tableSerial);
                                                         mBottomNavOrderButton.setEnabled(true);
-                                                        //showSessionActiveNotification();
                                                     }
                                                 });
                                         }
@@ -298,7 +252,7 @@ public class HomeActivity extends AppCompatActivity implements UIActivity {
 
     private void addListenerForSessionChange() {
         final DocumentReference docRef = FirebaseFirestore.getInstance().collection("users")
-                .document(user.getUid());
+                .document(mUser.getUid());
 
         docRef.addSnapshotListener((snapshot, e) -> {
             if (e != null) {
@@ -307,13 +261,42 @@ public class HomeActivity extends AppCompatActivity implements UIActivity {
             }
 
             if (snapshot != null && snapshot.exists()) {
-                checkSessionStatus();
+                boolean sessionActive = (boolean) snapshot.get("session_active");
+
+                boolean isSessionActive = getSharedPreferences(getString(R.string.app_name),
+                        MODE_PRIVATE).getBoolean("session_active", false);
+                
+                if (sessionActive) {
+                    enableSession();
+                }
+                else if (isSessionActive){
+                    disableSession();
+                }
+                
                 Log.d("Snapshot Exists", "Current data: " + snapshot.getData());
             }
             else {
                 Log.d("No Snapshot", "Current data: null");
             }
         });
+    }
+
+    private void enableSession() {
+        mRestaurantName = findViewById(R.id.text_restaurant);
+        mTableName = findViewById(R.id.text_table);
+
+        getSessionDetails();
+
+        mViewMenuButton = findViewById(R.id.button_view_menu);
+        mViewMenuButton.setOnClickListener(v -> startActivity(mResumeSessionIntent));
+    }
+
+    private void disableSession() {
+        mBottomSheet.setVisibility(View.GONE);
+        mBottomNavOrderButton.setEnabled(true);
+        sharedPreferences.edit()
+                .putBoolean("session_active", false)
+                .apply();
     }
 
     private void loadFragment(Fragment fragment) {

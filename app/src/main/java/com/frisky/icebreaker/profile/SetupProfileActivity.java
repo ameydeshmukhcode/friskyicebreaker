@@ -61,7 +61,7 @@ public class SetupProfileActivity extends AppCompatActivity implements FormActiv
 
     FirebaseAuth mAuth;
     FirebaseStorage mStorage;
-    StorageReference storageReference;
+    StorageReference mStorageReference;
     FirebaseFirestore mFirestore;
 
     @Override
@@ -71,7 +71,7 @@ public class SetupProfileActivity extends AppCompatActivity implements FormActiv
 
         mAuth = FirebaseAuth.getInstance();
         mStorage = FirebaseStorage.getInstance();
-        storageReference = mStorage.getReference();
+        mStorageReference = mStorage.getReference();
         mFirestore = FirebaseFirestore.getInstance();
 
         initUI();
@@ -86,14 +86,6 @@ public class SetupProfileActivity extends AppCompatActivity implements FormActiv
         mProfileImage = findViewById(R.id.image_profile);
         mCancelButton = findViewById(R.id.button_cancel);
         mDoneButton = findViewById(R.id.button_done);
-
-        if (getIntent().hasExtra("name")) {
-            mNameInput.setText(getIntent().getStringExtra("name"));
-        }
-
-        if (getIntent().hasExtra("bio")) {
-            mBioInput.setText(getIntent().getStringExtra("bio"));
-        }
 
         mGenderSpinner = findViewById(R.id.spinner_gender);
 
@@ -206,20 +198,20 @@ public class SetupProfileActivity extends AppCompatActivity implements FormActiv
 
         final String userUid = user.getUid();
 
-        Map<String, Object> firestoreUser = new HashMap<>();
-        firestoreUser.put("name", mNameInput.getText().toString());
-        firestoreUser.put("bio", mBioInput.getText().toString());
-        firestoreUser.put("gender", mGenderSpinner.getSelectedItem().toString());
-        firestoreUser.put("date_of_birth", mDateOfBirthInput.getText().toString());
-        firestoreUser.put("profile_setup_complete", true);
+        Map<String, Object> userDetails = new HashMap<>();
+        userDetails.put("name", mNameInput.getText().toString());
+        userDetails.put("bio", mBioInput.getText().toString());
+        userDetails.put("gender", mGenderSpinner.getSelectedItem().toString());
+        userDetails.put("date_of_birth", mDateOfBirthInput.getText().toString());
+        userDetails.put("profile_setup_complete", true);
 
         mFirestore.collection("users")
                 .document(userUid)
-                .set(firestoreUser, SetOptions.merge())
+                .set(userDetails, SetOptions.merge())
                 .addOnSuccessListener(aVoid -> Log.i("User", "DocumentSnapshot successfully written!"))
                 .addOnFailureListener(e -> Log.e("Failed", e.getMessage(), e));
 
-        final UploadTask uploadTask = storageReference.child("profile_images")
+        final UploadTask uploadTask = mStorageReference.child("profile_images")
                 .child(userUid).putFile(getImageUri());
 
         mProgressLayout.setVisibility(View.VISIBLE);
@@ -230,7 +222,7 @@ public class SetupProfileActivity extends AppCompatActivity implements FormActiv
             mProgressBar.setProgress(currentProgress);
         });
 
-        uploadTask.addOnSuccessListener(taskSnapshot -> storageReference.child("profile_images").child(userUid)
+        uploadTask.addOnSuccessListener(taskSnapshot -> mStorageReference.child("profile_images").child(userUid)
                 .getDownloadUrl().addOnSuccessListener(uri -> {
                     String name = mNameInput.getText().toString();
 

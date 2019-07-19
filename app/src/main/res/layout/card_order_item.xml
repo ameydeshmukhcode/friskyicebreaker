@@ -20,7 +20,7 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="12dp"
             android:fontFamily="@font/museosans300"
-            android:text="@string/placeholder"
+            android:text="@string/placeholder_text"
             android:textColor="@color/textDark"
             android:textSize="@dimen/text_menu_item_title"
             app:layout_constraintStart_toStartOf="parent"
@@ -35,7 +35,7 @@
             android:fontFamily="@font/museosans700"
             android:text="@string/rupee"
             android:textColor="@color/textDark"
-            android:textSize="@dimen/text_menu_item_description"
+            android:textSize="@dimen/text_menu_item_price"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/text_name"
             app:layout_constraintTop_toBottomOf="@+id/text_name" />
@@ -48,22 +48,10 @@
             android:fontFamily="@font/museosans700"
             android:text="@string/placeholder_number"
             android:textColor="@color/textDark"
-            android:textSize="@dimen/text_menu_item_description"
+            android:textSize="@dimen/text_menu_item_price"
             app:layout_constraintBottom_toBottomOf="@+id/rupee"
             app:layout_constraintStart_toEndOf="@+id/rupee"
             app:layout_constraintTop_toTopOf="@+id/rupee" />
-
-        <TextView
-            android:id="@+id/text_status"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="24dp"
-            android:fontFamily="@font/museosans700"
-            android:text="@string/placeholder"
-            android:textSize="@dimen/text_title_size"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/count_indicator"
@@ -90,5 +78,27 @@
             app:layout_constraintBottom_toBottomOf="@+id/text_name"
             app:layout_constraintStart_toEndOf="@+id/count_indicator"
             app:layout_constraintTop_toTopOf="@+id/text_name" />
+
+        <ImageView
+            android:id="@+id/image_status"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="4dp"
+            app:layout_constraintBottom_toBottomOf="@+id/text_status"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@+id/text_status"
+            app:layout_constraintTop_toTopOf="@+id/text_status" />
+
+        <TextView
+            android:id="@+id/text_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            android:fontFamily="@font/museosans700"
+            android:textSize="@dimen/text_title_size"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

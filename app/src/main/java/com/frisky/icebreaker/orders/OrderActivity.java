@@ -21,7 +21,7 @@ import java.util.Map;
 public class OrderActivity extends AppCompatActivity implements UIActivity {
 
     ImageButton mBackButton;
-    HashMap<MenuItem, MutableInt> orderList = new HashMap<>();
+    HashMap<MenuItem, MutableInt> mOrderList = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,10 +43,10 @@ public class OrderActivity extends AppCompatActivity implements UIActivity {
         }
 
         if (getIntent().hasExtra("order_list")) {
-            orderList = (HashMap<MenuItem, MutableInt>) getIntent().getSerializableExtra("order_list");
+            mOrderList = (HashMap<MenuItem, MutableInt>) getIntent().getSerializableExtra("order_list");
         }
 
-        for (Map.Entry<MenuItem, MutableInt> entry : orderList.entrySet()) {
+        for (Map.Entry<MenuItem, MutableInt> entry : mOrderList.entrySet()) {
             Log.i("List", entry.getKey().getName() + " " + entry.getValue().getValue());
         }
 
@@ -63,7 +63,7 @@ public class OrderActivity extends AppCompatActivity implements UIActivity {
         mRecyclerOrderListView.setLayoutManager(mMenuListViewLayoutManager);
 
         // specify an adapter (see also next example)
-        OrderListAdapter orderListAdapter = new OrderListAdapter(getApplicationContext(), orderList);
+        OrderListAdapter orderListAdapter = new OrderListAdapter(getApplicationContext(), mOrderList);
         mRecyclerOrderListView.setAdapter(orderListAdapter);
     }
 }

@@ -33,11 +33,11 @@ public class IceBreakerListViewAdapter extends RecyclerView.Adapter<IceBreakerLi
         MaterialCardView mCard;
         TextView mName;
         ImageView mPicture;
-        IceBreakerListViewHolder(View v) {
-            super(v);
-            mPicture = v.findViewById(R.id.image_user);
-            mName = v.findViewById(R.id.text_name);
-            mCard = v.findViewById(R.id.card_user);
+        IceBreakerListViewHolder(View view) {
+            super(view);
+            mPicture = view.findViewById(R.id.image_user);
+            mName = view.findViewById(R.id.text_name);
+            mCard = view.findViewById(R.id.card_user);
         }
     }
 
@@ -48,7 +48,7 @@ public class IceBreakerListViewAdapter extends RecyclerView.Adapter<IceBreakerLi
 
     @NonNull
     @Override
-    public IceBreakerListViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public IceBreakerListViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         View itemView = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.card_user_preview, viewGroup, false);
 
@@ -56,8 +56,8 @@ public class IceBreakerListViewAdapter extends RecyclerView.Adapter<IceBreakerLi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final IceBreakerListViewHolder viewHolder, int i) {
-        final User user = mUsersList.get(i);
+    public void onBindViewHolder(@NonNull final IceBreakerListViewHolder viewHolder, int position) {
+        final User user = mUsersList.get(position);
         viewHolder.mName.setText(user.getName());
 
         StorageReference profileImageRef = FirebaseStorage.getInstance().getReference()

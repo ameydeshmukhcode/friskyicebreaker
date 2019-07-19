@@ -1,5 +1,7 @@
 package com.frisky.icebreaker.social;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,26 +23,30 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.frisky.icebreaker.orders.OrderingAssistant.SESSION_ACTIVE;
+import java.util.Objects;
 
 public class IceBreakerFragment extends Fragment {
 
-    private List<User> usersList = new ArrayList<>();
-    private RecyclerView.Adapter iceBreakerAdapter;
+    private List<User> mUsersList = new ArrayList<>();
+    private RecyclerView.Adapter mIceBreakerAdapter;
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup viewGroup, @Nullable Bundle savedInstanceState) {
         View view;
-        view = inflater.inflate(R.layout.fragment_icebreaker, container, false);
+        view = inflater.inflate(R.layout.fragment_icebreaker, viewGroup, false);
+
+        SharedPreferences sharedPreferences = Objects.requireNonNull(getActivity())
+                .getSharedPreferences(getString(R.string.app_name), Context.MODE_PRIVATE);
+
+        boolean isSessionActive = sharedPreferences.getBoolean("session_active", false);
 
         RecyclerView mRecyclerUsersView;
         RecyclerView.LayoutManager mUsersViewLayoutManager;
 
         mRecyclerUsersView = view.findViewById(R.id.recycler_view);
 
-        if (SESSION_ACTIVE) {
+        if (isSessionActive) {
             mRecyclerUsersView.setPadding(0, 0, 0, 0);
             mRecyclerUsersView.setPadding(0, 0, 0, 225);
             mRecyclerUsersView.setClipToPadding(false);
@@ -52,8 +58,8 @@ public class IceBreakerFragment extends Fragment {
 
         prepareUserData();
 
-        iceBreakerAdapter = new IceBreakerListViewAdapter(usersList, getContext());
-        mRecyclerUsersView.setAdapter(iceBreakerAdapter);
+        mIceBreakerAdapter = new IceBreakerListViewAdapter(mUsersList, getContext());
+        mRecyclerUsersView.setAdapter(mIceBreakerAdapter);
 
         return view;
     }
@@ -74,8 +80,8 @@ public class IceBreakerFragment extends Fragment {
                                 String bio = document.getString("bio");
                                 User user = new User(document.getId(), name, bio, 0, null);
                                 if (firebaseUser != null && !document.getId().equals(firebaseUser.getUid())) {
-                                    usersList.add(user);
-                                    iceBreakerAdapter.notifyDataSetChanged();
+                                    mUsersList.add(user);
+                                    mIceBreakerAdapter.notifyDataSetChanged();
                                 }
                             }
                         }

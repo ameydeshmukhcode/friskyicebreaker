@@ -1,10 +1,10 @@
 package com.frisky.icebreaker.orders;
 
 import android.content.Context;
-import android.content.res.ColorStateList;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,12 +19,12 @@ import java.util.Objects;
 
 public class OrderListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private Context context;
-    private HashMap<MenuItem, MutableInt> orderList;
+    private Context mContext;
+    private HashMap<MenuItem, MutableInt> mOrderList;
 
     OrderListAdapter(Context context, HashMap<MenuItem, MutableInt> orderList) {
-        this.context = context;
-        this.orderList = orderList;
+        this.mContext = context;
+        this.mOrderList = orderList;
     }
 
     static class OrderListViewHolder extends RecyclerView.ViewHolder {
@@ -33,39 +33,39 @@ public class OrderListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         TextView mPrice;
         TextView mStatus;
         TextView mCount;
+        ImageView mImageStatus;
 
-        OrderListViewHolder(@NonNull View itemView) {
-            super(itemView);
-            mName = itemView.findViewById(R.id.text_name);
-            mPrice = itemView.findViewById(R.id.text_price);
-            mStatus = itemView.findViewById(R.id.text_status);
-            mCount = itemView.findViewById(R.id.text_count);
+        OrderListViewHolder(@NonNull View view) {
+            super(view);
+            mName = view.findViewById(R.id.text_name);
+            mPrice = view.findViewById(R.id.text_price);
+            mStatus = view.findViewById(R.id.text_status);
+            mImageStatus = view.findViewById(R.id.image_status);
+            mCount = view.findViewById(R.id.text_count);
         }
     }
 
     @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.card_order_item, parent, false);
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
+        View itemView = LayoutInflater.from(viewGroup.getContext())
+                .inflate(R.layout.card_order_item, viewGroup, false);
 
         return new OrderListAdapter.OrderListViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        OrderListViewHolder orderHolder = (OrderListViewHolder) holder;
-        MenuItem item = (MenuItem) Objects.requireNonNull(orderList.keySet().toArray())[position];
-        MutableInt count = (MutableInt) orderList.values().toArray()[position];
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
+        OrderListViewHolder orderHolder = (OrderListViewHolder) viewHolder;
+        MenuItem item = (MenuItem) Objects.requireNonNull(mOrderList.keySet().toArray())[position];
+        MutableInt count = (MutableInt) mOrderList.values().toArray()[position];
         orderHolder.mName.setText(item.getName());
         orderHolder.mCount.setText(String.valueOf(count.getValue()));
         orderHolder.mPrice.setText(String.valueOf(item.getPrice() * count.getValue()));
-        orderHolder.mStatus.setTextColor(ColorStateList.valueOf(context.getColor(R.color.rating_low)));
-        orderHolder.mStatus.setText(R.string.status_pending);
     }
 
     @Override
     public int getItemCount() {
-        return orderList.size();
+        return mOrderList.size();
     }
 }
