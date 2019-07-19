@@ -40,7 +40,7 @@
             android:layout_marginTop="6dp"
             android:layout_marginEnd="6dp"
             android:fontFamily="@font/museosans700"
-            android:text="@string/placeholder"
+            android:text="@string/placeholder_text"
             android:textColor="@color/textDark"
             android:textSize="@dimen/pub_title_size"
             app:layout_constraintEnd_toEndOf="parent"
@@ -52,7 +52,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/museosans300"
-            android:text="@string/placeholder"
+            android:text="@string/placeholder_text"
             android:textColor="@color/textDark"
             android:textSize="@dimen/pub_extra_info_size"
             app:layout_constraintEnd_toEndOf="@+id/text_title"
@@ -60,11 +60,11 @@
             app:layout_constraintTop_toBottomOf="@+id/text_title" />
 
         <TextView
-            android:id="@+id/text_tag_list"
+            android:id="@+id/text_cuisine"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/museosans300"
-            android:text="@string/placeholder"
+            android:text="@string/placeholder_text"
             android:textColor="@color/textDark"
             android:textSize="@dimen/pub_extra_info_size"
             app:layout_constraintEnd_toEndOf="@+id/text_title"
@@ -89,7 +89,7 @@
             android:textColor="@color/textLight"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_tag_list"
+            app:layout_constraintTop_toBottomOf="@+id/text_cuisine"
             app:layout_constraintVertical_bias="1.0" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

@@ -1,6 +1,7 @@
 package com.frisky.icebreaker;
 
 import android.content.Intent;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,32 +9,27 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.frisky.icebreaker.ui.base.FormActivity;
 import com.frisky.icebreaker.profile.SetupProfileActivity;
 import com.frisky.icebreaker.ui.base.UIActivity;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseNetworkException;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 public class SignInActivity extends AppCompatActivity implements FormActivity, UIActivity {
 
-    private static final int RC_SIGN_IN = 1;
+    //private static final int RC_SIGN_IN = 1;
     private int PW_ENTRY_FAILED = 0;
 
     Button mLoginButton;
-    ImageButton mGoogleButton;
+    //ImageButton mGoogleButton;
     TextView mSignUpLink;
     TextView mForgotPasswordLink;
     TextView mErrorText;
@@ -43,20 +39,20 @@ public class SignInActivity extends AppCompatActivity implements FormActivity, U
 
     FirebaseAuth mAuth;
     
-    GoogleSignInClient mGoogleSignInClient;
+    //GoogleSignInClient mGoogleSignInClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_in);
-
-        initUI();
 
         mAuth = FirebaseAuth.getInstance();
 
         FirebaseUser user = mAuth.getCurrentUser();
         if (user != null) {
             verifyLogin();
+        }
+        else {
+            setupActivityUI();
         }
 
 //        Configure Google Sign In
@@ -93,43 +89,41 @@ public class SignInActivity extends AppCompatActivity implements FormActivity, U
         mErrorText.setOnClickListener(null);
         if (validateForm()){
             mAuth.signInWithEmailAndPassword(mEmailInput.getText().toString(), mPasswordInput.getText().toString())
-                    .addOnCompleteListener(SignInActivity.this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-                                verifyLogin();
-                            }
-                            else {
-                                try {
+                    .addOnCompleteListener(SignInActivity.this, task -> {
+                        if (task.isSuccessful()) {
+                            verifyLogin();
+                        }
+                        else {
+                            try {
+                                if (task.getException() != null)
                                     throw task.getException();
-                                }
-                                catch (FirebaseAuthInvalidUserException e) {
-                                    Log.e("Sign In Error", e.getErrorCode());
-                                    mErrorText.setText(getString(R.string.error_not_signed_up));
-                                }
-                                catch (FirebaseAuthInvalidCredentialsException e) {
-                                    Log.e("Sign In Error", e.getErrorCode());
-                                    if (e.getErrorCode().equals("ERROR_INVALID_EMAIL")) {
-                                        mErrorText.setText(getString(R.string.error_invalid_email));
-                                    }
-                                    else if (e.getErrorCode().equals("ERROR_WRONG_PASSWORD")) {
-                                        if (PW_ENTRY_FAILED > 2) {
-                                            mErrorText.setText(getString(R.string.error_password_reset_hint));
-                                            return;
-                                        }
-                                        mErrorText.setText(getString(R.string.error_incorrect_password));
-                                        PW_ENTRY_FAILED++;
-                                    }
-                                }
-                                catch (FirebaseNetworkException e) {
-                                    Log.e("Sign In Error", e.getMessage());
-                                    mErrorText.setText(getString(R.string.error_network));
-                                }
-                                catch (Exception e) {
-                                    Log.e("Sign In Error", e.getMessage());
-                                }
-                                Log.e("Sign In Error", "signInWithEmail:failure", task.getException());
                             }
+                            catch (FirebaseAuthInvalidUserException e) {
+                                Log.e("Sign In Error", e.getErrorCode());
+                                mErrorText.setText(getString(R.string.error_not_signed_up));
+                            }
+                            catch (FirebaseAuthInvalidCredentialsException e) {
+                                Log.e("Sign In Error", e.getErrorCode());
+                                if (e.getErrorCode().equals("ERROR_INVALID_EMAIL")) {
+                                    mErrorText.setText(getString(R.string.error_invalid_email));
+                                }
+                                else if (e.getErrorCode().equals("ERROR_WRONG_PASSWORD")) {
+                                    if (PW_ENTRY_FAILED > 2) {
+                                        mErrorText.setText(getString(R.string.error_password_reset_hint));
+                                        return;
+                                    }
+                                    mErrorText.setText(getString(R.string.error_incorrect_password));
+                                    PW_ENTRY_FAILED++;
+                                }
+                            }
+                            catch (FirebaseNetworkException e) {
+                                Log.e("Sign In Error", e.getMessage());
+                                mErrorText.setText(getString(R.string.error_network));
+                            }
+                            catch (Exception e) {
+                                Log.e("Sign In Error", e.getMessage());
+                            }
+                            Log.e("Sign In Error", "signInWithEmail:failure", task.getException());
                         }
                     });
         }
@@ -214,60 +208,52 @@ public class SignInActivity extends AppCompatActivity implements FormActivity, U
     public void enableForm() {
         mEmailInput.setEnabled(true);
         mPasswordInput.setEnabled(true);
-        mLoginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                handleLogin();
-            }
+        mLoginButton.setOnClickListener(v -> handleLogin());
+
+        mSignUpLink.setOnClickListener(v -> {
+            Intent startSignUpActivity = new Intent(getApplicationContext(), SignUpActivity.class);
+            startActivity(startSignUpActivity);
         });
 
-        mSignUpLink.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent startSignUpActivity = new Intent(getApplicationContext(), SignUpActivity.class);
-                startActivity(startSignUpActivity);
+        mForgotPasswordLink.setOnClickListener(v -> {
+            String email = mEmailInput.getText().toString();
+
+            if (email.equals("")) {
+                Toast.makeText(SignInActivity.this, "Enter email",
+                        Toast.LENGTH_SHORT).show();
+                return;
             }
-        });
 
-        mForgotPasswordLink.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String email = mEmailInput.getText().toString();
-
-                if (email.equals("")) {
-                    Toast.makeText(SignInActivity.this, "Enter email",
-                            Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                mAuth.sendPasswordResetEmail(email)
-                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if (task.isSuccessful()) {
-                                    Log.i("Reset Password", "Email sent.");
-                                    mErrorText.setText(getString(R.string.error_password_reset_email));
-                                }
-                                else {
-                                    try {
-                                        throw task.getException();
-                                    }
-                                    catch (FirebaseAuthInvalidUserException e) {
-                                        Log.e("Create User Error", e.getErrorCode());
-                                        mErrorText.setText(getString(R.string.error_not_signed_up));
-                                    }
-                                    catch (FirebaseAuthInvalidCredentialsException e) {
-                                        Log.e("Create User Error", e.getErrorCode());
-                                        mErrorText.setText(getString(R.string.error_incorrect_password));
-                                    }
-                                    catch (Exception exp) {
-                                        Log.e("Reset password error", exp.toString());
-                                    }
-                                }
+            mAuth.sendPasswordResetEmail(email)
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            Log.i("Reset Password", "Email sent.");
+                            mErrorText.setText(getString(R.string.error_password_reset_email));
+                        }
+                        else {
+                            try {
+                                if (task.getException() != null)
+                                    throw task.getException();
                             }
-                        });
-            }
+                            catch (FirebaseAuthInvalidUserException e) {
+                                Log.e("Create User Error", e.getErrorCode());
+                                mErrorText.setText(getString(R.string.error_not_signed_up));
+                            }
+                            catch (FirebaseAuthInvalidCredentialsException e) {
+                                Log.e("Create User Error", e.getErrorCode());
+                                mErrorText.setText(getString(R.string.error_incorrect_password));
+                            }
+                            catch (Exception exp) {
+                                Log.e("Reset password error", exp.toString());
+                            }
+                        }
+                    });
         });
+    }
+
+    private void setupActivityUI() {
+        setContentView(R.layout.activity_sign_in);
+        initUI();
     }
 
     private void verifyLogin() {
@@ -281,56 +267,25 @@ public class SignInActivity extends AppCompatActivity implements FormActivity, U
 
         if (!emailVerified) {
             mErrorText.setText(getString(R.string.error_email_not_verified));
-            mErrorText.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    user.sendEmailVerification()
-                            .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if (task.isSuccessful()) {
-                                        Log.i("Verification email", "Email sent.");
-                                        Toast.makeText(SignInActivity.this, "Verification Email Sent.",
-                                                Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-                            });
-                }
-            });
+            mErrorText.setOnClickListener(v -> user.sendEmailVerification()
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            Log.i("Verification email", "Email sent.");
+                            Toast.makeText(SignInActivity.this, "Verification Email Sent.",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }));
             return;
         }
 
-        FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
-
-        firebaseFirestore.collection("users")
-                .document(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if (task.isSuccessful()) {
-                            DocumentSnapshot document = task.getResult();
-                            if (document.contains("profile_setup_complete")) {
-                                Intent launchHome = new Intent(getApplicationContext(), HomeActivity.class);
-                                startActivity(launchHome);
-                            }
-                            else {
-                                String name = "";
-                                String bio = "";
-                                if (document.contains("name")) {
-                                    name = document.getString("name");
-                                }
-                                if (document.contains("bio")) {
-                                    bio = document.getString("bio");
-                                }
-                                Intent setupProfile = new Intent(getApplicationContext(), SetupProfileActivity.class);
-                                setupProfile.putExtra("name", name);
-                                setupProfile.putExtra("bio", bio);
-                                startActivity(setupProfile);
-                            }
-                            finish();
-                        }
-                    }
-                });
+        if (user.getDisplayName() != null && !user.getDisplayName().equals("")) {
+            Intent launchHome = new Intent(getApplicationContext(), HomeActivity.class);
+            startActivity(launchHome);
+            finish();
+        }
+        else {
+            Intent setupProfile = new Intent(getApplicationContext(), SetupProfileActivity.class);
+            startActivity(setupProfile);
+        }
     }
 }

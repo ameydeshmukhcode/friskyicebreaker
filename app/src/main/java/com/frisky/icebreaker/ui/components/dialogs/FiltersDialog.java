@@ -1,37 +1,38 @@
 package com.frisky.icebreaker.ui.components.dialogs;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.os.Bundle;
-import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
+
 import com.frisky.icebreaker.R;
 
-public class FiltersDialog extends Dialog {
+public class FiltersDialog extends DialogFragment {
 
-    public FiltersDialog(Context context) {
-        super(context);
+    @NonNull
+    @Override
+    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
+        Dialog filtersDialog = new Dialog(getContext());
+        filtersDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        filtersDialog.setContentView(R.layout.dialog_filters);
+
+        return filtersDialog;
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.dialog_filters);
-
+    public void onStart() {
+        super.onStart();
         Button mCancelButton;
         Button mApplyButton;
 
-        mApplyButton = findViewById(R.id.button_apply);
-        mCancelButton = findViewById(R.id.button_cancel);
+        mApplyButton = getDialog().findViewById(R.id.button_apply);
+        mCancelButton = getDialog().findViewById(R.id.button_cancel);
 
-        mCancelButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dismiss();
-            }
-        });
+        mCancelButton.setOnClickListener(v -> dismiss());
+        mApplyButton.setOnClickListener(v -> dismiss());
     }
 }

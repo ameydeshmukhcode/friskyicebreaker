@@ -40,9 +40,9 @@
     <dimen name="text_button_primary_size">24sp</dimen>
     <dimen name="text_menu_item_title">14sp</dimen>
     <dimen name="text_menu_item_description">12sp</dimen>
-    <dimen name="text_menu_item_price">14sp</dimen>
+    <dimen name="text_menu_item_price">12sp</dimen>
 
-    <!-- Pub Card -->
+    <!-- Restaurant Card -->
     <dimen name="pub_title_size">16sp</dimen>
     <dimen name="pub_extra_info_size">12sp</dimen>
 

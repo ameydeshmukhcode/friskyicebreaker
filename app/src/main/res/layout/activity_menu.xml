@@ -43,7 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:fontFamily="@font/museosans700"
-            android:text="@string/placeholder"
+            android:text="@string/placeholder_text"
             android:textAllCaps="true"
             android:textSize="@dimen/app_bar_text_size"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -59,7 +59,7 @@
         android:fontFamily="@font/museosans700"
         android:gravity="center"
         android:padding="@dimen/bg_round_rect_radius"
-        android:text="@string/placeholder"
+        android:text="@string/placeholder_text"
         android:textAllCaps="true"
         android:textColor="@color/textDark"
         android:textSize="@dimen/text_large_banner_size"
@@ -79,15 +79,35 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_table" />
 
-    <FrameLayout
-        android:id="@+id/frame_menu"
+    <TextView
+        android:id="@+id/menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/museosans700"
+        android:text="@string/menu"
+        android:textSize="@dimen/text_title_size"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider">
+        app:layout_constraintTop_toBottomOf="@+id/menu" />
 
-    </FrameLayout>
+    <include
+        android:id="@+id/bottom_sheet_order"
+        layout="@layout/bottom_sheet_order"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,7 +1,5 @@
 package com.frisky.icebreaker.profile;
 
-import android.net.Uri;
-import androidx.annotation.NonNull;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
@@ -9,16 +7,11 @@ import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.ui.base.UIActivity;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -33,11 +26,11 @@ public class ViewUserActivity extends AppCompatActivity implements UIActivity {
     ImageButton mBackButton;
     TextView mBioText;
 
-    String UID;
+    String mUserId;
 
     FirebaseStorage mStorage;
-    StorageReference storageReference;
-    FirebaseFirestore firebaseFirestore;
+    StorageReference mStorageReference;
+    FirebaseFirestore mFirebaseFirestore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,8 +38,8 @@ public class ViewUserActivity extends AppCompatActivity implements UIActivity {
         setContentView(R.layout.activity_view_user);
 
         mStorage = FirebaseStorage.getInstance();
-        storageReference = mStorage.getReference();
-        firebaseFirestore = FirebaseFirestore.getInstance();
+        mStorageReference = mStorage.getReference();
+        mFirebaseFirestore = FirebaseFirestore.getInstance();
 
         initUI();
     }
@@ -64,17 +57,12 @@ public class ViewUserActivity extends AppCompatActivity implements UIActivity {
 
         if (getIntent().hasExtra("id")) {
             String id = getIntent().getStringExtra("id");
-            this.UID = id;
+            this.mUserId = id;
             Log.i("ID", id);
         }
 
         mBackButton = findViewById(R.id.button_back);
-        mBackButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ViewUserActivity.super.onBackPressed();
-            }
-        });
+        mBackButton.setOnClickListener(v -> ViewUserActivity.super.onBackPressed());
 
         mProfileImagePager = findViewById(R.id.pager_profile_images);
         mProfileImagePager.setAdapter(mProfileImageAdapter);
@@ -83,35 +71,29 @@ public class ViewUserActivity extends AppCompatActivity implements UIActivity {
         tabLayout.setupWithViewPager(mProfileImagePager, true);
 
         FloatingActionButton fab = findViewById(R.id.fab_break_ice);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //TODO ICEBREAKER
-                Snackbar.make(view, "Break Ice through here", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
+        fab.setOnClickListener(view -> {
+            //TODO ICEBREAKER
+            Snackbar.make(view, "Break Ice through here", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
         });
 
         mBioText = findViewById(R.id.text_bio);
-        DocumentReference docRef = firebaseFirestore.collection("users").document(UID);
-        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document == null)
-                        return;
-                    if (document.exists()) {
-                        mBioText.setText(document.get("bio").toString());
-                        Log.i("Exists", "DocumentSnapshot data: " + document.getData());
-                    }
-                    else {
-                        Log.e("Doesn't exist", "No such document");
-                    }
+        DocumentReference docRef = mFirebaseFirestore.collection("users").document(mUserId);
+        docRef.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                DocumentSnapshot document = task.getResult();
+                if (document == null)
+                    return;
+                if (document.exists()) {
+                    mBioText.setText(document.getString("bio"));
+                    Log.i("Exists", "DocumentSnapshot data: " + document.getData());
                 }
                 else {
-                    Log.e("Task", "failed with ", task.getException());
+                    Log.e("Doesn't exist", "No such document");
                 }
+            }
+            else {
+                Log.e("Task", "failed with ", task.getException());
             }
         });
 
@@ -121,20 +103,12 @@ public class ViewUserActivity extends AppCompatActivity implements UIActivity {
     private void getProfileImage() {
         StorageReference storageReference = FirebaseStorage.getInstance().getReference();
 
-        StorageReference profileImageRef = storageReference.child("profile_images").child(UID);
+        StorageReference profileImageRef = storageReference.child("profile_images").child(mUserId);
 
-        profileImageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                mProfileImageAdapter.addToImageList(uri);
-                mProfileImageAdapter.notifyDataSetChanged();
-                Log.i("Image Uri downloaded", uri.toString());
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.e("Uri Download Failed", e.getMessage());
-            }
-        });
+        profileImageRef.getDownloadUrl().addOnSuccessListener(uri -> {
+            mProfileImageAdapter.addToImageList(uri);
+            mProfileImageAdapter.notifyDataSetChanged();
+            Log.i("Image Uri downloaded", uri.toString());
+        }).addOnFailureListener(e -> Log.e("Uri Download Failed", e.getMessage()));
     }
 }

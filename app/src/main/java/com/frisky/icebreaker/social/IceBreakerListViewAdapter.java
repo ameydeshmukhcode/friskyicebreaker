@@ -2,17 +2,6 @@ package com.frisky.icebreaker.social;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import androidx.annotation.NonNull;
-
-import com.frisky.icebreaker.ui.assistant.CircularTransformation;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.card.MaterialCardView;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,10 +9,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.core.structures.User;
-import com.frisky.icebreaker.ui.assistant.UIAssistant;
 import com.frisky.icebreaker.profile.ViewUserActivity;
+import com.frisky.icebreaker.ui.assistant.CircularTransformation;
+import com.google.android.material.card.MaterialCardView;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
@@ -40,60 +33,47 @@ public class IceBreakerListViewAdapter extends RecyclerView.Adapter<IceBreakerLi
         MaterialCardView mCard;
         TextView mName;
         ImageView mPicture;
-        IceBreakerListViewHolder(View v) {
-            super(v);
-            mPicture = v.findViewById(R.id.image_user);
-            mName = v.findViewById(R.id.text_name);
-            mCard = v.findViewById(R.id.card_user);
+        IceBreakerListViewHolder(View view) {
+            super(view);
+            mPicture = view.findViewById(R.id.image_user);
+            mName = view.findViewById(R.id.text_name);
+            mCard = view.findViewById(R.id.card_user);
         }
     }
 
-    public IceBreakerListViewAdapter(List<User> usersList, Context context) {
+    IceBreakerListViewAdapter(List<User> usersList, Context context) {
         this.mUsersList = usersList;
         this.mContext = context;
     }
 
     @NonNull
     @Override
-    public IceBreakerListViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View itemView = null;
-
-        itemView = LayoutInflater.from(viewGroup.getContext())
+    public IceBreakerListViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
+        View itemView = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.card_user_preview, viewGroup, false);
 
         return new IceBreakerListViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final IceBreakerListViewHolder viewHolder, int i) {
-        final User user = mUsersList.get(i);
+    public void onBindViewHolder(@NonNull final IceBreakerListViewHolder viewHolder, int position) {
+        final User user = mUsersList.get(position);
         viewHolder.mName.setText(user.getName());
 
         StorageReference profileImageRef = FirebaseStorage.getInstance().getReference()
                 .child("profile_images")
                 .child(user.getID());
 
-        profileImageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                Picasso.get().load(uri).transform(new CircularTransformation()).into(viewHolder.mPicture);
-                Log.i("Image Uri Downloaded", uri.toString());
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.e("Uri Download Failed", e.getMessage());
-            }
-        });
+        profileImageRef.getDownloadUrl().addOnSuccessListener(uri -> {
+            Picasso.get().load(uri).transform(new CircularTransformation()).into(viewHolder.mPicture);
+            Log.i("Image Uri Downloaded", uri.toString());
+        }).addOnFailureListener(e -> Log.e("Uri Download Failed", e.getMessage()));
 
-        viewHolder.mCard.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent viewUser = new Intent(mContext, ViewUserActivity.class);
-                viewUser.putExtra("id", user.getID());
-                viewUser.putExtra("name", user.getName());
-                mContext.startActivity(viewUser);
-            }
+        viewHolder.mCard.setOnClickListener(v -> {
+            Intent viewUser = new Intent(mContext, ViewUserActivity.class);
+            viewUser.putExtra("id", user.getID());
+            viewUser.putExtra("name", user.getName());
+            mContext.startActivity(viewUser);
         });
     }
 

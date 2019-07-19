@@ -1,8 +1,6 @@
 package com.frisky.icebreaker.profile;
 
 import android.content.Intent;
-import android.net.Uri;
-import androidx.annotation.NonNull;
 import com.google.android.material.tabs.TabLayout;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,10 +13,6 @@ import android.widget.TextView;
 import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.SettingsActivity;
 import com.frisky.icebreaker.ui.base.UIActivity;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -39,8 +33,8 @@ public class ProfileActivity extends AppCompatActivity implements UIActivity {
 
     FirebaseAuth mAuth;
     FirebaseStorage mStorage;
-    StorageReference storageReference;
-    FirebaseFirestore firebaseFirestore;
+    StorageReference mStorageReference;
+    FirebaseFirestore mFirebaseFirestore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,8 +43,8 @@ public class ProfileActivity extends AppCompatActivity implements UIActivity {
 
         mAuth = FirebaseAuth.getInstance();
         mStorage = FirebaseStorage.getInstance();
-        storageReference = mStorage.getReference();
-        firebaseFirestore = FirebaseFirestore.getInstance();
+        mStorageReference = mStorage.getReference();
+        mFirebaseFirestore = FirebaseFirestore.getInstance();
 
         initUI();
     }
@@ -58,30 +52,19 @@ public class ProfileActivity extends AppCompatActivity implements UIActivity {
     @Override
     public void initUI() {
         mEditButton = findViewById(R.id.button_edit);
-        mEditButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent editProfile = new Intent(getApplicationContext(), EditProfileActivity.class);
-                editProfile.putExtra("bio", mBioText.getText().toString());
-                startActivity(editProfile);
-            }
+        mEditButton.setOnClickListener(v -> {
+            Intent editProfile = new Intent(getApplicationContext(), EditProfileActivity.class);
+            editProfile.putExtra("bio", mBioText.getText().toString());
+            startActivity(editProfile);
         });
 
         mBackButton = findViewById(R.id.button_back);
-        mBackButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ProfileActivity.super.onBackPressed();
-            }
-        });
+        mBackButton.setOnClickListener(v -> ProfileActivity.super.onBackPressed());
 
         mSettingsButton = findViewById(R.id.button_settings);
-        mSettingsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent editProfile = new Intent(getApplicationContext(), SettingsActivity.class);
-                startActivity(editProfile);
-            }
+        mSettingsButton.setOnClickListener(v -> {
+            Intent editProfile = new Intent(getApplicationContext(), SettingsActivity.class);
+            startActivity(editProfile);
         });
 
         mProfileImageAdapter = new ProfileImageAdapter(getApplicationContext());
@@ -99,25 +82,22 @@ public class ProfileActivity extends AppCompatActivity implements UIActivity {
             mNameText.setText(user.getDisplayName());
 
         mBioText = findViewById(R.id.text_bio);
-        DocumentReference docRef = firebaseFirestore.collection("users").document(mAuth.getCurrentUser().getUid());
-        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document == null)
-                        return;
-                    if (document.exists()) {
-                        mBioText.setText(document.get("bio").toString());
-                        Log.i("Exists", "DocumentSnapshot data: " + document.getData());
-                    }
-                    else {
-                        Log.e("Doesn't exist", "No such document");
-                    }
+        DocumentReference docRef = mFirebaseFirestore.collection("users").document(mAuth.getCurrentUser().getUid());
+        docRef.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                DocumentSnapshot document = task.getResult();
+                if (document == null)
+                    return;
+                if (document.exists()) {
+                    mBioText.setText(document.getString("bio"));
+                    Log.i("Exists", "DocumentSnapshot data: " + document.getData());
                 }
                 else {
-                    Log.e("Task", "failed with ", task.getException());
+                    Log.e("Doesn't exist", "No such document");
                 }
+            }
+            else {
+                Log.e("Task", "failed with ", task.getException());
             }
         });
 
@@ -125,20 +105,17 @@ public class ProfileActivity extends AppCompatActivity implements UIActivity {
     }
 
     private void getProfileImage() {
-        StorageReference profileImageRef = storageReference.child("profile_images").child(mAuth.getCurrentUser().getUid());
+        FirebaseUser user = mAuth.getCurrentUser();
 
-        profileImageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                mProfileImageAdapter.addToImageList(uri);
-                mProfileImageAdapter.notifyDataSetChanged();
-                Log.i("Image Uri Downloaded", uri.toString());
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.e("Uri Download Failed", e.getMessage());
-            }
-        });
+        if (user == null)
+            return;
+
+        StorageReference profileImageRef = mStorageReference.child("profile_images").child(mAuth.getCurrentUser().getUid());
+
+        profileImageRef.getDownloadUrl().addOnSuccessListener(uri -> {
+            mProfileImageAdapter.addToImageList(uri);
+            mProfileImageAdapter.notifyDataSetChanged();
+            Log.i("Image Uri Downloaded", uri.toString());
+        }).addOnFailureListener(e -> Log.e("Uri Download Failed", e.getMessage()));
     }
 }

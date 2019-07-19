@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
-import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
@@ -26,16 +25,12 @@ import com.frisky.icebreaker.ui.assistant.UIAssistant;
 import com.frisky.icebreaker.ui.base.FormActivity;
 import com.frisky.icebreaker.ui.base.UIActivity;
 import com.frisky.icebreaker.ui.components.dialogs.PickImageDialog;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
@@ -66,7 +61,7 @@ public class SetupProfileActivity extends AppCompatActivity implements FormActiv
 
     FirebaseAuth mAuth;
     FirebaseStorage mStorage;
-    StorageReference storageReference;
+    StorageReference mStorageReference;
     FirebaseFirestore mFirestore;
 
     @Override
@@ -76,7 +71,7 @@ public class SetupProfileActivity extends AppCompatActivity implements FormActiv
 
         mAuth = FirebaseAuth.getInstance();
         mStorage = FirebaseStorage.getInstance();
-        storageReference = mStorage.getReference();
+        mStorageReference = mStorage.getReference();
         mFirestore = FirebaseFirestore.getInstance();
 
         initUI();
@@ -91,14 +86,6 @@ public class SetupProfileActivity extends AppCompatActivity implements FormActiv
         mProfileImage = findViewById(R.id.image_profile);
         mCancelButton = findViewById(R.id.button_cancel);
         mDoneButton = findViewById(R.id.button_done);
-
-        if (getIntent().hasExtra("name")) {
-            mNameInput.setText(getIntent().getStringExtra("name"));
-        }
-
-        if (getIntent().hasExtra("bio")) {
-            mBioInput.setText(getIntent().getStringExtra("bio"));
-        }
 
         mGenderSpinner = findViewById(R.id.spinner_gender);
 
@@ -169,43 +156,31 @@ public class SetupProfileActivity extends AppCompatActivity implements FormActiv
             mDateOfBirthInput.setText(sdf.format(calendar.getTime()));
         };
 
-        mDateOfBirthInput.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DatePickerDialog datePickerDialog = new DatePickerDialog(v.getContext(), date,
-                        calendar.get(Calendar.YEAR),
-                        calendar.get(Calendar.MONTH),
-                        calendar.get(Calendar.DAY_OF_MONTH));
+        mDateOfBirthInput.setOnClickListener(v -> {
+            DatePickerDialog datePickerDialog = new DatePickerDialog(v.getContext(), date,
+                    calendar.get(Calendar.YEAR),
+                    calendar.get(Calendar.MONTH),
+                    calendar.get(Calendar.DAY_OF_MONTH));
 
-                calendar.add(Calendar.YEAR, -18);
-                datePickerDialog.getDatePicker().setMaxDate(calendar.getTimeInMillis());
-                datePickerDialog.show();
+            calendar.add(Calendar.YEAR, -18);
+            datePickerDialog.getDatePicker().setMaxDate(calendar.getTimeInMillis());
+            datePickerDialog.show();
+        });
+
+        mDoneButton.setOnClickListener(v -> {
+            if (validateForm()) {
+                updateProfileData();
             }
         });
 
-        mDoneButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (validateForm()) {
-                    updateProfileData();
-                }
-            }
+        mCancelButton.setOnClickListener(v -> {
+            FirebaseAuth.getInstance().signOut();
+            SetupProfileActivity.super.onBackPressed();
         });
 
-        mCancelButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FirebaseAuth.getInstance().signOut();
-                SetupProfileActivity.super.onBackPressed();
-            }
-        });
-
-        mProfileImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                pickImageDialog = new PickImageDialog();
-                pickImageDialog.show(getSupportFragmentManager(), "pick image dialog");
-            }
+        mProfileImage.setOnClickListener(view -> {
+            pickImageDialog = new PickImageDialog();
+            pickImageDialog.show(getSupportFragmentManager(), "pick image dialog");
         });
     }
 
@@ -223,79 +198,51 @@ public class SetupProfileActivity extends AppCompatActivity implements FormActiv
 
         final String userUid = user.getUid();
 
-        Map<String, Object> firestoreUser = new HashMap<>();
-        firestoreUser.put("name", mNameInput.getText().toString());
-        firestoreUser.put("bio", mBioInput.getText().toString());
-        firestoreUser.put("gender", mGenderSpinner.getSelectedItem().toString());
-        firestoreUser.put("date_of_birth", mDateOfBirthInput.getText().toString());
-        firestoreUser.put("profile_setup_complete", true);
+        Map<String, Object> userDetails = new HashMap<>();
+        userDetails.put("name", mNameInput.getText().toString());
+        userDetails.put("bio", mBioInput.getText().toString());
+        userDetails.put("gender", mGenderSpinner.getSelectedItem().toString());
+        userDetails.put("date_of_birth", mDateOfBirthInput.getText().toString());
+        userDetails.put("profile_setup_complete", true);
 
         mFirestore.collection("users")
                 .document(userUid)
-                .set(firestoreUser)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.i("User", "DocumentSnapshot successfully written!");
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.e("Failed", e.getMessage(), e);
-                    }
-                });
+                .set(userDetails, SetOptions.merge())
+                .addOnSuccessListener(aVoid -> Log.i("User", "DocumentSnapshot successfully written!"))
+                .addOnFailureListener(e -> Log.e("Failed", e.getMessage(), e));
 
-        final UploadTask uploadTask = storageReference.child("profile_images")
+        final UploadTask uploadTask = mStorageReference.child("profile_images")
                 .child(userUid).putFile(getImageUri());
 
         mProgressLayout.setVisibility(View.VISIBLE);
 
-        uploadTask.addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                double progress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
-                int currentProgress = (int) progress;
-                mProgressBar.setProgress(currentProgress);
-            }
+        uploadTask.addOnProgressListener(taskSnapshot -> {
+            double progress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
+            int currentProgress = (int) progress;
+            mProgressBar.setProgress(currentProgress);
         });
 
-        uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot)
-            {
-                storageReference.child("profile_images").child(userUid)
-                        .getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                    @Override
-                    public void onSuccess(Uri uri) {
-                        String name = mNameInput.getText().toString();
+        uploadTask.addOnSuccessListener(taskSnapshot -> mStorageReference.child("profile_images").child(userUid)
+                .getDownloadUrl().addOnSuccessListener(uri -> {
+                    String name = mNameInput.getText().toString();
 
-                        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                                .setDisplayName(name)
-                                .setPhotoUri(uri)
-                                .build();
+                    UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                            .setDisplayName(name)
+                            .setPhotoUri(uri)
+                            .build();
 
-                        user.updateProfile(profileUpdates)
-                                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        if (task.isSuccessful()) {
-                                            Log.i("User", "User profile updated.");
-                                            Intent launchHome = new Intent(getApplicationContext(), HomeActivity.class);
-                                            startActivity(launchHome);
-                                            finish();
-                                        }
-                                    }
-                                });
-                    }
-                });
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                enableForm();
-                Log.e("Upload Error", e.getMessage());
-            }
+                    user.updateProfile(profileUpdates)
+                            .addOnCompleteListener(task -> {
+                                if (task.isSuccessful()) {
+                                    Log.i("User", "User profile updated.");
+                                    Intent launchHome = new Intent(getApplicationContext(), HomeActivity.class);
+                                    startActivity(launchHome);
+                                    finish();
+                                }
+                            });
+                })).addOnFailureListener(e -> {
+            enableForm();
+            Log.e("Upload Error", e.getMessage());
         });
     }
 
