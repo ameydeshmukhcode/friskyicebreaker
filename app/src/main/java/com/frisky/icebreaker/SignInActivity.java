@@ -286,6 +286,7 @@ public class SignInActivity extends AppCompatActivity implements FormActivity, U
         else {
             Intent setupProfile = new Intent(getApplicationContext(), SetupProfileActivity.class);
             startActivity(setupProfile);
+            finish();
         }
     }
 }
