@@ -43,12 +43,13 @@ public class SignInActivity extends AppCompatActivity implements FormActivity, U
 
         mAuth = FirebaseAuth.getInstance();
 
+        setContentView(R.layout.activity_sign_in);
+
+        initUI();
+
         FirebaseUser user = mAuth.getCurrentUser();
         if (user != null) {
             verifyLogin();
-        }
-        else {
-            setupActivityUI();
         }
 
 //        Configure Google Sign In
@@ -245,11 +246,6 @@ public class SignInActivity extends AppCompatActivity implements FormActivity, U
                         }
                     });
         });
-    }
-
-    private void setupActivityUI() {
-        setContentView(R.layout.activity_sign_in);
-        initUI();
     }
 
     private void verifyLogin() {

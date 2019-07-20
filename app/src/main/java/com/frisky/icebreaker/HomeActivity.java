@@ -42,7 +42,7 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
     TextView mTableName;
 
     Intent mResumeSessionIntent;
-    
+
     FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
 
     SharedPreferences sharedPreferences;
