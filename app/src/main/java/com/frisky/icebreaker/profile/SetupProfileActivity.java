@@ -64,6 +64,8 @@ public class SetupProfileActivity extends AppCompatActivity implements FormActiv
     StorageReference mStorageReference;
     FirebaseFirestore mFirestore;
 
+    boolean imageNotSelected = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -119,6 +121,12 @@ public class SetupProfileActivity extends AppCompatActivity implements FormActiv
 
         if (bio.matches("")) {
             Toast.makeText(SetupProfileActivity.this, "Enter bio",
+                    Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (imageNotSelected) {
+            Toast.makeText(SetupProfileActivity.this, "Pick a profile photo",
                     Toast.LENGTH_SHORT).show();
             return false;
         }
@@ -187,6 +195,7 @@ public class SetupProfileActivity extends AppCompatActivity implements FormActiv
     @Override
     public void imageUpdated(Uri bitmap) {
         Picasso.get().load(bitmap).transform(new RoundRectTransformation()).into(mProfileImage);
+        imageNotSelected = false;
     }
 
     private void updateProfileData() {
