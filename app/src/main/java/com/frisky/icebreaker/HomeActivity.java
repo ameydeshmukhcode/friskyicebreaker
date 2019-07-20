@@ -267,7 +267,10 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
             }
 
             if (snapshot != null && snapshot.exists()) {
-                boolean sessionActive = (boolean) snapshot.get("session_active");
+                boolean sessionActive = false;
+                if (snapshot.contains("session_active")) {
+                    sessionActive = (boolean) snapshot.get("session_active");
+                }
 
                 boolean isSessionActive = getSharedPreferences(getString(R.string.app_name),
                         MODE_PRIVATE).getBoolean("session_active", false);
