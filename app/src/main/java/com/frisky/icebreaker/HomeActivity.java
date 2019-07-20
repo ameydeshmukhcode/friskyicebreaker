@@ -42,9 +42,7 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
     TextView mTableName;
 
     Intent mResumeSessionIntent;
-
-    ImageButton mBottomNavOrderButton;
-
+    
     FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
 
     SharedPreferences sharedPreferences;
@@ -271,14 +269,11 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
                 if (snapshot.contains("session_active")) {
                     sessionActive = (boolean) snapshot.get("session_active");
                 }
-
-                boolean isSessionActive = getSharedPreferences(getString(R.string.app_name),
-                        MODE_PRIVATE).getBoolean("session_active", false);
                 
                 if (sessionActive) {
                     enableSession();
                 }
-                else if (isSessionActive){
+                else {
                     disableSession();
                 }
                 
@@ -302,7 +297,6 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
 
     private void disableSession() {
         mBottomSheet.setVisibility(View.GONE);
-        mBottomNavOrderButton.setEnabled(true);
         sharedPreferences.edit()
                 .putBoolean("session_active", false)
                 .apply();
