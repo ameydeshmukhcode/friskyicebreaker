@@ -112,23 +112,16 @@ public class MenuItemListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             case MENU_ITEM_VIEW:
                 MenuItemHolder itemHolder = (MenuItemHolder) viewHolder;
                 MenuItem menuItem = (MenuItem) mMenu.get(position);
-                itemHolder.mRemove.setVisibility(View.INVISIBLE);
                 itemHolder.mName.setText(menuItem.getName());
                 itemHolder.mDescription.setText(menuItem.getDescription());
                 itemHolder.mPrice.setText(String.valueOf(menuItem.getPrice()));
                 itemHolder.mAdd.setOnClickListener(v -> {
-                    if (itemHolder.mRemove.getVisibility() == View.INVISIBLE) {
-                        itemHolder.mRemove.setVisibility(View.VISIBLE);
-                    }
                     int countInc = Integer.parseInt(itemHolder.mCount.getText().toString()) + 1;
                     itemHolder.mCount.setText(String.valueOf(countInc));
                     orderListChangeListener.addToOrder(menuItem);
                 });
                 itemHolder.mRemove.setOnClickListener(v -> {
                     int count = Integer.parseInt(itemHolder.mCount.getText().toString());
-                    if (count == 1) {
-                        itemHolder.mRemove.setVisibility(View.INVISIBLE);
-                    }
                     if (count > 0) {
                         int countDec = Integer.parseInt(itemHolder.mCount.getText().toString()) - 1;
                         itemHolder.mCount.setText(String.valueOf(countDec));
