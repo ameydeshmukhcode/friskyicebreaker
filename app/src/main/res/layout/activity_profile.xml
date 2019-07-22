@@ -14,14 +14,14 @@
         android:tint="@color/tintDark"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/round_arrow_back_24" />
+        app:srcCompat="@drawable/ic_arrow_back" />
 
     <ImageButton
         android:id="@+id/button_edit"
         android:layout_width="@dimen/button_square_dimen"
         android:layout_height="@dimen/button_square_dimen"
         android:background="@color/transparent"
-        android:src="@drawable/round_edit_24"
+        android:src="@drawable/ic_edit"
         android:tint="@color/tintDark"
         app:layout_constraintEnd_toStartOf="@+id/button_settings"
         app:layout_constraintTop_toTopOf="parent" />
@@ -34,7 +34,7 @@
         android:tint="@color/tintDark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/round_settings_24" />
+        app:srcCompat="@drawable/ic_settings" />
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/pager_profile_images"

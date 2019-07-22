@@ -105,11 +105,11 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
         mToolbarText.setTypeface(typeface);
 
         mSocialButton = findViewById(R.id.button_app_bar_right);
-        mSocialButton.setImageResource(R.drawable.round_chat_24);
+        mSocialButton.setImageResource(R.drawable.ic_chat);
         mSocialButton.setOnClickListener(v -> loadFragment(new SocialFragment()));
 
         mScanQRCodeButton = findViewById(R.id.button_app_bar_left);
-        mScanQRCodeButton.setImageResource(R.drawable.round_qr_code);
+        mScanQRCodeButton.setImageResource(R.drawable.ic_qr_code);
         mScanQRCodeButton.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), QRScanActivity.class)));
 
         BottomNavigationView navigation = findViewById(R.id.bottom_navigation);

@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:background="@color/transparent"
-        android:drawableStart="@drawable/round_photo_library_24"
+        android:drawableStart="@drawable/ic_photo_gallery"
         android:drawablePadding="8dp"
         android:drawableTint="@color/tintDark"
         android:fontFamily="@font/museosans300"
@@ -44,7 +44,7 @@
         <!--android:layout_width="0dp"-->
         <!--android:layout_height="wrap_content"-->
         <!--android:background="@color/transparent"-->
-        <!--android:drawableLeft="@drawable/round_photo_camera_24"-->
+        <!--android:drawableLeft="@drawable/ic_photo_camera"-->
         <!--android:drawablePadding="8dp"-->
         <!--android:drawableTint="@color/tintDark"-->
         <!--android:fontFamily="@font/museosans300"-->

@@ -37,7 +37,7 @@ public class SettingsActivity extends AppCompatActivity implements UIActivity {
     @Override
     public void initUI() {
         mBackButton = findViewById(R.id.button_app_bar_left);
-        mBackButton.setImageResource(R.drawable.round_arrow_back_24);
+        mBackButton.setImageResource(R.drawable.ic_arrow_back);
         mBackButton.setOnClickListener(v -> SettingsActivity.super.onBackPressed());
 
         mToolbarText = findViewById(R.id.text_app_bar);

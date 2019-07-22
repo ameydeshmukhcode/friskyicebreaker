@@ -30,7 +30,7 @@
                 android:layout_height="@dimen/app_bar_height"
                 android:minHeight="@dimen/app_bar_height"
                 app:layout_collapseMode="pin"
-                app:navigationIcon="@drawable/round_arrow_back_24"
+                app:navigationIcon="@drawable/ic_arrow_back"
                 app:popupTheme="@style/FriskyPopUpOverlay" />
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
@@ -51,6 +51,6 @@
         android:tint="@color/tintLight"
         app:backgroundTint="@color/colorAccent"
         app:rippleColor="@color/tintLight"
-        app:srcCompat="@drawable/round_chat_24" />
+        app:srcCompat="@drawable/ic_chat" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

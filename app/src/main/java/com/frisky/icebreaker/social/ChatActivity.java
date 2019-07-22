@@ -35,10 +35,10 @@ public class ChatActivity extends AppCompatActivity implements UIActivity {
         mToolbarText.setTypeface(typeface);
 
         mBackButton = findViewById(R.id.button_app_bar_left);
-        mBackButton.setImageResource(R.drawable.round_arrow_back_24);
+        mBackButton.setImageResource(R.drawable.ic_arrow_back);
         mBackButton.setOnClickListener(v -> ChatActivity.super.onBackPressed());
 
         mMenuButton = findViewById(R.id.button_app_bar_right);
-        mMenuButton.setImageResource(R.drawable.round_more_vert_24);
+        mMenuButton.setImageResource(R.drawable.ic_more_options);
     }
 }

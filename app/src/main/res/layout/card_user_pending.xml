@@ -27,7 +27,7 @@
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/round_person_24" />
+            app:srcCompat="@drawable/ic_person" />
 
         <TextView
             android:id="@+id/text_ping_status"

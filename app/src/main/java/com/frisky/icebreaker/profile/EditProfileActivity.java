@@ -40,7 +40,7 @@ public class EditProfileActivity extends AppCompatActivity implements UIActivity
         mToolbarText.setTypeface(typeface);
 
         mBackButton = findViewById(R.id.button_app_bar_left);
-        mBackButton.setImageResource(R.drawable.round_arrow_back_24);
+        mBackButton.setImageResource(R.drawable.ic_arrow_back);
         mBackButton.setOnClickListener(v -> EditProfileActivity.super.onBackPressed());
 
         RecyclerView mRecyclerImageGridView;
@@ -61,7 +61,7 @@ public class EditProfileActivity extends AppCompatActivity implements UIActivity
         mRecyclerImageGridView.setAdapter(mImageGridAdapter);
 
         mDoneButton = findViewById(R.id.button_app_bar_right);
-        mDoneButton.setImageResource(R.drawable.round_done_24);
+        mDoneButton.setImageResource(R.drawable.ic_done);
 
         mBioInput = findViewById(R.id.input_bio);
 

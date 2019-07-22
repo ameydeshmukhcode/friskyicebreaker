@@ -14,7 +14,7 @@
         android:tint="@color/tintDark"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/round_close_24" />
+        app:srcCompat="@drawable/ic_close" />
 
     <ImageButton
         android:id="@+id/button_done"
@@ -24,7 +24,7 @@
         android:tint="@color/tintDark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/round_done_24" />
+        app:srcCompat="@drawable/ic_done" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layout_progress"
@@ -83,7 +83,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/round_person_24" />
+                app:srcCompat="@drawable/ic_person" />
 
             <TextView
                 android:id="@+id/update_image"
