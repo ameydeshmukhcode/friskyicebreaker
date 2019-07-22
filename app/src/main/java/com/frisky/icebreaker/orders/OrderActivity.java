@@ -31,6 +31,7 @@ public class OrderActivity extends AppCompatActivity implements UIActivity {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public void initUI() {
         mBackButton = findViewById(R.id.button_back);
         mBackButton.setOnClickListener(v -> OrderActivity.super.onBackPressed());

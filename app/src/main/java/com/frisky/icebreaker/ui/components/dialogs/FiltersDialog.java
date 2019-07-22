@@ -11,12 +11,14 @@ import androidx.fragment.app.DialogFragment;
 
 import com.frisky.icebreaker.R;
 
+import java.util.Objects;
+
 public class FiltersDialog extends DialogFragment {
 
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        Dialog filtersDialog = new Dialog(getContext());
+        Dialog filtersDialog = new Dialog(Objects.requireNonNull(getContext()));
         filtersDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         filtersDialog.setContentView(R.layout.dialog_filters);
 
@@ -29,10 +31,13 @@ public class FiltersDialog extends DialogFragment {
         Button mCancelButton;
         Button mApplyButton;
 
-        mApplyButton = getDialog().findViewById(R.id.button_apply);
-        mCancelButton = getDialog().findViewById(R.id.button_cancel);
+        Dialog dialog = getDialog();
 
-        mCancelButton.setOnClickListener(v -> dismiss());
-        mApplyButton.setOnClickListener(v -> dismiss());
+        if (dialog != null) {
+            mApplyButton = getDialog().findViewById(R.id.button_apply);
+            mCancelButton = getDialog().findViewById(R.id.button_cancel);
+            mCancelButton.setOnClickListener(v -> dismiss());
+            mApplyButton.setOnClickListener(v -> dismiss());
+        }
     }
 }

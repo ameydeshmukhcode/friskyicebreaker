@@ -13,6 +13,8 @@ import android.widget.Button;
 
 import com.frisky.icebreaker.R;
 
+import java.util.Objects;
+
 import static android.app.Activity.RESULT_OK;
 
 public class PickImageDialog extends DialogFragment {
@@ -27,14 +29,19 @@ public class PickImageDialog extends DialogFragment {
     @Override
     public void onStart() {
         super.onStart();
-        Button galleryButton = getDialog().findViewById(R.id.button_gallery);
-        galleryButton.setOnClickListener(v -> {
-            Intent getImageFromDevice = new Intent(
-                    Intent.ACTION_PICK,
-                    android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 
-            startActivityForResult(getImageFromDevice, PICK_IMAGE_GALLERY);
-        });
+        Dialog dialog = getDialog();
+
+        if (dialog != null) {
+            Button galleryButton = getDialog().findViewById(R.id.button_gallery);
+            galleryButton.setOnClickListener(v -> {
+                Intent getImageFromDevice = new Intent(
+                        Intent.ACTION_PICK,
+                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+
+                startActivityForResult(getImageFromDevice, PICK_IMAGE_GALLERY);
+            });
+        }
 
 //        cameraButton = getDialog().findViewById(R.id.button_camera);
 //        cameraButton.setOnClickListener(new View.OnClickListener() {
@@ -49,7 +56,7 @@ public class PickImageDialog extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        Dialog pickImageDialog = new Dialog(getContext());
+        Dialog pickImageDialog = new Dialog(Objects.requireNonNull(getContext()));
         pickImageDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         pickImageDialog.setContentView(R.layout.dialog_pick_image);
 
@@ -78,7 +85,7 @@ public class PickImageDialog extends DialogFragment {
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         try {
             this.onImageUpdatedListener = (OnImageUpdatedListener) context;
