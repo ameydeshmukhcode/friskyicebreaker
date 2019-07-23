@@ -28,6 +28,7 @@ public class ConfirmOrderDialog extends DialogFragment {
             Button ok = getDialog().findViewById(R.id.button_ok);
             ok.setOnClickListener(v -> {
                 onConfirmOrderListener.confirmOrder(true);
+                dismiss();
             });
 
             Button cancel = getDialog().findViewById(R.id.button_cancel);
