@@ -11,6 +11,7 @@
     <string name="google">Google</string>
     <string name="apply">Apply</string>
     <string name="cancel">Cancel</string>
+    <string name="ok">OK</string>
     <string name="scan_qr_code">Scan QR Code</string>
 
     <!--Login Page-->
@@ -106,6 +107,9 @@
     <string name="pick_image">Pick Image</string>
     <string name="image_gallery">Choose from Gallery</string>
     <string name="image_camera">Take a new photo</string>
+
+    <!-- Confirm Order Dialog -->
+    <string name="confirm_order_info">Send order to kitchen for preparation?</string>
 
     <!-- Errors -->
     <string name="error_weak_password">Weak password.\nPassword length should be more than 6 characters.</string>
