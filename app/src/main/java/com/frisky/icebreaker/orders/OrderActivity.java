@@ -1,25 +1,30 @@
 package com.frisky.icebreaker.orders;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.core.structures.MenuItem;
 import com.frisky.icebreaker.core.structures.MutableInt;
 import com.frisky.icebreaker.ui.base.UIActivity;
+import com.frisky.icebreaker.ui.components.dialogs.ConfirmOrderDialog;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class OrderActivity extends AppCompatActivity implements UIActivity {
+public class OrderActivity extends AppCompatActivity implements UIActivity,
+        ConfirmOrderDialog.OnConfirmOrderListener {
 
+    Button mConfirmOrderButton;
+    Button mAddMoreButton;
     ImageButton mBackButton;
     HashMap<MenuItem, MutableInt> mOrderList = new HashMap<>();
 
@@ -35,6 +40,11 @@ public class OrderActivity extends AppCompatActivity implements UIActivity {
     public void initUI() {
         mBackButton = findViewById(R.id.button_back);
         mBackButton.setOnClickListener(v -> OrderActivity.super.onBackPressed());
+
+        mConfirmOrderButton = findViewById(R.id.button_confirm_order);
+        mConfirmOrderButton.setOnClickListener(v -> confirmOrder());
+
+        mAddMoreButton = findViewById(R.id.button_add_more);
 
         TextView mTotal = findViewById(R.id.text_order_total);
 
@@ -66,5 +76,18 @@ public class OrderActivity extends AppCompatActivity implements UIActivity {
         // specify an adapter (see also next example)
         OrderListAdapter orderListAdapter = new OrderListAdapter(getApplicationContext(), mOrderList);
         mRecyclerOrderListView.setAdapter(orderListAdapter);
+    }
+
+    private void confirmOrder() {
+        ConfirmOrderDialog confirmOrderDialog = new ConfirmOrderDialog();
+        confirmOrderDialog.show(getSupportFragmentManager(), "confirm order dialog");
+    }
+
+    @Override
+    public void confirmOrder(boolean choice) {
+        if (choice) {
+            //TODO send order to firestore
+            Log.i("Order", "confirmed");
+        }
     }
 }
