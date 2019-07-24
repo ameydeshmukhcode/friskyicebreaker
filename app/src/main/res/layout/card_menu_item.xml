@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/card_menu_item"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -25,18 +24,15 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/text_description"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="8dp"
-            android:fontFamily="@font/museosans300"
-            android:text="@string/placeholder_text"
-            android:textSize="@dimen/text_menu_item_description"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/text_name"
-            app:layout_constraintTop_toBottomOf="@+id/rupee" />
+        <ImageView
+            android:id="@+id/image_diet_type"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_marginStart="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/text_name"
+            app:layout_constraintStart_toEndOf="@+id/text_name"
+            app:layout_constraintTop_toTopOf="@+id/text_name"
+            app:srcCompat="@drawable/ic_veg" />
 
         <TextView
             android:id="@+id/rupee"
@@ -60,6 +56,19 @@
             app:layout_constraintBottom_toBottomOf="@+id/rupee"
             app:layout_constraintStart_toEndOf="@+id/rupee"
             app:layout_constraintTop_toTopOf="@+id/rupee" />
+
+        <TextView
+            android:id="@+id/text_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="@font/museosans300"
+            android:text="@string/placeholder_text"
+            android:textSize="@dimen/text_menu_item_description"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/text_name"
+            app:layout_constraintTop_toBottomOf="@+id/rupee" />
 
         <ImageButton
             android:id="@+id/button_remove"
@@ -102,16 +111,6 @@
             app:layout_constraintDimensionRatio="h,1:1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/text_name" />
-
-        <ImageView
-            android:id="@+id/image_diet_type"
-            android:layout_width="10dp"
-            android:layout_height="10dp"
-            android:layout_marginStart="8dp"
-            app:layout_constraintBottom_toBottomOf="@+id/text_name"
-            app:layout_constraintStart_toEndOf="@+id/text_name"
-            app:layout_constraintTop_toTopOf="@+id/text_name"
-            app:srcCompat="@drawable/ic_veg" />
 
         <TextView
             android:id="@+id/text_available"
