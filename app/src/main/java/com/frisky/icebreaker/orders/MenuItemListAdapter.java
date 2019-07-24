@@ -112,6 +112,13 @@ public class MenuItemListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             case MENU_ITEM_VIEW:
                 MenuItemHolder itemHolder = (MenuItemHolder) viewHolder;
                 MenuItem menuItem = (MenuItem) mMenu.get(position);
+                boolean available = menuItem.getAvailable();
+
+                if (!available) {
+                    itemHolder.mAdd.setEnabled(false);
+                    itemHolder.mRemove.setEnabled(false);
+                }
+                
                 itemHolder.mName.setText(menuItem.getName());
                 itemHolder.mDescription.setText(menuItem.getDescription());
                 itemHolder.mPrice.setText(String.valueOf(menuItem.getPrice()));
