@@ -296,7 +296,7 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
 
         getSessionDetails();
 
-        mViewMenuButton = findViewById(R.id.button_view_menu);
+        mViewMenuButton = findViewById(R.id.button_menu);
         mViewMenuButton.setOnClickListener(v -> startActivity(mResumeSessionIntent));
 
         Log.e("restaurant", sharedPreferences.getString("restaurant", ""));
