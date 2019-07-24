@@ -184,6 +184,11 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
                             .collection("restaurants")
                             .document(restaurant);
 
+                    sharedPreferences.edit()
+                            .putString("restaurant", restaurant)
+                            .putString("current_session", currentSession)
+                            .apply();
+
                     restaurantRef.get()
                         .addOnCompleteListener(task1 -> {
                             if (task1.isSuccessful()) {
@@ -293,12 +298,17 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
 
         mViewMenuButton = findViewById(R.id.button_view_menu);
         mViewMenuButton.setOnClickListener(v -> startActivity(mResumeSessionIntent));
+
+        Log.e("restaurant", sharedPreferences.getString("restaurant", ""));
+        Log.e("session id", sharedPreferences.getString("current_session", ""));
     }
 
     private void disableSession() {
         mBottomSheet.setVisibility(View.GONE);
         sharedPreferences.edit()
                 .putBoolean("session_active", false)
+                .remove("restaurant")
+                .remove("current_session")
                 .apply();
     }
 
