@@ -32,6 +32,7 @@ public class MenuItemListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         TextView mDescription;
         TextView mPrice;
         TextView mCount;
+        TextView mAvailable;
         MenuItemHolder(View v) {
             super(v);
             mAdd = v.findViewById(R.id.button_add);
@@ -40,6 +41,7 @@ public class MenuItemListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             mDescription = v.findViewById(R.id.text_description);
             mPrice = v.findViewById(R.id.text_price);
             mCount = v.findViewById(R.id.text_item_count);
+            mAvailable = v.findViewById(R.id.text_available);
         }
     }
 
@@ -117,8 +119,9 @@ public class MenuItemListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 if (!available) {
                     itemHolder.mAdd.setEnabled(false);
                     itemHolder.mRemove.setEnabled(false);
+                    itemHolder.mAvailable.setText(R.string.unavailable);
                 }
-                
+
                 itemHolder.mName.setText(menuItem.getName());
                 itemHolder.mDescription.setText(menuItem.getDescription());
                 itemHolder.mPrice.setText(String.valueOf(menuItem.getPrice()));
