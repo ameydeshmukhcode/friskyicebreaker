@@ -16,9 +16,12 @@ import com.frisky.icebreaker.core.structures.MenuItem;
 import com.frisky.icebreaker.core.structures.MutableInt;
 import com.frisky.icebreaker.ui.base.UIActivity;
 import com.frisky.icebreaker.ui.components.dialogs.ConfirmOrderDialog;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.functions.FirebaseFunctions;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class OrderActivity extends AppCompatActivity implements UIActivity,
         ConfirmOrderDialog.OnConfirmOrderListener {
@@ -28,10 +31,15 @@ public class OrderActivity extends AppCompatActivity implements UIActivity,
     ImageButton mBackButton;
     HashMap<MenuItem, MutableInt> mOrderList = new HashMap<>();
 
+    private FirebaseFunctions mFunctions;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order);
+
+        mFunctions = FirebaseFunctions.getInstance();
+
         initUI();
     }
 
@@ -86,8 +94,33 @@ public class OrderActivity extends AppCompatActivity implements UIActivity,
     @Override
     public void confirmOrder(boolean choice) {
         if (choice) {
-            //TODO send order to firestore
-            Log.i("Order", "confirmed");
+
+            HashMap<String, Integer> orderList = new HashMap<>();
+
+            for (Map.Entry<MenuItem, MutableInt> entry : mOrderList.entrySet()) {
+                orderList.put(entry.getKey().getId(), entry.getValue().getValue());
+            }
+
+            for (Map.Entry<String, Integer> entry : orderList.entrySet()) {
+                Log.i(entry.getKey(), String.valueOf(entry.getValue()));
+            }
+
+            placeOrder(orderList);
         }
+    }
+
+    private Task<String> placeOrder(HashMap<String, Integer> orderList) {
+        Map<String, Object> data = new HashMap<>();
+        data.put("order", orderList);
+
+        return mFunctions
+                .getHttpsCallable("placeOrder")
+                .call(data)
+                .continueWith(task -> {
+                    // This continuation runs on either success or failure, but if the task
+                    // has failed then getResult() will throw an Exception which will be
+                    // propagated down.
+                    return (String) Objects.requireNonNull(task.getResult()).getData();
+                });
     }
 }
