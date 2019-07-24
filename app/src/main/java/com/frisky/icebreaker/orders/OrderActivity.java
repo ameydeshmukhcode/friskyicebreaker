@@ -1,5 +1,6 @@
 package com.frisky.icebreaker.orders;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,6 +18,12 @@ import com.frisky.icebreaker.core.structures.MutableInt;
 import com.frisky.icebreaker.ui.base.UIActivity;
 import com.frisky.icebreaker.ui.components.dialogs.ConfirmOrderDialog;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.functions.FirebaseFunctions;
 
 import java.util.HashMap;
@@ -33,14 +40,19 @@ public class OrderActivity extends AppCompatActivity implements UIActivity,
 
     private FirebaseFunctions mFunctions;
 
+    SharedPreferences sharedPreferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order);
 
         mFunctions = FirebaseFunctions.getInstance();
+        sharedPreferences = getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE);
 
         initUI();
+
+        addListenerForOrderUpdates();
     }
 
     @Override
@@ -121,6 +133,47 @@ public class OrderActivity extends AppCompatActivity implements UIActivity,
                     // has failed then getResult() will throw an Exception which will be
                     // propagated down.
                     return (String) Objects.requireNonNull(task.getResult()).getData();
+                });
+    }
+
+    private void addListenerForOrderUpdates() {
+        String restaurant = "";
+        String currentSession = "";
+        if (sharedPreferences.contains("restaurant")) {
+            restaurant = sharedPreferences.getString("restaurant", "");
+        }
+        if (sharedPreferences.contains("current_session")) {
+            currentSession = sharedPreferences.getString("current_session", "");
+        }
+
+        assert restaurant != null;
+        final DocumentReference docRef = FirebaseFirestore.getInstance().collection("restaurants")
+                .document(restaurant);
+
+        docRef.collection("orders")
+                .whereEqualTo("session_id", currentSession)
+                .addSnapshotListener((queryDocumentSnapshots, e) -> {
+                    if (e != null) {
+                        System.err.println("Listen failed: " + e);
+                        return;
+                    }
+
+                    assert queryDocumentSnapshots != null;
+                    for (DocumentChange dc : queryDocumentSnapshots.getDocumentChanges()) {
+                        switch (dc.getType()) {
+                            case ADDED:
+                                Log.d("Added", "to Orders");
+                                break;
+                            case MODIFIED:
+                                Log.d("Modified", "Orders");
+                                break;
+                            case REMOVED:
+                                Log.d("Removed", "from Orders");
+                                break;
+                            default:
+                                break;
+                        }
+                    }
                 });
     }
 }
