@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -33,15 +32,14 @@ public class OrderListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         TextView mPrice;
         TextView mStatus;
         TextView mCount;
-        ImageView mImageStatus;
-
+        TextView mItemTotal;
         OrderListViewHolder(@NonNull View view) {
             super(view);
             mName = view.findViewById(R.id.text_name);
             mPrice = view.findViewById(R.id.text_price);
-            mStatus = view.findViewById(R.id.text_status);
-            mImageStatus = view.findViewById(R.id.image_status);
-            mCount = view.findViewById(R.id.text_count);
+            mStatus = view.findViewById(R.id.in_cart);
+            mCount = view.findViewById(R.id.text_item_count);
+            mItemTotal = view.findViewById(R.id.text_cart_item_total);
         }
     }
 
@@ -49,7 +47,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         View itemView = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.card_order_item, viewGroup, false);
+                .inflate(R.layout.card_cart_item, viewGroup, false);
 
         return new OrderListAdapter.OrderListViewHolder(itemView);
     }
@@ -61,7 +59,8 @@ public class OrderListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         MutableInt count = (MutableInt) mOrderList.values().toArray()[position];
         orderHolder.mName.setText(item.getName());
         orderHolder.mCount.setText(String.valueOf(count.getValue()));
-        orderHolder.mPrice.setText(String.valueOf(item.getPrice() * count.getValue()));
+        orderHolder.mPrice.setText(String.valueOf(item.getPrice()));
+        orderHolder.mItemTotal.setText(String.valueOf(item.getPrice() * count.getValue()));
     }
 
     @Override

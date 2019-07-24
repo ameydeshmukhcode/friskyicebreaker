@@ -90,6 +90,7 @@
     <string name="order_active">Your order is being processed</string>
     <string name="view_menu">View Menu</string>
     <string name="your_total">Your total:</string>
+    <string name="item_total">Item total:</string>
     <string name="clear_bill">Clear Bill</string>
     <string name="rupee">\u20B9</string>
     <string name="view">View</string>
@@ -98,6 +99,7 @@
     <string name="confirm_order">Confirm Order</string>
     <string name="add_more">Add More</string>
     <string name="unavailable">Unavailable</string>
+    <string name="in_cart">In cart</string>
     <!-- Status -->
     <string name="status_pending">Pending</string>
     <string name="status_accepted">Accepted</string>

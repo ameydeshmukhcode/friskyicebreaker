@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card_order_item"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="@android:color/transparent"
+    app:cardCornerRadius="0dp"
+    app:cardElevation="0dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/text_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/museosans700"
+            android:text="@string/placeholder_text"
+            android:textSize="@dimen/text_menu_item_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/image_diet_type"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_marginStart="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/text_name"
+            app:layout_constraintStart_toEndOf="@+id/text_name"
+            app:layout_constraintTop_toTopOf="@+id/text_name"
+            app:srcCompat="@drawable/ic_veg" />
+
+        <TextView
+            android:id="@+id/rupee"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/museosans700"
+            android:text="@string/rupee"
+            android:textSize="@dimen/text_menu_item_price"
+            app:layout_constraintStart_toStartOf="@+id/text_name"
+            app:layout_constraintTop_toBottomOf="@+id/text_name" />
+
+        <TextView
+            android:id="@+id/text_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:fontFamily="@font/museosans700"
+            android:text="@string/placeholder_number"
+            android:textSize="@dimen/text_menu_item_price"
+            app:layout_constraintBottom_toBottomOf="@+id/rupee"
+            app:layout_constraintStart_toEndOf="@+id/rupee"
+            app:layout_constraintTop_toTopOf="@+id/rupee" />
+
+        <TextView
+            android:id="@+id/item_total"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="@font/museosans300"
+            android:text="@string/item_total"
+            android:textSize="@dimen/text_menu_item_description"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/text_name"
+            app:layout_constraintTop_toBottomOf="@+id/rupee" />
+
+        <TextView
+            android:id="@+id/rupee_total"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:fontFamily="@font/museosans700"
+            android:text="@string/rupee"
+            android:textColor="@color/appRed"
+            android:textSize="@dimen/text_menu_item_description"
+            app:layout_constraintBottom_toBottomOf="@+id/item_total"
+            app:layout_constraintStart_toEndOf="@+id/item_total"
+            app:layout_constraintTop_toTopOf="@+id/item_total" />
+
+        <TextView
+            android:id="@+id/text_cart_item_total"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:fontFamily="@font/museosans700"
+            android:text="@string/default_count"
+            android:textColor="@color/appRed"
+            android:textSize="@dimen/text_menu_item_description"
+            app:layout_constraintBottom_toBottomOf="@+id/rupee_total"
+            app:layout_constraintStart_toEndOf="@+id/rupee_total"
+            app:layout_constraintTop_toTopOf="@+id/rupee_total"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <ImageButton
+            android:id="@+id/button_remove"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:background="@drawable/bg_round_rect_left"
+            android:backgroundTint="@drawable/button_green_state_colors"
+            android:src="@drawable/ic_remove"
+            android:tint="@color/tintLight"
+            app:layout_constraintBottom_toBottomOf="@+id/text_item_count"
+            app:layout_constraintDimensionRatio="h,1:1"
+            app:layout_constraintEnd_toStartOf="@+id/text_item_count"
+            app:layout_constraintTop_toTopOf="@+id/text_item_count"
+            app:layout_constraintVertical_bias="0.512" />
+
+        <TextView
+            android:id="@+id/text_item_count"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/backgroundLight"
+            android:fontFamily="@font/museosans700"
+            android:gravity="center"
+            android:text="@string/default_count"
+            android:textSize="@dimen/text_menu_item_price"
+            app:layout_constraintBottom_toBottomOf="@+id/button_add"
+            app:layout_constraintDimensionRatio="w,1:1"
+            app:layout_constraintEnd_toStartOf="@+id/button_add"
+            app:layout_constraintTop_toTopOf="@+id/button_add" />
+
+        <ImageButton
+            android:id="@+id/button_add"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginEnd="24dp"
+            android:background="@drawable/bg_round_rect_right"
+            android:backgroundTint="@drawable/button_green_state_colors"
+            android:src="@drawable/ic_add"
+            android:tint="@color/tintLight"
+            app:layout_constraintBottom_toBottomOf="@+id/text_price"
+            app:layout_constraintDimensionRatio="h,1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/text_name" />
+
+        <TextView
+            android:id="@+id/in_cart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="@font/museosans300"
+            android:text="@string/in_cart"
+            android:textColor="@color/textDark"
+            android:textSize="@dimen/text_menu_item_description"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/button_add"
+            app:layout_constraintStart_toEndOf="@+id/image_in_cart" />
+
+        <ImageView
+            android:id="@+id/image_in_cart"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="@+id/in_cart"
+            app:layout_constraintDimensionRatio="h,1:1"
+            app:layout_constraintEnd_toStartOf="@+id/in_cart"
+            app:layout_constraintStart_toStartOf="@+id/button_remove"
+            app:layout_constraintTop_toTopOf="@+id/in_cart"
+            app:srcCompat="@drawable/ic_cart" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>
