@@ -13,6 +13,9 @@
     <string name="cancel">Cancel</string>
     <string name="ok">OK</string>
     <string name="scan_qr_code">Scan QR Code</string>
+    <string name="dash">-</string>
+    <string name="default_count">0</string>
+    <string name="count_indicator">x</string>
 
     <!--Login Page-->
     <string name="sign_in">Sign In</string>
@@ -128,9 +131,6 @@
     <!--Empty state -->
     <string name="empty_state_scan_qr">You haven\'t ordered anything yet.\nTo get the menu and start ordering,\n
         scan the QR code on the table.</string>
-
-    <string name="dash">-</string>
-    <string name="default_count">0</string>
 
     <string name="placeholder_text">Some text</string>
     <string name="placeholder_number">23</string>
