@@ -16,24 +16,24 @@ import com.frisky.icebreaker.core.structures.MutableInt;
 import java.util.HashMap;
 import java.util.Objects;
 
-public class OrderListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class CartListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context mContext;
-    private HashMap<MenuItem, MutableInt> mOrderList;
+    private HashMap<MenuItem, MutableInt> mCartList;
 
-    OrderListAdapter(Context context, HashMap<MenuItem, MutableInt> orderList) {
+    CartListAdapter(Context context, HashMap<MenuItem, MutableInt> cartList) {
         this.mContext = context;
-        this.mOrderList = orderList;
+        this.mCartList = cartList;
     }
 
-    static class OrderListViewHolder extends RecyclerView.ViewHolder {
+    static class CartListViewHolder extends RecyclerView.ViewHolder {
 
         TextView mName;
         TextView mPrice;
         TextView mStatus;
         TextView mCount;
         TextView mItemTotal;
-        OrderListViewHolder(@NonNull View view) {
+        CartListViewHolder(@NonNull View view) {
             super(view);
             mName = view.findViewById(R.id.text_name);
             mPrice = view.findViewById(R.id.text_price);
@@ -49,22 +49,22 @@ public class OrderListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         View itemView = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.card_cart_item, viewGroup, false);
 
-        return new OrderListAdapter.OrderListViewHolder(itemView);
+        return new CartListViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
-        OrderListViewHolder orderHolder = (OrderListViewHolder) viewHolder;
-        MenuItem item = (MenuItem) Objects.requireNonNull(mOrderList.keySet().toArray())[position];
-        MutableInt count = (MutableInt) mOrderList.values().toArray()[position];
-        orderHolder.mName.setText(item.getName());
-        orderHolder.mCount.setText(String.valueOf(count.getValue()));
-        orderHolder.mPrice.setText(String.valueOf(item.getPrice()));
-        orderHolder.mItemTotal.setText(String.valueOf(item.getPrice() * count.getValue()));
+        CartListViewHolder cartItemHolder = (CartListViewHolder) viewHolder;
+        MenuItem item = (MenuItem) Objects.requireNonNull(mCartList.keySet().toArray())[position];
+        MutableInt count = (MutableInt) mCartList.values().toArray()[position];
+        cartItemHolder.mName.setText(item.getName());
+        cartItemHolder.mCount.setText(String.valueOf(count.getValue()));
+        cartItemHolder.mPrice.setText(String.valueOf(item.getPrice()));
+        cartItemHolder.mItemTotal.setText(String.valueOf(item.getPrice() * count.getValue()));
     }
 
     @Override
     public int getItemCount() {
-        return mOrderList.size();
+        return mCartList.size();
     }
 }

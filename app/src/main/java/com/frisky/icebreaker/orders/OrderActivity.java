@@ -17,13 +17,9 @@ import com.frisky.icebreaker.core.structures.MenuItem;
 import com.frisky.icebreaker.core.structures.MutableInt;
 import com.frisky.icebreaker.ui.base.UIActivity;
 import com.frisky.icebreaker.ui.components.dialogs.ConfirmOrderDialog;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.functions.FirebaseFunctions;
 
 import java.util.HashMap;
@@ -36,7 +32,7 @@ public class OrderActivity extends AppCompatActivity implements UIActivity,
     Button mConfirmOrderButton;
     Button mAddMoreButton;
     ImageButton mBackButton;
-    HashMap<MenuItem, MutableInt> mOrderList = new HashMap<>();
+    HashMap<MenuItem, MutableInt> mCartList = new HashMap<>();
 
     private FirebaseFunctions mFunctions;
 
@@ -62,7 +58,10 @@ public class OrderActivity extends AppCompatActivity implements UIActivity,
         mBackButton.setOnClickListener(v -> OrderActivity.super.onBackPressed());
 
         mConfirmOrderButton = findViewById(R.id.button_confirm_order);
-        mConfirmOrderButton.setOnClickListener(v -> confirmOrder());
+        mConfirmOrderButton.setOnClickListener(v -> {
+            if (mCartList.size() > 0)
+                confirmOrder();
+        });
 
         mAddMoreButton = findViewById(R.id.button_add_more);
 
@@ -74,10 +73,10 @@ public class OrderActivity extends AppCompatActivity implements UIActivity,
         }
 
         if (getIntent().hasExtra("order_list")) {
-            mOrderList = (HashMap<MenuItem, MutableInt>) getIntent().getSerializableExtra("order_list");
+            mCartList = (HashMap<MenuItem, MutableInt>) getIntent().getSerializableExtra("order_list");
         }
 
-        for (Map.Entry<MenuItem, MutableInt> entry : mOrderList.entrySet()) {
+        for (Map.Entry<MenuItem, MutableInt> entry : mCartList.entrySet()) {
             Log.i("List", entry.getKey().getName() + " " + entry.getValue().getValue());
         }
 
@@ -85,17 +84,17 @@ public class OrderActivity extends AppCompatActivity implements UIActivity,
             mTotal.setText(String.valueOf(getIntent().getIntExtra("order_total", 0)));
         }
 
-        RecyclerView mRecyclerOrderListView = findViewById(R.id.recycler_view_order_list);
-        mRecyclerOrderListView.setOverScrollMode(View.OVER_SCROLL_NEVER);
+        RecyclerView mRecyclerCartListView = findViewById(R.id.recycler_view_cart_list);
+        mRecyclerCartListView.setOverScrollMode(View.OVER_SCROLL_NEVER);
 
         RecyclerView.LayoutManager mMenuListViewLayoutManager;
         // use a linear layout manager
         mMenuListViewLayoutManager = new LinearLayoutManager(getApplicationContext());
-        mRecyclerOrderListView.setLayoutManager(mMenuListViewLayoutManager);
+        mRecyclerCartListView.setLayoutManager(mMenuListViewLayoutManager);
 
         // specify an adapter (see also next example)
-        OrderListAdapter orderListAdapter = new OrderListAdapter(getApplicationContext(), mOrderList);
-        mRecyclerOrderListView.setAdapter(orderListAdapter);
+        CartListAdapter cartListAdapter = new CartListAdapter(getApplicationContext(), mCartList);
+        mRecyclerCartListView.setAdapter(cartListAdapter);
     }
 
     private void confirmOrder() {
@@ -109,7 +108,7 @@ public class OrderActivity extends AppCompatActivity implements UIActivity,
 
             HashMap<String, Integer> orderList = new HashMap<>();
 
-            for (Map.Entry<MenuItem, MutableInt> entry : mOrderList.entrySet()) {
+            for (Map.Entry<MenuItem, MutableInt> entry : mCartList.entrySet()) {
                 orderList.put(entry.getKey().getId(), entry.getValue().getValue());
             }
 
@@ -121,19 +120,19 @@ public class OrderActivity extends AppCompatActivity implements UIActivity,
         }
     }
 
-    private Task<String> placeOrder(HashMap<String, Integer> orderList) {
+    private void placeOrder(HashMap<String, Integer> orderList) {
         Map<String, Object> data = new HashMap<>();
         data.put("order", orderList);
 
-        return mFunctions
-                .getHttpsCallable("placeOrder")
-                .call(data)
-                .continueWith(task -> {
-                    // This continuation runs on either success or failure, but if the task
-                    // has failed then getResult() will throw an Exception which will be
-                    // propagated down.
-                    return (String) Objects.requireNonNull(task.getResult()).getData();
-                });
+        mFunctions
+            .getHttpsCallable("placeOrder")
+            .call(data)
+            .continueWith(task -> {
+                // This continuation runs on either success or failure, but if the task
+                // has failed then getResult() will throw an Exception which will be
+                // propagated down.
+                return (String) Objects.requireNonNull(task.getResult()).getData();
+            });
     }
 
     private void addListenerForOrderUpdates() {
