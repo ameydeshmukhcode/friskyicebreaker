@@ -40,7 +40,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:fontFamily="@font/museosans300"
-            android:text="x"
+            android:text="@string/count_indicator"
             android:textSize="@dimen/text_menu_item_price"
             app:layout_constraintBottom_toBottomOf="@+id/text_name"
             app:layout_constraintStart_toEndOf="@+id/image_diet_type"
