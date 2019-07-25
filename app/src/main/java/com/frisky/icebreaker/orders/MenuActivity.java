@@ -141,7 +141,7 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
                 .add(sessionDetails)
                 .addOnSuccessListener(documentReference -> {
                     final String sessionID = documentReference.getId();
-                    Log.e("", "DocumentSnapshot written with ID: " + documentReference.getId());
+                    Log.d("", "DocumentSnapshot written with ID: " + documentReference.getId());
 
                     Map<String, Object> userSessionDetails = new HashMap<>();
                     userSessionDetails.put("session_active", true);
@@ -167,7 +167,7 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
                                         .collection("tables")
                                         .document(tableID)
                                         .set(tableSessionDetails, SetOptions.merge())
-                                        .addOnSuccessListener(aVoid1 -> Log.i("Success", "Table details updated"));
+                                        .addOnSuccessListener(aVoid1 -> Log.d("Success", "Table details updated"));
                             });
                 })
                 .addOnFailureListener(e -> Log.e("", "Error adding document", e));
@@ -194,7 +194,7 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
                     return;
                 if (document.exists()) {
                     mRestName.setText(document.getString("name"));
-                    Log.i("Exists", "DocumentSnapshot data: " + document.getData());
+                    Log.d("Exists", "DocumentSnapshot data: " + document.getData());
                 }
                 else {
                     Log.e("Doesn't exist", "No such document");
@@ -219,7 +219,7 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
                 if (document.exists()) {
                     String tableSerial = "Table " + document.get("number");
                     mTableSerial.setText(tableSerial);
-                    Log.i("Exists", "DocumentSnapshot data: " + document.getData());
+                    Log.d("Exists", "DocumentSnapshot data: " + document.getData());
                 }
                 else {
                     Log.e("Doesn't exist", "No such document");

@@ -75,7 +75,7 @@ public class IceBreakerFragment extends Fragment {
                     if (task.isSuccessful()) {
                         if (task.getResult() != null) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.i("User", document.getId() + " => " + document.getData());
+                                Log.d("User", document.getId() + " => " + document.getData());
                                 String name = document.getString("name");
                                 String bio = document.getString("bio");
                                 User user = new User(document.getId(), name, bio, 0, null);

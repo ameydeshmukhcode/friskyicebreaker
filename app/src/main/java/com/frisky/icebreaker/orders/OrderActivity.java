@@ -85,7 +85,7 @@ public class OrderActivity extends AppCompatActivity implements UIActivity,
         }
 
         for (Map.Entry<MenuItem, MutableInt> entry : mCartList.entrySet()) {
-            Log.i("List", entry.getKey().getName() + " " + entry.getValue().getValue());
+            Log.d("List", entry.getKey().getName() + " " + entry.getValue().getValue());
         }
 
         if (getIntent().hasExtra("order_total")) {
@@ -127,7 +127,7 @@ public class OrderActivity extends AppCompatActivity implements UIActivity,
             }
 
             for (Map.Entry<String, Integer> entry : orderList.entrySet()) {
-                Log.i(entry.getKey(), String.valueOf(entry.getValue()));
+                Log.d(entry.getKey(), String.valueOf(entry.getValue()));
             }
 
             placeOrder(orderList);
@@ -216,7 +216,7 @@ public class OrderActivity extends AppCompatActivity implements UIActivity,
                                         Log.d("Status", "Cancelled");
                                     }
                                 }
-                                
+
                                 orderListAdapter = new OrderListAdapter(getApplicationContext(), mOrderList);
                                 mRecyclerOrderListView.setAdapter(orderListAdapter);
 

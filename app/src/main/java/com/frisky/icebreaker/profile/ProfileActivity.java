@@ -90,7 +90,7 @@ public class ProfileActivity extends AppCompatActivity implements UIActivity {
                     return;
                 if (document.exists()) {
                     mBioText.setText(document.getString("bio"));
-                    Log.i("Exists", "DocumentSnapshot data: " + document.getData());
+                    Log.d("Exists", "DocumentSnapshot data: " + document.getData());
                 }
                 else {
                     Log.e("Doesn't exist", "No such document");
@@ -115,7 +115,7 @@ public class ProfileActivity extends AppCompatActivity implements UIActivity {
         profileImageRef.getDownloadUrl().addOnSuccessListener(uri -> {
             mProfileImageAdapter.addToImageList(uri);
             mProfileImageAdapter.notifyDataSetChanged();
-            Log.i("Image Uri Downloaded", uri.toString());
+            Log.d("Image Uri Downloaded", uri.toString());
         }).addOnFailureListener(e -> Log.e("Uri Download Failed", e.getMessage()));
     }
 }

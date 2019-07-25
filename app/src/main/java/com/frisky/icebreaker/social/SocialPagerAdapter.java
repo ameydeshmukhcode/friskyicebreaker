@@ -10,7 +10,6 @@ public class SocialPagerAdapter extends FragmentStatePagerAdapter {
     private static final int SOCIAL_TAB_COUNT = 2;
 
     SocialPagerAdapter(FragmentManager fm) {
-        //noinspection deprecation
         super(fm);
     }
 

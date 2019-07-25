@@ -265,7 +265,7 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
 
         docRef.addSnapshotListener((snapshot, e) -> {
             if (e != null) {
-                Log.w("Failed", "Listen failed.", e);
+                Log.e("Failed", "Listen failed.", e);
                 return;
             }
 
@@ -316,9 +316,9 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
         Fragment currentFragment = getSupportFragmentManager().getFragment(Bundle.EMPTY, "");
 
         if (currentFragment != null)
-            Log.i("Current Frag", currentFragment.toString());
+            Log.d("Current Frag", currentFragment.toString());
 
-        Log.i("Change To", fragment.toString());
+        Log.d("Change To", fragment.toString());
 
         getSupportFragmentManager()
                 .beginTransaction()
