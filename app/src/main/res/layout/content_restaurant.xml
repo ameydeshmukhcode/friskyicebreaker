@@ -60,7 +60,7 @@
             android:fontFamily="@font/museosans900"
             android:gravity="center"
             android:padding="4dp"
-            android:text="@string/placeholder_number"
+            android:text="@string/default_number"
             android:textColor="@color/textLight"
             android:textSize="@dimen/text_title_size"
             app:layout_constraintBottom_toBottomOf="@+id/text_pub_name"

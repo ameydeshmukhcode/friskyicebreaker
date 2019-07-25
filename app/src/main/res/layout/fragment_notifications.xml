@@ -51,7 +51,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:fontFamily="@font/museosans700"
-            android:text="@string/default_count"
+            android:text="@string/default_number"
             android:textColor="@color/textDark"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="@+id/unread"
