@@ -216,8 +216,7 @@ public class OrderActivity extends AppCompatActivity implements UIActivity,
                                         Log.d("Status", "Cancelled");
                                     }
                                 }
-
-
+                                
                                 orderListAdapter = new OrderListAdapter(getApplicationContext(), mOrderList);
                                 mRecyclerOrderListView.setAdapter(orderListAdapter);
 
