@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.core.structures.MenuItem;
 import com.frisky.icebreaker.core.structures.MutableInt;
+import com.frisky.icebreaker.core.structures.OrderStatus;
 import com.frisky.icebreaker.ui.base.UIActivity;
 import com.frisky.icebreaker.ui.components.dialogs.ConfirmOrderDialog;
 import com.google.firebase.firestore.DocumentChange;
@@ -32,7 +33,14 @@ public class OrderActivity extends AppCompatActivity implements UIActivity,
     Button mConfirmOrderButton;
     Button mAddMoreButton;
     ImageButton mBackButton;
+
+    RecyclerView mRecyclerOrderListView;
+    RecyclerView mRecyclerCartListView;
+    CartListAdapter cartListAdapter;
+    OrderListAdapter orderListAdapter;
+
     HashMap<MenuItem, MutableInt> mCartList = new HashMap<>();
+    HashMap<String, OrderStatus> mOrderList = new HashMap<>();
 
     private FirebaseFunctions mFunctions;
 
@@ -84,13 +92,19 @@ public class OrderActivity extends AppCompatActivity implements UIActivity,
             mTotal.setText(String.valueOf(getIntent().getIntExtra("order_total", 0)));
         }
 
-        RecyclerView mRecyclerCartListView = findViewById(R.id.recycler_view_cart_list);
+        mRecyclerCartListView = findViewById(R.id.recycler_view_cart_list);
         mRecyclerCartListView.setOverScrollMode(View.OVER_SCROLL_NEVER);
 
+        mRecyclerOrderListView = findViewById(R.id.recycler_view_order_list);
+
         RecyclerView.LayoutManager mMenuListViewLayoutManager;
-        // use a linear layout manager
         mMenuListViewLayoutManager = new LinearLayoutManager(getApplicationContext());
+
+        RecyclerView.LayoutManager mOrderListViewLayoutManager;
+        mOrderListViewLayoutManager = new LinearLayoutManager(getApplicationContext());
+
         mRecyclerCartListView.setLayoutManager(mMenuListViewLayoutManager);
+        mRecyclerOrderListView.setLayoutManager(mOrderListViewLayoutManager);
 
         // specify an adapter (see also next example)
         CartListAdapter cartListAdapter = new CartListAdapter(getApplicationContext(), mCartList);
@@ -123,6 +137,18 @@ public class OrderActivity extends AppCompatActivity implements UIActivity,
     private void placeOrder(HashMap<String, Integer> orderList) {
         Map<String, Object> data = new HashMap<>();
         data.put("order", orderList);
+
+        for (Map.Entry<MenuItem, MutableInt> entry: mCartList.entrySet()) {
+            mOrderList.put(entry.getKey().getId(), OrderStatus.PENDING);
+        }
+
+        orderListAdapter = new OrderListAdapter(getApplicationContext(), mOrderList);
+        mRecyclerOrderListView.setAdapter(orderListAdapter);
+
+        mCartList.clear();
+
+        cartListAdapter = new CartListAdapter(getApplicationContext(), mCartList);
+        mRecyclerCartListView.setAdapter(cartListAdapter);
 
         mFunctions
             .getHttpsCallable("placeOrder")
