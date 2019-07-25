@@ -161,6 +161,7 @@ public class OrderActivity extends AppCompatActivity implements UIActivity,
             });
     }
 
+    @SuppressWarnings("unchecked")
     private void addListenerForOrderUpdates() {
         String restaurant = "";
         String currentSession = "";
@@ -190,7 +191,36 @@ public class OrderActivity extends AppCompatActivity implements UIActivity,
                                 Log.d("Added", "to Orders");
                                 break;
                             case MODIFIED:
-                                Log.d("Modified", "Orders");
+                                mOrderList.clear();
+
+                                Map<String, Object> data;
+                                data = (Map<String, Object>) dc.getDocument().get("items");
+                                assert data != null;
+                                for (Map.Entry<String, Object> entry : data.entrySet()) {
+                                    String value = entry.getValue().toString();
+                                    Log.d("Item", entry.getKey());
+                                    if (value.contains("status=pending")) {
+                                        mOrderList.put(entry.getKey(), OrderStatus.PENDING);
+                                        Log.d("Status", "Pending");
+                                    }
+                                    else if (value.contains("status=accepted")) {
+                                        mOrderList.put(entry.getKey(), OrderStatus.ACCEPTED);
+                                        Log.d("Status", "Accepted");
+                                    }
+                                    else if (value.contains("status=rejected")) {
+                                        mOrderList.put(entry.getKey(), OrderStatus.REJECTED);
+                                        Log.d("Status", "Rejected");
+                                    }
+                                    else if (value.contains("status=cancelled")) {
+                                        mOrderList.put(entry.getKey(), OrderStatus.CANCELLED);
+                                        Log.d("Status", "Cancelled");
+                                    }
+                                }
+
+
+                                orderListAdapter = new OrderListAdapter(getApplicationContext(), mOrderList);
+                                mRecyclerOrderListView.setAdapter(orderListAdapter);
+
                                 break;
                             case REMOVED:
                                 Log.d("Removed", "from Orders");
