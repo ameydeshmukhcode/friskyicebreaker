@@ -31,7 +31,8 @@
     <string name="age_check">I\'m 18 years and older.</string>
     <string name="terms">By signing up, you\'re agreeing to our Terms and Privacy Policies</string>
 
-    <!--Home Page-->
+    <!--Restaurant Activity-->
+    <string name="live_count">Live count</string>
     <!--Restaurant View-->
     <string name="search_restaurants">Search restaurants&#8230;</string>
     <string name="filters">Filters</string>
@@ -40,13 +41,16 @@
     <string name="type">Type</string>
     <string name="city">City</string>
     <string name="features">Features</string>
+
     <!--Social-->
     <string name="chats">Chats</string>
     <string name="pending">Pending</string>
     <string name="ping_rec">You have been pinged by </string>
     <string name="ping_send">You have pinged </string>
+
     <!--IceBreaker-->
     <string name="hide_visibility">Hide Visibility</string>
+
     <!--Profile-->
     <string name="about_me">About me</string>
     <string name="about">About</string>
@@ -67,6 +71,11 @@
         <item>@string/female</item>
         <item>@string/other</item>
     </string-array>
+    <!--Image Picker Dialog-->
+    <string name="pick_image">Pick Image</string>
+    <string name="image_gallery">Choose from Gallery</string>
+    <string name="image_camera">Take a new photo</string>
+
     <!-- Notifications -->
     <string name="clear_all">Clear All</string>
     <string name="unread">Unread:</string>
@@ -76,9 +85,6 @@
     <string name="enter_name">Enter Name</string>
     <string name="enter_bio">Enter Bio</string>
     <string name="uploading_details">Uploading Details</string>
-
-    <!--Restaurant Activity-->
-    <string name="live_count">Live count</string>
 
     <!--Chat Activity-->
     <string name="type_message">Type a message&#8230;</string>
@@ -109,12 +115,6 @@
     <string name="status_accepted">Accepted</string>
     <string name="status_rejected">Rejected</string>
     <string name="status_cancelled">Cancelled</string>
-
-    <!--Image Picker Dialog-->
-    <string name="pick_image">Pick Image</string>
-    <string name="image_gallery">Choose from Gallery</string>
-    <string name="image_camera">Take a new photo</string>
-
     <!-- Confirm Order Dialog -->
     <string name="confirm_order_info">Send order to kitchen for preparation?</string>
 
