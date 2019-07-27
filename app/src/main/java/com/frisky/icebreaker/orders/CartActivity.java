@@ -1,5 +1,6 @@
 package com.frisky.icebreaker.orders;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,11 +16,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.core.structures.MenuItem;
 import com.frisky.icebreaker.core.structures.MutableInt;
+import com.frisky.icebreaker.core.structures.OrderStatus;
 import com.frisky.icebreaker.ui.base.UIActivity;
 import com.frisky.icebreaker.ui.components.dialogs.ConfirmOrderDialog;
+import com.google.firebase.functions.FirebaseFunctions;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class CartActivity extends AppCompatActivity implements UIActivity,
         ConfirmOrderDialog.OnConfirmOrderListener {
@@ -33,6 +37,8 @@ public class CartActivity extends AppCompatActivity implements UIActivity,
 
     SharedPreferences sharedPreferences;
 
+    FirebaseFunctions mFunctions;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,9 +46,9 @@ public class CartActivity extends AppCompatActivity implements UIActivity,
 
         sharedPreferences = getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE);
 
-        initUI();
+        mFunctions = FirebaseFunctions.getInstance();
 
-        //addListenerForOrderUpdates();
+        initUI();
     }
 
     @Override
@@ -64,16 +70,16 @@ public class CartActivity extends AppCompatActivity implements UIActivity,
             mTableSerial.setText(getIntent().getStringExtra("table_id"));
         }
 
-        if (getIntent().hasExtra("order_list")) {
-            mCartList = (HashMap<MenuItem, MutableInt>) getIntent().getSerializableExtra("order_list");
+        if (getIntent().hasExtra("cart_list")) {
+            mCartList = (HashMap<MenuItem, MutableInt>) getIntent().getSerializableExtra("cart_list");
         }
 
         for (Map.Entry<MenuItem, MutableInt> entry : mCartList.entrySet()) {
             Log.d("List", entry.getKey().getName() + " " + entry.getValue().getValue());
         }
 
-        if (getIntent().hasExtra("order_total")) {
-            mTotal.setText(String.valueOf(getIntent().getIntExtra("order_total", 0)));
+        if (getIntent().hasExtra("cart_total")) {
+            mTotal.setText(String.valueOf(getIntent().getIntExtra("cart_total", 0)));
         }
 
         mRecyclerCartListView = findViewById(R.id.recycler_view_cart_list);
@@ -98,116 +104,35 @@ public class CartActivity extends AppCompatActivity implements UIActivity,
     public void confirmOrder(boolean choice) {
         if (choice) {
 
-            HashMap<String, Integer> orderList = new HashMap<>();
+            HashMap<String, Integer> order = new HashMap<>();
 
-            for (Map.Entry<MenuItem, MutableInt> entry : mCartList.entrySet()) {
-                orderList.put(entry.getKey().getId(), entry.getValue().getValue());
+            HashMap<String, OrderStatus> orderListFinal = new HashMap<>();
+
+            for (Map.Entry<MenuItem, MutableInt> entry: mCartList.entrySet()) {
+                order.put(entry.getKey().getId(), entry.getValue().getValue());
+                orderListFinal.put(entry.getKey().getId(), OrderStatus.PENDING);
             }
 
-            for (Map.Entry<String, Integer> entry : orderList.entrySet()) {
-                Log.d(entry.getKey(), String.valueOf(entry.getValue()));
-            }
+            placeOrder(order);
 
-            placeOrder(orderList);
+            Intent showOrder = new Intent(this, OrderActivity.class);
+            showOrder.putExtra("order_list", orderListFinal);
+            startActivity(showOrder);
         }
     }
 
     private void placeOrder(HashMap<String, Integer> orderList) {
-        // TODO send order to order activity
-
-        /*Map<String, Object> data = new HashMap<>();
+        Map<String, Object> data = new HashMap<>();
         data.put("order", orderList);
 
-        for (Map.Entry<MenuItem, MutableInt> entry: mCartList.entrySet()) {
-            mOrderList.put(entry.getKey().getId(), OrderStatus.PENDING);
-        }
-
-        orderListAdapter = new OrderListAdapter(getApplicationContext(), mOrderList);
-        mRecyclerOrderListView.setAdapter(orderListAdapter);
-
-        mCartList.clear();
-
-        cartListAdapter = new CartListAdapter(getApplicationContext(), mCartList);
-        mRecyclerCartListView.setAdapter(cartListAdapter);
-
         mFunctions
-            .getHttpsCallable("placeOrder")
-            .call(data)
-            .continueWith(task -> {
-                // This continuation runs on either success or failure, but if the task
-                // has failed then getResult() will throw an Exception which will be
-                // propagated down.
-                return (String) Objects.requireNonNull(task.getResult()).getData();
-            });*/
-    }
-
-    //@SuppressWarnings("unchecked")
-    /*private void addListenerForOrderUpdates() {
-        String restaurant = "";
-        String currentSession = "";
-        if (sharedPreferences.contains("restaurant")) {
-            restaurant = sharedPreferences.getString("restaurant", "");
-        }
-        if (sharedPreferences.contains("current_session")) {
-            currentSession = sharedPreferences.getString("current_session", "");
-        }
-
-        assert restaurant != null;
-        final DocumentReference docRef = FirebaseFirestore.getInstance().collection("restaurants")
-                .document(restaurant);
-
-        docRef.collection("orders")
-                .whereEqualTo("session_id", currentSession)
-                .addSnapshotListener((queryDocumentSnapshots, e) -> {
-                    if (e != null) {
-                        System.err.println("Listen failed: " + e);
-                        return;
-                    }
-
-                    assert queryDocumentSnapshots != null;
-                    for (DocumentChange dc : queryDocumentSnapshots.getDocumentChanges()) {
-                        switch (dc.getType()) {
-                            case ADDED:
-                                Log.d("Added", "to Orders");
-                                break;
-                            case MODIFIED:
-                                mOrderList.clear();
-
-                                Map<String, Object> data;
-                                data = (Map<String, Object>) dc.getDocument().get("items");
-                                assert data != null;
-                                for (Map.Entry<String, Object> entry : data.entrySet()) {
-                                    String value = entry.getValue().toString();
-                                    Log.d("Item", entry.getKey());
-                                    if (value.contains("status=pending")) {
-                                        mOrderList.put(entry.getKey(), OrderStatus.PENDING);
-                                        Log.d("Status", "Pending");
-                                    }
-                                    else if (value.contains("status=accepted")) {
-                                        mOrderList.put(entry.getKey(), OrderStatus.ACCEPTED);
-                                        Log.d("Status", "Accepted");
-                                    }
-                                    else if (value.contains("status=rejected")) {
-                                        mOrderList.put(entry.getKey(), OrderStatus.REJECTED);
-                                        Log.d("Status", "Rejected");
-                                    }
-                                    else if (value.contains("status=cancelled")) {
-                                        mOrderList.put(entry.getKey(), OrderStatus.CANCELLED);
-                                        Log.d("Status", "Cancelled");
-                                    }
-                                }
-
-                                orderListAdapter = new OrderListAdapter(getApplicationContext(), mOrderList);
-                                mRecyclerOrderListView.setAdapter(orderListAdapter);
-
-                                break;
-                            case REMOVED:
-                                Log.d("Removed", "from Orders");
-                                break;
-                            default:
-                                break;
-                        }
-                    }
+                .getHttpsCallable("placeOrder")
+                .call(data)
+                .continueWith(task -> {
+                    // This continuation runs on either success or failure, but if the task
+                    // has failed then getResult() will throw an Exception which will be
+                    // propagated down.
+                    return (String) Objects.requireNonNull(task.getResult()).getData();
                 });
-    }*/
+    }
 }
