@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.frisky.icebreaker">
+
     <uses-permission android:name="android.permission.CAMERA" />
 
     <application
@@ -34,12 +35,14 @@
             android:name=".profile.EditProfileActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".profile.ViewUserActivity" />
-        <activity android:name=".profile.SetupProfileActivity"
+        <activity
+            android:name=".profile.SetupProfileActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".social.ChatActivity" />
-        <activity android:name=".orders.CartActivity" />
         <activity android:name=".orders.MenuActivity" />
-        <activity android:name=".orders.QRScanActivity"/>
+        <activity android:name=".orders.CartActivity" />
+        <activity android:name=".orders.OrderActivity" />
+        <activity android:name=".orders.QRScanActivity" />
     </application>
 
 </manifest>
