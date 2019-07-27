@@ -47,15 +47,15 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
     private List<Object> mMenu = new ArrayList<>();
     private HashMap<String, String> mCategories = new HashMap<>();
 
-    int mOrderTotal = 0;
-    HashMap<MenuItem, MutableInt> mOrderList = new HashMap<>();
+    int mCartTotal = 0;
+    HashMap<MenuItem, MutableInt> mCartList = new HashMap<>();
 
     RecyclerView.Adapter mMenuListViewAdapter;
     RecyclerView mRecyclerMenuListView;
 
     ConstraintLayout mBottomSheetOrder;
-    TextView mOrderTotalText;
-    Button mViewOrderButton;
+    TextView mCartTotalText;
+    Button mViewCartButton;
 
     boolean isSessionActive;
 
@@ -90,13 +90,13 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
             mBottomSheetOrder = findViewById(R.id.bottom_sheet_order);
             mBottomSheetOrder.setVisibility(View.GONE);
 
-            mOrderTotalText = findViewById(R.id.text_order_amount);
-            mViewOrderButton = findViewById(R.id.button_view_order);
-            mViewOrderButton.setOnClickListener(v -> {
+            mCartTotalText = findViewById(R.id.text_order_amount);
+            mViewCartButton = findViewById(R.id.button_view_order);
+            mViewCartButton.setOnClickListener(v -> {
                 Intent showOrder = new Intent(getApplicationContext(), CartActivity.class);
                 showOrder.putExtra("table_id", mTableSerial.getText().toString());
-                showOrder.putExtra("order_list", mOrderList);
-                showOrder.putExtra("order_total", mOrderTotal);
+                showOrder.putExtra("cart_list", mCartList);
+                showOrder.putExtra("cart_total", mCartTotal);
                 startActivity(showOrder);
             });
 
@@ -300,16 +300,16 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
 
     @Override
     public void addToOrder(MenuItem item) {
-        mOrderTotal += item.getPrice();
+        mCartTotal += item.getPrice();
         mBottomSheetOrder.setVisibility(View.VISIBLE);
-        mOrderTotalText.setText(String.valueOf(mOrderTotal));
+        mCartTotalText.setText(String.valueOf(mCartTotal));
 
-        if (mOrderList.size() == 0) {
-            mOrderList.put(item, new MutableInt());
+        if (mCartList.size() == 0) {
+            mCartList.put(item, new MutableInt());
         }
         else {
             boolean updatedItem = false;
-            for (Map.Entry<MenuItem, MutableInt> entry : mOrderList.entrySet()) {
+            for (Map.Entry<MenuItem, MutableInt> entry : mCartList.entrySet()) {
                 if (entry.getKey().getId().equals(item.getId())) {
                     MutableInt count = entry.getValue();
                     count.increment();
@@ -317,7 +317,7 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
                 }
             }
             if (!updatedItem) {
-                mOrderList.put(item, new MutableInt());
+                mCartList.put(item, new MutableInt());
             }
         }
 
@@ -328,21 +328,21 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
 
     @Override
     public void removeFromOrder(MenuItem item) {
-        mOrderTotal -= item.getPrice();
+        mCartTotal -= item.getPrice();
 
-        for (Map.Entry<MenuItem, MutableInt> entry : mOrderList.entrySet()) {
+        for (Map.Entry<MenuItem, MutableInt> entry : mCartList.entrySet()) {
             if (entry.getKey().getId().equals(item.getId())) {
                 MutableInt count = entry.getValue();
                 count.decrement();
                 if (count.getValue() == 0) {
-                    mOrderList.remove(entry.getKey());
+                    mCartList.remove(entry.getKey());
                 }
                 break;
             }
         }
 
-        if (mOrderTotal > 0) {
-            mOrderTotalText.setText(String.valueOf(mOrderTotal));
+        if (mCartTotal > 0) {
+            mCartTotalText.setText(String.valueOf(mCartTotal));
         }
         else {
             mBottomSheetOrder.setVisibility(View.GONE);
