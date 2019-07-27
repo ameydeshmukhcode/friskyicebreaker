@@ -37,7 +37,7 @@
         <activity android:name=".profile.SetupProfileActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".social.ChatActivity" />
-        <activity android:name=".orders.OrderActivity" />
+        <activity android:name=".orders.CartActivity" />
         <activity android:name=".orders.MenuActivity" />
         <activity android:name=".orders.QRScanActivity"/>
     </application>

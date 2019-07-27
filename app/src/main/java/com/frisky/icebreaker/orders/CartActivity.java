@@ -15,63 +15,47 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.core.structures.MenuItem;
 import com.frisky.icebreaker.core.structures.MutableInt;
-import com.frisky.icebreaker.core.structures.OrderStatus;
 import com.frisky.icebreaker.ui.base.UIActivity;
 import com.frisky.icebreaker.ui.components.dialogs.ConfirmOrderDialog;
-import com.google.firebase.firestore.DocumentChange;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.functions.FirebaseFunctions;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
-public class OrderActivity extends AppCompatActivity implements UIActivity,
+public class CartActivity extends AppCompatActivity implements UIActivity,
         ConfirmOrderDialog.OnConfirmOrderListener {
 
     Button mConfirmOrderButton;
-    Button mAddMoreButton;
     ImageButton mBackButton;
 
-    RecyclerView mRecyclerOrderListView;
     RecyclerView mRecyclerCartListView;
-    CartListAdapter cartListAdapter;
-    OrderListAdapter orderListAdapter;
 
     HashMap<MenuItem, MutableInt> mCartList = new HashMap<>();
-    HashMap<String, OrderStatus> mOrderList = new HashMap<>();
-
-    private FirebaseFunctions mFunctions;
 
     SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_order);
+        setContentView(R.layout.activity_cart);
 
-        mFunctions = FirebaseFunctions.getInstance();
         sharedPreferences = getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE);
 
         initUI();
 
-        addListenerForOrderUpdates();
+        //addListenerForOrderUpdates();
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public void initUI() {
         mBackButton = findViewById(R.id.button_back);
-        mBackButton.setOnClickListener(v -> OrderActivity.super.onBackPressed());
+        mBackButton.setOnClickListener(v -> CartActivity.super.onBackPressed());
 
         mConfirmOrderButton = findViewById(R.id.button_confirm_order);
         mConfirmOrderButton.setOnClickListener(v -> {
             if (mCartList.size() > 0)
                 confirmOrder();
         });
-
-        mAddMoreButton = findViewById(R.id.button_add_more);
 
         TextView mTotal = findViewById(R.id.text_order_total);
 
@@ -95,16 +79,10 @@ public class OrderActivity extends AppCompatActivity implements UIActivity,
         mRecyclerCartListView = findViewById(R.id.recycler_view_cart_list);
         mRecyclerCartListView.setOverScrollMode(View.OVER_SCROLL_NEVER);
 
-        mRecyclerOrderListView = findViewById(R.id.recycler_view_order_list);
-
         RecyclerView.LayoutManager mMenuListViewLayoutManager;
         mMenuListViewLayoutManager = new LinearLayoutManager(getApplicationContext());
 
-        RecyclerView.LayoutManager mOrderListViewLayoutManager;
-        mOrderListViewLayoutManager = new LinearLayoutManager(getApplicationContext());
-
         mRecyclerCartListView.setLayoutManager(mMenuListViewLayoutManager);
-        mRecyclerOrderListView.setLayoutManager(mOrderListViewLayoutManager);
 
         // specify an adapter (see also next example)
         CartListAdapter cartListAdapter = new CartListAdapter(getApplicationContext(), mCartList);
@@ -135,7 +113,9 @@ public class OrderActivity extends AppCompatActivity implements UIActivity,
     }
 
     private void placeOrder(HashMap<String, Integer> orderList) {
-        Map<String, Object> data = new HashMap<>();
+        // TODO send order to order activity
+
+        /*Map<String, Object> data = new HashMap<>();
         data.put("order", orderList);
 
         for (Map.Entry<MenuItem, MutableInt> entry: mCartList.entrySet()) {
@@ -158,11 +138,11 @@ public class OrderActivity extends AppCompatActivity implements UIActivity,
                 // has failed then getResult() will throw an Exception which will be
                 // propagated down.
                 return (String) Objects.requireNonNull(task.getResult()).getData();
-            });
+            });*/
     }
 
-    @SuppressWarnings("unchecked")
-    private void addListenerForOrderUpdates() {
+    //@SuppressWarnings("unchecked")
+    /*private void addListenerForOrderUpdates() {
         String restaurant = "";
         String currentSession = "";
         if (sharedPreferences.contains("restaurant")) {
@@ -229,5 +209,5 @@ public class OrderActivity extends AppCompatActivity implements UIActivity,
                         }
                     }
                 });
-    }
+    }*/
 }

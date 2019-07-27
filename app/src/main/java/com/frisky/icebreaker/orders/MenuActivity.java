@@ -93,7 +93,7 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
             mOrderTotalText = findViewById(R.id.text_order_amount);
             mViewOrderButton = findViewById(R.id.button_view_order);
             mViewOrderButton.setOnClickListener(v -> {
-                Intent showOrder = new Intent(getApplicationContext(), OrderActivity.class);
+                Intent showOrder = new Intent(getApplicationContext(), CartActivity.class);
                 showOrder.putExtra("table_id", mTableSerial.getText().toString());
                 showOrder.putExtra("order_list", mOrderList);
                 showOrder.putExtra("order_total", mOrderTotal);
