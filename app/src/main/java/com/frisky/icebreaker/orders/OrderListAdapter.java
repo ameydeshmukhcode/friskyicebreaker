@@ -40,6 +40,8 @@ public class OrderListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             super(view);
             mName = view.findViewById(R.id.text_name);
             mStatus = view.findViewById(R.id.text_item_status);
+            mItemCount = view.findViewById(R.id.text_item_count);
+            mItemTotal = view.findViewById(R.id.text_cart_item_total);
             mStatusImage = view.findViewById(R.id.image_item_status);
         }
     }
