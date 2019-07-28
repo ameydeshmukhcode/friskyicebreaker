@@ -112,6 +112,8 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
                 mBottomSheetOrder = findViewById(R.id.bottom_sheet_order);
                 mBottomSheetOrder.setVisibility(View.GONE);
 
+                mCartTotalText = findViewById(R.id.text_order_amount);
+
                 final String restID = getIntent().getStringExtra("restaurant_id");
                 final String tableID = getIntent().getStringExtra("table_id");
 
