@@ -47,7 +47,7 @@
             app:layout_constraintTop_toTopOf="@+id/text_name" />
 
         <TextView
-            android:id="@+id/text_price"
+            android:id="@+id/text_item_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
@@ -72,7 +72,7 @@
             app:layout_constraintTop_toBottomOf="@+id/x" />
 
         <TextView
-            android:id="@+id/rupee_total"
+            android:id="@+id/rupee"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -93,9 +93,9 @@
             android:text="@string/default_number"
             android:textColor="@color/appRed"
             android:textSize="@dimen/text_menu_item_description"
-            app:layout_constraintBottom_toBottomOf="@+id/rupee_total"
-            app:layout_constraintStart_toEndOf="@+id/rupee_total"
-            app:layout_constraintTop_toTopOf="@+id/rupee_total"
+            app:layout_constraintBottom_toBottomOf="@+id/rupee"
+            app:layout_constraintStart_toEndOf="@+id/rupee"
+            app:layout_constraintTop_toTopOf="@+id/rupee"
             app:layout_constraintVertical_bias="0.0" />
 
         <ImageView
@@ -117,7 +117,7 @@
             android:fontFamily="@font/museosans300"
             android:text="@string/status_pending"
             android:textColor="@color/textDark"
-            android:textSize="@dimen/text_menu_item_description"
+            android:textSize="@dimen/text_menu_item_title"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

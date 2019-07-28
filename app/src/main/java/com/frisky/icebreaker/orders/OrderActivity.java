@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.frisky.icebreaker.R;
+import com.frisky.icebreaker.core.structures.OrderItem;
 import com.frisky.icebreaker.core.structures.OrderStatus;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
@@ -24,7 +25,7 @@ public class OrderActivity extends AppCompatActivity {
     OrderListAdapter orderListAdapter;
     RecyclerView mRecyclerOrderListView;
 
-    HashMap<String, OrderStatus> mOrderList = new HashMap<>();
+    HashMap<OrderItem, OrderStatus> mOrderList = new HashMap<>();
 
     @SuppressWarnings("unchecked")
     @Override
@@ -44,7 +45,7 @@ public class OrderActivity extends AppCompatActivity {
         addListenerForOrderUpdates();
 
         if (getIntent().hasExtra("order_list")) {
-            mOrderList = (HashMap<String, OrderStatus>) getIntent().getSerializableExtra("order_list");
+            mOrderList = (HashMap<OrderItem, OrderStatus>) getIntent().getSerializableExtra("order_list");
         }
 
         orderListAdapter = new OrderListAdapter(getApplicationContext(), mOrderList);
@@ -90,19 +91,19 @@ public class OrderActivity extends AppCompatActivity {
                                     String value = entry.getValue().toString();
                                     Log.d("Item", entry.getKey());
                                     if (value.contains("status=pending")) {
-                                        mOrderList.put(entry.getKey(), OrderStatus.PENDING);
+                                        //mOrderList.put(entry.getKey(), OrderStatus.PENDING);
                                         Log.d("Status", "Pending");
                                     }
                                     else if (value.contains("status=accepted")) {
-                                        mOrderList.put(entry.getKey(), OrderStatus.ACCEPTED);
+                                        //mOrderList.put(entry.getKey(), OrderStatus.ACCEPTED);
                                         Log.d("Status", "Accepted");
                                     }
                                     else if (value.contains("status=rejected")) {
-                                        mOrderList.put(entry.getKey(), OrderStatus.REJECTED);
+                                        //mOrderList.put(entry.getKey(), OrderStatus.REJECTED);
                                         Log.d("Status", "Rejected");
                                     }
                                     else if (value.contains("status=cancelled")) {
-                                        mOrderList.put(entry.getKey(), OrderStatus.CANCELLED);
+                                        //mOrderList.put(entry.getKey(), OrderStatus.CANCELLED);
                                         Log.d("Status", "Cancelled");
                                     }
                                 }

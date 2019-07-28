@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.frisky.icebreaker.R;
+import com.frisky.icebreaker.core.structures.OrderItem;
 import com.frisky.icebreaker.core.structures.OrderStatus;
 import com.frisky.icebreaker.ui.assistant.UIAssistant;
 
@@ -21,9 +22,9 @@ import java.util.Objects;
 public class OrderListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context mContext;
-    private HashMap<String, OrderStatus> mOrderList;
+    private HashMap<OrderItem, OrderStatus> mOrderList;
 
-    OrderListAdapter(Context context, HashMap<String, OrderStatus> orderList) {
+    OrderListAdapter(Context context, HashMap<OrderItem, OrderStatus> orderList) {
         this.mContext = context;
         this.mOrderList = orderList;
     }
@@ -32,6 +33,8 @@ public class OrderListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
         TextView mName;
         TextView mStatus;
+        TextView mItemCount;
+        TextView mItemTotal;
         ImageView mStatusImage;
         OrderListViewHolder(@NonNull View view) {
             super(view);
@@ -53,9 +56,11 @@ public class OrderListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
         OrderListAdapter.OrderListViewHolder orderItemHolder = (OrderListAdapter.OrderListViewHolder) viewHolder;
-        String itemID = (String) Objects.requireNonNull(mOrderList.keySet().toArray())[position];
+        OrderItem orderItem = (OrderItem) Objects.requireNonNull(mOrderList.keySet().toArray())[position];
         OrderStatus status = (OrderStatus) mOrderList.values().toArray()[position];
-        orderItemHolder.mName.setText(itemID);
+        orderItemHolder.mName.setText(orderItem.getName());
+        orderItemHolder.mItemCount.setText(orderItem.getCount());
+        orderItemHolder.mItemTotal.setText(orderItem.getTotal());
         orderItemHolder.mStatus.setText(UIAssistant.getInstance().getStatusText(status));
         orderItemHolder.mStatus.setTextColor(ColorStateList.valueOf(mContext.getApplicationContext()
                 .getColor(UIAssistant.getInstance().getStatusColor(status))));

@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.core.structures.MenuItem;
 import com.frisky.icebreaker.core.structures.MutableInt;
+import com.frisky.icebreaker.core.structures.OrderItem;
 import com.frisky.icebreaker.core.structures.OrderStatus;
 import com.frisky.icebreaker.ui.base.UIActivity;
 import com.frisky.icebreaker.ui.components.dialogs.ConfirmOrderDialog;
@@ -106,11 +107,15 @@ public class CartActivity extends AppCompatActivity implements UIActivity,
 
             HashMap<String, Integer> order = new HashMap<>();
 
-            HashMap<String, OrderStatus> orderListFinal = new HashMap<>();
+            HashMap<OrderItem, OrderStatus> orderListFinal = new HashMap<>();
 
             for (Map.Entry<MenuItem, MutableInt> entry: mCartList.entrySet()) {
                 order.put(entry.getKey().getId(), entry.getValue().getValue());
-                orderListFinal.put(entry.getKey().getId(), OrderStatus.PENDING);
+                MenuItem menuItem = entry.getKey();
+                MutableInt itemCount = entry.getValue();
+                OrderItem orderItem = new OrderItem(menuItem.getId(), menuItem.getName(),
+                        itemCount.getValue(), (menuItem.getPrice() * itemCount.getValue()));
+                orderListFinal.put(orderItem, OrderStatus.PENDING);
             }
 
             placeOrder(order);
