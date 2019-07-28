@@ -102,7 +102,7 @@ public class OrderActivity extends AppCompatActivity {
                                                 orderListEntry.setValue(OrderStatus.ACCEPTED);
                                                 Log.d("Status", "Accepted");
                                             }
-                                            else if (value.contains("status=rejected")) {                                                orderListEntry.setValue(OrderStatus.PENDING);
+                                            else if (value.contains("status=rejected")) {
                                                 orderListEntry.setValue(OrderStatus.REJECTED);
                                                 Log.d("Status", "Rejected");
                                             }
