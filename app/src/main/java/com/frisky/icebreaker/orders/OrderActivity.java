@@ -81,40 +81,47 @@ public class OrderActivity extends AppCompatActivity {
                             case ADDED:
                                 Log.d("Added", "to Orders");
                                 break;
-                            case MODIFIED:
-                                mOrderList.clear();
 
+                            case MODIFIED:
                                 Map<String, Object> data;
                                 data = (Map<String, Object>) dc.getDocument().get("items");
                                 assert data != null;
                                 for (Map.Entry<String, Object> entry : data.entrySet()) {
                                     String value = entry.getValue().toString();
-                                    Log.d("Item", entry.getKey());
-                                    if (value.contains("status=pending")) {
-                                        //mOrderList.put(entry.getKey(), OrderStatus.PENDING);
-                                        Log.d("Status", "Pending");
-                                    }
-                                    else if (value.contains("status=accepted")) {
-                                        //mOrderList.put(entry.getKey(), OrderStatus.ACCEPTED);
-                                        Log.d("Status", "Accepted");
-                                    }
-                                    else if (value.contains("status=rejected")) {
-                                        //mOrderList.put(entry.getKey(), OrderStatus.REJECTED);
-                                        Log.d("Status", "Rejected");
-                                    }
-                                    else if (value.contains("status=cancelled")) {
-                                        //mOrderList.put(entry.getKey(), OrderStatus.CANCELLED);
-                                        Log.d("Status", "Cancelled");
+                                    String itemID = entry.getKey();
+                                    Log.d("Item", itemID);
+
+                                    for (Map.Entry<OrderItem, OrderStatus> orderListEntry:
+                                            mOrderList.entrySet()) {
+                                        if (orderListEntry.getKey().getId().equals(itemID)) {
+                                            if (value.contains("status=pending")) {
+                                                orderListEntry.setValue(OrderStatus.PENDING);
+                                                Log.d("Status", "Pending");
+                                            }
+                                            else if (value.contains("status=accepted")) {
+                                                orderListEntry.setValue(OrderStatus.ACCEPTED);
+                                                Log.d("Status", "Accepted");
+                                            }
+                                            else if (value.contains("status=rejected")) {                                                orderListEntry.setValue(OrderStatus.PENDING);
+                                                orderListEntry.setValue(OrderStatus.REJECTED);
+                                                Log.d("Status", "Rejected");
+                                            }
+                                            else if (value.contains("status=cancelled")) {
+                                                orderListEntry.setValue(OrderStatus.CANCELLED);
+                                                Log.d("Status", "Cancelled");
+                                            }
+                                        }
                                     }
                                 }
 
                                 orderListAdapter = new OrderListAdapter(getApplicationContext(), mOrderList);
                                 mRecyclerOrderListView.setAdapter(orderListAdapter);
-
                                 break;
+
                             case REMOVED:
                                 Log.d("Removed", "from Orders");
                                 break;
+
                             default:
                                 break;
                         }
