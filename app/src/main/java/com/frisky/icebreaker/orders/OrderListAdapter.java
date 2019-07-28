@@ -61,8 +61,8 @@ public class OrderListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         OrderItem orderItem = (OrderItem) Objects.requireNonNull(mOrderList.keySet().toArray())[position];
         OrderStatus status = (OrderStatus) mOrderList.values().toArray()[position];
         orderItemHolder.mName.setText(orderItem.getName());
-        orderItemHolder.mItemCount.setText(orderItem.getCount());
-        orderItemHolder.mItemTotal.setText(orderItem.getTotal());
+        orderItemHolder.mItemCount.setText(String.valueOf(orderItem.getCount()));
+        orderItemHolder.mItemTotal.setText(String.valueOf(orderItem.getTotal()));
         orderItemHolder.mStatus.setText(UIAssistant.getInstance().getStatusText(status));
         orderItemHolder.mStatus.setTextColor(ColorStateList.valueOf(mContext.getApplicationContext()
                 .getColor(UIAssistant.getInstance().getStatusColor(status))));
