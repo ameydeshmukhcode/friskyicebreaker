@@ -77,18 +77,18 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
         android:background="@color/lightAccent"
-        app:layout_constraintBottom_toTopOf="@+id/your_total"
+        app:layout_constraintBottom_toTopOf="@+id/cart_total"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/your_total"
+        android:id="@+id/cart_total"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginBottom="8dp"
         android:fontFamily="@font/museosans300"
-        android:text="@string/your_total"
+        android:text="@string/cart_total"
         android:textSize="@dimen/text_title_size"
         app:layout_constraintBottom_toTopOf="@+id/button_confirm_order"
         app:layout_constraintStart_toStartOf="parent" />
@@ -102,9 +102,9 @@
         android:text="@string/rupee"
         android:textColor="@color/appRed"
         android:textSize="@dimen/text_title_size"
-        app:layout_constraintBottom_toBottomOf="@+id/your_total"
+        app:layout_constraintBottom_toBottomOf="@+id/cart_total"
         app:layout_constraintEnd_toStartOf="@+id/text_order_total"
-        app:layout_constraintTop_toTopOf="@+id/your_total" />
+        app:layout_constraintTop_toTopOf="@+id/cart_total" />
 
     <TextView
         android:id="@+id/text_order_total"
@@ -115,9 +115,9 @@
         android:text="@string/default_number"
         android:textColor="@color/appRed"
         android:textSize="@dimen/text_title_size"
-        app:layout_constraintBottom_toBottomOf="@+id/your_total"
+        app:layout_constraintBottom_toBottomOf="@+id/cart_total"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/your_total" />
+        app:layout_constraintTop_toTopOf="@+id/cart_total" />
 
     <Button
         android:id="@+id/button_confirm_order"

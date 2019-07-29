@@ -93,14 +93,16 @@
     <!--Settings Activity-->
     <string name="settings">Settings</string>
 
-    <!--Menu/Order Activity-->
+    <!--Menu/Cart/Order Activity-->
     <string name="at">You\'re at</string>
     <string name="your_order">Your Order</string>
     <string name="currently_at">Currently at</string>
     <string name="cart_active">You have items in the cart</string>
     <string name="view_menu">View Menu</string>
     <string name="your_total">Your total:</string>
+    <string name="cart_total">Cart total:</string>
     <string name="item_total">Item total:</string>
+    <string name="order_total">Order total:</string>
     <string name="clear_bill">Clear Bill</string>
     <string name="rupee">\u20B9</string>
     <string name="view">View</string>
