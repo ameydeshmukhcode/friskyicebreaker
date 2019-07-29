@@ -27,10 +27,12 @@ import java.util.Map;
 import java.util.Objects;
 
 public class CartActivity extends AppCompatActivity implements UIActivity,
-        ConfirmOrderDialog.OnConfirmOrderListener {
+        ConfirmOrderDialog.OnConfirmOrderListener, OnOrderUpdateListener {
 
     Button mConfirmOrderButton;
     ImageButton mBackButton;
+    TextView mCartTotalText;
+    int mCartTotal;
 
     RecyclerView mRecyclerCartListView;
 
@@ -64,7 +66,7 @@ public class CartActivity extends AppCompatActivity implements UIActivity,
                 confirmOrder();
         });
 
-        TextView mTotal = findViewById(R.id.text_order_total);
+        mCartTotalText = findViewById(R.id.text_order_total);
 
         TextView mTableSerial = findViewById(R.id.text_table);
         if (getIntent().hasExtra("table_id")){
@@ -80,7 +82,9 @@ public class CartActivity extends AppCompatActivity implements UIActivity,
         }
 
         if (getIntent().hasExtra("cart_total")) {
-            mTotal.setText(String.valueOf(getIntent().getIntExtra("cart_total", 0)));
+            int cartTotal = getIntent().getIntExtra("cart_total", 0);
+            mCartTotalText.setText(String.valueOf(cartTotal));
+            mCartTotal = cartTotal;
         }
 
         mRecyclerCartListView = findViewById(R.id.recycler_view_cart_list);
@@ -92,7 +96,7 @@ public class CartActivity extends AppCompatActivity implements UIActivity,
         mRecyclerCartListView.setLayoutManager(mMenuListViewLayoutManager);
 
         // specify an adapter (see also next example)
-        CartListAdapter cartListAdapter = new CartListAdapter(getApplicationContext(), mCartList);
+        CartListAdapter cartListAdapter = new CartListAdapter(getApplicationContext(), mCartList, this);
         mRecyclerCartListView.setAdapter(cartListAdapter);
     }
 
@@ -139,5 +143,48 @@ public class CartActivity extends AppCompatActivity implements UIActivity,
                     // propagated down.
                     return (String) Objects.requireNonNull(task.getResult()).getData();
                 });
+    }
+
+    @Override
+    public void addToOrder(MenuItem item) {
+        mCartTotal += item.getPrice();
+        mCartTotalText.setText(String.valueOf(mCartTotal));
+
+        if (mCartList.size() == 0) {
+            mCartList.put(item, new MutableInt());
+        }
+        else {
+            boolean updatedItem = false;
+            for (Map.Entry<MenuItem, MutableInt> entry : mCartList.entrySet()) {
+                if (entry.getKey().getId().equals(item.getId())) {
+                    MutableInt count = entry.getValue();
+                    count.increment();
+                    updatedItem = true;
+                }
+            }
+            if (!updatedItem) {
+                mCartList.put(item, new MutableInt());
+            }
+        }
+    }
+
+    @Override
+    public void removeFromOrder(MenuItem item) {
+        mCartTotal -= item.getPrice();
+
+        for (Map.Entry<MenuItem, MutableInt> entry : mCartList.entrySet()) {
+            if (entry.getKey().getId().equals(item.getId())) {
+                MutableInt count = entry.getValue();
+                count.decrement();
+                if (count.getValue() == 0) {
+                    mCartList.remove(entry.getKey());
+                }
+                break;
+            }
+        }
+        mCartTotalText.setText(String.valueOf(mCartTotal));
+        if (mCartTotal == 0) {
+            super.onBackPressed();
+        }
     }
 }

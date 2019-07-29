@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -20,14 +21,17 @@ public class CartListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     private Context mContext;
     private HashMap<MenuItem, MutableInt> mCartList;
+    private OnOrderUpdateListener orderUpdateListener;
 
-    CartListAdapter(Context context, HashMap<MenuItem, MutableInt> cartList) {
+    CartListAdapter(Context context, HashMap<MenuItem, MutableInt> cartList, OnOrderUpdateListener listener) {
         this.mContext = context;
         this.mCartList = cartList;
+        this.orderUpdateListener = listener;
     }
 
     static class CartListViewHolder extends RecyclerView.ViewHolder {
-
+        ImageButton mAdd;
+        ImageButton mRemove;
         TextView mName;
         TextView mPrice;
         TextView mStatus;
@@ -40,6 +44,8 @@ public class CartListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             mStatus = view.findViewById(R.id.in_cart);
             mCount = view.findViewById(R.id.text_item_count);
             mItemTotal = view.findViewById(R.id.text_cart_item_total);
+            mAdd = view.findViewById(R.id.button_add);
+            mRemove = view.findViewById(R.id.button_remove);
         }
     }
 
@@ -61,6 +67,19 @@ public class CartListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         cartItemHolder.mCount.setText(String.valueOf(count.getValue()));
         cartItemHolder.mPrice.setText(String.valueOf(item.getPrice()));
         cartItemHolder.mItemTotal.setText(String.valueOf(item.getPrice() * count.getValue()));
+        cartItemHolder.mAdd.setOnClickListener(v -> {
+            int countInc = Integer.parseInt(cartItemHolder.mCount.getText().toString()) + 1;
+            cartItemHolder.mCount.setText(String.valueOf(countInc));
+            orderUpdateListener.addToOrder(item);
+        });
+        cartItemHolder.mRemove.setOnClickListener(v -> {
+            int countMod = Integer.parseInt(cartItemHolder.mCount.getText().toString());
+            if (countMod > 0) {
+                int countDec = Integer.parseInt(cartItemHolder.mCount.getText().toString()) - 1;
+                cartItemHolder.mCount.setText(String.valueOf(countDec));
+                orderUpdateListener.removeFromOrder(item);
+            }
+        });
     }
 
     @Override

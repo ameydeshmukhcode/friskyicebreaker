@@ -36,7 +36,7 @@ import java.util.Map;
 import java.util.Objects;
 
 public class MenuActivity extends AppCompatActivity implements UIActivity,
-        MenuItemListAdapter.OnOrderListChangeListener {
+        OnOrderUpdateListener {
 
     SharedPreferences sharedPreferences;
 
