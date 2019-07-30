@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/background_top_corners_rounded"
+    android:background="@drawable/bg_round_rect_top"
     android:elevation="4dp">
 
     <TextView
@@ -14,7 +14,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:fontFamily="@font/museosans300"
-        android:text="@string/order_active"
+        android:text="@string/cart_active"
         android:textColor="@color/textDark"
         android:textSize="@dimen/text_subtitle_size"
         app:layout_constraintStart_toStartOf="parent"
@@ -53,7 +53,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
         android:fontFamily="@font/museosans700"
-        android:text="@string/placeholder_number"
+        android:text="@string/default_number"
         android:textColor="@color/appRed"
         app:layout_constraintBottom_toBottomOf="@+id/your_total"
         app:layout_constraintStart_toEndOf="@+id/rupee"

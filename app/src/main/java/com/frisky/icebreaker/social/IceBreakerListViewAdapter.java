@@ -66,7 +66,7 @@ public class IceBreakerListViewAdapter extends RecyclerView.Adapter<IceBreakerLi
 
         profileImageRef.getDownloadUrl().addOnSuccessListener(uri -> {
             Picasso.get().load(uri).transform(new CircularTransformation()).into(viewHolder.mPicture);
-            Log.i("Image Uri Downloaded", uri.toString());
+            Log.d("Image Uri Downloaded", uri.toString());
         }).addOnFailureListener(e -> Log.e("Uri Download Failed", e.getMessage()));
 
         viewHolder.mCard.setOnClickListener(v -> {

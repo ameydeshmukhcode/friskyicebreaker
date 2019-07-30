@@ -1,10 +1,5 @@
 package com.frisky.icebreaker.orders;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -13,6 +8,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.core.structures.MenuItem;
@@ -36,7 +36,7 @@ import java.util.Map;
 import java.util.Objects;
 
 public class MenuActivity extends AppCompatActivity implements UIActivity,
-        MenuItemListAdapter.OnOrderListChangeListener {
+        OnOrderUpdateListener {
 
     SharedPreferences sharedPreferences;
 
@@ -47,17 +47,18 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
     private List<Object> mMenu = new ArrayList<>();
     private HashMap<String, String> mCategories = new HashMap<>();
 
-    int mOrderTotal = 0;
-    HashMap<MenuItem, MutableInt> mOrderList = new HashMap<>();
+    int mCartTotal = 0;
+    HashMap<MenuItem, MutableInt> mCartList = new HashMap<>();
 
     RecyclerView.Adapter mMenuListViewAdapter;
     RecyclerView mRecyclerMenuListView;
 
     ConstraintLayout mBottomSheetOrder;
-    TextView mOrderTotalText;
-    Button mViewOrderButton;
+    TextView mCartTotalText;
+    Button mViewCartButton;
 
     boolean isSessionActive;
+    boolean startNewSession = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +69,11 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
         isSessionActive = getSharedPreferences(getString(R.string.app_name),
                 MODE_PRIVATE).getBoolean("session_active", false);
 
-        if (isSessionActive || getIntent().hasExtra("start_new_session")) {
+        if (getIntent().hasExtra("start_new_session")) {
+            startNewSession = true;
+        }
+
+        if (isSessionActive || startNewSession) {
             setContentView(R.layout.activity_menu);
         }
         else {
@@ -90,19 +95,19 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
             mBottomSheetOrder = findViewById(R.id.bottom_sheet_order);
             mBottomSheetOrder.setVisibility(View.GONE);
 
-            mOrderTotalText = findViewById(R.id.text_order_amount);
-            mViewOrderButton = findViewById(R.id.button_view_order);
-            mViewOrderButton.setOnClickListener(v -> {
-                Intent showOrder = new Intent(getApplicationContext(), OrderActivity.class);
+            mCartTotalText = findViewById(R.id.text_order_amount);
+            mViewCartButton = findViewById(R.id.button_view_order);
+            mViewCartButton.setOnClickListener(v -> {
+                Intent showOrder = new Intent(getApplicationContext(), CartActivity.class);
                 showOrder.putExtra("table_id", mTableSerial.getText().toString());
-                showOrder.putExtra("order_list", mOrderList);
-                showOrder.putExtra("order_total", mOrderTotal);
+                showOrder.putExtra("cart_list", mCartList);
+                showOrder.putExtra("cart_total", mCartTotal);
                 startActivity(showOrder);
             });
 
             restoreUserSession();
         }
-        else if (getIntent().hasExtra("start_new_session")) {
+        else if (startNewSession) {
             if (getIntent().hasExtra("table_id")
                     && getIntent().hasExtra("restaurant_id")) {
 
@@ -111,6 +116,8 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
 
                 mBottomSheetOrder = findViewById(R.id.bottom_sheet_order);
                 mBottomSheetOrder.setVisibility(View.GONE);
+
+                mCartTotalText = findViewById(R.id.text_order_amount);
 
                 final String restID = getIntent().getStringExtra("restaurant_id");
                 final String tableID = getIntent().getStringExtra("table_id");
@@ -141,7 +148,7 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
                 .add(sessionDetails)
                 .addOnSuccessListener(documentReference -> {
                     final String sessionID = documentReference.getId();
-                    Log.e("", "DocumentSnapshot written with ID: " + documentReference.getId());
+                    Log.d("", "DocumentSnapshot written with ID: " + documentReference.getId());
 
                     Map<String, Object> userSessionDetails = new HashMap<>();
                     userSessionDetails.put("session_active", true);
@@ -150,6 +157,8 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
 
                     sharedPreferences.edit()
                             .putBoolean("session_active", true)
+                            .putString("restaurant", restID)
+                            .putString("current_session", sessionID)
                             .apply();
 
                     firebaseFirestore.collection("users")
@@ -165,7 +174,7 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
                                         .collection("tables")
                                         .document(tableID)
                                         .set(tableSessionDetails, SetOptions.merge())
-                                        .addOnSuccessListener(aVoid1 -> Log.i("Success", "Table details updated"));
+                                        .addOnSuccessListener(aVoid1 -> Log.d("Success", "Table details updated"));
                             });
                 })
                 .addOnFailureListener(e -> Log.e("", "Error adding document", e));
@@ -191,8 +200,10 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
                 if (document == null)
                     return;
                 if (document.exists()) {
-                    mRestName.setText(document.getString("name"));
-                    Log.i("Exists", "DocumentSnapshot data: " + document.getData());
+                    String restaurantName = document.getString("name");
+                    mRestName.setText(restaurantName);
+                    sharedPreferences.edit().putString("restaurant_name", restaurantName).apply();
+                    Log.d("Exists", "DocumentSnapshot data: " + document.getData());
                 }
                 else {
                     Log.e("Doesn't exist", "No such document");
@@ -217,7 +228,8 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
                 if (document.exists()) {
                     String tableSerial = "Table " + document.get("number");
                     mTableSerial.setText(tableSerial);
-                    Log.i("Exists", "DocumentSnapshot data: " + document.getData());
+                    sharedPreferences.edit().putString("table_serial", tableSerial).apply();
+                    Log.d("Exists", "DocumentSnapshot data: " + document.getData());
                 }
                 else {
                     Log.e("Doesn't exist", "No such document");
@@ -276,9 +288,15 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
                             category = currentCategory;
                             mMenu.add(currentCategory);
                         }
+                        boolean available = true;
                         String name = document.getString("name");
+                        if (document.contains("is_available")) {
+                            if (!(boolean) document.get("is_available")) {
+                                available = false;
+                            }
+                        }
                         int cost = Integer.parseInt(Objects.requireNonNull(document.getString("cost")));
-                        MenuItem item = new MenuItem(document.getId(), name, name, cost);
+                        MenuItem item = new MenuItem(document.getId(), name, name + " description", cost, available);
                         mMenu.add(item);
                         mMenuListViewAdapter.notifyDataSetChanged();
                     }
@@ -292,16 +310,16 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
 
     @Override
     public void addToOrder(MenuItem item) {
-        mOrderTotal += item.getPrice();
+        mCartTotal += item.getPrice();
         mBottomSheetOrder.setVisibility(View.VISIBLE);
-        mOrderTotalText.setText(String.valueOf(mOrderTotal));
+        mCartTotalText.setText(String.valueOf(mCartTotal));
 
-        if (mOrderList.size() == 0) {
-            mOrderList.put(item, new MutableInt());
+        if (mCartList.size() == 0) {
+            mCartList.put(item, new MutableInt());
         }
         else {
             boolean updatedItem = false;
-            for (Map.Entry<MenuItem, MutableInt> entry : mOrderList.entrySet()) {
+            for (Map.Entry<MenuItem, MutableInt> entry : mCartList.entrySet()) {
                 if (entry.getKey().getId().equals(item.getId())) {
                     MutableInt count = entry.getValue();
                     count.increment();
@@ -309,7 +327,7 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
                 }
             }
             if (!updatedItem) {
-                mOrderList.put(item, new MutableInt());
+                mCartList.put(item, new MutableInt());
             }
         }
 
@@ -320,21 +338,21 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
 
     @Override
     public void removeFromOrder(MenuItem item) {
-        mOrderTotal -= item.getPrice();
+        mCartTotal -= item.getPrice();
 
-        for (Map.Entry<MenuItem, MutableInt> entry : mOrderList.entrySet()) {
+        for (Map.Entry<MenuItem, MutableInt> entry : mCartList.entrySet()) {
             if (entry.getKey().getId().equals(item.getId())) {
                 MutableInt count = entry.getValue();
                 count.decrement();
                 if (count.getValue() == 0) {
-                    mOrderList.remove(entry.getKey());
+                    mCartList.remove(entry.getKey());
                 }
                 break;
             }
         }
 
-        if (mOrderTotal > 0) {
-            mOrderTotalText.setText(String.valueOf(mOrderTotal));
+        if (mCartTotal > 0) {
+            mCartTotalText.setText(String.valueOf(mCartTotal));
         }
         else {
             mBottomSheetOrder.setVisibility(View.GONE);

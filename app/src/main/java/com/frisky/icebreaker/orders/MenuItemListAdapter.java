@@ -23,7 +23,7 @@ public class MenuItemListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private final int CATEGORY_VIEW = 77;
     private final int MENU_ITEM_VIEW = 88;
 
-    private OnOrderListChangeListener orderListChangeListener;
+    private OnOrderUpdateListener orderUpdateListener;
 
     static class MenuItemHolder extends RecyclerView.ViewHolder {
         ImageButton mAdd;
@@ -32,14 +32,16 @@ public class MenuItemListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         TextView mDescription;
         TextView mPrice;
         TextView mCount;
-        MenuItemHolder(View v) {
-            super(v);
-            mAdd = v.findViewById(R.id.button_add);
-            mRemove = v.findViewById(R.id.button_remove);
-            mName = v.findViewById(R.id.text_name);
-            mDescription = v.findViewById(R.id.text_description);
-            mPrice = v.findViewById(R.id.text_price);
-            mCount = v.findViewById(R.id.text_item_count);
+        TextView mAvailable;
+        MenuItemHolder(View view) {
+            super(view);
+            mAdd = view.findViewById(R.id.button_add);
+            mRemove = view.findViewById(R.id.button_remove);
+            mName = view.findViewById(R.id.text_name);
+            mDescription = view.findViewById(R.id.text_description);
+            mPrice = view.findViewById(R.id.text_price);
+            mCount = view.findViewById(R.id.text_item_count);
+            mAvailable = view.findViewById(R.id.text_available);
         }
     }
 
@@ -51,10 +53,10 @@ public class MenuItemListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }
     }
 
-    MenuItemListAdapter(List<Object> menu, HashMap<String, String> categories, OnOrderListChangeListener listener) {
+    MenuItemListAdapter(List<Object> menu, HashMap<String, String> categories, OnOrderUpdateListener listener) {
         this.mMenu = menu;
         this.mCategories = categories;
-        this.orderListChangeListener = listener;
+        this.orderUpdateListener = listener;
     }
 
     @Override
@@ -112,27 +114,28 @@ public class MenuItemListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             case MENU_ITEM_VIEW:
                 MenuItemHolder itemHolder = (MenuItemHolder) viewHolder;
                 MenuItem menuItem = (MenuItem) mMenu.get(position);
-                itemHolder.mRemove.setVisibility(View.INVISIBLE);
+                boolean available = menuItem.getAvailable();
+
+                if (!available) {
+                    itemHolder.mAdd.setEnabled(false);
+                    itemHolder.mRemove.setEnabled(false);
+                    itemHolder.mAvailable.setText(R.string.unavailable);
+                }
+
                 itemHolder.mName.setText(menuItem.getName());
                 itemHolder.mDescription.setText(menuItem.getDescription());
                 itemHolder.mPrice.setText(String.valueOf(menuItem.getPrice()));
                 itemHolder.mAdd.setOnClickListener(v -> {
-                    if (itemHolder.mRemove.getVisibility() == View.INVISIBLE) {
-                        itemHolder.mRemove.setVisibility(View.VISIBLE);
-                    }
                     int countInc = Integer.parseInt(itemHolder.mCount.getText().toString()) + 1;
                     itemHolder.mCount.setText(String.valueOf(countInc));
-                    orderListChangeListener.addToOrder(menuItem);
+                    orderUpdateListener.addToOrder(menuItem);
                 });
                 itemHolder.mRemove.setOnClickListener(v -> {
                     int count = Integer.parseInt(itemHolder.mCount.getText().toString());
-                    if (count == 1) {
-                        itemHolder.mRemove.setVisibility(View.INVISIBLE);
-                    }
                     if (count > 0) {
                         int countDec = Integer.parseInt(itemHolder.mCount.getText().toString()) - 1;
                         itemHolder.mCount.setText(String.valueOf(countDec));
-                        orderListChangeListener.removeFromOrder(menuItem);
+                        orderUpdateListener.removeFromOrder(menuItem);
                     }
                 });
                 break;
@@ -142,10 +145,5 @@ public class MenuItemListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     @Override
     public int getItemCount() {
         return mMenu.size();
-    }
-
-    interface OnOrderListChangeListener {
-        void addToOrder(MenuItem item);
-        void removeFromOrder(MenuItem item);
     }
 }

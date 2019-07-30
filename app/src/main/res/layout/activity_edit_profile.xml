@@ -46,7 +46,7 @@
         android:layout_width="0dp"
         android:layout_height="@dimen/input_about_me_height"
         android:layout_marginTop="8dp"
-        android:background="@drawable/background_round_rect"
+        android:background="@drawable/bg_round_rect"
         android:ems="10"
         android:fontFamily="@font/museosans300"
         android:gravity="start|top"

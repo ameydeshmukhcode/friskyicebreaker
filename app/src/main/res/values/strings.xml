@@ -11,7 +11,12 @@
     <string name="google">Google</string>
     <string name="apply">Apply</string>
     <string name="cancel">Cancel</string>
+    <string name="ok">OK</string>
     <string name="scan_qr_code">Scan QR Code</string>
+    <string name="dash">-</string>
+    <string name="default_number">0</string>
+    <string name="count_indicator">x</string>
+    <string name="placeholder_text">Some text</string>
 
     <!--Login Page-->
     <string name="sign_in">Sign In</string>
@@ -26,7 +31,8 @@
     <string name="age_check">I\'m 18 years and older.</string>
     <string name="terms">By signing up, you\'re agreeing to our Terms and Privacy Policies</string>
 
-    <!--Home Page-->
+    <!--Restaurant Activity-->
+    <string name="live_count">Live count</string>
     <!--Restaurant View-->
     <string name="search_restaurants">Search restaurants&#8230;</string>
     <string name="filters">Filters</string>
@@ -35,13 +41,16 @@
     <string name="type">Type</string>
     <string name="city">City</string>
     <string name="features">Features</string>
+
     <!--Social-->
     <string name="chats">Chats</string>
     <string name="pending">Pending</string>
     <string name="ping_rec">You have been pinged by </string>
     <string name="ping_send">You have pinged </string>
+
     <!--IceBreaker-->
     <string name="hide_visibility">Hide Visibility</string>
+
     <!--Profile-->
     <string name="about_me">About me</string>
     <string name="about">About</string>
@@ -62,6 +71,11 @@
         <item>@string/female</item>
         <item>@string/other</item>
     </string-array>
+    <!--Image Picker Dialog-->
+    <string name="pick_image">Pick Image</string>
+    <string name="image_gallery">Choose from Gallery</string>
+    <string name="image_camera">Take a new photo</string>
+
     <!-- Notifications -->
     <string name="clear_all">Clear All</string>
     <string name="unread">Unread:</string>
@@ -72,9 +86,6 @@
     <string name="enter_bio">Enter Bio</string>
     <string name="uploading_details">Uploading Details</string>
 
-    <!--Restaurant Activity-->
-    <string name="live_count">Live count</string>
-
     <!--Chat Activity-->
     <string name="type_message">Type a message&#8230;</string>
     <string name="send_message">Send</string>
@@ -82,30 +93,35 @@
     <!--Settings Activity-->
     <string name="settings">Settings</string>
 
-    <!--Menu/Order Activity-->
+    <!--Menu/Cart/Order Activity-->
     <string name="at">You\'re at</string>
     <string name="your_order">Your Order</string>
     <string name="currently_at">Currently at</string>
-    <string name="order_active">Your order is being processed</string>
+    <string name="cart_active">You have items in the cart</string>
     <string name="view_menu">View Menu</string>
     <string name="your_total">Your total:</string>
+    <string name="cart_total">Cart total:</string>
+    <string name="item_total">Item total:</string>
+    <string name="order_total">Order total:</string>
     <string name="clear_bill">Clear Bill</string>
     <string name="rupee">\u20B9</string>
     <string name="view">View</string>
     <string name="add">Add</string>
     <string name="menu">Menu</string>
+    <string name="confirm_order">Confirm Order</string>
+    <string name="add_more">Add More</string>
+    <string name="unavailable">Unavailable</string>
+    <string name="in_cart">In cart</string>
     <!-- Status -->
     <string name="status_pending">Pending</string>
     <string name="status_accepted">Accepted</string>
     <string name="status_rejected">Rejected</string>
     <string name="status_cancelled">Cancelled</string>
-
-    <!--Image Picker Dialog-->
-    <string name="pick_image">Pick Image</string>
-    <string name="image_gallery">Choose from Gallery</string>
-    <string name="image_camera">Take a new photo</string>
+    <!-- Confirm Order Dialog -->
+    <string name="confirm_order_info">Send order to kitchen for preparation?</string>
 
     <!-- Errors -->
+    <!-- Sign Up Sign In errors -->
     <string name="error_weak_password">Weak password.\nPassword length should be more than 6 characters.</string>
     <string name="error_invalid_email">Invalid email entered. Enter a valid email.</string>
     <string name="error_duplicate_email">Account with this email already exists.\nTry \'Forgot Password?\'</string>
@@ -120,9 +136,4 @@
     <string name="empty_state_scan_qr">You haven\'t ordered anything yet.\nTo get the menu and start ordering,\n
         scan the QR code on the table.</string>
 
-    <string name="dash">-</string>
-    <string name="default_count">0</string>
-
-    <string name="placeholder_text">Some text</string>
-    <string name="placeholder_number">23</string>
 </resources>

@@ -8,6 +8,7 @@ public class User {
     private String bio;
     private int age;
     private Date dateOfBirth;
+
     public User() {
     }
 

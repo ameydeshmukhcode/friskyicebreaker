@@ -33,6 +33,8 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.Map;
+
 public class HomeActivity extends AppCompatActivity implements UIActivity, BottomNavigationView.OnNavigationItemSelectedListener {
 
     ConstraintLayout mBottomSheet;
@@ -42,8 +44,6 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
     TextView mTableName;
 
     Intent mResumeSessionIntent;
-
-    ImageButton mBottomNavOrderButton;
 
     FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -56,6 +56,10 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
         mResumeSessionIntent = new Intent(getApplicationContext(), MenuActivity.class);
         sharedPreferences = getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE);
 
+        for (Map.Entry<String, ?> entry : sharedPreferences.getAll().entrySet()) {
+            Log.d("Saved Entry", entry.getKey());
+        }
+
         initUI();
         loadFragment(new RestaurantViewFragment());
         addListenerForSessionChange();
@@ -64,7 +68,6 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
     @Override
     protected void onResume() {
         super.onResume();
-        checkSessionStatus();
     }
 
     @Override
@@ -107,11 +110,11 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
         mToolbarText.setTypeface(typeface);
 
         mSocialButton = findViewById(R.id.button_app_bar_right);
-        mSocialButton.setImageResource(R.drawable.round_chat_24);
+        mSocialButton.setImageResource(R.drawable.ic_chat);
         mSocialButton.setOnClickListener(v -> loadFragment(new SocialFragment()));
 
         mScanQRCodeButton = findViewById(R.id.button_app_bar_left);
-        mScanQRCodeButton.setImageResource(R.drawable.round_qr_code);
+        mScanQRCodeButton.setImageResource(R.drawable.ic_qr_code);
         mScanQRCodeButton.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), QRScanActivity.class)));
 
         BottomNavigationView navigation = findViewById(R.id.bottom_navigation);
@@ -121,43 +124,35 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
         mIceBreakerButton.setOnClickListener(v -> loadFragment(new IceBreakerFragment()));
     }
 
-    private void checkSessionStatus() {
-        FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+    private void addListenerForSessionChange() {
+        final DocumentReference docRef = FirebaseFirestore.getInstance().collection("users")
+                .document(mUser.getUid());
 
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        docRef.addSnapshotListener((snapshot, e) -> {
+            if (e != null) {
+                Log.e("Failed", "Listen failed.", e);
+                return;
+            }
 
-        if (user == null)
-            return;
+            if (snapshot != null && snapshot.exists()) {
+                boolean sessionActive = false;
+                if (snapshot.contains("session_active")) {
+                    sessionActive = (boolean) snapshot.get("session_active");
+                }
 
-        firebaseFirestore.collection("users")
-                .document(user.getUid())
-                .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        DocumentSnapshot document = task.getResult();
-                        if (document == null)
-                            return;
-                        if (document.contains("session_active")) {
-                            boolean value = (boolean) document.get("session_active");
-                            sharedPreferences.edit()
-                                    .putBoolean("session_active", value)
-                                    .apply();
+                if (sessionActive) {
+                    enableSession();
+                }
+                else {
+                    disableSession();
+                }
 
-                            boolean isSessionActive = getSharedPreferences(getString(R.string.app_name),
-                                    MODE_PRIVATE).getBoolean("session_active", false);
-
-                            if (isSessionActive) {
-                                enableSession();
-                            }
-                            else {
-                                disableSession();
-                            }
-                        }
-                        else {
-                            disableSession();
-                        }
-                    }
-                });
+                Log.d("Snapshot Exists", "Current data: " + snapshot.getData());
+            }
+            else {
+                Log.d("No Snapshot", "Current data: null");
+            }
+        });
     }
 
     private void getSessionDetails() {
@@ -185,6 +180,11 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
                     DocumentReference restaurantRef = firebaseFirestore
                             .collection("restaurants")
                             .document(restaurant);
+
+                    sharedPreferences.edit()
+                            .putString("restaurant", restaurant)
+                            .putString("current_session", currentSession)
+                            .apply();
 
                     restaurantRef.get()
                         .addOnCompleteListener(task1 -> {
@@ -256,52 +256,24 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
         });
     }
 
-    private void addListenerForSessionChange() {
-        final DocumentReference docRef = FirebaseFirestore.getInstance().collection("users")
-                .document(mUser.getUid());
-
-        docRef.addSnapshotListener((snapshot, e) -> {
-            if (e != null) {
-                Log.w("Failed", "Listen failed.", e);
-                return;
-            }
-
-            if (snapshot != null && snapshot.exists()) {
-                boolean sessionActive = (boolean) snapshot.get("session_active");
-
-                boolean isSessionActive = getSharedPreferences(getString(R.string.app_name),
-                        MODE_PRIVATE).getBoolean("session_active", false);
-                
-                if (sessionActive) {
-                    enableSession();
-                }
-                else if (isSessionActive){
-                    disableSession();
-                }
-                
-                Log.d("Snapshot Exists", "Current data: " + snapshot.getData());
-            }
-            else {
-                Log.d("No Snapshot", "Current data: null");
-            }
-        });
-    }
-
     private void enableSession() {
         mRestaurantName = findViewById(R.id.text_restaurant);
         mTableName = findViewById(R.id.text_table);
 
         getSessionDetails();
 
-        mViewMenuButton = findViewById(R.id.button_view_menu);
+        mViewMenuButton = findViewById(R.id.button_menu);
         mViewMenuButton.setOnClickListener(v -> startActivity(mResumeSessionIntent));
     }
 
     private void disableSession() {
         mBottomSheet.setVisibility(View.GONE);
-        mBottomNavOrderButton.setEnabled(true);
         sharedPreferences.edit()
                 .putBoolean("session_active", false)
+                .remove("restaurant")
+                .remove("restaurant_name")
+                .remove("current_session")
+                .remove("table_serial")
                 .apply();
     }
 
@@ -309,9 +281,9 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
         Fragment currentFragment = getSupportFragmentManager().getFragment(Bundle.EMPTY, "");
 
         if (currentFragment != null)
-            Log.i("Current Frag", currentFragment.toString());
+            Log.d("Current Frag", currentFragment.toString());
 
-        Log.i("Change To", fragment.toString());
+        Log.d("Change To", fragment.toString());
 
         getSupportFragmentManager()
                 .beginTransaction()

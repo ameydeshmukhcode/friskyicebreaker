@@ -82,7 +82,7 @@ public class EditImagesAdapter extends RecyclerView.Adapter<EditImagesAdapter.Im
             profileImageRef.getDownloadUrl().addOnSuccessListener(uri -> {
                 addToImageList(uri);
                 notifyDataSetChanged();
-                Log.i("Image Uri Downloaded", uri.toString());
+                Log.d("Image Uri Downloaded", uri.toString());
             }).addOnFailureListener(e -> Log.e("Uri Download Failed", e.getMessage()));
         }
     }

@@ -55,7 +55,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:fontFamily="@font/museosans300"
-            android:text="@string/placeholder_number"
+            android:text="@string/default_number"
             android:textSize="@dimen/text_subtitle_size"
             app:layout_constraintBottom_toBottomOf="@+id/app_name"
             app:layout_constraintStart_toEndOf="@+id/version"

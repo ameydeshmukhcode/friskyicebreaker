@@ -56,11 +56,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:background="@drawable/background_badge"
+            android:background="@drawable/bg_badge"
             android:fontFamily="@font/museosans900"
             android:gravity="center"
             android:padding="4dp"
-            android:text="@string/placeholder_number"
+            android:text="@string/default_number"
             android:textColor="@color/textLight"
             android:textSize="@dimen/text_title_size"
             app:layout_constraintBottom_toBottomOf="@+id/text_pub_name"
@@ -80,7 +80,7 @@
                 <!--android:id="@+id/live_indicator"-->
                 <!--android:layout_width="@dimen/live_indicator_dimen"-->
                 <!--android:layout_height="@dimen/live_indicator_dimen"-->
-                <!--android:background="@drawable/background_circular"-->
+                <!--android:background="@drawable/bg_circular"-->
                 <!--android:backgroundTint="@color/appGreen"-->
                 <!--app:layout_constraintBottom_toBottomOf="@+id/live_count"-->
                 <!--app:layout_constraintEnd_toStartOf="@+id/live_count"-->
@@ -105,7 +105,7 @@
                 <!--android:layout_width="0dp"-->
                 <!--android:layout_height="wrap_content"-->
                 <!--android:layout_marginTop="8dp"-->
-                <!--android:background="@drawable/background_round_rect"-->
+                <!--android:background="@drawable/bg_round_rect"-->
                 <!--android:fontFamily="@font/museosans700"-->
                 <!--android:gravity="center"-->
                 <!--android:padding="6dp"-->

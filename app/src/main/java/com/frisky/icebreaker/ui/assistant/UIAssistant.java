@@ -49,13 +49,13 @@ public class UIAssistant {
 
     public int getStatusIcon(OrderStatus status) {
         switch (status) {
-            case PENDING: return R.drawable.round_pending_24;
-            case ACCEPTED: return R.drawable.round_accepted_24;
+            case PENDING: return R.drawable.ic_status_pending;
+            case ACCEPTED: return R.drawable.ic_status_accepted;
             case REJECTED:
-            case CANCELLED: return R.drawable.round_rejected_24;
+            case CANCELLED: return R.drawable.ic_status_rejected;
         }
 
-        return R.drawable.round_rejected_24;
+        return R.drawable.ic_status_rejected;
     }
 
     public String getStatusText(OrderStatus status) {

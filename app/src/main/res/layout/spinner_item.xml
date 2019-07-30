@@ -3,7 +3,7 @@
     android:id="@+id/text_spinner"
     android:layout_width="match_parent"
     android:layout_height="@dimen/input_primary_height"
-    android:background="@drawable/background_circular"
+    android:background="@drawable/bg_circular"
     android:fontFamily="@font/museosans300"
     android:gravity="center_vertical"
     android:paddingStart="@dimen/input_primary_start_padding"

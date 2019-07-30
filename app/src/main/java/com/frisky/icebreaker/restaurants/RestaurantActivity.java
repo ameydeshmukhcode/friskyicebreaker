@@ -38,7 +38,7 @@ public class RestaurantActivity extends AppCompatActivity implements UIActivity 
         mAppBarLayout = findViewById(R.id.app_bar_container);
         mToolbar = findViewById(R.id.app_bar_pub);
 
-        mToolbar.setNavigationIcon(R.drawable.round_arrow_back_24);
+        mToolbar.setNavigationIcon(R.drawable.ic_arrow_back);
         mToolbar.setNavigationOnClickListener(v -> onBackPressed());
 
         if (getIntent().hasExtra("name")){
@@ -64,7 +64,7 @@ public class RestaurantActivity extends AppCompatActivity implements UIActivity 
 
         if (getIntent().hasExtra("id")) {
             String id = getIntent().getStringExtra("id");
-            Log.i("ID", id);
+            Log.d("ID", id);
         }
 
         FloatingActionButton fab = findViewById(R.id.fab_chat_room);

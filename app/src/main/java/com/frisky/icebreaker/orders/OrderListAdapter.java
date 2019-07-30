@@ -1,6 +1,7 @@
 package com.frisky.icebreaker.orders;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,8 +12,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.frisky.icebreaker.R;
-import com.frisky.icebreaker.core.structures.MenuItem;
-import com.frisky.icebreaker.core.structures.MutableInt;
+import com.frisky.icebreaker.core.structures.OrderItem;
+import com.frisky.icebreaker.core.structures.OrderStatus;
+import com.frisky.icebreaker.ui.assistant.UIAssistant;
 
 import java.util.HashMap;
 import java.util.Objects;
@@ -20,9 +22,9 @@ import java.util.Objects;
 public class OrderListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context mContext;
-    private HashMap<MenuItem, MutableInt> mOrderList;
+    private HashMap<OrderItem, OrderStatus> mOrderList;
 
-    OrderListAdapter(Context context, HashMap<MenuItem, MutableInt> orderList) {
+    OrderListAdapter(Context context, HashMap<OrderItem, OrderStatus> orderList) {
         this.mContext = context;
         this.mOrderList = orderList;
     }
@@ -30,18 +32,17 @@ public class OrderListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     static class OrderListViewHolder extends RecyclerView.ViewHolder {
 
         TextView mName;
-        TextView mPrice;
         TextView mStatus;
-        TextView mCount;
-        ImageView mImageStatus;
-
+        TextView mItemCount;
+        TextView mItemTotal;
+        ImageView mStatusImage;
         OrderListViewHolder(@NonNull View view) {
             super(view);
             mName = view.findViewById(R.id.text_name);
-            mPrice = view.findViewById(R.id.text_price);
-            mStatus = view.findViewById(R.id.text_status);
-            mImageStatus = view.findViewById(R.id.image_status);
-            mCount = view.findViewById(R.id.text_count);
+            mStatus = view.findViewById(R.id.text_item_status);
+            mItemCount = view.findViewById(R.id.text_item_count);
+            mItemTotal = view.findViewById(R.id.text_cart_item_total);
+            mStatusImage = view.findViewById(R.id.image_item_status);
         }
     }
 
@@ -56,12 +57,18 @@ public class OrderListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
-        OrderListViewHolder orderHolder = (OrderListViewHolder) viewHolder;
-        MenuItem item = (MenuItem) Objects.requireNonNull(mOrderList.keySet().toArray())[position];
-        MutableInt count = (MutableInt) mOrderList.values().toArray()[position];
-        orderHolder.mName.setText(item.getName());
-        orderHolder.mCount.setText(String.valueOf(count.getValue()));
-        orderHolder.mPrice.setText(String.valueOf(item.getPrice() * count.getValue()));
+        OrderListAdapter.OrderListViewHolder orderItemHolder = (OrderListAdapter.OrderListViewHolder) viewHolder;
+        OrderItem orderItem = (OrderItem) Objects.requireNonNull(mOrderList.keySet().toArray())[position];
+        OrderStatus status = (OrderStatus) mOrderList.values().toArray()[position];
+        orderItemHolder.mName.setText(orderItem.getName());
+        orderItemHolder.mItemCount.setText(String.valueOf(orderItem.getCount()));
+        orderItemHolder.mItemTotal.setText(String.valueOf(orderItem.getTotal()));
+        orderItemHolder.mStatus.setText(UIAssistant.getInstance().getStatusText(status));
+        orderItemHolder.mStatus.setTextColor(ColorStateList.valueOf(mContext.getApplicationContext()
+                .getColor(UIAssistant.getInstance().getStatusColor(status))));
+        orderItemHolder.mStatusImage.setImageResource(UIAssistant.getInstance().getStatusIcon(status));
+        orderItemHolder.mStatusImage.setImageTintList(ColorStateList.valueOf(mContext.getApplicationContext()
+                .getColor(UIAssistant.getInstance().getStatusColor(status))));
     }
 
     @Override

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".orders.MenuActivity">
+    tools:context=".orders.CartActivity">
 
     <ImageButton
         android:id="@+id/button_back"
@@ -17,31 +17,17 @@
         app:srcCompat="@drawable/ic_arrow_back" />
 
     <TextView
-        android:id="@+id/youre_at"
+        android:id="@+id/your_order"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/museosans300"
-        android:text="@string/at"
+        android:text="@string/your_order"
         android:textColor="@color/textDark"
         android:textSize="@dimen/app_bar_text_size"
         app:layout_constraintBottom_toBottomOf="@+id/button_back"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/text_pub_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/museosans700"
-        android:text="@string/placeholder_text"
-        android:textAllCaps="true"
-        android:textSize="@dimen/app_bar_text_size"
-        app:layout_constraintBottom_toBottomOf="@+id/text_table"
-        app:layout_constraintEnd_toStartOf="@+id/text_table"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/text_table" />
 
     <TextView
         android:id="@+id/text_table"
@@ -56,7 +42,7 @@
         android:textColor="@color/textDark"
         android:textSize="@dimen/app_bar_text_size"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/text_pub_name"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_back" />
 
     <View
@@ -71,33 +57,82 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_table" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view_cart_list"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:padding="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <View
+        android:id="@+id/divider_bottom"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/divider_height"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        android:background="@color/lightAccent"
+        app:layout_constraintBottom_toTopOf="@+id/cart_total"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <TextView
-        android:id="@+id/menu"
+        android:id="@+id/cart_total"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:fontFamily="@font/museosans700"
-        android:text="@string/menu"
+        android:layout_marginStart="32dp"
+        android:layout_marginBottom="8dp"
+        android:fontFamily="@font/museosans300"
+        android:text="@string/cart_total"
         android:textSize="@dimen/text_title_size"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider" />
+        app:layout_constraintBottom_toTopOf="@+id/button_confirm_order"
+        app:layout_constraintStart_toStartOf="parent" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view"
-        android:layout_width="0dp"
+    <TextView
+        android:id="@+id/rupee"
+        android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/menu" />
+        android:layout_marginEnd="2dp"
+        android:fontFamily="@font/museosans700"
+        android:text="@string/rupee"
+        android:textColor="@color/appRed"
+        android:textSize="@dimen/text_title_size"
+        app:layout_constraintBottom_toBottomOf="@+id/cart_total"
+        app:layout_constraintEnd_toStartOf="@+id/text_order_total"
+        app:layout_constraintTop_toTopOf="@+id/cart_total" />
 
-    <include
-        android:id="@+id/bottom_sheet_order"
-        layout="@layout/bottom_sheet_order"
+    <TextView
+        android:id="@+id/text_order_total"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginEnd="32dp"
+        android:fontFamily="@font/museosans700"
+        android:text="@string/default_number"
+        android:textColor="@color/appRed"
+        android:textSize="@dimen/text_title_size"
+        app:layout_constraintBottom_toBottomOf="@+id/cart_total"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/cart_total" />
+
+    <Button
+        android:id="@+id/button_confirm_order"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/bg_round_rect"
+        android:backgroundTint="@color/appGreen"
+        android:fontFamily="@font/museosans700"
+        android:text="@string/confirm_order"
+        android:textAllCaps="false"
+        android:textColor="@color/textLight"
+        android:textSize="@dimen/text_button_primary_size"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

@@ -23,7 +23,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        android:background="@drawable/background_outline"
+        android:background="@drawable/bg_chat"
         android:ems="10"
         android:fontFamily="@font/museosans300"
         android:hint="@string/type_message"
@@ -45,7 +45,7 @@
         android:layout_height="@dimen/button_send_message_dimen"
         android:layout_marginEnd="4dp"
         android:layout_marginBottom="4dp"
-        android:background="@drawable/background_circular"
+        android:background="@drawable/bg_circular"
         android:backgroundTint="@color/colorPrimary"
         android:contentDescription="@string/send_message"
         android:elevation="2dp"
@@ -54,5 +54,5 @@
         app:layout_constraintBottom_toBottomOf="@+id/input_message"
         app:layout_constraintDimensionRatio="1"
         app:layout_constraintEnd_toEndOf="@+id/input_message"
-        app:srcCompat="@drawable/round_send_24" />
+        app:srcCompat="@drawable/ic_send" />
 </androidx.constraintlayout.widget.ConstraintLayout>
