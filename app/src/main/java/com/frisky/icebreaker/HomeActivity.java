@@ -264,9 +264,6 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
 
         mViewMenuButton = findViewById(R.id.button_menu);
         mViewMenuButton.setOnClickListener(v -> startActivity(mResumeSessionIntent));
-
-        Log.e("restaurant", sharedPreferences.getString("restaurant", ""));
-        Log.e("session id", sharedPreferences.getString("current_session", ""));
     }
 
     private void disableSession() {
