@@ -58,6 +58,7 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
     Button mViewCartButton;
 
     boolean isSessionActive;
+    boolean startNewSession = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +69,11 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
         isSessionActive = getSharedPreferences(getString(R.string.app_name),
                 MODE_PRIVATE).getBoolean("session_active", false);
 
-        if (isSessionActive || getIntent().hasExtra("start_new_session")) {
+        if (getIntent().hasExtra("start_new_session")) {
+            startNewSession = true;
+        }
+
+        if (isSessionActive || startNewSession) {
             setContentView(R.layout.activity_menu);
         }
         else {
@@ -102,7 +107,7 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
 
             restoreUserSession();
         }
-        else if (getIntent().hasExtra("start_new_session")) {
+        else if (startNewSession) {
             if (getIntent().hasExtra("table_id")
                     && getIntent().hasExtra("restaurant_id")) {
 
@@ -195,7 +200,9 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
                 if (document == null)
                     return;
                 if (document.exists()) {
-                    mRestName.setText(document.getString("name"));
+                    String restaurantName = document.getString("name");
+                    mRestName.setText(restaurantName);
+                    sharedPreferences.edit().putString("restaurant_name", restaurantName).apply();
                     Log.d("Exists", "DocumentSnapshot data: " + document.getData());
                 }
                 else {
@@ -221,6 +228,7 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
                 if (document.exists()) {
                     String tableSerial = "Table " + document.get("number");
                     mTableSerial.setText(tableSerial);
+                    sharedPreferences.edit().putString("table_serial", tableSerial).apply();
                     Log.d("Exists", "DocumentSnapshot data: " + document.getData());
                 }
                 else {
