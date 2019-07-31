@@ -12,6 +12,7 @@ import android.util.TypedValue;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.frisky.icebreaker.R;
@@ -24,6 +25,7 @@ public class EditProfileActivity extends AppCompatActivity implements UIActivity
     EditText mBioInput;
     ImageButton mBackButton;
     ImageButton mDoneButton;
+    ImageView mToolbarLogo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +35,9 @@ public class EditProfileActivity extends AppCompatActivity implements UIActivity
     }
 
     public void initUI() {
+        mToolbarLogo = findViewById(R.id.image_logo_text);
+        mToolbarLogo.setVisibility(View.GONE);
+
         mToolbarText = findViewById(R.id.text_app_bar);
         mToolbarText.setText(R.string.edit_profile);
         mToolbarText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
