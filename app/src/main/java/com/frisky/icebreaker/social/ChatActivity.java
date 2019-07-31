@@ -5,7 +5,9 @@ import androidx.core.content.res.ResourcesCompat;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.TypedValue;
+import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.frisky.icebreaker.R;
@@ -24,6 +26,10 @@ public class ChatActivity extends AppCompatActivity implements UIActivity {
         TextView mToolbarText;
         ImageButton mBackButton;
         ImageButton mMenuButton;
+        ImageView mToolbarLogo;
+
+        mToolbarLogo = findViewById(R.id.image_logo_text);
+        mToolbarLogo.setVisibility(View.GONE);
 
         mToolbarText = findViewById(R.id.text_app_bar);
         if (getIntent().hasExtra("name")){
