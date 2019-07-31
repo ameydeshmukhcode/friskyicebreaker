@@ -6,8 +6,10 @@ import androidx.core.content.res.ResourcesCompat;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.TypedValue;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.frisky.icebreaker.ui.base.UIActivity;
@@ -17,6 +19,7 @@ import com.google.firebase.auth.FirebaseUser;
 public class SettingsActivity extends AppCompatActivity implements UIActivity {
 
     ImageButton mBackButton;
+    ImageView mToolbarLogo;
     TextView mToolbarText;
     Button mLogoutButton;
 
@@ -39,6 +42,9 @@ public class SettingsActivity extends AppCompatActivity implements UIActivity {
         mBackButton = findViewById(R.id.button_app_bar_left);
         mBackButton.setImageResource(R.drawable.ic_arrow_back);
         mBackButton.setOnClickListener(v -> SettingsActivity.super.onBackPressed());
+
+        mToolbarLogo = findViewById(R.id.image_logo_text);
+        mToolbarLogo.setVisibility(View.GONE);
 
         mToolbarText = findViewById(R.id.text_app_bar);
         mToolbarText.setText(R.string.settings);
