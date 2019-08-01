@@ -6,22 +6,22 @@
     android:layout_height="match_parent"
     tools:context=".SignUpActivity">
 
-    <ImageView
-        android:id="@+id/app_name"
-        android:layout_width="0dp"
-        android:layout_height="70dp"
-        android:layout_marginTop="50dp"
-        app:layout_constraintEnd_toEndOf="parent"
+    <ImageButton
+        android:id="@+id/button_back"
+        android:layout_width="@dimen/button_square_dimen"
+        android:layout_height="@dimen/button_square_dimen"
+        android:background="@color/transparent"
+        android:tint="@color/tintDark"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logo_text" />
+        app:srcCompat="@drawable/ic_arrow_back" />
 
     <EditText
         android:id="@+id/input_email"
         android:layout_width="0dp"
         android:layout_height="@dimen/input_primary_height"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
         android:background="@drawable/bg_circular"
         android:ems="10"
@@ -33,7 +33,7 @@
         android:textColor="@color/textDark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/app_name" />
+        app:layout_constraintTop_toBottomOf="@+id/button_back" />
 
     <EditText
         android:id="@+id/input_password"
@@ -69,25 +69,11 @@
         app:layout_constraintStart_toStartOf="@+id/input_password"
         app:layout_constraintTop_toBottomOf="@+id/input_password" />
 
-    <CheckBox
-        android:id="@+id/checkbox_age"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:buttonTint="@color/darkAccent"
-        android:fontFamily="@font/museosans300"
-        android:text="@string/age_check"
-        android:textColor="@color/textDark"
-        android:textSize="@dimen/text_subtitle_size"
-        app:layout_constraintEnd_toEndOf="@+id/input_confirm_password"
-        app:layout_constraintStart_toStartOf="@+id/input_confirm_password"
-        app:layout_constraintTop_toBottomOf="@+id/input_confirm_password" />
-
     <Button
         android:id="@+id/button_sign_up"
         android:layout_width="0dp"
         android:layout_height="@dimen/button_primary_height"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/bg_circular"
         android:backgroundTint="@color/colorPrimary"
         android:fontFamily="@font/museosans700"
@@ -97,7 +83,7 @@
         android:textSize="@dimen/text_button_primary_size"
         app:layout_constraintEnd_toEndOf="@+id/input_confirm_password"
         app:layout_constraintStart_toStartOf="@+id/input_confirm_password"
-        app:layout_constraintTop_toBottomOf="@+id/checkbox_age" />
+        app:layout_constraintTop_toBottomOf="@+id/input_confirm_password" />
 
     <TextView
         android:id="@+id/text_error"
@@ -112,17 +98,4 @@
         app:layout_constraintStart_toStartOf="@+id/button_sign_up"
         app:layout_constraintTop_toBottomOf="@+id/button_sign_up" />
 
-    <TextView
-        android:id="@+id/terms"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:fontFamily="@font/museosans300"
-        android:gravity="center"
-        android:text="@string/terms"
-        android:textColor="@color/textDark"
-        android:textSize="@dimen/text_subtitle_size"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/button_sign_up"
-        app:layout_constraintStart_toStartOf="@+id/button_sign_up" />
 </androidx.constraintlayout.widget.ConstraintLayout>
