@@ -1,14 +1,15 @@
 package com.frisky.icebreaker;
 
-import android.content.Intent;
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.frisky.icebreaker.ui.base.FormActivity;
 import com.frisky.icebreaker.ui.base.UIActivity;
@@ -24,8 +25,8 @@ public class SignUpActivity extends AppCompatActivity implements FormActivity, U
     EditText mEmailInput;
     EditText mPasswordInput;
     EditText mConfirmPasswordInput;
-    CheckBox mAgeCheck;
     TextView mErrorText;
+    ImageButton mBackButton;
 
     FirebaseAuth mAuth;
 
@@ -44,8 +45,10 @@ public class SignUpActivity extends AppCompatActivity implements FormActivity, U
         mEmailInput = findViewById(R.id.input_email);
         mPasswordInput = findViewById(R.id.input_password);
         mConfirmPasswordInput = findViewById(R.id.input_confirm_password);
-        mAgeCheck = findViewById(R.id.checkbox_age);
         mErrorText = findViewById(R.id.text_error);
+
+        mBackButton = findViewById(R.id.button_back);
+        mBackButton.setOnClickListener(v -> super.onBackPressed());
 
         mSignUpButton.setOnClickListener(v -> handleSignUp(mEmailInput.getText().toString(), mPasswordInput.getText().toString()));
     }
@@ -60,8 +63,9 @@ public class SignUpActivity extends AppCompatActivity implements FormActivity, U
                             Toast.makeText(getApplicationContext(), "Signed up with Frisky!",
                                     Toast.LENGTH_SHORT).show();
                             mAuth.signOut();
-                            Intent startLoginActivity = new Intent(getApplicationContext(), SignInActivity.class);
-                            startActivity(startLoginActivity);
+                            // go back to SignInActivity and finish this
+                            super.onBackPressed();
+                            finish();
                         }
                         else if (!task.isSuccessful()) {
                             try {
@@ -112,12 +116,6 @@ public class SignUpActivity extends AppCompatActivity implements FormActivity, U
 
         if (!password.equals(confirmPassword)) {
             Toast.makeText(SignUpActivity.this, "Passwords don't match",
-                    Toast.LENGTH_SHORT).show();
-            return false;
-        }
-
-        if (!mAgeCheck.isChecked()) {
-            Toast.makeText(SignUpActivity.this, "Confirm that you're older than 18",
                     Toast.LENGTH_SHORT).show();
             return false;
         }

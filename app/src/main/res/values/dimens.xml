@@ -39,7 +39,7 @@
     <dimen name="text_multiline_input_size">16sp</dimen>
     <dimen name="app_bar_text_size">20sp</dimen>
     <dimen name="text_large_banner_size">40sp</dimen>
-    <dimen name="text_button_primary_size">24sp</dimen>
+    <dimen name="text_button_primary_size">20sp</dimen>
     <dimen name="text_menu_item_title">14sp</dimen>
     <dimen name="text_menu_item_description">12sp</dimen>
     <dimen name="text_menu_item_price">12sp</dimen>
