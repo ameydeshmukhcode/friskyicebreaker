@@ -20,8 +20,6 @@ import com.frisky.icebreaker.orders.MenuActivity;
 import com.frisky.icebreaker.orders.QRScanActivity;
 import com.frisky.icebreaker.profile.ProfileActivity;
 import com.frisky.icebreaker.restaurants.RestaurantViewFragment;
-import com.frisky.icebreaker.social.IceBreakerFragment;
-import com.frisky.icebreaker.social.SocialFragment;
 import com.frisky.icebreaker.ui.base.UIActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -92,7 +90,7 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
     }
 
     public void initUI() {
-        ImageButton mSocialButton;
+//        ImageButton mSocialButton;
         ImageButton mScanQRCodeButton;
 //        ImageButton mIceBreakerButton;
 
@@ -102,9 +100,9 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
         mRestaurantName = findViewById(R.id.text_restaurant);
         mTableName = findViewById(R.id.text_table);
 
-        mSocialButton = findViewById(R.id.button_app_bar_right);
-        mSocialButton.setImageResource(R.drawable.ic_chat);
-        mSocialButton.setOnClickListener(v -> loadFragment(new SocialFragment()));
+//        mSocialButton = findViewById(R.id.button_app_bar_right);
+//        mSocialButton.setImageResource(R.drawable.ic_chat);
+//        mSocialButton.setOnClickListener(v -> loadFragment(new SocialFragment()));
 
         mScanQRCodeButton = findViewById(R.id.button_app_bar_left);
         mScanQRCodeButton.setImageResource(R.drawable.ic_qr_code);
