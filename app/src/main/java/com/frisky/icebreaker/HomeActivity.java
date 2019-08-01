@@ -94,7 +94,7 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
     public void initUI() {
         ImageButton mSocialButton;
         ImageButton mScanQRCodeButton;
-        ImageButton mIceBreakerButton;
+//        ImageButton mIceBreakerButton;
 
         mBottomSheet = findViewById(R.id.bottom_sheet_session);
         mBottomSheet.setVisibility(View.GONE);
@@ -113,8 +113,8 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
         BottomNavigationView navigation = findViewById(R.id.bottom_navigation);
         navigation.setOnNavigationItemSelectedListener(this);
 
-        mIceBreakerButton = findViewById(R.id.button_icebreaker);
-        mIceBreakerButton.setOnClickListener(v -> loadFragment(new IceBreakerFragment()));
+//        mIceBreakerButton = findViewById(R.id.button_icebreaker);
+//        mIceBreakerButton.setOnClickListener(v -> loadFragment(new IceBreakerFragment()));
     }
 
     private void addListenerForSessionChange() {
