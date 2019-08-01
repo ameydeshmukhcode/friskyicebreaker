@@ -13,7 +13,6 @@
         android:roundIcon="@mipmap/icon_first_round"
         android:theme="@style/FriskyAppTheme"
         tools:ignore="UnusedAttribute">
-        <activity android:name=".SettingsActivity" />
         <activity android:name=".SignInActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,6 +20,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".SignInEmailActivity" />
         <activity android:name=".SignUpActivity" />
         <activity
             android:name=".HomeActivity"
@@ -39,10 +39,11 @@
             android:name=".profile.SetupProfileActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".social.ChatActivity" />
+        <activity android:name=".orders.QRScanActivity" />
         <activity android:name=".orders.MenuActivity" />
         <activity android:name=".orders.CartActivity" />
         <activity android:name=".orders.OrderActivity" />
-        <activity android:name=".orders.QRScanActivity" />
+        <activity android:name=".SettingsActivity" />
     </application>
 
 </manifest>
