@@ -24,12 +24,14 @@
     <string name="alternate_sign_in">or sign in with</string>
     <string name="no_account">Don\'t have an account?</string>
     <string name="sign_up">Sign Up</string>
+    <string name="use_google_account">Use Google Account</string>
+    <string name="use_email">Use Email Address</string>
 
     <!--Sign up page-->
     <string name="password_confirm">Confirm Password</string>
     <string name="name">Name</string>
     <string name="age_check">I\'m 18 years and older.</string>
-    <string name="terms">By signing up, you\'re agreeing to our Terms and Privacy Policies</string>
+    <string name="terms">By signing in, you\'re agreeing to our Terms and Privacy Policies</string>
 
     <!--Restaurant Activity-->
     <string name="live_count">Live count</string>
@@ -124,7 +126,7 @@
     <!-- Sign Up Sign In errors -->
     <string name="error_weak_password">Weak password.\nPassword length should be more than 6 characters.</string>
     <string name="error_invalid_email">Invalid email entered. Enter a valid email.</string>
-    <string name="error_duplicate_email">Account with this email already exists.\nTry \'Forgot Password?\'</string>
+    <string name="error_duplicate_email">Account with this email already exists.\nTry Signing In.</string>
     <string name="error_not_signed_up">Account with this email doesn\'t exist.\nSign up first.</string>
     <string name="error_incorrect_password">Incorrect password entered.</string>
     <string name="error_network">Check your network connection.</string>
