@@ -31,7 +31,7 @@
     <string name="password_confirm">Confirm Password</string>
     <string name="name">Name</string>
     <string name="age_check">I\'m 18 years and older.</string>
-    <string name="terms">By signing in, you\'re agreeing to our Terms and Privacy Policies</string>
+    <string name="terms">By signing in, you\'re agreeing to our Terms and Privacy Policy</string>
 
     <!--Restaurant Activity-->
     <string name="live_count">Live count</string>
