@@ -3,7 +3,6 @@ package com.frisky.icebreaker;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -23,7 +22,7 @@ public class SignInActivity extends AppCompatActivity {
 
     private static final int RC_SIGN_IN = 1;
 
-    Button mUseEmailButton;
+    ConstraintLayout mUseEmailButton;
     ConstraintLayout mUseGoogleButton;
 
     FirebaseAuth mAuth;

@@ -20,14 +20,11 @@ import com.frisky.icebreaker.orders.MenuActivity;
 import com.frisky.icebreaker.orders.QRScanActivity;
 import com.frisky.icebreaker.profile.ProfileActivity;
 import com.frisky.icebreaker.restaurants.RestaurantViewFragment;
-import com.frisky.icebreaker.social.IceBreakerFragment;
-import com.frisky.icebreaker.social.SocialFragment;
 import com.frisky.icebreaker.ui.base.UIActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Map;
@@ -65,6 +62,7 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
     @Override
     protected void onResume() {
         super.onResume();
+        checkSessionDetails();
     }
 
     @Override
@@ -92,16 +90,19 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
     }
 
     public void initUI() {
-        ImageButton mSocialButton;
+//        ImageButton mSocialButton;
         ImageButton mScanQRCodeButton;
-        ImageButton mIceBreakerButton;
+//        ImageButton mIceBreakerButton;
 
         mBottomSheet = findViewById(R.id.bottom_sheet_session);
         mBottomSheet.setVisibility(View.GONE);
 
-        mSocialButton = findViewById(R.id.button_app_bar_right);
-        mSocialButton.setImageResource(R.drawable.ic_chat);
-        mSocialButton.setOnClickListener(v -> loadFragment(new SocialFragment()));
+        mRestaurantName = findViewById(R.id.text_restaurant);
+        mTableName = findViewById(R.id.text_table);
+
+//        mSocialButton = findViewById(R.id.button_app_bar_right);
+//        mSocialButton.setImageResource(R.drawable.ic_chat);
+//        mSocialButton.setOnClickListener(v -> loadFragment(new SocialFragment()));
 
         mScanQRCodeButton = findViewById(R.id.button_app_bar_left);
         mScanQRCodeButton.setImageResource(R.drawable.ic_qr_code);
@@ -110,8 +111,8 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
         BottomNavigationView navigation = findViewById(R.id.bottom_navigation);
         navigation.setOnNavigationItemSelectedListener(this);
 
-        mIceBreakerButton = findViewById(R.id.button_icebreaker);
-        mIceBreakerButton.setOnClickListener(v -> loadFragment(new IceBreakerFragment()));
+//        mIceBreakerButton = findViewById(R.id.button_icebreaker);
+//        mIceBreakerButton.setOnClickListener(v -> loadFragment(new IceBreakerFragment()));
     }
 
     private void addListenerForSessionChange() {
@@ -145,112 +146,27 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
         });
     }
 
-    private void getSessionDetails() {
-        final FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+    private void checkSessionDetails() {
+        boolean isSessionActive = sharedPreferences.getBoolean("session_active", false);
+        if (isSessionActive) {
+            setupSessionDetails();
+        }
+    }
 
-        if (mUser == null)
-            return;
-
-        DocumentReference userRef = firebaseFirestore
-                .collection("users")
-                .document(mUser.getUid());
-
-        userRef.get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                DocumentSnapshot doc = task.getResult();
-                if (doc == null)
-                    return;
-                if (doc.contains("restaurant") && doc.contains("current_session")) {
-                    final String restaurant = doc.getString("restaurant");
-                    final String currentSession = doc.getString("current_session");
-
-                    if (restaurant == null)
-                        return;
-
-                    DocumentReference restaurantRef = firebaseFirestore
-                            .collection("restaurants")
-                            .document(restaurant);
-
-                    sharedPreferences.edit()
-                            .putString("restaurant", restaurant)
-                            .putString("current_session", currentSession)
-                            .apply();
-
-                    restaurantRef.get()
-                        .addOnCompleteListener(task1 -> {
-                            if (task1.isSuccessful()) {
-                                DocumentSnapshot doc1 = task1.getResult();
-
-                                if (doc1 == null)
-                                    return;
-
-                                if (doc1.contains("name")) {
-                                    mRestaurantName.setText(doc1.getString("name"));
-                                }
-                            }
-
-                            if (currentSession == null)
-                                return;
-
-                            DocumentReference sessionRef = firebaseFirestore
-                                    .collection("restaurants")
-                                    .document(restaurant)
-                                    .collection("sessions")
-                                    .document(currentSession);
-
-                            sessionRef.get()
-                                .addOnCompleteListener(task11 -> {
-                                    if (task11.isSuccessful()) {
-                                        DocumentSnapshot doc1 = task11.getResult();
-
-                                        if (doc1 == null)
-                                            return;
-
-                                        if (doc1.contains("table_id")) {
-                                            final String tableid = doc1.getString("table_id");
-
-                                            if (tableid == null)
-                                                return;
-
-                                            DocumentReference tableRef = firebaseFirestore
-                                                    .collection("restaurants")
-                                                    .document(restaurant)
-                                                    .collection("tables")
-                                                    .document(tableid);
-
-                                            tableRef.get()
-                                                .addOnCompleteListener(task111 -> {
-                                                    if (task111.isSuccessful()) {
-                                                        DocumentSnapshot doc11 = task111.getResult();
-                                                        String tableSerial = "";
-
-                                                        if (doc11 == null)
-                                                            return;
-
-                                                        if (doc11.contains("number")) {
-                                                            tableSerial = "Table " + doc11.get("number");
-                                                            mTableName.setText(tableSerial);
-                                                        }
-                                                        mBottomSheet.setVisibility(View.VISIBLE);
-                                                        mResumeSessionIntent.putExtra("restaurant_id", restaurant);
-                                                        mResumeSessionIntent.putExtra("restaurant_name", mRestaurantName.getText().toString());
-                                                        mResumeSessionIntent.putExtra("table_number", tableSerial);
-                                                    }
-                                                });
-                                        }
-                                    }
-                                });
-                        });
-                }
-            }
-        });
+    private void setupSessionDetails() {
+        mTableName.setText(sharedPreferences.getString("table_serial", ""));
+        mRestaurantName.setText(sharedPreferences.getString("restaurant_name", ""));
+        mBottomSheet.setVisibility(View.VISIBLE);
+        mResumeSessionIntent.putExtra("restaurant_id", sharedPreferences.getString("restaurant", ""));
+        mResumeSessionIntent.putExtra("restaurant_name", mRestaurantName.getText().toString());
+        mResumeSessionIntent.putExtra("table_number", sharedPreferences.getString("table_serial", ""));
     }
 
     private void enableSession() {
         mRestaurantName = findViewById(R.id.text_restaurant);
         mTableName = findViewById(R.id.text_table);
 
-        getSessionDetails();
+        setupSessionDetails();
 
         mViewMenuButton = findViewById(R.id.button_menu);
         mViewMenuButton.setOnClickListener(v -> startActivity(mResumeSessionIntent));
