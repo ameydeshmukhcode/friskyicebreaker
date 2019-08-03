@@ -148,7 +148,7 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
                 .add(sessionDetails)
                 .addOnSuccessListener(documentReference -> {
                     final String sessionID = documentReference.getId();
-                    Log.d("", "DocumentSnapshot written with ID: " + documentReference.getId());
+                    Log.d(getString(R.string.tag_debug), "DocumentSnapshot written with ID: " + documentReference.getId());
 
                     Map<String, Object> userSessionDetails = new HashMap<>();
                     userSessionDetails.put("session_active", true);
@@ -174,7 +174,8 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
                                         .collection("tables")
                                         .document(tableID)
                                         .set(tableSessionDetails, SetOptions.merge())
-                                        .addOnSuccessListener(aVoid1 -> Log.d("Success", "Table details updated"));
+                                        .addOnSuccessListener(aVoid1 -> Log.d(getString(R.string.tag_debug),
+                                                "Table details updated"));
                             });
                 })
                 .addOnFailureListener(e -> Log.e("", "Error adding document", e));
@@ -203,7 +204,7 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
                     String restaurantName = document.getString("name");
                     mRestName.setText(restaurantName);
                     sharedPreferences.edit().putString("restaurant_name", restaurantName).apply();
-                    Log.d("Exists", "DocumentSnapshot data: " + document.getData());
+                    Log.d(getString(R.string.tag_debug), "DocumentSnapshot data: " + document.getData());
                 }
                 else {
                     Log.e("Doesn't exist", "No such document");
@@ -229,7 +230,7 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
                     String tableSerial = "Table " + document.get("number");
                     mTableSerial.setText(tableSerial);
                     sharedPreferences.edit().putString("table_serial", tableSerial).apply();
-                    Log.d("Exists", "DocumentSnapshot data: " + document.getData());
+                    Log.d(getString(R.string.tag_debug), "DocumentSnapshot data: " + document.getData());
                 }
                 else {
                     Log.e("Doesn't exist", "No such document");

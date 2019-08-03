@@ -78,7 +78,7 @@ public class CartActivity extends AppCompatActivity implements UIActivity,
         }
 
         for (Map.Entry<MenuItem, MutableInt> entry : mCartList.entrySet()) {
-            Log.d("List", entry.getKey().getName() + " " + entry.getValue().getValue());
+            Log.d(getString(R.string.tag_debug), "List " + entry.getKey().getName() + " " + entry.getValue().getValue());
         }
 
         if (getIntent().hasExtra("cart_total")) {

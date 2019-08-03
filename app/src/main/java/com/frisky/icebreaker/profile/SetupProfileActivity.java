@@ -217,7 +217,8 @@ public class SetupProfileActivity extends AppCompatActivity implements FormActiv
         mFirestore.collection("users")
                 .document(userUid)
                 .set(userDetails, SetOptions.merge())
-                .addOnSuccessListener(aVoid -> Log.d("User", "DocumentSnapshot successfully written!"))
+                .addOnSuccessListener(aVoid -> Log.d(getString(R.string.tag_debug),
+                        "DocumentSnapshot successfully written!"))
                 .addOnFailureListener(e -> Log.e("Failed", e.getMessage(), e));
 
         final UploadTask uploadTask = mStorageReference.child("profile_images")
@@ -243,7 +244,7 @@ public class SetupProfileActivity extends AppCompatActivity implements FormActiv
                     user.updateProfile(profileUpdates)
                             .addOnCompleteListener(task -> {
                                 if (task.isSuccessful()) {
-                                    Log.d("User", "User profile updated.");
+                                    Log.d(getString(R.string.tag_debug), "User profile updated.");
                                     Intent launchHome = new Intent(getApplicationContext(), HomeActivity.class);
                                     startActivity(launchHome);
                                     finish();

@@ -64,7 +64,7 @@ public class RestaurantActivity extends AppCompatActivity implements UIActivity 
 
         if (getIntent().hasExtra("id")) {
             String id = getIntent().getStringExtra("id");
-            Log.d("ID", id);
+            Log.d(getString(R.string.tag_debug), "restaurant " + id);
         }
 
         FloatingActionButton fab = findViewById(R.id.fab_chat_room);

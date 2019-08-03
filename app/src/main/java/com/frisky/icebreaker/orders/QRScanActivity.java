@@ -124,7 +124,7 @@ public class QRScanActivity extends AppCompatActivity {
                                 Toast.makeText(getBaseContext(),"Table is Occupied", Toast.LENGTH_LONG).show();
                                 mCodeScanner.startPreview();
                             }
-                            Log.d("Exists", "DocumentSnapshot data: " + document.getData());
+                            Log.d(getString(R.string.tag_debug), "DocumentSnapshot data: " + document.getData());
                         }
                         else {
                             Log.e("Doesn't exist", "No such document");

@@ -79,7 +79,7 @@ public class OrderActivity extends AppCompatActivity {
                     for (DocumentChange dc : queryDocumentSnapshots.getDocumentChanges()) {
                         switch (dc.getType()) {
                             case ADDED:
-                                Log.d("Added", "to Orders");
+                                Log.d(getString(R.string.tag_debug), "Added to Orders");
                                 break;
 
                             case MODIFIED:
@@ -89,26 +89,26 @@ public class OrderActivity extends AppCompatActivity {
                                 for (Map.Entry<String, Object> entry : data.entrySet()) {
                                     String value = entry.getValue().toString();
                                     String itemID = entry.getKey();
-                                    Log.d("Item", itemID);
+                                    Log.d(getString(R.string.tag_debug), "Item " + itemID);
 
                                     for (Map.Entry<OrderItem, OrderStatus> orderListEntry:
                                             mOrderList.entrySet()) {
                                         if (orderListEntry.getKey().getId().equals(itemID)) {
                                             if (value.contains("status=pending")) {
                                                 orderListEntry.setValue(OrderStatus.PENDING);
-                                                Log.d("Status", "Pending");
+                                                Log.d(getString(R.string.tag_debug), "Status Pending");
                                             }
                                             else if (value.contains("status=accepted")) {
                                                 orderListEntry.setValue(OrderStatus.ACCEPTED);
-                                                Log.d("Status", "Accepted");
+                                                Log.d(getString(R.string.tag_debug), "Status Accepted");
                                             }
                                             else if (value.contains("status=rejected")) {
                                                 orderListEntry.setValue(OrderStatus.REJECTED);
-                                                Log.d("Status", "Rejected");
+                                                Log.d(getString(R.string.tag_debug), "Status Rejected");
                                             }
                                             else if (value.contains("status=cancelled")) {
                                                 orderListEntry.setValue(OrderStatus.CANCELLED);
-                                                Log.d("Status", "Cancelled");
+                                                Log.d(getString(R.string.tag_debug), "Status Cancelled");
                                             }
                                         }
                                     }
@@ -119,7 +119,7 @@ public class OrderActivity extends AppCompatActivity {
                                 break;
 
                             case REMOVED:
-                                Log.d("Removed", "from Orders");
+                                Log.d(getString(R.string.tag_debug), "Removed from Orders");
                                 break;
 
                             default:
