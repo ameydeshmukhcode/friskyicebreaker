@@ -140,4 +140,9 @@
 
     <!-- Debug -->
     <string name="tag_debug">Frisky Debug</string>
+
+    <!-- Notifications -->
+    <string name="n_channel_orders">Orders</string>
+    <string name="n_channel_name_orders">Order Details</string>
+    <string name="n_channel_desc_orders">Order details and real-time updates</string>
 </resources>
