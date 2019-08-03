@@ -143,10 +143,10 @@ public class OrderSessionService extends Service {
     private void disableSession() {
         sharedPreferences.edit()
                 .putBoolean("session_active", false)
-                .remove("restaurant")
+                .remove("restaurant_id")
                 .remove("restaurant_name")
-                .remove("current_session")
-                .remove("table_serial")
+                .remove("session_id")
+                .remove("table_name")
                 .apply();
 
         stopSelf();
