@@ -236,13 +236,9 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
     }
 
     private void restoreUserSession() {
-        if (getIntent().hasExtra("table_number")
-                && getIntent().hasExtra("restaurant_name")
-                && getIntent().hasExtra("restaurant_id")) {
-            mRestName.setText(getIntent().getStringExtra("restaurant_name"));
-            mTableSerial.setText(getIntent().getStringExtra("table_number"));
-            setMenu(getIntent().getStringExtra("restaurant_id"));
-        }
+        mRestName.setText(sharedPreferences.getString("restaurant_name", ""));
+        mTableSerial.setText(sharedPreferences.getString("table_serial", ""));
+        setMenu(sharedPreferences.getString("restaurant", ""));
     }
 
     private void setMenu(String restaurant) {
