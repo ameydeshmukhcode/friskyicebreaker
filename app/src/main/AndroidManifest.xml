@@ -13,6 +13,11 @@
         android:roundIcon="@mipmap/icon_first_round"
         android:theme="@style/FriskyAppTheme"
         tools:ignore="UnusedAttribute">
+        <service
+            android:name=".orders.OrderService"
+            android:enabled="true"
+            android:exported="false" />
+
         <activity android:name=".SignInActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
