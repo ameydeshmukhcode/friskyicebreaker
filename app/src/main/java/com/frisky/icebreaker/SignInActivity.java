@@ -45,7 +45,7 @@ public class SignInActivity extends AppCompatActivity {
 
         FirebaseUser user = mAuth.getCurrentUser();
         if (user != null) {
-            verifyLogin();
+            goToHome();
         }
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -88,9 +88,7 @@ public class SignInActivity extends AppCompatActivity {
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
                         // Sign in success, update UI with the signed-in user's information
-                        Intent launchHome = new Intent(getApplicationContext(), HomeActivity.class);
-                        startActivity(launchHome);
-                        finish();
+                        goToHome();
                     }
                     else {
                         // If sign in fails, display a message to the user.
@@ -99,13 +97,9 @@ public class SignInActivity extends AppCompatActivity {
                 });
     }
 
-    private void verifyLogin() {
-        final FirebaseUser user = mAuth.getCurrentUser();
-
-        if (user != null) {
-            Intent launchHome = new Intent(getApplicationContext(), HomeActivity.class);
-            startActivity(launchHome);
-            finish();
-        }
+    private void goToHome() {
+        Intent launchHome = new Intent(getApplicationContext(), HomeActivity.class);
+        startActivity(launchHome);
+        finish();
     }
 }
