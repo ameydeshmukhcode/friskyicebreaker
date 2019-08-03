@@ -22,10 +22,6 @@ import com.frisky.icebreaker.profile.ProfileActivity;
 import com.frisky.icebreaker.restaurants.RestaurantViewFragment;
 import com.frisky.icebreaker.ui.base.UIActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Map;
 
@@ -38,8 +34,6 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
     TextView mTableName;
 
     Intent mResumeSessionIntent;
-
-    FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
 
     SharedPreferences sharedPreferences;
 
@@ -113,7 +107,7 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
 //        mIceBreakerButton = findViewById(R.id.button_icebreaker);
 //        mIceBreakerButton.setOnClickListener(v -> loadFragment(new IceBreakerFragment()));
     }
-    
+
     private void checkSessionDetails() {
         boolean isSessionActive = sharedPreferences.getBoolean("session_active", false);
         if (isSessionActive) {
