@@ -4,8 +4,8 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 
-public class OrderService extends Service {
-    public OrderService() {
+public class OrderSessionService extends Service {
+    public OrderSessionService() {
     }
 
     @Override
