@@ -56,7 +56,6 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
 
         initUI();
         loadFragment(new RestaurantViewFragment());
-        addListenerForSessionChange();
     }
 
     @Override
@@ -114,38 +113,7 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
 //        mIceBreakerButton = findViewById(R.id.button_icebreaker);
 //        mIceBreakerButton.setOnClickListener(v -> loadFragment(new IceBreakerFragment()));
     }
-
-    private void addListenerForSessionChange() {
-        final DocumentReference docRef = FirebaseFirestore.getInstance().collection("users")
-                .document(mUser.getUid());
-
-        docRef.addSnapshotListener((snapshot, e) -> {
-            if (e != null) {
-                Log.e("Failed", "Listen failed.", e);
-                return;
-            }
-
-            if (snapshot != null && snapshot.exists()) {
-                boolean sessionActive = false;
-                if (snapshot.contains("session_active")) {
-                    sessionActive = (boolean) snapshot.get("session_active");
-                }
-
-                if (sessionActive) {
-                    enableSession();
-                }
-                else {
-                    disableSession();
-                }
-
-                Log.d("Snapshot Exists", "Current data: " + snapshot.getData());
-            }
-            else {
-                Log.d("No Snapshot", "Current data: null");
-            }
-        });
-    }
-
+    
     private void checkSessionDetails() {
         boolean isSessionActive = sharedPreferences.getBoolean("session_active", false);
         if (isSessionActive) {
