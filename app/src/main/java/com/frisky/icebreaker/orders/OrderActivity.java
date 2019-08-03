@@ -3,6 +3,8 @@ package com.frisky.icebreaker.orders;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -20,6 +22,8 @@ import java.util.Map;
 
 public class OrderActivity extends AppCompatActivity {
 
+    ImageButton mBackButton;
+
     SharedPreferences sharedPreferences;
 
     OrderListAdapter orderListAdapter;
@@ -34,6 +38,12 @@ public class OrderActivity extends AppCompatActivity {
         setContentView(R.layout.activity_order);
 
         sharedPreferences = getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE);
+
+        mBackButton = findViewById(R.id.button_back);
+        mBackButton.setOnClickListener(v -> super.onBackPressed());
+
+        TextView mTableSerial = findViewById(R.id.text_table);
+        mTableSerial.setText(sharedPreferences.getString("table_name", ""));
 
         mRecyclerOrderListView = findViewById(R.id.recycler_view_order_list);
 

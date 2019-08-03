@@ -69,9 +69,7 @@ public class CartActivity extends AppCompatActivity implements UIActivity,
         mCartTotalText = findViewById(R.id.text_order_total);
 
         TextView mTableSerial = findViewById(R.id.text_table);
-        if (getIntent().hasExtra("table_id")){
-            mTableSerial.setText(getIntent().getStringExtra("table_id"));
-        }
+        mTableSerial.setText(sharedPreferences.getString("table_name", ""));
 
         if (getIntent().hasExtra("cart_list")) {
             mCartList = (HashMap<MenuItem, MutableInt>) getIntent().getSerializableExtra("cart_list");
