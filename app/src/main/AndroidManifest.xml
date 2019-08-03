@@ -46,7 +46,9 @@
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".social.ChatActivity" />
         <activity android:name=".orders.QRScanActivity" />
-        <activity android:name=".orders.MenuActivity" />
+        <activity
+            android:name=".orders.MenuActivity"
+            android:parentActivityName=".HomeActivity" />
         <activity android:name=".orders.CartActivity" />
         <activity android:name=".orders.OrderActivity" />
         <activity android:name=".SettingsActivity" />
