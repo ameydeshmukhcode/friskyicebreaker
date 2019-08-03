@@ -113,36 +113,26 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
         if (isSessionActive) {
             setupSessionDetails();
         }
+        else {
+            disableSession();
+        }
     }
 
     private void setupSessionDetails() {
+        mRestaurantName = findViewById(R.id.text_restaurant);
+        mTableName = findViewById(R.id.text_table);
         mTableName.setText(sharedPreferences.getString("table_serial", ""));
         mRestaurantName.setText(sharedPreferences.getString("restaurant_name", ""));
         mBottomSheet.setVisibility(View.VISIBLE);
         mResumeSessionIntent.putExtra("restaurant_id", sharedPreferences.getString("restaurant", ""));
         mResumeSessionIntent.putExtra("restaurant_name", mRestaurantName.getText().toString());
         mResumeSessionIntent.putExtra("table_number", sharedPreferences.getString("table_serial", ""));
-    }
-
-    private void enableSession() {
-        mRestaurantName = findViewById(R.id.text_restaurant);
-        mTableName = findViewById(R.id.text_table);
-
-        setupSessionDetails();
-
         mViewMenuButton = findViewById(R.id.button_menu);
         mViewMenuButton.setOnClickListener(v -> startActivity(mResumeSessionIntent));
     }
 
     private void disableSession() {
         mBottomSheet.setVisibility(View.GONE);
-        sharedPreferences.edit()
-                .putBoolean("session_active", false)
-                .remove("restaurant")
-                .remove("restaurant_name")
-                .remove("current_session")
-                .remove("table_serial")
-                .apply();
     }
 
     private void loadFragment(Fragment fragment) {
