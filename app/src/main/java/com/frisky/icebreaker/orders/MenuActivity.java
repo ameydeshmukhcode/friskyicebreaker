@@ -225,8 +225,11 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
                                         .collection("tables")
                                         .document(tableID)
                                         .set(tableSessionDetails, SetOptions.merge())
-                                        .addOnSuccessListener(aVoid1 -> Log.d(getString(R.string.tag_debug),
-                                                "Table details updated"));
+                                        .addOnSuccessListener(aVoid1 -> {
+                                            Log.d(getString(R.string.tag_debug), "Table details updated");
+                                            Intent orderSession = new Intent(getApplicationContext(), OrderSessionService.class);
+                                            startService(orderSession);
+                                        });
                             });
                 })
                 .addOnFailureListener(e -> Log.e("", "Error adding document", e));
