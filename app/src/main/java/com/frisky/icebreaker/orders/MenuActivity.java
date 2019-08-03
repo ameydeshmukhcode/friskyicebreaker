@@ -129,6 +129,57 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
         }
     }
 
+    private void getRestaurantAndTableDetails(String restID, String tableID) {
+        FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+
+        DocumentReference resRef = firebaseFirestore.collection("restaurants").document(restID);
+        resRef.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                DocumentSnapshot document = task.getResult();
+                if (document == null)
+                    return;
+                if (document.exists()) {
+                    String restaurantName = document.getString("name");
+                    mRestName.setText(restaurantName);
+                    sharedPreferences.edit().putString("restaurant_name", restaurantName).apply();
+                    Log.d(getString(R.string.tag_debug), "DocumentSnapshot data: " + document.getData());
+                }
+                else {
+                    Log.e("Doesn't exist", "No such document");
+                }
+            }
+            else {
+                Log.e("Task", "failed with ", task.getException());
+            }
+        });
+
+        DocumentReference tableRef = firebaseFirestore
+                .collection("restaurants")
+                .document(restID)
+                .collection("tables")
+                .document(tableID);
+
+        tableRef.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                DocumentSnapshot document = task.getResult();
+                if (document == null)
+                    return;
+                if (document.exists()) {
+                    String tableSerial = "Table " + document.get("number");
+                    mTableSerial.setText(tableSerial);
+                    sharedPreferences.edit().putString("table_serial", tableSerial).apply();
+                    Log.d(getString(R.string.tag_debug), "DocumentSnapshot data: " + document.getData());
+                }
+                else {
+                    Log.e("Doesn't exist", "No such document");
+                }
+            }
+            else {
+                Log.e("Task", "failed with ", task.getException());
+            }
+        });
+    }
+
     private void initUserSession(final String restID, final String tableID) {
         final FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
 
@@ -189,57 +240,6 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
             mTableSerial.setText(getIntent().getStringExtra("table_number"));
             setMenu(getIntent().getStringExtra("restaurant_id"));
         }
-    }
-
-    private void getRestaurantAndTableDetails(String restID, String tableID) {
-        FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
-
-        DocumentReference resRef = firebaseFirestore.collection("restaurants").document(restID);
-        resRef.get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                DocumentSnapshot document = task.getResult();
-                if (document == null)
-                    return;
-                if (document.exists()) {
-                    String restaurantName = document.getString("name");
-                    mRestName.setText(restaurantName);
-                    sharedPreferences.edit().putString("restaurant_name", restaurantName).apply();
-                    Log.d(getString(R.string.tag_debug), "DocumentSnapshot data: " + document.getData());
-                }
-                else {
-                    Log.e("Doesn't exist", "No such document");
-                }
-            }
-            else {
-                Log.e("Task", "failed with ", task.getException());
-            }
-        });
-
-        DocumentReference tableRef = firebaseFirestore
-                .collection("restaurants")
-                .document(restID)
-                .collection("tables")
-                .document(tableID);
-
-        tableRef.get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                DocumentSnapshot document = task.getResult();
-                if (document == null)
-                    return;
-                if (document.exists()) {
-                    String tableSerial = "Table " + document.get("number");
-                    mTableSerial.setText(tableSerial);
-                    sharedPreferences.edit().putString("table_serial", tableSerial).apply();
-                    Log.d(getString(R.string.tag_debug), "DocumentSnapshot data: " + document.getData());
-                }
-                else {
-                    Log.e("Doesn't exist", "No such document");
-                }
-            }
-            else {
-                Log.e("Task", "failed with ", task.getException());
-            }
-        });
     }
 
     private void setMenu(String restaurant) {
