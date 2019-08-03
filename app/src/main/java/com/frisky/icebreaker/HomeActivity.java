@@ -121,8 +121,8 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
     private void setupSessionDetails() {
         mRestaurantName = findViewById(R.id.text_restaurant);
         mTableName = findViewById(R.id.text_table);
-        mTableName.setText(sharedPreferences.getString("table_serial", ""));
         mRestaurantName.setText(sharedPreferences.getString("restaurant_name", ""));
+        mTableName.setText(sharedPreferences.getString("table_name", ""));
         mBottomSheet.setVisibility(View.VISIBLE);
         mViewMenuButton = findViewById(R.id.button_menu);
         mViewMenuButton.setOnClickListener(v -> startActivity(mResumeSessionIntent));

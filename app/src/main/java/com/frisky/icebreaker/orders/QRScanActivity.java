@@ -81,8 +81,7 @@ public class QRScanActivity extends AppCompatActivity {
             FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
             final String qrCodeData = result.getText();
 
-            boolean isSessionActive = getSharedPreferences(getString(R.string.app_name),
-                    MODE_PRIVATE).getBoolean("session_active", false);
+            boolean isSessionActive = sharedPreferences.getBoolean("session_active", false);
 
             if (!qrCodeData.contains("frisky")) {
                 Toast.makeText(getBaseContext(),"QR Code not recognised", Toast.LENGTH_LONG).show();

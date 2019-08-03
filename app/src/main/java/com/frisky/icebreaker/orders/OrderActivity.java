@@ -56,11 +56,11 @@ public class OrderActivity extends AppCompatActivity {
     private void addListenerForOrderUpdates() {
         String restaurant = "";
         String currentSession = "";
-        if (sharedPreferences.contains("restaurant")) {
-            restaurant = sharedPreferences.getString("restaurant", "");
+        if (sharedPreferences.contains("restaurant_id")) {
+            restaurant = sharedPreferences.getString("restaurant_id", "");
         }
-        if (sharedPreferences.contains("current_session")) {
-            currentSession = sharedPreferences.getString("current_session", "");
+        if (sharedPreferences.contains("session_id")) {
+            currentSession = sharedPreferences.getString("session_id", "");
         }
 
         assert restaurant != null;

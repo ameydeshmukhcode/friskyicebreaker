@@ -167,7 +167,7 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
                 if (document.exists()) {
                     String tableSerial = "Table " + document.get("number");
                     mTableSerial.setText(tableSerial);
-                    sharedPreferences.edit().putString("table_serial", tableSerial).apply();
+                    sharedPreferences.edit().putString("table_name", tableSerial).apply();
                     Log.d(getString(R.string.tag_debug), "DocumentSnapshot data: " + document.getData());
                 }
                 else {
@@ -208,8 +208,8 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
 
                     sharedPreferences.edit()
                             .putBoolean("session_active", true)
-                            .putString("restaurant", restID)
-                            .putString("current_session", sessionID)
+                            .putString("restaurant_id", restID)
+                            .putString("session_id", sessionID)
                             .apply();
 
                     firebaseFirestore.collection("users")
@@ -237,8 +237,8 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
 
     private void restoreUserSession() {
         mRestName.setText(sharedPreferences.getString("restaurant_name", ""));
-        mTableSerial.setText(sharedPreferences.getString("table_serial", ""));
-        setMenu(sharedPreferences.getString("restaurant", ""));
+        mTableSerial.setText(sharedPreferences.getString("table_name", ""));
+        setMenu(sharedPreferences.getString("restaurant_id", ""));
     }
 
     private void setMenu(String restaurant) {

@@ -1,6 +1,5 @@
 package com.frisky.icebreaker.orders;
 
-import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -16,6 +15,7 @@ import androidx.core.app.NotificationCompat;
 import com.frisky.icebreaker.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Objects;
@@ -64,7 +64,7 @@ public class OrderSessionService extends Service {
                 NotificationCompat.Builder(this, getString(R.string.n_channel_orders))
                 .setSmallIcon(R.drawable.logo)
                 .setContentTitle("Welcome to " + sharedPreferences.getString("restaurant_name", ""))
-                .setContentText("You're on " + sharedPreferences.getString("table_serial", ""))
+                .setContentText("You're on " + sharedPreferences.getString("table_name", ""))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 // Set the intent that will fire when the user taps the notification
                 .setContentIntent(pendingIntent);
@@ -101,13 +101,41 @@ public class OrderSessionService extends Service {
                 }
 
                 if (!sessionActive) {
-                    disableSession();
+                    getSessionEndDetails();
                 }
 
                 Log.d(getString(R.string.tag_debug), "Current data: " + snapshot.getData());
             }
             else {
                 Log.d(getString(R.string.tag_debug), "Current data: null");
+            }
+        });
+    }
+
+    private void getSessionEndDetails() {
+        final String restaurantID = sharedPreferences.getString("restaurant_id", "");
+        final String sessionID = sharedPreferences.getString("session_id", "");
+
+        assert restaurantID != null;
+        assert sessionID != null;
+        final DocumentReference docRef = FirebaseFirestore.getInstance().collection("restaurants")
+                .document(restaurantID).collection("sessions").document(sessionID);
+
+        docRef.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                DocumentSnapshot document = task.getResult();
+                if (document == null)
+                    return;
+                if (document.exists()) {
+                    Log.d(getString(R.string.tag_debug), "DocumentSnapshot data: " + document.getData());
+                    disableSession();
+                }
+                else {
+                    Log.e("Doesn't exist", "No such document");
+                }
+            }
+            else {
+                Log.e("Task", "failed with ", task.getException());
             }
         });
     }
