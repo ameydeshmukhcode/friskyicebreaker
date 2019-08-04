@@ -1,5 +1,7 @@
 package com.frisky.icebreaker.orders;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -10,6 +12,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -120,15 +123,11 @@ public class CartActivity extends AppCompatActivity implements UIActivity,
                 orderListFinal.put(orderItem, OrderStatus.PENDING);
             }
 
-            placeOrder(order);
-
-            Intent showOrder = new Intent(this, OrderActivity.class);
-            showOrder.putExtra("order_list", orderListFinal);
-            startActivity(showOrder);
+            placeOrder(order, orderListFinal);
         }
     }
 
-    private void placeOrder(HashMap<String, Integer> orderList) {
+    private void placeOrder(HashMap<String, Integer> orderList, HashMap<OrderItem, OrderStatus> orderListFinal) {
         Map<String, Object> data = new HashMap<>();
         data.put("order", orderList);
 
@@ -136,6 +135,28 @@ public class CartActivity extends AppCompatActivity implements UIActivity,
                 .getHttpsCallable("placeOrder")
                 .call(data)
                 .continueWith(task -> {
+                    if(task.isSuccessful()) {
+                        NotificationManager notificationManager = getSystemService(NotificationManager.class);
+
+                        Intent notificationIntent = new Intent(this, OrderActivity.class);
+                        PendingIntent pendingIntent =
+                                PendingIntent.getActivity(this, 0, notificationIntent, 0);
+
+                        NotificationCompat.Builder builder = new
+                                NotificationCompat.Builder(this, getString(R.string.n_channel_orders))
+                                .setSmallIcon(R.drawable.logo)
+                                .setContentTitle("Order Placed")
+                                .setContentText("Your order has been placed. Awaiting Confirmation.")
+                                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                                // Set the intent that will fire when the user taps the notification
+                                .setContentIntent(pendingIntent);
+
+                        notificationManager.notify(R.integer.n_order_session_service, builder.build());
+
+                        Intent showOrder = new Intent(this, OrderActivity.class);
+                        showOrder.putExtra("order_list", orderListFinal);
+                        startActivity(showOrder);
+                    }
                     // This continuation runs on either success or failure, but if the task
                     // has failed then getResult() will throw an Exception which will be
                     // propagated down.
