@@ -1,5 +1,7 @@
 package com.frisky.icebreaker.orders;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -9,6 +11,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -182,6 +185,23 @@ public class OrderActivity extends AppCompatActivity implements ClearBillDialog.
                                 .document(tableID)
                                 .set(needsAttention, SetOptions.merge())
                                 .addOnSuccessListener(doc -> {
+                                    NotificationManager notificationManager = getSystemService(NotificationManager.class);
+
+                                    Intent notificationIntent = new Intent(this, HomeActivity.class);
+                                    PendingIntent pendingIntent =
+                                            PendingIntent.getActivity(this, 0, notificationIntent, 0);
+
+                                    NotificationCompat.Builder builder = new
+                                            NotificationCompat.Builder(this, getString(R.string.n_channel_orders))
+                                            .setSmallIcon(R.drawable.logo)
+                                            .setContentTitle("Welcome to " + sharedPreferences.getString("restaurant_name", ""))
+                                            .setContentText("You're on " + sharedPreferences.getString("table_name", ""))
+                                            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                                            // Set the intent that will fire when the user taps the notification
+                                            .setContentIntent(pendingIntent);
+
+                                    notificationManager.notify(1402, builder.build());
+
                                     Intent clearBill = new Intent(this, HomeActivity.class);
                                     clearBill.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
                                             Intent.FLAG_ACTIVITY_CLEAR_TASK |
