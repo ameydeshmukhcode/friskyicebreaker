@@ -12,6 +12,7 @@ import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
 
+import com.frisky.icebreaker.HomeActivity;
 import com.frisky.icebreaker.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
@@ -82,6 +83,28 @@ public class OrderSessionService extends Service {
     public void onDestroy() {
         super.onDestroy();
         Log.d(getString(R.string.tag_debug), "Service Stopped");
+
+        NotificationManager notificationManager = getSystemService(NotificationManager.class);
+
+        Intent notificationIntent = new Intent(this, HomeActivity.class);
+        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
+                Intent.FLAG_ACTIVITY_CLEAR_TASK |
+                Intent.FLAG_ACTIVITY_NEW_TASK);
+        PendingIntent pendingIntent =
+                PendingIntent.getActivity(this, 0, notificationIntent, 0);
+
+        NotificationCompat.Builder builder = new
+                NotificationCompat.Builder(this, getString(R.string.n_channel_orders))
+                .setSmallIcon(R.drawable.logo)
+                .setContentTitle("Bill Requested")
+                .setContentText("Payment complete. Hope you had a great experience at " + sharedPreferences.getString("restaurant_name", ""))
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                // Set the intent that will fire when the user taps the notification
+                .setContentIntent(pendingIntent);
+
+        notificationManager.notify(2301, builder.build());
+
+        disableSession();
     }
 
     private void addListenerForSessionEnd() {
@@ -128,7 +151,7 @@ public class OrderSessionService extends Service {
                     return;
                 if (document.exists()) {
                     Log.d(getString(R.string.tag_debug), "DocumentSnapshot data: " + document.getData());
-                    disableSession();
+                    stopSelf();
                 }
                 else {
                     Log.e("Doesn't exist", "No such document");
@@ -149,7 +172,5 @@ public class OrderSessionService extends Service {
                 .remove("table_name")
                 .remove("table_id")
                 .apply();
-
-        stopSelf();
     }
 }
