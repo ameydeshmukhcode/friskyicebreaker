@@ -4,27 +4,32 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
 import com.budiyev.android.codescanner.CodeScanner;
 import com.budiyev.android.codescanner.CodeScannerView;
 import com.frisky.icebreaker.R;
+import com.frisky.icebreaker.ui.components.dialogs.ConfirmSessionStartDialog;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-public class QRScanActivity extends AppCompatActivity {
+public class QRScanActivity extends AppCompatActivity implements ConfirmSessionStartDialog.OnConfirmSessionStart {
 
     public static final int MY_PERMISSIONS_REQUEST_CAMERA = 1;
     CodeScanner mCodeScanner;
 
     SharedPreferences sharedPreferences;
+
+    String restaurantID;
+    String tableID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +83,6 @@ public class QRScanActivity extends AppCompatActivity {
         mCodeScanner = new CodeScanner(this, scannerView);
 
         mCodeScanner.setDecodeCallback(result -> runOnUiThread(() -> {
-            FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
             final String qrCodeData = result.getText();
 
             boolean isSessionActive = sharedPreferences.getBoolean("session_active", false);
@@ -92,49 +96,64 @@ public class QRScanActivity extends AppCompatActivity {
                 mCodeScanner.startPreview();
             }
             else {
-                final String restaurant = qrCodeData.split("\\+")[1];
-                final String table = qrCodeData.split("\\+")[2];
+                restaurantID = qrCodeData.split("\\+")[1];
+                tableID = qrCodeData.split("\\+")[2];
 
-                DocumentReference tableRef = firebaseFirestore
-                        .collection("restaurants")
-                        .document(restaurant)
-                        .collection("tables")
-                        .document(table);
-
-                tableRef.get().addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        DocumentSnapshot document = task.getResult();
-                        if (document == null)
-                            return;
-                        if (document.exists()) {
-                            boolean isOccupied = false;
-                            if (document.contains("occupied")) {
-                                isOccupied = (boolean) document.get("occupied");
-                            }
-                            if (!isOccupied) {
-                                Intent showMenu = new Intent(getBaseContext(), MenuActivity.class);
-                                showMenu.putExtra("start_new_session", true);
-                                showMenu.putExtra("restaurant_id", restaurant);
-                                showMenu.putExtra("table_id", table);
-                                startActivity(showMenu);
-                                finish();
-                            }
-                            else {
-                                Toast.makeText(getBaseContext(),"Table is Occupied", Toast.LENGTH_LONG).show();
-                                mCodeScanner.startPreview();
-                            }
-                            Log.d(getString(R.string.tag_debug), "DocumentSnapshot data: " + document.getData());
-                        }
-                        else {
-                            Log.e("Doesn't exist", "No such document");
-                        }
-                    }
-                    else {
-                        Log.e("Task", "failed with ", task.getException());
-                    }
-                });
+                ConfirmSessionStartDialog confirmSessionStartDialog = new ConfirmSessionStartDialog();
+                confirmSessionStartDialog.show(getSupportFragmentManager(), "confirm session start dialog");
             }
         }));
         mCodeScanner.startPreview();
+    }
+
+    @Override
+    public void sessionStart(boolean choice) {
+        if (choice) {
+            startNewSession();
+        }
+        else {
+            mCodeScanner.startPreview();
+        }
+    }
+
+    private void startNewSession() {
+        DocumentReference tableRef = FirebaseFirestore.getInstance()
+                .collection("restaurants")
+                .document(restaurantID)
+                .collection("tables")
+                .document(tableID);
+
+        tableRef.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                DocumentSnapshot document = task.getResult();
+                if (document == null)
+                    return;
+                if (document.exists()) {
+                    boolean isOccupied = false;
+                    if (document.contains("occupied")) {
+                        isOccupied = (boolean) document.get("occupied");
+                    }
+                    if (!isOccupied) {
+                        Intent showMenu = new Intent(getBaseContext(), MenuActivity.class);
+                        showMenu.putExtra("start_new_session", true);
+                        showMenu.putExtra("restaurant_id", restaurantID);
+                        showMenu.putExtra("table_id", tableID);
+                        startActivity(showMenu);
+                        finish();
+                    }
+                    else {
+                        Toast.makeText(getBaseContext(),"Table is Occupied", Toast.LENGTH_LONG).show();
+                        mCodeScanner.startPreview();
+                    }
+                    Log.d(getString(R.string.tag_debug), "DocumentSnapshot data: " + document.getData());
+                }
+                else {
+                    Log.e("Doesn't exist", "No such document");
+                }
+            }
+            else {
+                Log.e("Task", "failed with ", task.getException());
+            }
+        });
     }
 }
