@@ -96,8 +96,8 @@ public class OrderSessionService extends Service {
         NotificationCompat.Builder builder = new
                 NotificationCompat.Builder(this, getString(R.string.n_channel_orders))
                 .setSmallIcon(R.drawable.logo)
-                .setContentTitle("Bill Requested")
-                .setContentText("Payment complete. Hope you had a great experience at " + sharedPreferences.getString("restaurant_name", ""))
+                .setContentTitle("Session Ended")
+                .setContentText("Click here to view your order receipt")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 // Set the intent that will fire when the user taps the notification
                 .setContentIntent(pendingIntent);
