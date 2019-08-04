@@ -1,8 +1,10 @@
 package com.frisky.icebreaker.orders;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -10,19 +12,23 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.frisky.icebreaker.HomeActivity;
 import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.core.structures.OrderItem;
 import com.frisky.icebreaker.core.structures.OrderStatus;
+import com.frisky.icebreaker.ui.components.dialogs.ClearBillDialog;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class OrderActivity extends AppCompatActivity {
+public class OrderActivity extends AppCompatActivity implements ClearBillDialog.OnClearBillListener {
 
     ImageButton mBackButton;
+    Button mClearBill;
 
     SharedPreferences sharedPreferences;
 
@@ -42,6 +48,9 @@ public class OrderActivity extends AppCompatActivity {
         mBackButton = findViewById(R.id.button_back);
         mBackButton.setOnClickListener(v -> super.onBackPressed());
 
+        mClearBill = findViewById(R.id.button_clear_bill);
+        mClearBill.setOnClickListener(v -> clearBill());
+
         TextView mTableSerial = findViewById(R.id.text_table);
         mTableSerial.setText(sharedPreferences.getString("table_name", ""));
 
@@ -60,6 +69,11 @@ public class OrderActivity extends AppCompatActivity {
 
         orderListAdapter = new OrderListAdapter(getApplicationContext(), mOrderList);
         mRecyclerOrderListView.setAdapter(orderListAdapter);
+    }
+
+    private void clearBill() {
+        ClearBillDialog clearBillDialog = new ClearBillDialog();
+        clearBillDialog.show(getSupportFragmentManager(), "clear bill dialog");
     }
 
     @SuppressWarnings("unchecked")
@@ -137,5 +151,45 @@ public class OrderActivity extends AppCompatActivity {
                         }
                     }
                 });
+    }
+
+    @Override
+    public void clearBill(boolean choice) {
+        if (choice) {
+            final FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+            String restaurantID = sharedPreferences.getString("restaurant_id", "");
+            String sessionID = sharedPreferences.getString("session_id", "");
+            String tableID = sharedPreferences.getString("table_id", "");
+
+            Map<String, Object> requestBill = new HashMap<>();
+            requestBill.put("bill_requested", true);
+
+            assert restaurantID != null;
+            assert sessionID != null;
+            firebaseFirestore.collection("restaurants")
+                    .document(restaurantID)
+                    .collection("sessions")
+                    .document(sessionID)
+                    .set(requestBill, SetOptions.merge())
+                    .addOnSuccessListener(documentReference -> {
+                        Map<String, Object> needsAttention = new HashMap<>();
+                        requestBill.put("needs_attention", true);
+
+                        assert tableID != null;
+                        firebaseFirestore.collection("restaurants")
+                                .document(restaurantID)
+                                .collection("tables")
+                                .document(tableID)
+                                .set(needsAttention, SetOptions.merge())
+                                .addOnSuccessListener(doc -> {
+                                    Intent clearBill = new Intent(this, HomeActivity.class);
+                                    clearBill.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
+                                            Intent.FLAG_ACTIVITY_CLEAR_TASK |
+                                            Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    startActivity(clearBill);
+                                    finish();
+                                });
+                    });
+        }
     }
 }
