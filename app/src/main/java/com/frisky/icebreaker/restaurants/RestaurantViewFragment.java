@@ -48,13 +48,13 @@ public class RestaurantViewFragment extends Fragment {
 
         FragmentManager fragmentManager = getFragmentManager();
 
-        ImageButton filtersButton;
-        filtersButton = view.findViewById(R.id.button_filters);
-        filtersButton.setOnClickListener(v -> {
-            FiltersDialog filtersDialog = new FiltersDialog();
-            if (fragmentManager != null)
-                filtersDialog.show(fragmentManager, "pick image dialog");
-        });
+//        ImageButton filtersButton;
+//        filtersButton = view.findViewById(R.id.button_filters);
+//        filtersButton.setOnClickListener(v -> {
+//            FiltersDialog filtersDialog = new FiltersDialog();
+//            if (fragmentManager != null)
+//                filtersDialog.show(fragmentManager, "pick image dialog");
+//        });
 
         if (isSessionActive) {
             mRecyclerPubView.setPadding(0, 0, 0, 0);
