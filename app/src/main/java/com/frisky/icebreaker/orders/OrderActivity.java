@@ -200,7 +200,7 @@ public class OrderActivity extends AppCompatActivity implements ClearBillDialog.
                                             // Set the intent that will fire when the user taps the notification
                                             .setContentIntent(pendingIntent);
 
-                                    notificationManager.notify(1402, builder.build());
+                                    notificationManager.notify(R.integer.n_order_session_service, builder.build());
 
                                     Intent clearBill = new Intent(this, HomeActivity.class);
                                     clearBill.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |

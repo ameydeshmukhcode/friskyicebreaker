@@ -70,7 +70,7 @@ public class OrderSessionService extends Service {
                 // Set the intent that will fire when the user taps the notification
                 .setContentIntent(pendingIntent);
 
-        startForeground(1402, builder.build());
+        startForeground(R.integer.n_order_session_service, builder.build());
     }
 
     @Override
@@ -102,7 +102,7 @@ public class OrderSessionService extends Service {
                 // Set the intent that will fire when the user taps the notification
                 .setContentIntent(pendingIntent);
 
-        notificationManager.notify(2301, builder.build());
+        notificationManager.notify(R.integer.n_session_end, builder.build());
 
         disableSession();
     }
