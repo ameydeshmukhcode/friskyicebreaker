@@ -45,7 +45,7 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
         sharedPreferences = getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE);
 
         for (Map.Entry<String, ?> entry : sharedPreferences.getAll().entrySet()) {
-            Log.d(getString(R.string.tag_debug), "Saved Entry " + entry.getKey());
+            Log.d(getString(R.string.tag_debug), "Saved Entry " + entry.getKey() + " " + entry.getValue());
         }
 
         initUI();
