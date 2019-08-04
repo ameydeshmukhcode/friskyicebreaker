@@ -209,6 +209,7 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
                             .putBoolean("session_active", true)
                             .putString("restaurant_id", restID)
                             .putString("session_id", sessionID)
+                            .putString("table_id", tableID)
                             .apply();
 
                     firebaseFirestore.collection("users")

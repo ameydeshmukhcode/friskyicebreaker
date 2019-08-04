@@ -147,6 +147,7 @@ public class OrderSessionService extends Service {
                 .remove("restaurant_name")
                 .remove("session_id")
                 .remove("table_name")
+                .remove("table_id")
                 .apply();
 
         stopSelf();
