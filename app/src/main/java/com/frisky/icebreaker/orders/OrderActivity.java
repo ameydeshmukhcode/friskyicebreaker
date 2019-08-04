@@ -175,15 +175,15 @@ public class OrderActivity extends AppCompatActivity implements ClearBillDialog.
                     .document(sessionID)
                     .set(requestBill, SetOptions.merge())
                     .addOnSuccessListener(documentReference -> {
-                        Map<String, Object> needsAttention = new HashMap<>();
-                        requestBill.put("needs_attention", true);
+                        Map<String, Object> clearTable = new HashMap<>();
+                        clearTable.put("bill_requested", true);
 
                         assert tableID != null;
                         firebaseFirestore.collection("restaurants")
                                 .document(restaurantID)
                                 .collection("tables")
                                 .document(tableID)
-                                .set(needsAttention, SetOptions.merge())
+                                .set(clearTable, SetOptions.merge())
                                 .addOnSuccessListener(doc -> {
                                     NotificationManager notificationManager = getSystemService(NotificationManager.class);
 
