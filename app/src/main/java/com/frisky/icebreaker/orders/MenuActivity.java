@@ -121,6 +121,14 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
                 final String restID = getIntent().getStringExtra("restaurant_id");
                 final String tableID = getIntent().getStringExtra("table_id");
 
+                mViewCartButton = findViewById(R.id.button_view_order);
+                mViewCartButton.setOnClickListener(v -> {
+                    Intent showOrder = new Intent(getApplicationContext(), CartActivity.class);
+                    showOrder.putExtra("cart_list", mCartList);
+                    showOrder.putExtra("cart_total", mCartTotal);
+                    startActivity(showOrder);
+                });
+
                 getRestaurantAndTableDetails(restID, tableID);
                 initUserSession(restID, tableID);
                 setMenu(restID);
