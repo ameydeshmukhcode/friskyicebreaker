@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Notifications -->
+    <string name="n_channel_orders">Orders</string>
+    <string name="n_channel_name_orders">Order Details</string>
+    <string name="n_channel_desc_orders">Order details and real-time updates</string>
+    <integer name="n_order_session_service">1402</integer>
+    <integer name="n_session_end">2301</integer>
+</resources>

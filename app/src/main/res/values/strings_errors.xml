@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Errors -->
+    <!-- Sign Up Sign In errors -->
+    <string name="error_weak_password">Weak password.\nPassword length should be more than 6 characters.</string>
+    <string name="error_invalid_email">Invalid email entered. Enter a valid email.</string>
+    <string name="error_duplicate_email">Account with this email already exists.\nTry Signing In.</string>
+    <string name="error_not_signed_up">Account with this email doesn\'t exist.\nSign up first.</string>
+    <string name="error_incorrect_password">Incorrect password entered.</string>
+    <string name="error_network">Check your network connection.</string>
+    <string name="error_email_not_verified">You need to verify your email.\nClick here to send verification link.</string>
+    <string name="error_password_reset_email">Password reset link sent to your email.</string>
+    <string name="error_password_reset_hint">Seems like you\'ve forgotten your password.\nTry \'Forgot Password?\'</string>
+</resources>
