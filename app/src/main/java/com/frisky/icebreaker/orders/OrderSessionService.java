@@ -100,7 +100,8 @@ public class OrderSessionService extends Service {
                 .setContentText("Click here to view your order receipt")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 // Set the intent that will fire when the user taps the notification
-                .setContentIntent(pendingIntent);
+                .setContentIntent(pendingIntent)
+                .setAutoCancel(true);
 
         notificationManager.notify(R.integer.n_order_session_service, builder.build());
 
