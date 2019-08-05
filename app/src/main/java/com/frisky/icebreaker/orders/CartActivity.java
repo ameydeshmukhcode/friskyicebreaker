@@ -18,13 +18,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.core.structures.MenuItem;
-import com.frisky.icebreaker.core.structures.MutableInt;
 import com.frisky.icebreaker.core.structures.OrderItem;
 import com.frisky.icebreaker.core.structures.OrderStatus;
 import com.frisky.icebreaker.ui.base.UIActivity;
 import com.frisky.icebreaker.ui.components.dialogs.ConfirmOrderDialog;
 import com.google.firebase.functions.FirebaseFunctions;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -38,8 +38,9 @@ public class CartActivity extends AppCompatActivity implements UIActivity,
     int mCartTotal;
 
     RecyclerView mRecyclerCartListView;
+    CartListAdapter mCartListAdapter;
 
-    HashMap<MenuItem, MutableInt> mCartList = new HashMap<>();
+    ArrayList<MenuItem> mCartList = new ArrayList<>();
 
     SharedPreferences sharedPreferences;
 
@@ -75,11 +76,12 @@ public class CartActivity extends AppCompatActivity implements UIActivity,
         mTableSerial.setText(sharedPreferences.getString("table_name", ""));
 
         if (getIntent().hasExtra("cart_list")) {
-            mCartList = (HashMap<MenuItem, MutableInt>) getIntent().getSerializableExtra("cart_list");
+            mCartList = (ArrayList<MenuItem>) getIntent().getSerializableExtra("cart_list");
         }
 
-        for (Map.Entry<MenuItem, MutableInt> entry : mCartList.entrySet()) {
-            Log.d(getString(R.string.tag_debug), "List " + entry.getKey().getName() + " " + entry.getValue().getValue());
+        for (int i = 0; i < mCartList.size(); i++) {
+            Log.d(getString(R.string.tag_debug), "List " + mCartList.get(i).getName() + " " +
+                    mCartList.get(i).getCount());
         }
 
         if (getIntent().hasExtra("cart_total")) {
@@ -97,8 +99,8 @@ public class CartActivity extends AppCompatActivity implements UIActivity,
         mRecyclerCartListView.setLayoutManager(mMenuListViewLayoutManager);
 
         // specify an adapter (see also next example)
-        CartListAdapter cartListAdapter = new CartListAdapter(getApplicationContext(), mCartList, this);
-        mRecyclerCartListView.setAdapter(cartListAdapter);
+        mCartListAdapter = new CartListAdapter(mCartList, this);
+        mRecyclerCartListView.setAdapter(mCartListAdapter);
     }
 
     private void confirmOrder() {
@@ -114,12 +116,11 @@ public class CartActivity extends AppCompatActivity implements UIActivity,
 
             HashMap<OrderItem, OrderStatus> orderListFinal = new HashMap<>();
 
-            for (Map.Entry<MenuItem, MutableInt> entry: mCartList.entrySet()) {
-                order.put(entry.getKey().getId(), entry.getValue().getValue());
-                MenuItem menuItem = entry.getKey();
-                MutableInt itemCount = entry.getValue();
-                OrderItem orderItem = new OrderItem(menuItem.getId(), menuItem.getName(),
-                        itemCount.getValue(), (menuItem.getPrice() * itemCount.getValue()));
+            for (int i = 0; i < mCartList.size(); i++) {
+                MenuItem item = mCartList.get(i);
+                order.put(item.getId(), item.getCount());
+                OrderItem orderItem = new OrderItem(item.getId(), item.getName(),
+                        item.getCount(), (item.getPrice() * item.getCount()));
                 orderListFinal.put(orderItem, OrderStatus.PENDING);
             }
 
@@ -170,20 +171,27 @@ public class CartActivity extends AppCompatActivity implements UIActivity,
         mCartTotalText.setText(String.valueOf(mCartTotal));
 
         if (mCartList.size() == 0) {
-            mCartList.put(item, new MutableInt());
+            mCartList.add(item);
         }
         else {
             boolean updatedItem = false;
-            for (Map.Entry<MenuItem, MutableInt> entry : mCartList.entrySet()) {
-                if (entry.getKey().getId().equals(item.getId())) {
-                    MutableInt count = entry.getValue();
-                    count.increment();
+            for (int i = 0; i < mCartList.size(); i++) {
+                if (mCartList.get(i).getId().equals(item.getId())) {
+                    mCartList.get(i).incrementCount();
                     updatedItem = true;
+                    break;
                 }
             }
             if (!updatedItem) {
-                mCartList.put(item, new MutableInt());
+                mCartList.add(item);
             }
+        }
+
+        mCartListAdapter.notifyDataSetChanged();
+
+        for (int i = 0; i < mCartList.size(); i++) {
+            Log.d(getString(R.string.tag_debug), mCartList.get(i).getName() + " " +
+                    mCartList.get(i).getCount());
         }
     }
 
@@ -191,16 +199,19 @@ public class CartActivity extends AppCompatActivity implements UIActivity,
     public void removeFromOrder(MenuItem item) {
         mCartTotal -= item.getPrice();
 
-        for (Map.Entry<MenuItem, MutableInt> entry : mCartList.entrySet()) {
-            if (entry.getKey().getId().equals(item.getId())) {
-                MutableInt count = entry.getValue();
-                count.decrement();
-                if (count.getValue() == 0) {
-                    mCartList.remove(entry.getKey());
+        for (int i = 0; i < mCartList.size(); i++) {
+            if (mCartList.get(i).getId().equals(item.getId())) {
+                if (mCartList.get(i).getCount() == 1) {
+                    mCartList.remove(i);
                 }
+                else {
+                    mCartList.get(i).decrementCount();
+                }
+                mCartListAdapter.notifyDataSetChanged();
                 break;
             }
         }
+
         mCartTotalText.setText(String.valueOf(mCartTotal));
         if (mCartTotal == 0) {
             super.onBackPressed();

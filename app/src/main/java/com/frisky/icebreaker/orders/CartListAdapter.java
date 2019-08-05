@@ -1,6 +1,5 @@
 package com.frisky.icebreaker.orders;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,19 +11,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.core.structures.MenuItem;
-import com.frisky.icebreaker.core.structures.MutableInt;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class CartListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private Context mContext;
-    private HashMap<MenuItem, MutableInt> mCartList;
+    private ArrayList<MenuItem> mCartList;
     private OnOrderUpdateListener orderUpdateListener;
 
-    CartListAdapter(Context context, HashMap<MenuItem, MutableInt> cartList, OnOrderUpdateListener listener) {
-        this.mContext = context;
+    CartListAdapter(ArrayList<MenuItem> cartList, OnOrderUpdateListener listener) {
         this.mCartList = cartList;
         this.orderUpdateListener = listener;
     }
@@ -61,12 +57,12 @@ public class CartListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
         CartListViewHolder cartItemHolder = (CartListViewHolder) viewHolder;
-        MenuItem item = (MenuItem) Objects.requireNonNull(mCartList.keySet().toArray())[position];
-        MutableInt count = (MutableInt) mCartList.values().toArray()[position];
+        MenuItem item = Objects.requireNonNull(mCartList.get(position));
+        int count = item.getCount();
         cartItemHolder.mName.setText(item.getName());
-        cartItemHolder.mCount.setText(String.valueOf(count.getValue()));
+        cartItemHolder.mCount.setText(String.valueOf(count));
         cartItemHolder.mPrice.setText(String.valueOf(item.getPrice()));
-        cartItemHolder.mItemTotal.setText(String.valueOf(item.getPrice() * count.getValue()));
+        cartItemHolder.mItemTotal.setText(String.valueOf(item.getPrice() * count));
         cartItemHolder.mAdd.setOnClickListener(v -> {
             int countInc = Integer.parseInt(cartItemHolder.mCount.getText().toString()) + 1;
             cartItemHolder.mCount.setText(String.valueOf(countInc));
