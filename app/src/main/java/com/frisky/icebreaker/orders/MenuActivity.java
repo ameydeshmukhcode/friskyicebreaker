@@ -123,7 +123,7 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
                 mViewCartButton = findViewById(R.id.button_view_order);
                 mViewCartButton.setOnClickListener(v -> {
                     Intent showOrder = new Intent(getApplicationContext(), CartActivity.class);
-                    //showOrder.putExtra("cart_list", mCartList);
+                    showOrder.putExtra("cart_list", mCartList);
                     showOrder.putExtra("cart_total", mCartTotal);
                     startActivity(showOrder);
                 });
