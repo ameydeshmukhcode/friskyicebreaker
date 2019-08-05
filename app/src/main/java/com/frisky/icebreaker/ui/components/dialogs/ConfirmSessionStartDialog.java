@@ -2,6 +2,7 @@ package com.frisky.icebreaker.ui.components.dialogs;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.Window;
 import android.widget.Button;
@@ -51,6 +52,12 @@ public class ConfirmSessionStartDialog extends DialogFragment {
 
     public interface OnConfirmSessionStart {
         void sessionStart(boolean choice);
+    }
+
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        super.onDismiss(dialog);
+        this.onConfirmSessionStart.sessionStart(false);
     }
 
     @Override
