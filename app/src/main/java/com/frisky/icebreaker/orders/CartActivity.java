@@ -114,21 +114,21 @@ public class CartActivity extends AppCompatActivity implements UIActivity,
 
             HashMap<String, Integer> order = new HashMap<>();
 
-            HashMap<OrderItem, OrderStatus> orderListFinal = new HashMap<>();
+            ArrayList<OrderItem> orderListFinal = new ArrayList<>();
 
             for (int i = 0; i < mCartList.size(); i++) {
                 MenuItem item = mCartList.get(i);
                 order.put(item.getId(), item.getCount());
                 OrderItem orderItem = new OrderItem(item.getId(), item.getName(),
                         item.getCount(), (item.getPrice() * item.getCount()));
-                orderListFinal.put(orderItem, OrderStatus.PENDING);
+                orderListFinal.add(orderItem);
             }
 
             placeOrder(order, orderListFinal);
         }
     }
 
-    private void placeOrder(HashMap<String, Integer> orderList, HashMap<OrderItem, OrderStatus> orderListFinal) {
+    private void placeOrder(HashMap<String, Integer> orderList,  ArrayList<OrderItem> orderListFinal) {
         Map<String, Object> data = new HashMap<>();
         data.put("order", orderList);
 

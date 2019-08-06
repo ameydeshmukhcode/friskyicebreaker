@@ -16,15 +16,16 @@ import com.frisky.icebreaker.core.structures.OrderItem;
 import com.frisky.icebreaker.core.structures.OrderStatus;
 import com.frisky.icebreaker.ui.assistant.UIAssistant;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
 
 public class OrderListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context mContext;
-    private HashMap<OrderItem, OrderStatus> mOrderList;
+    private ArrayList<OrderItem> mOrderList;
 
-    OrderListAdapter(Context context, HashMap<OrderItem, OrderStatus> orderList) {
+    OrderListAdapter(Context context, ArrayList<OrderItem> orderList) {
         this.mContext = context;
         this.mOrderList = orderList;
     }
@@ -58,8 +59,8 @@ public class OrderListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
         OrderListAdapter.OrderListViewHolder orderItemHolder = (OrderListAdapter.OrderListViewHolder) viewHolder;
-        OrderItem orderItem = (OrderItem) Objects.requireNonNull(mOrderList.keySet().toArray())[position];
-        OrderStatus status = (OrderStatus) mOrderList.values().toArray()[position];
+        OrderItem orderItem = Objects.requireNonNull(mOrderList.get(position));
+        OrderStatus status = orderItem.getStatus();
         orderItemHolder.mName.setText(orderItem.getName());
         orderItemHolder.mItemCount.setText(String.valueOf(orderItem.getCount()));
         orderItemHolder.mItemTotal.setText(String.valueOf(orderItem.getTotal()));

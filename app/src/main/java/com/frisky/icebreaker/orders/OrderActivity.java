@@ -25,6 +25,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -38,7 +39,7 @@ public class OrderActivity extends AppCompatActivity implements ClearBillDialog.
     OrderListAdapter orderListAdapter;
     RecyclerView mRecyclerOrderListView;
 
-    HashMap<OrderItem, OrderStatus> mOrderList = new HashMap<>();
+    ArrayList<OrderItem> mOrderList = new ArrayList<>();
 
     @SuppressWarnings("unchecked")
     @Override
@@ -67,7 +68,7 @@ public class OrderActivity extends AppCompatActivity implements ClearBillDialog.
         addListenerForOrderUpdates();
 
         if (getIntent().hasExtra("order_list")) {
-            mOrderList = (HashMap<OrderItem, OrderStatus>) getIntent().getSerializableExtra("order_list");
+            mOrderList = (ArrayList<OrderItem>) getIntent().getSerializableExtra("order_list");
         }
 
         orderListAdapter = new OrderListAdapter(getApplicationContext(), mOrderList);
@@ -118,31 +119,29 @@ public class OrderActivity extends AppCompatActivity implements ClearBillDialog.
                                     String itemID = entry.getKey();
                                     Log.d(getString(R.string.tag_debug), "Item " + itemID);
 
-                                    for (Map.Entry<OrderItem, OrderStatus> orderListEntry:
-                                            mOrderList.entrySet()) {
-                                        if (orderListEntry.getKey().getId().equals(itemID)) {
+                                    for (int i = 0; i < mOrderList.size(); i++) {
+                                        if (mOrderList.get(i).getId().equals(itemID)) {
                                             if (value.contains("status=pending")) {
-                                                orderListEntry.setValue(OrderStatus.PENDING);
+                                                mOrderList.get(i).setStatus(OrderStatus.PENDING);
                                                 Log.d(getString(R.string.tag_debug), "Status Pending");
                                             }
                                             else if (value.contains("status=accepted")) {
-                                                orderListEntry.setValue(OrderStatus.ACCEPTED);
+                                                mOrderList.get(i).setStatus(OrderStatus.ACCEPTED);
                                                 Log.d(getString(R.string.tag_debug), "Status Accepted");
                                             }
                                             else if (value.contains("status=rejected")) {
-                                                orderListEntry.setValue(OrderStatus.REJECTED);
+                                                mOrderList.get(i).setStatus(OrderStatus.REJECTED);
                                                 Log.d(getString(R.string.tag_debug), "Status Rejected");
                                             }
                                             else if (value.contains("status=cancelled")) {
-                                                orderListEntry.setValue(OrderStatus.CANCELLED);
+                                                mOrderList.get(i).setStatus(OrderStatus.CANCELLED);
                                                 Log.d(getString(R.string.tag_debug), "Status Cancelled");
                                             }
                                         }
                                     }
                                 }
 
-                                orderListAdapter = new OrderListAdapter(getApplicationContext(), mOrderList);
-                                mRecyclerOrderListView.setAdapter(orderListAdapter);
+                                orderListAdapter.notifyDataSetChanged();
                                 break;
 
                             case REMOVED:
