@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -18,10 +16,12 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.frisky.icebreaker.R;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+
 import com.frisky.icebreaker.HomeActivity;
+import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.ui.assistant.RoundRectTransformation;
-import com.frisky.icebreaker.ui.assistant.UIAssistant;
 import com.frisky.icebreaker.ui.base.FormActivity;
 import com.frisky.icebreaker.ui.base.UIActivity;
 import com.frisky.icebreaker.ui.components.dialogs.PickImageDialog;
@@ -43,6 +43,8 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+
+import static com.frisky.icebreaker.ui.assistant.UIAssistant.compressImage;
 
 public class SetupProfileActivity extends AppCompatActivity implements FormActivity, UIActivity,
         PickImageDialog.OnImageUpdatedListener {
@@ -265,7 +267,7 @@ public class SetupProfileActivity extends AppCompatActivity implements FormActiv
             ostream = new FileOutputStream(tmp);
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, ostream);
             ostream.close();
-            return Uri.fromFile(UIAssistant.getInstance().compressImage(tmp, getApplicationContext()));
+            return Uri.fromFile(compressImage(tmp, getApplicationContext()));
         }
         catch (IOException exp) {
             exp.printStackTrace();

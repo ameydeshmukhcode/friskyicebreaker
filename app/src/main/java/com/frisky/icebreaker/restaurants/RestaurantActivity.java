@@ -2,17 +2,19 @@ package com.frisky.icebreaker.restaurants;
 
 import android.content.res.ColorStateList;
 import android.os.Bundle;
-import com.google.android.material.appbar.AppBarLayout;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import com.frisky.icebreaker.R;
-import com.frisky.icebreaker.ui.assistant.UIAssistant;
 import com.frisky.icebreaker.ui.base.UIActivity;
+import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
+
+import static com.frisky.icebreaker.ui.assistant.UIAssistant.getRatingBadgeColor;
 
 public class RestaurantActivity extends AppCompatActivity implements UIActivity {
 
@@ -58,8 +60,8 @@ public class RestaurantActivity extends AppCompatActivity implements UIActivity 
             double pubRating = Double.parseDouble(pubRatingText);
             mRatingText.setText(getIntent().getStringExtra("rating"));
             mRatingText.setBackgroundTintList(ColorStateList.valueOf(getApplicationContext()
-                    .getColor(UIAssistant.getInstance().getRatingBadgeColor(pubRating))));
-            mAppBarLayout.setBackgroundResource(UIAssistant.getInstance().getRatingBadgeColor(pubRating));
+                    .getColor(getRatingBadgeColor(pubRating))));
+            mAppBarLayout.setBackgroundResource(getRatingBadgeColor(pubRating));
         }
 
         if (getIntent().hasExtra("id")) {
