@@ -7,7 +7,7 @@
     android:elevation="4dp">
 
     <TextView
-        android:id="@+id/session"
+        android:id="@+id/text_sheet_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/text_restaurant"
+        android:id="@+id/text_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -30,10 +30,24 @@
         android:textSize="@dimen/text_subtitle_size"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/session" />
+        app:layout_constraintTop_toBottomOf="@+id/text_sheet_title" />
 
     <TextView
-        android:id="@+id/text_table"
+        android:id="@+id/dash"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp"
+        android:fontFamily="@font/museosans700"
+        android:text="@string/dash"
+        android:textSize="@dimen/text_subtitle_size"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/text_info"
+        app:layout_constraintTop_toBottomOf="@+id/text_sheet_title" />
+
+    <TextView
+        android:id="@+id/text_details"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
@@ -44,7 +58,7 @@
         android:textSize="@dimen/text_subtitle_size"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/dash"
-        app:layout_constraintTop_toBottomOf="@+id/session" />
+        app:layout_constraintTop_toBottomOf="@+id/text_sheet_title" />
 
     <Button
         android:id="@+id/button_menu"
@@ -58,22 +72,8 @@
         android:textAllCaps="false"
         android:textColor="@color/colorPrimary"
         android:textSize="@dimen/text_title_size"
-        app:layout_constraintBottom_toBottomOf="@+id/text_restaurant"
+        app:layout_constraintBottom_toBottomOf="@+id/text_info"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/session" />
-
-    <TextView
-        android:id="@+id/dash"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="16dp"
-        android:fontFamily="@font/museosans700"
-        android:text="@string/dash"
-        android:textSize="@dimen/text_subtitle_size"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/text_restaurant"
-        app:layout_constraintTop_toBottomOf="@+id/session" />
+        app:layout_constraintTop_toTopOf="@+id/text_sheet_title" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
