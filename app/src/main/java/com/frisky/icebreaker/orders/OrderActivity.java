@@ -29,11 +29,13 @@ import com.google.firebase.firestore.SetOptions;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class OrderActivity extends AppCompatActivity implements ClearBillDialog.OnClearBillListener {
 
     ImageButton mBackButton;
     Button mClearBill;
+    TextView mOrderTotalText;
 
     SharedPreferences sharedPreferences;
 
@@ -56,6 +58,8 @@ public class OrderActivity extends AppCompatActivity implements ClearBillDialog.
         mClearBill = findViewById(R.id.button_clear_bill);
         mClearBill.setOnClickListener(v -> clearBill());
 
+        mOrderTotalText = findViewById(R.id.text_order_total);
+
         TextView mTableSerial = findViewById(R.id.text_table);
         mTableSerial.setText(sharedPreferences.getString("table_name", ""));
 
@@ -68,6 +72,7 @@ public class OrderActivity extends AppCompatActivity implements ClearBillDialog.
         mRecyclerOrderListView.setLayoutManager(mOrderListViewLayoutManager);
 
         addListenerForOrderUpdates();
+        addListenerForOrderDetailsUpdate();
 
         if (getIntent().hasExtra("order_ack")) {
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
@@ -179,6 +184,33 @@ public class OrderActivity extends AppCompatActivity implements ClearBillDialog.
                 });
     }
 
+    private void addListenerForOrderDetailsUpdate() {
+        final DocumentReference docRef = FirebaseFirestore.getInstance().collection("restaurants")
+                .document(Objects.requireNonNull(sharedPreferences.getString("restaurant_id", "")))
+                .collection("sessions")
+                .document(Objects.requireNonNull(sharedPreferences.getString("session_id", "")));
+
+        docRef.addSnapshotListener((snapshot, e) -> {
+            if (e != null) {
+                Log.e("Failed", "Listen failed.", e);
+                return;
+            }
+
+            if (snapshot != null && snapshot.exists()) {
+                if (snapshot.contains("bill_amount")) {
+                    mOrderTotalText.setText(snapshot.get("bill_amount").toString());
+                    sharedPreferences.edit().putInt("bill_amount",
+                            Integer.parseInt(snapshot.get("bill_amount").toString())).apply();
+                }
+
+                Log.d(getString(R.string.tag_debug), "Current data: " + snapshot.getData());
+            }
+            else {
+                Log.d(getString(R.string.tag_debug), "Current data: null");
+            }
+        });
+    }
+
     @Override
     public void clearBill(boolean choice) {
         if (choice) {
@@ -214,11 +246,15 @@ public class OrderActivity extends AppCompatActivity implements ClearBillDialog.
                                     PendingIntent pendingIntent =
                                             PendingIntent.getActivity(this, 0, notificationIntent, 0);
 
+                                    String billAmountString = "You've requested for the bill. Bill Amount: "
+                                            + getString(R.string.rupee)
+                                            + sharedPreferences.getInt("bill_amount", 0);
+
                                     NotificationCompat.Builder builder = new
                                             NotificationCompat.Builder(this, getString(R.string.n_channel_orders))
                                             .setSmallIcon(R.drawable.logo)
                                             .setContentTitle("Bill Requested")
-                                            .setContentText("You've requested for the bill. Bill Amount: ")
+                                            .setContentText(billAmountString)
                                             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                                             // Set the intent that will fire when the user taps the notification
                                             .setContentIntent(pendingIntent);
