@@ -18,7 +18,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.core.structures.MenuItem;
-import com.frisky.icebreaker.core.structures.OrderItem;
 import com.frisky.icebreaker.ui.base.UIActivity;
 import com.frisky.icebreaker.ui.components.dialogs.ConfirmOrderDialog;
 import com.google.firebase.functions.FirebaseFunctions;
@@ -113,21 +112,16 @@ public class CartActivity extends AppCompatActivity implements UIActivity,
 
             HashMap<String, Integer> order = new HashMap<>();
 
-            ArrayList<OrderItem> orderListFinal = new ArrayList<>();
-
             for (int i = 0; i < mCartList.size(); i++) {
                 MenuItem item = mCartList.get(i);
                 order.put(item.getId(), item.getCount());
-                OrderItem orderItem = new OrderItem(item.getId(), item.getName(),
-                        item.getCount(), (item.getPrice() * item.getCount()));
-                orderListFinal.add(orderItem);
             }
 
-            placeOrder(order, orderListFinal);
+            placeOrder(order);
         }
     }
 
-    private void placeOrder(HashMap<String, Integer> orderList,  ArrayList<OrderItem> orderListFinal) {
+    private void placeOrder(HashMap<String, Integer> orderList) {
         Map<String, Object> data = new HashMap<>();
         data.put("order", orderList);
 
@@ -156,7 +150,6 @@ public class CartActivity extends AppCompatActivity implements UIActivity,
                         notificationManager.notify(R.integer.n_order_session_service, builder.build());
 
                         Intent showOrder = new Intent(this, OrderActivity.class);
-                        showOrder.putExtra("order_list", orderListFinal);
                         startActivity(showOrder);
                         finish();
                     }
