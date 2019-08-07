@@ -201,6 +201,8 @@ public class OrderActivity extends AppCompatActivity implements ClearBillDialog.
 
                                     notificationManager.notify(R.integer.n_order_session_service, builder.build());
 
+                                    sharedPreferences.edit().putBoolean("bill_requested", true).apply();
+
                                     Intent clearBill = new Intent(this, HomeActivity.class);
                                     clearBill.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
                                             Intent.FLAG_ACTIVITY_CLEAR_TASK |
