@@ -12,23 +12,15 @@ import java.io.IOException;
 import id.zelory.compressor.Compressor;
 
 public class UIAssistant {
-    private static final UIAssistant ourInstance = new UIAssistant();
 
-    public static UIAssistant getInstance() {
-        return ourInstance;
-    }
-
-    private UIAssistant() {
-    }
-
-    public int getRatingBadgeColor(double rating) {
+    public static int getRatingBadgeColor(double rating) {
         if (rating >= 4.0) {
             return R.color.rating_very_high;
         }
-        else if (rating >= 3.5) {
+        else if (rating >= 3.0) {
             return R.color.rating_high;
         }
-        else if (rating >= 2.5) {
+        else if (rating >= 2.0) {
             return R.color.rating_low;
         }
         else {
@@ -36,7 +28,7 @@ public class UIAssistant {
         }
     }
 
-    public int getStatusColor(OrderStatus status) {
+    public static int getStatusColor(OrderStatus status) {
         switch (status) {
             case PENDING: return R.color.rating_low;
             case ACCEPTED: return R.color.rating_high;
@@ -47,7 +39,7 @@ public class UIAssistant {
         return R.color.rating_very_low;
     }
 
-    public int getStatusIcon(OrderStatus status) {
+    public static int getStatusIcon(OrderStatus status) {
         switch (status) {
             case PENDING: return R.drawable.ic_status_pending;
             case ACCEPTED: return R.drawable.ic_status_accepted;
@@ -58,7 +50,7 @@ public class UIAssistant {
         return R.drawable.ic_status_rejected;
     }
 
-    public String getStatusText(OrderStatus status) {
+    public static String getStatusText(OrderStatus status) {
         switch (status) {
             case PENDING: return "Pending";
             case ACCEPTED: return "Accepted";
@@ -69,7 +61,7 @@ public class UIAssistant {
         return "";
     }
 
-    public File compressImage(File file, Context context) throws IOException {
+    public static File compressImage(File file, Context context) throws IOException {
         int height = 720, width = 720, quality = 50;
 
         return new Compressor(context)
