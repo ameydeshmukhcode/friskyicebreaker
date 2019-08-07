@@ -139,6 +139,8 @@ public class CartActivity extends AppCompatActivity implements UIActivity,
                         NotificationManager notificationManager = getSystemService(NotificationManager.class);
 
                         Intent notificationIntent = new Intent(this, OrderActivity.class);
+                        notificationIntent.putExtra("order_ack", true);
+
                         PendingIntent pendingIntent =
                                 PendingIntent.getActivity(this, 0, notificationIntent, 0);
 
