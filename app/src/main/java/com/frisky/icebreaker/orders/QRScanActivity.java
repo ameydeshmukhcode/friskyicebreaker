@@ -99,8 +99,40 @@ public class QRScanActivity extends AppCompatActivity implements ConfirmSessionS
                 restaurantID = qrCodeData.split("\\+")[1];
                 tableID = qrCodeData.split("\\+")[2];
 
-                ConfirmSessionStartDialog confirmSessionStartDialog = new ConfirmSessionStartDialog();
-                confirmSessionStartDialog.show(getSupportFragmentManager(), "confirm session start dialog");
+                DocumentReference tableRef = FirebaseFirestore.getInstance()
+                        .collection("restaurants")
+                        .document(restaurantID)
+                        .collection("tables")
+                        .document(tableID);
+
+                tableRef.get().addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        if (document == null)
+                            return;
+                        if (document.exists()) {
+                            boolean isOccupied = false;
+                            if (document.contains("occupied")) {
+                                isOccupied = (boolean) document.get("occupied");
+                            }
+                            if (!isOccupied) {
+                                ConfirmSessionStartDialog confirmSessionStartDialog = new ConfirmSessionStartDialog();
+                                confirmSessionStartDialog.show(getSupportFragmentManager(), "confirm session start dialog");
+                            }
+                            else {
+                                Toast.makeText(getBaseContext(),"Table is Occupied", Toast.LENGTH_LONG).show();
+                                mCodeScanner.startPreview();
+                            }
+                            Log.d(getString(R.string.tag_debug), "DocumentSnapshot data: " + document.getData());
+                        }
+                        else {
+                            Log.e("Doesn't exist", "No such document");
+                        }
+                    }
+                    else {
+                        Log.e("Task", "failed with ", task.getException());
+                    }
+                });
             }
         }));
         mCodeScanner.startPreview();
@@ -109,6 +141,7 @@ public class QRScanActivity extends AppCompatActivity implements ConfirmSessionS
     @Override
     public void sessionStart(boolean choice) {
         if (choice) {
+            mCodeScanner.stopPreview();
             startNewSession();
         }
         else {
@@ -117,43 +150,11 @@ public class QRScanActivity extends AppCompatActivity implements ConfirmSessionS
     }
 
     private void startNewSession() {
-        DocumentReference tableRef = FirebaseFirestore.getInstance()
-                .collection("restaurants")
-                .document(restaurantID)
-                .collection("tables")
-                .document(tableID);
-
-        tableRef.get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                DocumentSnapshot document = task.getResult();
-                if (document == null)
-                    return;
-                if (document.exists()) {
-                    boolean isOccupied = false;
-                    if (document.contains("occupied")) {
-                        isOccupied = (boolean) document.get("occupied");
-                    }
-                    if (!isOccupied) {
-                        Intent showMenu = new Intent(getBaseContext(), MenuActivity.class);
-                        showMenu.putExtra("start_new_session", true);
-                        showMenu.putExtra("restaurant_id", restaurantID);
-                        showMenu.putExtra("table_id", tableID);
-                        startActivity(showMenu);
-                        finish();
-                    }
-                    else {
-                        Toast.makeText(getBaseContext(),"Table is Occupied", Toast.LENGTH_LONG).show();
-                        mCodeScanner.startPreview();
-                    }
-                    Log.d(getString(R.string.tag_debug), "DocumentSnapshot data: " + document.getData());
-                }
-                else {
-                    Log.e("Doesn't exist", "No such document");
-                }
-            }
-            else {
-                Log.e("Task", "failed with ", task.getException());
-            }
-        });
+        Intent showMenu = new Intent(getBaseContext(), MenuActivity.class);
+        showMenu.putExtra("start_new_session", true);
+        showMenu.putExtra("restaurant_id", restaurantID);
+        showMenu.putExtra("table_id", tableID);
+        startActivity(showMenu);
+        finish();
     }
 }
