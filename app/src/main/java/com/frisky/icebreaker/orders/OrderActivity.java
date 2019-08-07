@@ -83,7 +83,7 @@ public class OrderActivity extends AppCompatActivity implements ClearBillDialog.
                     NotificationCompat.Builder(this, getString(R.string.n_channel_orders))
                     .setSmallIcon(R.drawable.logo)
                     .setContentTitle(title)
-                    .setContentText("Click here to use the menu")
+                    .setContentText("Click here to order more")
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                     // Set the intent that will fire when the user taps the notification
                     .setContentIntent(pendingIntent);
