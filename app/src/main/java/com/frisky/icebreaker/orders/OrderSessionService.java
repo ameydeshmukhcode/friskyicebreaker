@@ -235,6 +235,7 @@ public class OrderSessionService extends Service {
                 .remove("table_name")
                 .remove("table_id")
                 .remove("bill_requested")
+                .remove("bill_amount")
                 .apply();
     }
 }
