@@ -15,6 +15,7 @@ import androidx.core.app.NotificationCompat;
 import com.frisky.icebreaker.HomeActivity;
 import com.frisky.icebreaker.R;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -24,6 +25,7 @@ import java.util.Objects;
 public class OrderSessionService extends Service {
 
     SharedPreferences sharedPreferences;
+    NotificationManager notificationManager;
 
     public OrderSessionService() {
     }
@@ -41,9 +43,11 @@ public class OrderSessionService extends Service {
         Log.d(getString(R.string.tag_debug), "Service Created");
 
         sharedPreferences = getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE);
+
+        addListenerForOrderUpdates();
         addListenerForSessionEnd();
 
-        NotificationManager notificationManager = getSystemService(NotificationManager.class);
+        notificationManager = getSystemService(NotificationManager.class);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             if (notificationManager.getNotificationChannel(getString(R.string.n_channel_orders)) == null) {
@@ -84,8 +88,6 @@ public class OrderSessionService extends Service {
         super.onDestroy();
         Log.d(getString(R.string.tag_debug), "Service Stopped");
 
-        NotificationManager notificationManager = getSystemService(NotificationManager.class);
-
         Intent notificationIntent = new Intent(this, HomeActivity.class);
         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
                 Intent.FLAG_ACTIVITY_CLEAR_TASK |
@@ -106,6 +108,64 @@ public class OrderSessionService extends Service {
         notificationManager.notify(R.integer.n_order_session_service, builder.build());
 
         disableSession();
+    }
+
+    private void addListenerForOrderUpdates() {
+        String restaurant = "";
+        String currentSession = "";
+        if (sharedPreferences.contains("restaurant_id")) {
+            restaurant = sharedPreferences.getString("restaurant_id", "");
+        }
+        if (sharedPreferences.contains("session_id")) {
+            currentSession = sharedPreferences.getString("session_id", "");
+        }
+
+        assert restaurant != null;
+        final DocumentReference docRef = FirebaseFirestore.getInstance().collection("restaurants")
+                .document(restaurant);
+
+        docRef.collection("orders")
+                .whereEqualTo("session_id", currentSession)
+                .addSnapshotListener((queryDocumentSnapshots, e) -> {
+                    if (e != null) {
+                        System.err.println("Listen failed: " + e);
+                        return;
+                    }
+
+                    assert queryDocumentSnapshots != null;
+                    for (DocumentChange dc : queryDocumentSnapshots.getDocumentChanges()) {
+                        switch (dc.getType()) {
+                            case ADDED:
+                                Log.d(getString(R.string.tag_debug), "Added to Orders");
+                                break;
+
+                            case MODIFIED:
+                                Intent notificationIntent = new Intent(this, OrderActivity.class);
+                                PendingIntent pendingIntent =
+                                        PendingIntent.getActivity(this, 0, notificationIntent, 0);
+
+                                NotificationCompat.Builder builder = new
+                                        NotificationCompat.Builder(this, getString(R.string.n_channel_orders))
+                                        .setSmallIcon(R.drawable.logo)
+                                        .setContentTitle("Order Update")
+                                        .setContentText("Click here to view")
+                                        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                                        // Set the intent that will fire when the user taps the notification
+                                        .setContentIntent(pendingIntent)
+                                        .setAutoCancel(true);
+
+                                notificationManager.notify(R.integer.n_order_session_service, builder.build());
+                                break;
+
+                            case REMOVED:
+                                Log.d(getString(R.string.tag_debug), "Removed from Orders");
+                                break;
+
+                            default:
+                                break;
+                        }
+                    }
+                });
     }
 
     private void addListenerForSessionEnd() {
