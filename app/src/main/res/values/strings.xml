@@ -126,6 +126,8 @@
     <!-- Clear Bill Dialog -->
     <string name="clear_bill_info">You are about to request the bill and end your session.
         You won\'t be able to order anymore items after you confirm.</string>
+    <string name="bill_amount_to_be_paid">Bill amount to be paid</string>
+    <string name="bill_requested">Bill Requested</string>
 
     <!-- Session Start Dialog -->
     <string name="start_new_session">Start new Session?</string>
