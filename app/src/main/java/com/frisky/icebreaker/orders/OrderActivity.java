@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -59,6 +60,7 @@ public class OrderActivity extends AppCompatActivity implements ClearBillDialog.
         mTableSerial.setText(sharedPreferences.getString("table_name", ""));
 
         mRecyclerOrderListView = findViewById(R.id.recycler_view_order_list);
+        mRecyclerOrderListView.setOverScrollMode(View.OVER_SCROLL_NEVER);
 
         RecyclerView.LayoutManager mOrderListViewLayoutManager;
         mOrderListViewLayoutManager = new LinearLayoutManager(getApplicationContext());
@@ -66,6 +68,28 @@ public class OrderActivity extends AppCompatActivity implements ClearBillDialog.
         mRecyclerOrderListView.setLayoutManager(mOrderListViewLayoutManager);
 
         addListenerForOrderUpdates();
+
+        if (getIntent().hasExtra("order_ack")) {
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+
+            Intent notificationIntent = new Intent(this, MenuActivity.class);
+            PendingIntent pendingIntent =
+                    PendingIntent.getActivity(this, 0, notificationIntent, 0);
+
+            String title = sharedPreferences.getString("restaurant_name", "") + " " +
+                    sharedPreferences.getString("table_name", "");
+
+            NotificationCompat.Builder builder = new
+                    NotificationCompat.Builder(this, getString(R.string.n_channel_orders))
+                    .setSmallIcon(R.drawable.logo)
+                    .setContentTitle(title)
+                    .setContentText("Click here to use the menu")
+                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                    // Set the intent that will fire when the user taps the notification
+                    .setContentIntent(pendingIntent);
+
+            notificationManager.notify(R.integer.n_order_session_service, builder.build());
+        }
 
         if (getIntent().hasExtra("order_list")) {
             mOrderList = (ArrayList<OrderItem>) getIntent().getSerializableExtra("order_list");
