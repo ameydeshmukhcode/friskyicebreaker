@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,10 +29,11 @@ import java.util.Map;
 public class HomeActivity extends AppCompatActivity implements UIActivity, BottomNavigationView.OnNavigationItemSelectedListener {
 
     ConstraintLayout mBottomSheet;
-    Button mViewMenuButton;
+    Button mBottomSheetButton;
 
-    TextView mRestaurantName;
-    TextView mTableName;
+    TextView mBottomSheetTitle;
+    TextView mBottomSheetInfo;
+    TextView mBottomSheetDetails;
 
     Intent mResumeSessionIntent;
 
@@ -48,13 +50,15 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
             Log.d(getString(R.string.tag_debug), "Saved Entry " + entry.getKey() + " " + entry.getValue());
         }
 
-        initUI();
         loadFragment(new RestaurantViewFragment());
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+
+        initUI();
+
         checkSessionDetails();
     }
 
@@ -66,7 +70,12 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
                 break;
 
             case R.id.bottom_nav_menu:
-                startActivity(mResumeSessionIntent);
+                if (sharedPreferences.contains("bill_requested")) {
+                    Toast.makeText(getApplicationContext(), "Bill Requested.", Toast.LENGTH_LONG).show();
+                }
+                else {
+                    startActivity(mResumeSessionIntent);
+                }
                 break;
 
             case R.id.bottom_nav_notifications:
@@ -90,8 +99,10 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
         mBottomSheet = findViewById(R.id.bottom_sheet_session);
         mBottomSheet.setVisibility(View.GONE);
 
-        mRestaurantName = findViewById(R.id.text_restaurant);
-        mTableName = findViewById(R.id.text_table);
+        mBottomSheetTitle = findViewById(R.id.text_sheet_title);
+        mBottomSheetInfo = findViewById(R.id.text_info);
+        mBottomSheetDetails = findViewById(R.id.text_details);
+        mBottomSheetButton = findViewById(R.id.button_menu);
 
 //        mSocialButton = findViewById(R.id.button_app_bar_right);
 //        mSocialButton.setImageResource(R.drawable.ic_chat);
@@ -119,13 +130,19 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
     }
 
     private void setupSessionDetails() {
-        mRestaurantName = findViewById(R.id.text_restaurant);
-        mTableName = findViewById(R.id.text_table);
-        mRestaurantName.setText(sharedPreferences.getString("restaurant_name", ""));
-        mTableName.setText(sharedPreferences.getString("table_name", ""));
+        if (sharedPreferences.contains("bill_requested")) {
+            mBottomSheetTitle.setText(getString(R.string.bill_requested));
+            mBottomSheetInfo.setText(getString(R.string.bill_amount_to_be_paid));
+            mBottomSheetDetails.setText(String.valueOf(100));
+            mBottomSheetButton.setVisibility(View.INVISIBLE);
+        }
+        else {
+            mBottomSheetInfo.setText(sharedPreferences.getString("restaurant_name", ""));
+            mBottomSheetDetails.setText(sharedPreferences.getString("table_name", ""));
+            mBottomSheetButton.setOnClickListener(v -> startActivity(mResumeSessionIntent));
+        }
+
         mBottomSheet.setVisibility(View.VISIBLE);
-        mViewMenuButton = findViewById(R.id.button_menu);
-        mViewMenuButton.setOnClickListener(v -> startActivity(mResumeSessionIntent));
     }
 
     private void disableSession() {
