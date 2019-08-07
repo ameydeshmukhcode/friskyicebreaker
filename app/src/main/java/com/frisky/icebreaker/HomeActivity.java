@@ -133,7 +133,9 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
         if (sharedPreferences.contains("bill_requested")) {
             mBottomSheetTitle.setText(getString(R.string.bill_requested));
             mBottomSheetInfo.setText(getString(R.string.bill_amount_to_be_paid));
-            mBottomSheetDetails.setText(String.valueOf(100));
+            String billAmountString = getString(R.string.rupee) +
+                    sharedPreferences.getInt("bill_amount", 0);
+            mBottomSheetDetails.setText(billAmountString);
             mBottomSheetButton.setVisibility(View.INVISIBLE);
         }
         else {
