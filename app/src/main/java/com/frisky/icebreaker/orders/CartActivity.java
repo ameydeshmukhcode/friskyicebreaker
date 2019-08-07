@@ -158,6 +158,7 @@ public class CartActivity extends AppCompatActivity implements UIActivity,
                         Intent showOrder = new Intent(this, OrderActivity.class);
                         showOrder.putExtra("order_list", orderListFinal);
                         startActivity(showOrder);
+                        finish();
                     }
                     // This continuation runs on either success or failure, but if the task
                     // has failed then getResult() will throw an Exception which will be
