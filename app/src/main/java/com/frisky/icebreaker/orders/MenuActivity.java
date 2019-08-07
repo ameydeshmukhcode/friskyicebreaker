@@ -91,7 +91,7 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
             mRestName = findViewById(R.id.text_pub_name);
             mTableSerial = findViewById(R.id.text_table);
 
-            mBottomSheetOrder = findViewById(R.id.bottom_sheet_order);
+            mBottomSheetOrder = findViewById(R.id.bottom_sheet_cart);
             mBottomSheetOrder.setVisibility(View.GONE);
 
             mCartTotalText = findViewById(R.id.text_order_amount);
@@ -112,7 +112,7 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
                 mRestName = findViewById(R.id.text_pub_name);
                 mTableSerial = findViewById(R.id.text_table);
 
-                mBottomSheetOrder = findViewById(R.id.bottom_sheet_order);
+                mBottomSheetOrder = findViewById(R.id.bottom_sheet_cart);
                 mBottomSheetOrder.setVisibility(View.GONE);
 
                 mCartTotalText = findViewById(R.id.text_order_amount);
