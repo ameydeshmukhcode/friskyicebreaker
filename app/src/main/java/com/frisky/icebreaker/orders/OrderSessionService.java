@@ -208,7 +208,7 @@ public class OrderSessionService extends Service {
         });
     }
 
-    private static void sendSessionEndBroadcast(Context context) {
+    private void sendSessionEndBroadcast(Context context) {
         Intent intent = new Intent("SessionEnd");
         // You can also include some extra data.
         LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
