@@ -149,6 +149,8 @@ public class CartActivity extends AppCompatActivity implements UIActivity,
 
                         notificationManager.notify(R.integer.n_order_session_service, builder.build());
 
+                        sharedPreferences.edit().putBoolean("order_active", true).apply();
+
                         Intent showOrder = new Intent(this, OrderActivity.class);
                         startActivity(showOrder);
                         finish();
