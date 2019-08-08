@@ -139,11 +139,11 @@ public class CartActivity extends AppCompatActivity implements UIActivity,
                                 PendingIntent.getActivity(this, 0, notificationIntent, 0);
 
                         NotificationCompat.Builder builder = new
-                                NotificationCompat.Builder(this, getString(R.string.n_channel_orders))
+                                NotificationCompat.Builder(this, getString(R.string.n_channel_order))
                                 .setSmallIcon(R.drawable.logo)
                                 .setContentTitle("Order Placed")
                                 .setContentText("Your order has been placed. Awaiting Confirmation.")
-                                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                                .setPriority(NotificationCompat.PRIORITY_HIGH)
                                 // Set the intent that will fire when the user taps the notification
                                 .setContentIntent(pendingIntent);
 

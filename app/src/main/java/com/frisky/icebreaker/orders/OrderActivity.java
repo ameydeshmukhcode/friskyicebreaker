@@ -2,7 +2,10 @@ package com.frisky.icebreaker.orders;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +16,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,9 +25,12 @@ import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.core.structures.OrderItem;
 import com.frisky.icebreaker.core.structures.OrderStatus;
 import com.frisky.icebreaker.ui.components.dialogs.ClearBillDialog;
-import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
 
 import java.util.ArrayList;
@@ -44,7 +51,9 @@ public class OrderActivity extends AppCompatActivity implements ClearBillDialog.
 
     ArrayList<OrderItem> mOrderList = new ArrayList<>();
 
-    @SuppressWarnings("unchecked")
+    String restaurantID;
+    String sessionID;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +72,13 @@ public class OrderActivity extends AppCompatActivity implements ClearBillDialog.
         TextView mTableSerial = findViewById(R.id.text_table);
         mTableSerial.setText(sharedPreferences.getString("table_name", ""));
 
+        if (sharedPreferences.contains("restaurant_id")) {
+            restaurantID = sharedPreferences.getString("restaurant_id", "");
+        }
+        if (sharedPreferences.contains("session_id")) {
+            sessionID = sharedPreferences.getString("session_id", "");
+        }
+
         mRecyclerOrderListView = findViewById(R.id.recycler_view_order_list);
         mRecyclerOrderListView.setOverScrollMode(View.OVER_SCROLL_NEVER);
 
@@ -71,7 +87,6 @@ public class OrderActivity extends AppCompatActivity implements ClearBillDialog.
 
         mRecyclerOrderListView.setLayoutManager(mOrderListViewLayoutManager);
 
-        addListenerForOrderUpdates();
         addListenerForOrderDetailsUpdate();
 
         if (getIntent().hasExtra("order_ack")) {
@@ -85,23 +100,76 @@ public class OrderActivity extends AppCompatActivity implements ClearBillDialog.
                     sharedPreferences.getString("table_name", "");
 
             NotificationCompat.Builder builder = new
-                    NotificationCompat.Builder(this, getString(R.string.n_channel_orders))
+                    NotificationCompat.Builder(this, getString(R.string.n_channel_order))
                     .setSmallIcon(R.drawable.logo)
                     .setContentTitle(title)
                     .setContentText("Click here to order more")
-                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                    .setPriority(NotificationCompat.PRIORITY_HIGH)
                     // Set the intent that will fire when the user taps the notification
                     .setContentIntent(pendingIntent);
 
             notificationManager.notify(R.integer.n_order_session_service, builder.build());
         }
 
-        if (getIntent().hasExtra("order_list")) {
-            mOrderList = (ArrayList<OrderItem>) getIntent().getSerializableExtra("order_list");
-        }
+        getOrderDetails();
 
-        orderListAdapter = new OrderListAdapter(getApplicationContext(), mOrderList);
-        mRecyclerOrderListView.setAdapter(orderListAdapter);
+        LocalBroadcastManager.getInstance(this).registerReceiver(
+                new BroadcastReceiver() {
+                    @Override
+                    public void onReceive(Context context, Intent intent) {
+                        addListenerForOrderUpdates();
+                    }
+                },
+                new IntentFilter("OrderUpdate"));
+    }
+
+    @SuppressWarnings("unchecked")
+    private void getOrderDetails() {
+        final DocumentReference docRef = FirebaseFirestore.getInstance().collection("restaurants")
+                .document(restaurantID);
+
+        docRef.collection("orders")
+                .whereEqualTo("session_id", sessionID)
+                .orderBy("timestamp", Query.Direction.DESCENDING)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        QuerySnapshot document = task.getResult();
+                        assert document != null;
+                        for (DocumentSnapshot snapshot : document.getDocuments()) {
+
+                            Map<String, Object> orderData = (Map<String, Object>) snapshot.get("items");
+                            assert orderData != null;
+
+                            for (Map.Entry<String, Object> entry : orderData.entrySet()) {
+                                String itemID = entry.getKey();
+                                HashMap<String, Object> item = (HashMap<String, Object>) entry.getValue();
+
+                                String name = String.valueOf(item.get("name"));
+                                int count = Integer.parseInt(String.valueOf(item.get("quantity")));
+                                int price = Integer.parseInt(String.valueOf(item.get("cost")));
+                                OrderItem orderItem = new OrderItem(itemID, name, count, (count * price));
+
+                                if (String.valueOf(item.get("status")).equals("pending")) {
+                                    orderItem.setStatus(OrderStatus.PENDING);
+                                }
+                                else if (String.valueOf(item.get("status")).equals("accepted")) {
+                                    orderItem.setStatus(OrderStatus.ACCEPTED);
+                                }
+                                else if (String.valueOf(item.get("status")).equals("rejected")) {
+                                    orderItem.setStatus(OrderStatus.REJECTED);
+                                }
+                                else if (String.valueOf(item.get("status")).equals("cancelled")) {
+                                    orderItem.setStatus(OrderStatus.CANCELLED);
+                                }
+                                mOrderList.add(orderItem);
+                            }
+                        }
+
+                        orderListAdapter = new OrderListAdapter(getApplicationContext(), mOrderList);
+                        mRecyclerOrderListView.setAdapter(orderListAdapter);
+                    }
+                });
     }
 
     private void clearBill() {
@@ -111,76 +179,60 @@ public class OrderActivity extends AppCompatActivity implements ClearBillDialog.
 
     @SuppressWarnings("unchecked")
     private void addListenerForOrderUpdates() {
-        String restaurant = "";
-        String currentSession = "";
-        if (sharedPreferences.contains("restaurant_id")) {
-            restaurant = sharedPreferences.getString("restaurant_id", "");
-        }
-        if (sharedPreferences.contains("session_id")) {
-            currentSession = sharedPreferences.getString("session_id", "");
-        }
-
-        assert restaurant != null;
         final DocumentReference docRef = FirebaseFirestore.getInstance().collection("restaurants")
-                .document(restaurant);
+                .document(restaurantID);
 
         docRef.collection("orders")
-                .whereEqualTo("session_id", currentSession)
-                .addSnapshotListener((queryDocumentSnapshots, e) -> {
+                .whereEqualTo("session_id", sessionID)
+                .orderBy("timestamp", Query.Direction.DESCENDING)
+                .addSnapshotListener((value, e) -> {
                     if (e != null) {
-                        System.err.println("Listen failed: " + e);
+                        Log.w("Error", "Listen failed.", e);
                         return;
                     }
 
-                    assert queryDocumentSnapshots != null;
-                    for (DocumentChange dc : queryDocumentSnapshots.getDocumentChanges()) {
-                        switch (dc.getType()) {
-                            case ADDED:
-                                Log.d(getString(R.string.tag_debug), "Added to Orders");
-                                break;
+                    int startIndex = 0;
+                    int endIndex = 0;
 
-                            case MODIFIED:
-                                Map<String, Object> data;
-                                data = (Map<String, Object>) dc.getDocument().get("items");
-                                assert data != null;
-                                for (Map.Entry<String, Object> entry : data.entrySet()) {
-                                    String value = entry.getValue().toString();
-                                    String itemID = entry.getKey();
-                                    Log.d(getString(R.string.tag_debug), "Item " + itemID);
+                    assert value != null;
 
-                                    for (int i = 0; i < mOrderList.size(); i++) {
-                                        if (mOrderList.get(i).getId().equals(itemID)) {
-                                            if (value.contains("status=pending")) {
-                                                mOrderList.get(i).setStatus(OrderStatus.PENDING);
-                                                Log.d(getString(R.string.tag_debug), "Status Pending");
-                                            }
-                                            else if (value.contains("status=accepted")) {
-                                                mOrderList.get(i).setStatus(OrderStatus.ACCEPTED);
-                                                Log.d(getString(R.string.tag_debug), "Status Accepted");
-                                            }
-                                            else if (value.contains("status=rejected")) {
-                                                mOrderList.get(i).setStatus(OrderStatus.REJECTED);
-                                                Log.d(getString(R.string.tag_debug), "Status Rejected");
-                                            }
-                                            else if (value.contains("status=cancelled")) {
-                                                mOrderList.get(i).setStatus(OrderStatus.CANCELLED);
-                                                Log.d(getString(R.string.tag_debug), "Status Cancelled");
-                                            }
-                                        }
+                    for (QueryDocumentSnapshot doc : value) {
+                        Map<String, Object> orderData = (Map<String, Object>) doc.get("items");
+                        assert orderData != null;
+
+                        endIndex += orderData.size();
+
+                        for (Map.Entry<String, Object> entry : orderData.entrySet()) {
+                            String itemID = entry.getKey();
+                            HashMap<String, Object> item = (HashMap<String, Object>) entry.getValue();
+
+                            for (int i = startIndex; i < endIndex; i++) {
+
+                                Log.d(getString(R.string.tag_debug), "Item ID " + itemID);
+                                Log.d(getString(R.string.tag_debug), "Current ID " + mOrderList.get(i).getId());
+
+                                if (mOrderList.get(i).getId().equals(itemID)) {
+                                    if (String.valueOf(item.get("status")).equals("pending")) {
+                                        mOrderList.get(i).setStatus(OrderStatus.PENDING);
                                     }
+                                    else if (String.valueOf(item.get("status")).equals("accepted")) {
+                                        mOrderList.get(i).setStatus(OrderStatus.ACCEPTED);
+                                    }
+                                    else if (String.valueOf(item.get("status")).equals("rejected")) {
+                                        mOrderList.get(i).setStatus(OrderStatus.REJECTED);
+                                    }
+                                    else if (String.valueOf(item.get("status")).equals("cancelled")) {
+                                        mOrderList.get(i).setStatus(OrderStatus.CANCELLED);
+                                    }
+                                    break;
                                 }
-
-                                orderListAdapter.notifyDataSetChanged();
-                                break;
-
-                            case REMOVED:
-                                Log.d(getString(R.string.tag_debug), "Removed from Orders");
-                                break;
-
-                            default:
-                                break;
+                            }
                         }
+
+                        startIndex = endIndex;
                     }
+
+                    orderListAdapter.notifyDataSetChanged();
                 });
     }
 
@@ -198,9 +250,9 @@ public class OrderActivity extends AppCompatActivity implements ClearBillDialog.
 
             if (snapshot != null && snapshot.exists()) {
                 if (snapshot.contains("bill_amount")) {
-                    mOrderTotalText.setText(snapshot.get("bill_amount").toString());
+                    mOrderTotalText.setText(Objects.requireNonNull(snapshot.get("bill_amount")).toString());
                     sharedPreferences.edit().putInt("bill_amount",
-                            Integer.parseInt(snapshot.get("bill_amount").toString())).apply();
+                            Integer.parseInt(Objects.requireNonNull(snapshot.get("bill_amount")).toString())).apply();
                 }
 
                 Log.d(getString(R.string.tag_debug), "Current data: " + snapshot.getData());
@@ -251,11 +303,11 @@ public class OrderActivity extends AppCompatActivity implements ClearBillDialog.
                                             + sharedPreferences.getInt("bill_amount", 0);
 
                                     NotificationCompat.Builder builder = new
-                                            NotificationCompat.Builder(this, getString(R.string.n_channel_orders))
+                                            NotificationCompat.Builder(this, getString(R.string.n_channel_order))
                                             .setSmallIcon(R.drawable.logo)
                                             .setContentTitle("Bill Requested")
                                             .setContentText(billAmountString)
-                                            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                                            .setPriority(NotificationCompat.PRIORITY_HIGH)
                                             // Set the intent that will fire when the user taps the notification
                                             .setContentIntent(pendingIntent);
 

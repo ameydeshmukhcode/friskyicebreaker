@@ -19,7 +19,6 @@ import com.frisky.icebreaker.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Objects;
@@ -52,14 +51,21 @@ public class OrderSessionService extends Service {
         notificationManager = getSystemService(NotificationManager.class);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            if (notificationManager.getNotificationChannel(getString(R.string.n_channel_orders)) == null) {
-                int importance = NotificationManager.IMPORTANCE_DEFAULT;
-                NotificationChannel channel = new NotificationChannel(getString(R.string.n_channel_orders),
-                        getString(R.string.n_channel_name_orders), importance);
-                channel.setDescription(getString(R.string.n_channel_desc_orders));
+            if (notificationManager.getNotificationChannel(getString(R.string.n_channel_session)) == null) {
+                int importance = NotificationManager.IMPORTANCE_HIGH;
+                NotificationChannel sessionChannel = new NotificationChannel(getString(R.string.n_channel_session),
+                        getString(R.string.n_channel_name_session), importance);
+                sessionChannel.setDescription(getString(R.string.n_channel_desc_session));
                 // Register the channel with the system; you can't change the importance
                 // or other notification behaviors after this
-                notificationManager.createNotificationChannel(channel);
+                notificationManager.createNotificationChannel(sessionChannel);
+
+                NotificationChannel orderChannel = new NotificationChannel(getString(R.string.n_channel_order),
+                        getString(R.string.n_channel_name_order), importance);
+                orderChannel.setSound(null, null);
+                orderChannel.setDescription(getString(R.string.n_channel_desc_order));
+
+                notificationManager.createNotificationChannel(orderChannel);
             }
         }
 
@@ -68,11 +74,11 @@ public class OrderSessionService extends Service {
                 PendingIntent.getActivity(this, 0, notificationIntent, 0);
 
         NotificationCompat.Builder builder = new
-                NotificationCompat.Builder(this, getString(R.string.n_channel_orders))
+                NotificationCompat.Builder(this, getString(R.string.n_channel_session))
                 .setSmallIcon(R.drawable.logo)
                 .setContentTitle("Welcome to " + sharedPreferences.getString("restaurant_name", ""))
                 .setContentText("You're on " + sharedPreferences.getString("table_name", ""))
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
                 // Set the intent that will fire when the user taps the notification
                 .setContentIntent(pendingIntent);
 
@@ -98,11 +104,11 @@ public class OrderSessionService extends Service {
                 PendingIntent.getActivity(this, 0, notificationIntent, 0);
 
         NotificationCompat.Builder builder = new
-                NotificationCompat.Builder(this, getString(R.string.n_channel_orders))
+                NotificationCompat.Builder(this, getString(R.string.n_channel_session))
                 .setSmallIcon(R.drawable.logo)
                 .setContentTitle("Session Ended")
                 .setContentText("Click here to view your order receipt")
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
                 // Set the intent that will fire when the user taps the notification
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(true);
@@ -151,11 +157,11 @@ public class OrderSessionService extends Service {
                                         PendingIntent.getActivity(this, 0, notificationIntent, 0);
 
                                 NotificationCompat.Builder builder = new
-                                        NotificationCompat.Builder(this, getString(R.string.n_channel_orders))
+                                        NotificationCompat.Builder(this, getString(R.string.n_channel_order))
                                         .setSmallIcon(R.drawable.logo)
                                         .setContentTitle("Order Update")
                                         .setContentText("Click here to view")
-                                        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                                        .setPriority(NotificationCompat.PRIORITY_HIGH)
                                         // Set the intent that will fire when the user taps the notification
                                         .setContentIntent(pendingIntent)
                                         .setAutoCancel(true);
