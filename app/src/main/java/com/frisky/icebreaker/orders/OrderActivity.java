@@ -116,18 +116,20 @@ public class OrderActivity extends AppCompatActivity implements ClearBillDialog.
 
         addListenerForOrderDetailsUpdate();
 
-//        LocalBroadcastManager.getInstance(this).registerReceiver(
-//                new BroadcastReceiver() {
-//                    @Override
-//                    public void onReceive(Context context, Intent intent) {
-//                        addListenerForOrderUpdates();
-//                    }
-//                },
-//                new IntentFilter("OrderUpdate"));
+        LocalBroadcastManager.getInstance(this).registerReceiver(
+                new BroadcastReceiver() {
+                    @Override
+                    public void onReceive(Context context, Intent intent) {
+                        getOrderDetails();
+                    }
+                },
+                new IntentFilter("OrderUpdate"));
     }
 
     @SuppressWarnings("unchecked")
     private void getOrderDetails() {
+        mOrderList.clear();
+
         final DocumentReference docRef = FirebaseFirestore.getInstance().collection("restaurants")
                 .document(restaurantID);
 
