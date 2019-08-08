@@ -114,6 +114,8 @@ public class OrderActivity extends AppCompatActivity implements ClearBillDialog.
             notificationManager.notify(R.integer.n_order_session_service, builder.build());
         }
 
+        addListenerForOrderDetailsUpdate();
+
 //        LocalBroadcastManager.getInstance(this).registerReceiver(
 //                new BroadcastReceiver() {
 //                    @Override
