@@ -128,6 +128,7 @@
         You won\'t be able to order anymore items after you confirm.</string>
     <string name="bill_amount_to_be_paid">Bill amount to be paid</string>
     <string name="bill_requested">Bill Requested</string>
+    <string name="view_order_summary">View Order Summary</string>
 
     <!-- Session Start Dialog -->
     <string name="start_new_session">Start new Session?</string>
