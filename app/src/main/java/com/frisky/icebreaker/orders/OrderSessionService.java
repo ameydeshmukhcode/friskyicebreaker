@@ -187,41 +187,13 @@ public class OrderSessionService extends Service {
                 }
 
                 if (!sessionActive) {
-                    getSessionEndDetails();
+                    stopSelf();
                 }
 
                 Log.d(getString(R.string.tag_debug), "Current data: " + snapshot.getData());
             }
             else {
                 Log.d(getString(R.string.tag_debug), "Current data: null");
-            }
-        });
-    }
-
-    private void getSessionEndDetails() {
-        final String restaurantID = sharedPreferences.getString("restaurant_id", "");
-        final String sessionID = sharedPreferences.getString("session_id", "");
-
-        assert restaurantID != null;
-        assert sessionID != null;
-        final DocumentReference docRef = FirebaseFirestore.getInstance().collection("restaurants")
-                .document(restaurantID).collection("sessions").document(sessionID);
-
-        docRef.get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                DocumentSnapshot document = task.getResult();
-                if (document == null)
-                    return;
-                if (document.exists()) {
-                    Log.d(getString(R.string.tag_debug), "DocumentSnapshot data: " + document.getData());
-                    stopSelf();
-                }
-                else {
-                    Log.e("Doesn't exist", "No such document");
-                }
-            }
-            else {
-                Log.e("Task", "failed with ", task.getException());
             }
         });
     }
