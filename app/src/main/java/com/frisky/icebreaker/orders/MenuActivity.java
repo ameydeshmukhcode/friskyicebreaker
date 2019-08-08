@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.core.structures.MenuItem;
-import com.frisky.icebreaker.core.structures.MutableInt;
 import com.frisky.icebreaker.ui.base.UIActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -48,11 +47,12 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
     private HashMap<String, String> mCategories = new HashMap<>();
 
     int mCartTotal = 0;
-    HashMap<MenuItem, MutableInt> mCartList = new HashMap<>();
+    ArrayList<MenuItem> mCartList = new ArrayList<>();
 
     RecyclerView.Adapter mMenuListViewAdapter;
     RecyclerView mRecyclerMenuListView;
 
+    ConstraintLayout mBottomSheetCart;
     ConstraintLayout mBottomSheetOrder;
     TextView mCartTotalText;
     Button mViewCartButton;
@@ -91,15 +91,30 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
         if (isSessionActive) {
             mRestName = findViewById(R.id.text_pub_name);
             mTableSerial = findViewById(R.id.text_table);
+            mRecyclerMenuListView = findViewById(R.id.recycler_view);
+
+            mBottomSheetCart = findViewById(R.id.bottom_sheet_cart);
+            mBottomSheetCart.setVisibility(View.GONE);
 
             mBottomSheetOrder = findViewById(R.id.bottom_sheet_order);
-            mBottomSheetOrder.setVisibility(View.GONE);
+
+            if (sharedPreferences.getBoolean("order_active", false)) {
+                mBottomSheetOrder.setVisibility(View.VISIBLE);
+                mBottomSheetOrder.setOnClickListener(v -> {
+                    startActivity(new Intent(getApplicationContext(), OrderActivity.class));
+                });
+                mRecyclerMenuListView.setPadding(0, 0, 0, 0);
+                mRecyclerMenuListView.setPadding(0, 0, 0, 225);
+                mRecyclerMenuListView.setClipToPadding(false);
+            }
+            else {
+                mBottomSheetOrder.setVisibility(View.GONE);
+            }
 
             mCartTotalText = findViewById(R.id.text_order_amount);
             mViewCartButton = findViewById(R.id.button_view_order);
             mViewCartButton.setOnClickListener(v -> {
                 Intent showOrder = new Intent(getApplicationContext(), CartActivity.class);
-                showOrder.putExtra("table_id", mTableSerial.getText().toString());
                 showOrder.putExtra("cart_list", mCartList);
                 showOrder.putExtra("cart_total", mCartTotal);
                 startActivity(showOrder);
@@ -114,6 +129,11 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
                 mRestName = findViewById(R.id.text_pub_name);
                 mTableSerial = findViewById(R.id.text_table);
 
+                mRecyclerMenuListView = findViewById(R.id.recycler_view);
+
+                mBottomSheetCart = findViewById(R.id.bottom_sheet_cart);
+                mBottomSheetCart.setVisibility(View.GONE);
+
                 mBottomSheetOrder = findViewById(R.id.bottom_sheet_order);
                 mBottomSheetOrder.setVisibility(View.GONE);
 
@@ -122,71 +142,18 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
                 final String restID = getIntent().getStringExtra("restaurant_id");
                 final String tableID = getIntent().getStringExtra("table_id");
 
+                mViewCartButton = findViewById(R.id.button_view_order);
+                mViewCartButton.setOnClickListener(v -> {
+                    Intent showOrder = new Intent(getApplicationContext(), CartActivity.class);
+                    showOrder.putExtra("cart_list", mCartList);
+                    showOrder.putExtra("cart_total", mCartTotal);
+                    startActivity(showOrder);
+                });
+
                 getRestaurantAndTableDetails(restID, tableID);
                 initUserSession(restID, tableID);
                 setMenu(restID);
             }
-        }
-    }
-
-    private void initUserSession(final String restID, final String tableID) {
-        final FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
-
-        Map<String, Object> sessionDetails = new HashMap<>();
-        sessionDetails.put("table_id", tableID);
-
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null)
-            sessionDetails.put("created_by", FirebaseAuth.getInstance().getCurrentUser().getUid());
-
-        sessionDetails.put("start_time", new Timestamp(System.currentTimeMillis()));
-        sessionDetails.put("is_active", true);
-
-        firebaseFirestore.collection("restaurants")
-                .document(restID)
-                .collection("sessions")
-                .add(sessionDetails)
-                .addOnSuccessListener(documentReference -> {
-                    final String sessionID = documentReference.getId();
-                    Log.d("", "DocumentSnapshot written with ID: " + documentReference.getId());
-
-                    Map<String, Object> userSessionDetails = new HashMap<>();
-                    userSessionDetails.put("session_active", true);
-                    userSessionDetails.put("current_session", sessionID);
-                    userSessionDetails.put("restaurant", restID);
-
-                    sharedPreferences.edit()
-                            .putBoolean("session_active", true)
-                            .putString("restaurant", restID)
-                            .putString("current_session", sessionID)
-                            .apply();
-
-                    firebaseFirestore.collection("users")
-                            .document(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                            .set(userSessionDetails, SetOptions.merge())
-                            .addOnSuccessListener(aVoid -> {
-                                Map<String, Object> tableSessionDetails = new HashMap<>();
-                                tableSessionDetails.put("occupied", true);
-                                tableSessionDetails.put("session_id", sessionID);
-
-                                firebaseFirestore.collection("restaurants")
-                                        .document(restID)
-                                        .collection("tables")
-                                        .document(tableID)
-                                        .set(tableSessionDetails, SetOptions.merge())
-                                        .addOnSuccessListener(aVoid1 -> Log.d("Success", "Table details updated"));
-                            });
-                })
-                .addOnFailureListener(e -> Log.e("", "Error adding document", e));
-    }
-
-    private void restoreUserSession() {
-        if (getIntent().hasExtra("table_number")
-                && getIntent().hasExtra("restaurant_name")
-                && getIntent().hasExtra("restaurant_id")) {
-            mRestName.setText(getIntent().getStringExtra("restaurant_name"));
-            mTableSerial.setText(getIntent().getStringExtra("table_number"));
-            setMenu(getIntent().getStringExtra("restaurant_id"));
         }
     }
 
@@ -203,7 +170,7 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
                     String restaurantName = document.getString("name");
                     mRestName.setText(restaurantName);
                     sharedPreferences.edit().putString("restaurant_name", restaurantName).apply();
-                    Log.d("Exists", "DocumentSnapshot data: " + document.getData());
+                    Log.d(getString(R.string.tag_debug), "DocumentSnapshot data: " + document.getData());
                 }
                 else {
                     Log.e("Doesn't exist", "No such document");
@@ -228,8 +195,8 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
                 if (document.exists()) {
                     String tableSerial = "Table " + document.get("number");
                     mTableSerial.setText(tableSerial);
-                    sharedPreferences.edit().putString("table_serial", tableSerial).apply();
-                    Log.d("Exists", "DocumentSnapshot data: " + document.getData());
+                    sharedPreferences.edit().putString("table_name", tableSerial).apply();
+                    Log.d(getString(R.string.tag_debug), "DocumentSnapshot data: " + document.getData());
                 }
                 else {
                     Log.e("Doesn't exist", "No such document");
@@ -241,8 +208,69 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
         });
     }
 
+    private void initUserSession(final String restID, final String tableID) {
+        final FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+
+        Map<String, Object> sessionDetails = new HashMap<>();
+        sessionDetails.put("table_id", tableID);
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null)
+            sessionDetails.put("created_by", FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+        sessionDetails.put("start_time", new Timestamp(System.currentTimeMillis()));
+        sessionDetails.put("is_active", true);
+
+        firebaseFirestore.collection("restaurants")
+                .document(restID)
+                .collection("sessions")
+                .add(sessionDetails)
+                .addOnSuccessListener(documentReference -> {
+                    final String sessionID = documentReference.getId();
+                    Log.d(getString(R.string.tag_debug), "DocumentSnapshot written with ID: " + documentReference.getId());
+
+                    Map<String, Object> userSessionDetails = new HashMap<>();
+                    userSessionDetails.put("session_active", true);
+                    userSessionDetails.put("current_session", sessionID);
+                    userSessionDetails.put("restaurant", restID);
+
+                    sharedPreferences.edit()
+                            .putBoolean("session_active", true)
+                            .putString("restaurant_id", restID)
+                            .putString("session_id", sessionID)
+                            .putString("table_id", tableID)
+                            .apply();
+
+                    firebaseFirestore.collection("users")
+                            .document(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                            .set(userSessionDetails, SetOptions.merge())
+                            .addOnSuccessListener(aVoid -> {
+                                Map<String, Object> tableSessionDetails = new HashMap<>();
+                                tableSessionDetails.put("occupied", true);
+                                tableSessionDetails.put("session_id", sessionID);
+
+                                firebaseFirestore.collection("restaurants")
+                                        .document(restID)
+                                        .collection("tables")
+                                        .document(tableID)
+                                        .set(tableSessionDetails, SetOptions.merge())
+                                        .addOnSuccessListener(aVoid1 -> {
+                                            Log.d(getString(R.string.tag_debug), "Table details updated");
+                                            Intent orderSession = new Intent(getApplicationContext(), OrderSessionService.class);
+                                            startService(orderSession);
+                                        });
+                            });
+                })
+                .addOnFailureListener(e -> Log.e("", "Error adding document", e));
+    }
+
+    private void restoreUserSession() {
+        mRestName.setText(sharedPreferences.getString("restaurant_name", ""));
+        mTableSerial.setText(sharedPreferences.getString("table_name", ""));
+        setMenu(sharedPreferences.getString("restaurant_id", ""));
+    }
+
     private void setMenu(String restaurant) {
-        mRecyclerMenuListView = findViewById(R.id.recycler_view);
         mRecyclerMenuListView.setOverScrollMode(View.OVER_SCROLL_NEVER);
 
         RecyclerView.LayoutManager mMenuListViewLayoutManager;
@@ -310,25 +338,32 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
 
     @Override
     public void addToOrder(MenuItem item) {
+        mBottomSheetOrder.setVisibility(View.GONE);
+
         mCartTotal += item.getPrice();
-        mBottomSheetOrder.setVisibility(View.VISIBLE);
+        mBottomSheetCart.setVisibility(View.VISIBLE);
         mCartTotalText.setText(String.valueOf(mCartTotal));
 
         if (mCartList.size() == 0) {
-            mCartList.put(item, new MutableInt());
+            mCartList.add(item);
         }
         else {
             boolean updatedItem = false;
-            for (Map.Entry<MenuItem, MutableInt> entry : mCartList.entrySet()) {
-                if (entry.getKey().getId().equals(item.getId())) {
-                    MutableInt count = entry.getValue();
-                    count.increment();
+            for (int i = 0; i < mCartList.size(); i++) {
+                if (mCartList.get(i).getId().equals(item.getId())) {
+                    mCartList.get(i).incrementCount();
                     updatedItem = true;
+                    break;
                 }
             }
             if (!updatedItem) {
-                mCartList.put(item, new MutableInt());
+                mCartList.add(item);
             }
+        }
+
+        for (int i = 0; i < mCartList.size(); i++) {
+            Log.d(getString(R.string.tag_debug), mCartList.get(i).getName() + " " +
+                    mCartList.get(i).getCount());
         }
 
         mRecyclerMenuListView.setPadding(0, 0, 0, 0);
@@ -340,12 +375,13 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
     public void removeFromOrder(MenuItem item) {
         mCartTotal -= item.getPrice();
 
-        for (Map.Entry<MenuItem, MutableInt> entry : mCartList.entrySet()) {
-            if (entry.getKey().getId().equals(item.getId())) {
-                MutableInt count = entry.getValue();
-                count.decrement();
-                if (count.getValue() == 0) {
-                    mCartList.remove(entry.getKey());
+        for (int i = 0; i < mCartList.size(); i++) {
+            if (mCartList.get(i).getId().equals(item.getId())) {
+                if (mCartList.get(i).getCount() == 1) {
+                    mCartList.remove(i);
+                }
+                else {
+                    mCartList.get(i).decrementCount();
                 }
                 break;
             }
@@ -355,9 +391,16 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
             mCartTotalText.setText(String.valueOf(mCartTotal));
         }
         else {
-            mBottomSheetOrder.setVisibility(View.GONE);
-            mRecyclerMenuListView.setPadding(0, 0, 0, 0);
-            mRecyclerMenuListView.setClipToPadding(false);
+            if (sharedPreferences.getBoolean("order_active", false)) {
+                mBottomSheetOrder.setVisibility(View.VISIBLE);
+                mBottomSheetCart.setVisibility(View.GONE);
+            }
+            else {
+                mBottomSheetOrder.setVisibility(View.GONE);
+                mBottomSheetCart.setVisibility(View.GONE);
+                mRecyclerMenuListView.setPadding(0, 0, 0, 0);
+                mRecyclerMenuListView.setClipToPadding(false);
+            }
         }
     }
 }

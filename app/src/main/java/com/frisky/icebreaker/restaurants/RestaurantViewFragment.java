@@ -48,13 +48,13 @@ public class RestaurantViewFragment extends Fragment {
 
         FragmentManager fragmentManager = getFragmentManager();
 
-        ImageButton filtersButton;
-        filtersButton = view.findViewById(R.id.button_filters);
-        filtersButton.setOnClickListener(v -> {
-            FiltersDialog filtersDialog = new FiltersDialog();
-            if (fragmentManager != null)
-                filtersDialog.show(fragmentManager, "pick image dialog");
-        });
+//        ImageButton filtersButton;
+//        filtersButton = view.findViewById(R.id.button_filters);
+//        filtersButton.setOnClickListener(v -> {
+//            FiltersDialog filtersDialog = new FiltersDialog();
+//            if (fragmentManager != null)
+//                filtersDialog.show(fragmentManager, "pick image dialog");
+//        });
 
         if (isSessionActive) {
             mRecyclerPubView.setPadding(0, 0, 0, 0);
@@ -90,7 +90,7 @@ public class RestaurantViewFragment extends Fragment {
                                 String address = document.getString("address");
                                 String tags = Objects.requireNonNull(document.get("cuisine")).toString();
 
-                                Log.d("Rest", name + " " + address + " " + tags);
+                                Log.d("Frisky Debug", name + " " + address + " " + tags);
 
                                 Restaurant restaurant = new Restaurant(Uri.parse(image), document.getId(), name, name, address,
                                         tags.substring(1, tags.length() - 1), 4.5);

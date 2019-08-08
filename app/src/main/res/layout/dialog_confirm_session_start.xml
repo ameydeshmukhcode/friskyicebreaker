@@ -1,34 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="280dp"
     android:layout_height="wrap_content">
 
     <TextView
-        android:id="@+id/confirm_order"
+        android:id="@+id/start_new_session"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:fontFamily="@font/museosans700"
-        android:text="@string/confirm_order"
+        android:text="@string/start_new_session"
         android:textSize="@dimen/text_title_size"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/confirm_order_info"
+        android:id="@+id/start_new_session_info"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:fontFamily="@font/museosans300"
-        android:text="@string/confirm_order_info"
+        android:text="@string/start_new_session_info"
         android:textSize="@dimen/text_subtitle_size"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@id/confirm_order"
-        app:layout_constraintTop_toBottomOf="@id/confirm_order" />
+        app:layout_constraintStart_toStartOf="@id/start_new_session"
+        app:layout_constraintTop_toBottomOf="@id/start_new_session" />
 
     <Button
         android:id="@+id/button_cancel"
@@ -45,11 +44,11 @@
         android:textColor="@color/colorPrimary"
         android:textSize="@dimen/text_title_size"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/button_ok"
-        app:layout_constraintTop_toBottomOf="@+id/confirm_order_info" />
+        app:layout_constraintEnd_toStartOf="@id/button_start"
+        app:layout_constraintTop_toBottomOf="@id/start_new_session_info" />
 
     <Button
-        android:id="@+id/button_ok"
+        android:id="@+id/button_start"
         android:layout_width="@dimen/dialog_button_width"
         android:layout_height="@dimen/dialog_button_height"
         android:layout_marginEnd="8dp"
@@ -57,7 +56,7 @@
         android:background="@color/transparent"
         android:fontFamily="@font/museosans700"
         android:foreground="?attr/selectableItemBackground"
-        android:text="@string/ok"
+        android:text="@string/start"
         android:textAllCaps="false"
         android:textColor="@color/colorPrimary"
         android:textSize="@dimen/text_title_size"

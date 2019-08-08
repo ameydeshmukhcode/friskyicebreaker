@@ -3,21 +3,23 @@ package com.frisky.icebreaker.restaurants;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
-import androidx.annotation.NonNull;
-import com.google.android.material.card.MaterialCardView;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.core.structures.Restaurant;
-import com.frisky.icebreaker.ui.assistant.UIAssistant;
+import com.google.android.material.card.MaterialCardView;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
+
+import static com.frisky.icebreaker.ui.assistant.UIAssistant.getRatingBadgeColor;
 
 public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAdapter.PubViewHolder> {
 
@@ -70,7 +72,7 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
         viewHolder.mRating.setText(String.valueOf(pubRating));
 
         viewHolder.mRating.setBackgroundTintList(ColorStateList.valueOf(mContext
-                .getColor(UIAssistant.getInstance().getRatingBadgeColor(pubRating))));
+                .getColor(getRatingBadgeColor(pubRating))));
 
         viewHolder.mPubCard.setOnClickListener(v -> {
             Intent pubView = new Intent(mContext, RestaurantActivity.class);

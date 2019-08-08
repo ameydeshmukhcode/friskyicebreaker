@@ -8,6 +8,7 @@ public class MenuItem implements Serializable {
     private String description;
     private int price;
     private boolean available;
+    private int count = 1;
 
     public MenuItem(String id, String name, String description, int price, boolean available) {
         this.id = id;
@@ -35,5 +36,17 @@ public class MenuItem implements Serializable {
 
     public boolean getAvailable() {
         return available;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void incrementCount() {
+        ++count;
+    }
+
+    public void decrementCount() {
+        --count;
     }
 }

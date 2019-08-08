@@ -58,7 +58,7 @@ public class ViewUserActivity extends AppCompatActivity implements UIActivity {
         if (getIntent().hasExtra("id")) {
             String id = getIntent().getStringExtra("id");
             this.mUserId = id;
-            Log.d("ID", id);
+            Log.d(getString(R.string.tag_debug), "User " + id);
         }
 
         mBackButton = findViewById(R.id.button_back);
@@ -86,7 +86,7 @@ public class ViewUserActivity extends AppCompatActivity implements UIActivity {
                     return;
                 if (document.exists()) {
                     mBioText.setText(document.getString("bio"));
-                    Log.d("Exists", "DocumentSnapshot data: " + document.getData());
+                    Log.d(getString(R.string.tag_debug), "DocumentSnapshot data: " + document.getData());
                 }
                 else {
                     Log.e("Doesn't exist", "No such document");
@@ -108,7 +108,7 @@ public class ViewUserActivity extends AppCompatActivity implements UIActivity {
         profileImageRef.getDownloadUrl().addOnSuccessListener(uri -> {
             mProfileImageAdapter.addToImageList(uri);
             mProfileImageAdapter.notifyDataSetChanged();
-            Log.d("Image Uri downloaded", uri.toString());
+            Log.d(getString(R.string.tag_debug), "Image " + uri.toString());
         }).addOnFailureListener(e -> Log.e("Uri Download Failed", e.getMessage()));
     }
 }

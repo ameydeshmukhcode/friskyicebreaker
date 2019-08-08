@@ -111,7 +111,7 @@ public class SignInEmailActivity extends AppCompatActivity implements UIActivity
             mAuth.sendPasswordResetEmail(email)
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
-                            Log.d("Reset Password", "Email sent.");
+                            Log.d(getString(R.string.tag_debug), "Reset pw email sent.");
                             mErrorText.setText(getString(R.string.error_password_reset_email));
                         }
                         else {
@@ -191,7 +191,7 @@ public class SignInEmailActivity extends AppCompatActivity implements UIActivity
             mErrorText.setOnClickListener(v -> user.sendEmailVerification()
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
-                            Log.d("Verification email", "Email sent.");
+                            Log.d(getString(R.string.tag_debug), "Verification email sent.");
                             Toast.makeText(this, "Verification Email Sent.",
                                     Toast.LENGTH_SHORT).show();
                         }

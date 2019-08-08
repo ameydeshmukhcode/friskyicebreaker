@@ -7,6 +7,7 @@ public class OrderItem implements Serializable {
     private String name;
     private int count;
     private int total;
+    private OrderStatus status = OrderStatus.PENDING;
 
     public OrderItem(String id, String name, int count, int total) {
         this.id = id;
@@ -45,5 +46,13 @@ public class OrderItem implements Serializable {
 
     public void setTotal(int total) {
         this.total = total;
+    }
+
+    public OrderStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(OrderStatus status) {
+        this.status = status;
     }
 }

@@ -1,6 +1,9 @@
 package com.frisky.icebreaker;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,11 +12,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.frisky.icebreaker.notifications.NotificationsFragment;
 import com.frisky.icebreaker.orders.MenuActivity;
@@ -22,24 +27,19 @@ import com.frisky.icebreaker.profile.ProfileActivity;
 import com.frisky.icebreaker.restaurants.RestaurantViewFragment;
 import com.frisky.icebreaker.ui.base.UIActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Map;
 
 public class HomeActivity extends AppCompatActivity implements UIActivity, BottomNavigationView.OnNavigationItemSelectedListener {
 
     ConstraintLayout mBottomSheet;
-    Button mViewMenuButton;
+    Button mBottomSheetButton;
 
-    TextView mRestaurantName;
-    TextView mTableName;
+    TextView mBottomSheetTitle;
+    TextView mBottomSheetInfo;
+    TextView mBottomSheetDetails;
 
     Intent mResumeSessionIntent;
-
-    FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
 
     SharedPreferences sharedPreferences;
 
@@ -51,17 +51,27 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
         sharedPreferences = getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE);
 
         for (Map.Entry<String, ?> entry : sharedPreferences.getAll().entrySet()) {
-            Log.d("Saved Entry", entry.getKey());
+            Log.d(getString(R.string.tag_debug), "Saved Entry " + entry.getKey() + " " + entry.getValue());
         }
 
-        initUI();
+        LocalBroadcastManager.getInstance(this).registerReceiver(
+                new BroadcastReceiver() {
+                    @Override
+                    public void onReceive(Context context, Intent intent) {
+                        checkSessionDetails();
+                    }
+                },
+                new IntentFilter("SessionEnd"));
+
         loadFragment(new RestaurantViewFragment());
-        addListenerForSessionChange();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+
+        initUI();
+
         checkSessionDetails();
     }
 
@@ -73,7 +83,12 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
                 break;
 
             case R.id.bottom_nav_menu:
-                startActivity(mResumeSessionIntent);
+                if (sharedPreferences.contains("bill_requested")) {
+                    Toast.makeText(getApplicationContext(), "Bill Requested.", Toast.LENGTH_LONG).show();
+                }
+                else {
+                    startActivity(mResumeSessionIntent);
+                }
                 break;
 
             case R.id.bottom_nav_notifications:
@@ -97,8 +112,10 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
         mBottomSheet = findViewById(R.id.bottom_sheet_session);
         mBottomSheet.setVisibility(View.GONE);
 
-        mRestaurantName = findViewById(R.id.text_restaurant);
-        mTableName = findViewById(R.id.text_table);
+        mBottomSheetTitle = findViewById(R.id.text_sheet_title);
+        mBottomSheetInfo = findViewById(R.id.text_info);
+        mBottomSheetDetails = findViewById(R.id.text_details);
+        mBottomSheetButton = findViewById(R.id.button_menu);
 
 //        mSocialButton = findViewById(R.id.button_app_bar_right);
 //        mSocialButton.setImageResource(R.drawable.ic_chat);
@@ -115,72 +132,36 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
 //        mIceBreakerButton.setOnClickListener(v -> loadFragment(new IceBreakerFragment()));
     }
 
-    private void addListenerForSessionChange() {
-        final DocumentReference docRef = FirebaseFirestore.getInstance().collection("users")
-                .document(mUser.getUid());
-
-        docRef.addSnapshotListener((snapshot, e) -> {
-            if (e != null) {
-                Log.e("Failed", "Listen failed.", e);
-                return;
-            }
-
-            if (snapshot != null && snapshot.exists()) {
-                boolean sessionActive = false;
-                if (snapshot.contains("session_active")) {
-                    sessionActive = (boolean) snapshot.get("session_active");
-                }
-
-                if (sessionActive) {
-                    enableSession();
-                }
-                else {
-                    disableSession();
-                }
-
-                Log.d("Snapshot Exists", "Current data: " + snapshot.getData());
-            }
-            else {
-                Log.d("No Snapshot", "Current data: null");
-            }
-        });
-    }
-
     private void checkSessionDetails() {
         boolean isSessionActive = sharedPreferences.getBoolean("session_active", false);
         if (isSessionActive) {
             setupSessionDetails();
         }
+        else {
+            disableSession();
+        }
     }
 
     private void setupSessionDetails() {
-        mTableName.setText(sharedPreferences.getString("table_serial", ""));
-        mRestaurantName.setText(sharedPreferences.getString("restaurant_name", ""));
+        if (sharedPreferences.contains("bill_requested")) {
+            mBottomSheetTitle.setText(getString(R.string.bill_requested));
+            mBottomSheetInfo.setText(getString(R.string.bill_amount_to_be_paid));
+            String billAmountString = getString(R.string.rupee) +
+                    sharedPreferences.getInt("bill_amount", 0);
+            mBottomSheetDetails.setText(billAmountString);
+            mBottomSheetButton.setVisibility(View.INVISIBLE);
+        }
+        else {
+            mBottomSheetInfo.setText(sharedPreferences.getString("restaurant_name", ""));
+            mBottomSheetDetails.setText(sharedPreferences.getString("table_name", ""));
+            mBottomSheetButton.setOnClickListener(v -> startActivity(mResumeSessionIntent));
+        }
+
         mBottomSheet.setVisibility(View.VISIBLE);
-        mResumeSessionIntent.putExtra("restaurant_id", sharedPreferences.getString("restaurant", ""));
-        mResumeSessionIntent.putExtra("restaurant_name", mRestaurantName.getText().toString());
-        mResumeSessionIntent.putExtra("table_number", sharedPreferences.getString("table_serial", ""));
-    }
-
-    private void enableSession() {
-        mRestaurantName = findViewById(R.id.text_restaurant);
-        mTableName = findViewById(R.id.text_table);
-
-        setupSessionDetails();
-
-        mViewMenuButton = findViewById(R.id.button_menu);
-        mViewMenuButton.setOnClickListener(v -> startActivity(mResumeSessionIntent));
     }
 
     private void disableSession() {
         mBottomSheet.setVisibility(View.GONE);
-        sharedPreferences.edit()
-                .putBoolean("session_active", false)
-                .remove("restaurant")
-                .remove("restaurant_name")
-                .remove("current_session")
-                .remove("table_serial")
-                .apply();
     }
 
     private void loadFragment(Fragment fragment) {

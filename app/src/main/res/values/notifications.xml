@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Notifications -->
+    <string name="n_channel_session">Sessions</string>
+    <string name="n_channel_name_session">Session Details</string>
+    <string name="n_channel_desc_session">Session start and end details.</string>
+
+    <string name="n_channel_order">Orders</string>
+    <string name="n_channel_name_order">Order details and updates</string>
+    <string name="n_channel_desc_order">Order placement and item updates.</string>
+
+    <integer name="n_order_session_service">1402</integer>
+    <integer name="n_session_end">2301</integer>
+</resources>
