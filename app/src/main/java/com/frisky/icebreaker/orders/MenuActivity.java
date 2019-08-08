@@ -52,6 +52,7 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
     RecyclerView.Adapter mMenuListViewAdapter;
     RecyclerView mRecyclerMenuListView;
 
+    ConstraintLayout mBottomSheetCart;
     ConstraintLayout mBottomSheetOrder;
     TextView mCartTotalText;
     Button mViewCartButton;
@@ -90,9 +91,25 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
         if (isSessionActive) {
             mRestName = findViewById(R.id.text_pub_name);
             mTableSerial = findViewById(R.id.text_table);
+            mRecyclerMenuListView = findViewById(R.id.recycler_view);
 
-            mBottomSheetOrder = findViewById(R.id.bottom_sheet_cart);
-            mBottomSheetOrder.setVisibility(View.GONE);
+            mBottomSheetCart = findViewById(R.id.bottom_sheet_cart);
+            mBottomSheetCart.setVisibility(View.GONE);
+
+            mBottomSheetOrder = findViewById(R.id.bottom_sheet_order);
+
+            if (sharedPreferences.getBoolean("order_active", false)) {
+                mBottomSheetOrder.setVisibility(View.VISIBLE);
+                mBottomSheetOrder.setOnClickListener(v -> {
+                    startActivity(new Intent(getApplicationContext(), OrderActivity.class));
+                });
+                mRecyclerMenuListView.setPadding(0, 0, 0, 0);
+                mRecyclerMenuListView.setPadding(0, 0, 0, 225);
+                mRecyclerMenuListView.setClipToPadding(false);
+            }
+            else {
+                mBottomSheetOrder.setVisibility(View.GONE);
+            }
 
             mCartTotalText = findViewById(R.id.text_order_amount);
             mViewCartButton = findViewById(R.id.button_view_order);
@@ -112,7 +129,12 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
                 mRestName = findViewById(R.id.text_pub_name);
                 mTableSerial = findViewById(R.id.text_table);
 
-                mBottomSheetOrder = findViewById(R.id.bottom_sheet_cart);
+                mRecyclerMenuListView = findViewById(R.id.recycler_view);
+
+                mBottomSheetCart = findViewById(R.id.bottom_sheet_cart);
+                mBottomSheetCart.setVisibility(View.GONE);
+
+                mBottomSheetOrder = findViewById(R.id.bottom_sheet_order);
                 mBottomSheetOrder.setVisibility(View.GONE);
 
                 mCartTotalText = findViewById(R.id.text_order_amount);
@@ -249,7 +271,6 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
     }
 
     private void setMenu(String restaurant) {
-        mRecyclerMenuListView = findViewById(R.id.recycler_view);
         mRecyclerMenuListView.setOverScrollMode(View.OVER_SCROLL_NEVER);
 
         RecyclerView.LayoutManager mMenuListViewLayoutManager;
@@ -317,8 +338,10 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
 
     @Override
     public void addToOrder(MenuItem item) {
+        mBottomSheetOrder.setVisibility(View.GONE);
+
         mCartTotal += item.getPrice();
-        mBottomSheetOrder.setVisibility(View.VISIBLE);
+        mBottomSheetCart.setVisibility(View.VISIBLE);
         mCartTotalText.setText(String.valueOf(mCartTotal));
 
         if (mCartList.size() == 0) {
@@ -368,9 +391,16 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
             mCartTotalText.setText(String.valueOf(mCartTotal));
         }
         else {
-            mBottomSheetOrder.setVisibility(View.GONE);
-            mRecyclerMenuListView.setPadding(0, 0, 0, 0);
-            mRecyclerMenuListView.setClipToPadding(false);
+            if (sharedPreferences.getBoolean("order_active", false)) {
+                mBottomSheetOrder.setVisibility(View.VISIBLE);
+                mBottomSheetCart.setVisibility(View.GONE);
+            }
+            else {
+                mBottomSheetOrder.setVisibility(View.GONE);
+                mBottomSheetCart.setVisibility(View.GONE);
+                mRecyclerMenuListView.setPadding(0, 0, 0, 0);
+                mRecyclerMenuListView.setClipToPadding(false);
+            }
         }
     }
 }
