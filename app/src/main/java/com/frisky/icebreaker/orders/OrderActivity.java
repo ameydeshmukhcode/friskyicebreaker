@@ -303,7 +303,7 @@ public class OrderActivity extends AppCompatActivity implements ClearBillDialog.
                                             + sharedPreferences.getInt("bill_amount", 0);
 
                                     NotificationCompat.Builder builder = new
-                                            NotificationCompat.Builder(this, getString(R.string.n_channel_order))
+                                            NotificationCompat.Builder(this, getString(R.string.n_channel_session))
                                             .setSmallIcon(R.drawable.logo)
                                             .setContentTitle("Bill Requested")
                                             .setContentText(billAmountString)
