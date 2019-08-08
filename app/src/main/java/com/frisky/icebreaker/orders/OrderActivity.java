@@ -87,12 +87,15 @@ public class OrderActivity extends AppCompatActivity implements ClearBillDialog.
 
         mRecyclerOrderListView.setLayoutManager(mOrderListViewLayoutManager);
 
-        addListenerForOrderDetailsUpdate();
+        getOrderDetails();
 
         if (getIntent().hasExtra("order_ack")) {
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
 
             Intent notificationIntent = new Intent(this, MenuActivity.class);
+            notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
+                    Intent.FLAG_ACTIVITY_CLEAR_TASK |
+                    Intent.FLAG_ACTIVITY_NEW_TASK);
             PendingIntent pendingIntent =
                     PendingIntent.getActivity(this, 0, notificationIntent, 0);
 
@@ -111,16 +114,14 @@ public class OrderActivity extends AppCompatActivity implements ClearBillDialog.
             notificationManager.notify(R.integer.n_order_session_service, builder.build());
         }
 
-        getOrderDetails();
-
-        LocalBroadcastManager.getInstance(this).registerReceiver(
-                new BroadcastReceiver() {
-                    @Override
-                    public void onReceive(Context context, Intent intent) {
-                        addListenerForOrderUpdates();
-                    }
-                },
-                new IntentFilter("OrderUpdate"));
+//        LocalBroadcastManager.getInstance(this).registerReceiver(
+//                new BroadcastReceiver() {
+//                    @Override
+//                    public void onReceive(Context context, Intent intent) {
+//                        addListenerForOrderUpdates();
+//                    }
+//                },
+//                new IntentFilter("OrderUpdate"));
     }
 
     @SuppressWarnings("unchecked")

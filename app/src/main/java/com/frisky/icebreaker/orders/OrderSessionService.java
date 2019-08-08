@@ -144,32 +144,28 @@ public class OrderSessionService extends Service {
 
                     assert queryDocumentSnapshots != null;
                     for (DocumentChange dc : queryDocumentSnapshots.getDocumentChanges()) {
-                        switch (dc.getType()) {
+                        if (dc.getType() == DocumentChange.Type.MODIFIED) {
+                            Intent notificationIntent = new Intent(this, OrderActivity.class);
+                            notificationIntent.putExtra("order_ack", true);
+                            notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
+                                    Intent.FLAG_ACTIVITY_CLEAR_TASK |
+                                    Intent.FLAG_ACTIVITY_NEW_TASK);
+                            PendingIntent pendingIntent =
+                                    PendingIntent.getActivity(this, 0, notificationIntent, 0);
 
-                            case MODIFIED:
-                                Intent notificationIntent = new Intent(this, OrderActivity.class);
-                                notificationIntent.putExtra("order_ack", true);
+                            NotificationCompat.Builder builder = new
+                                    NotificationCompat.Builder(this, getString(R.string.n_channel_order))
+                                    .setSmallIcon(R.drawable.logo)
+                                    .setContentTitle("Order Update")
+                                    .setContentText("Click here to view")
+                                    .setPriority(NotificationCompat.PRIORITY_HIGH)
+                                    // Set the intent that will fire when the user taps the notification
+                                    .setContentIntent(pendingIntent)
+                                    .setAutoCancel(true);
 
-                                PendingIntent pendingIntent =
-                                        PendingIntent.getActivity(this, 0, notificationIntent, 0);
+                            notificationManager.notify(R.integer.n_order_session_service, builder.build());
 
-                                NotificationCompat.Builder builder = new
-                                        NotificationCompat.Builder(this, getString(R.string.n_channel_order))
-                                        .setSmallIcon(R.drawable.logo)
-                                        .setContentTitle("Order Update")
-                                        .setContentText("Click here to view")
-                                        .setPriority(NotificationCompat.PRIORITY_HIGH)
-                                        // Set the intent that will fire when the user taps the notification
-                                        .setContentIntent(pendingIntent)
-                                        .setAutoCancel(true);
-
-                                notificationManager.notify(R.integer.n_order_session_service, builder.build());
-
-                                sendOrderUpdateBroadcast(getApplicationContext());
-                                break;
-
-                            default:
-                                break;
+                            sendOrderUpdateBroadcast(getApplicationContext());
                         }
                     }
                 });
