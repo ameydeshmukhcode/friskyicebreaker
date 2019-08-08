@@ -1,6 +1,9 @@
 package com.frisky.icebreaker;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,6 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.frisky.icebreaker.notifications.NotificationsFragment;
 import com.frisky.icebreaker.orders.MenuActivity;
@@ -49,6 +53,15 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
         for (Map.Entry<String, ?> entry : sharedPreferences.getAll().entrySet()) {
             Log.d(getString(R.string.tag_debug), "Saved Entry " + entry.getKey() + " " + entry.getValue());
         }
+
+        LocalBroadcastManager.getInstance(this).registerReceiver(
+                new BroadcastReceiver() {
+                    @Override
+                    public void onReceive(Context context, Intent intent) {
+                        checkSessionDetails();
+                    }
+                },
+                new IntentFilter("SessionEnd"));
 
         loadFragment(new RestaurantViewFragment());
     }
