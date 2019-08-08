@@ -145,9 +145,6 @@ public class OrderSessionService extends Service {
                     assert queryDocumentSnapshots != null;
                     for (DocumentChange dc : queryDocumentSnapshots.getDocumentChanges()) {
                         switch (dc.getType()) {
-                            case ADDED:
-                                Log.d(getString(R.string.tag_debug), "Added to Orders");
-                                break;
 
                             case MODIFIED:
                                 Intent notificationIntent = new Intent(this, OrderActivity.class);
@@ -167,10 +164,8 @@ public class OrderSessionService extends Service {
                                         .setAutoCancel(true);
 
                                 notificationManager.notify(R.integer.n_order_session_service, builder.build());
-                                break;
 
-                            case REMOVED:
-                                Log.d(getString(R.string.tag_debug), "Removed from Orders");
+                                sendOrderUpdateBroadcast(getApplicationContext());
                                 break;
 
                             default:
@@ -210,6 +205,12 @@ public class OrderSessionService extends Service {
 
     private void sendSessionEndBroadcast(Context context) {
         Intent intent = new Intent("SessionEnd");
+        // You can also include some extra data.
+        LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+    }
+
+    private void sendOrderUpdateBroadcast(Context context) {
+        Intent intent = new Intent("OrderUpdate");
         // You can also include some extra data.
         LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
     }
