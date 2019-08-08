@@ -29,7 +29,6 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
 
@@ -182,7 +181,7 @@ public class OrderActivity extends AppCompatActivity implements ClearBillDialog.
         clearBillDialog.show(getSupportFragmentManager(), "clear bill dialog");
     }
 
-    @SuppressWarnings("unchecked")
+    /*@SuppressWarnings("unchecked")
     private void addListenerForOrderUpdates() {
         final DocumentReference docRef = FirebaseFirestore.getInstance().collection("restaurants")
                 .document(restaurantID);
@@ -239,7 +238,7 @@ public class OrderActivity extends AppCompatActivity implements ClearBillDialog.
 
                     orderListAdapter.notifyDataSetChanged();
                 });
-    }
+    }*/
 
     private void addListenerForOrderDetailsUpdate() {
         final DocumentReference docRef = FirebaseFirestore.getInstance().collection("restaurants")
