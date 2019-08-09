@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card_order_details"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="@color/transparent"
+    app:cardCornerRadius="0dp"
+    app:cardElevation="0dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/order_rank"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/museosans700"
+            android:text="@string/order_rank"
+            android:textSize="@dimen/pub_title_size"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/order_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="@font/museosans300"
+            android:text="@string/order_time"
+            android:textSize="@dimen/text_subtitle_size"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/order_rank"
+            app:layout_constraintTop_toBottomOf="@+id/order_rank" />
+
+        <TextView
+            android:id="@+id/text_order_rank"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/museosans700"
+            android:text="@string/default_number"
+            android:textSize="@dimen/pub_title_size"
+            app:layout_constraintBottom_toBottomOf="@+id/order_rank"
+            app:layout_constraintStart_toEndOf="@+id/order_rank"
+            app:layout_constraintTop_toTopOf="@+id/order_rank" />
+
+        <TextView
+            android:id="@+id/text_order_time"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginStart="4dp"
+            android:fontFamily="@font/museosans300"
+            android:text="@string/default_number"
+            android:textSize="@dimen/text_subtitle_size"
+            app:layout_constraintBottom_toBottomOf="@+id/order_time"
+            app:layout_constraintStart_toEndOf="@+id/order_time"
+            app:layout_constraintTop_toTopOf="@+id/order_time" />
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/divider_height"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="@color/lightAccent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

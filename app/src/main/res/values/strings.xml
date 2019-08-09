@@ -116,6 +116,8 @@
     <string name="add_more">Add More</string>
     <string name="unavailable">Unavailable</string>
     <string name="in_cart">In cart</string>
+    <string name="order_rank">Order #</string>
+    <string name="order_time">Order time - </string>
     <!-- Status -->
     <string name="status_pending">Pending</string>
     <string name="status_accepted">Accepted</string>

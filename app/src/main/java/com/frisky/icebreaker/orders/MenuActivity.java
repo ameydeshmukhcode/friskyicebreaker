@@ -393,6 +393,9 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
         else {
             if (sharedPreferences.getBoolean("order_active", false)) {
                 mBottomSheetOrder.setVisibility(View.VISIBLE);
+                mBottomSheetOrder.setOnClickListener(v -> {
+                    startActivity(new Intent(getApplicationContext(), OrderActivity.class));
+                });
                 mBottomSheetCart.setVisibility(View.GONE);
             }
             else {
