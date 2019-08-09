@@ -1,5 +1,6 @@
 package com.frisky.icebreaker.orders;
 
+import android.annotation.SuppressLint;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
@@ -22,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.frisky.icebreaker.HomeActivity;
 import com.frisky.icebreaker.R;
+import com.frisky.icebreaker.core.structures.OrderDetailsHeader;
 import com.frisky.icebreaker.core.structures.OrderItem;
 import com.frisky.icebreaker.core.structures.OrderStatus;
 import com.frisky.icebreaker.ui.components.dialogs.ClearBillDialog;
@@ -32,6 +34,7 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -48,7 +51,7 @@ public class OrderActivity extends AppCompatActivity implements ClearBillDialog.
     OrderListAdapter orderListAdapter;
     RecyclerView mRecyclerOrderListView;
 
-    ArrayList<OrderItem> mOrderList = new ArrayList<>();
+    ArrayList<Object> mOrderList = new ArrayList<>();
 
     String restaurantID;
     String sessionID;
@@ -140,10 +143,24 @@ public class OrderActivity extends AppCompatActivity implements ClearBillDialog.
                     if (task.isSuccessful()) {
                         QuerySnapshot document = task.getResult();
                         assert document != null;
+
+                        int docRank = document.size();
+
                         for (DocumentSnapshot snapshot : document.getDocuments()) {
 
                             Map<String, Object> orderData = (Map<String, Object>) snapshot.get("items");
                             assert orderData != null;
+
+                            @SuppressLint("SimpleDateFormat")
+                            SimpleDateFormat formatter = new SimpleDateFormat("hh:mm a");
+                            String orderTime = formatter.format((Objects
+                                    .requireNonNull(snapshot.getTimestamp("timestamp")).toDate()));
+
+                            OrderDetailsHeader orderDetailsHeader = new OrderDetailsHeader(orderTime, docRank);
+                            mOrderList.add(orderDetailsHeader);
+
+                            Log.d(getString(R.string.tag_debug), "Time " + orderDetailsHeader.getTime());
+                            Log.d(getString(R.string.tag_debug),  "#" + orderDetailsHeader.getRank());
 
                             for (Map.Entry<String, Object> entry : orderData.entrySet()) {
                                 String itemID = entry.getKey();
@@ -168,6 +185,7 @@ public class OrderActivity extends AppCompatActivity implements ClearBillDialog.
                                 }
                                 mOrderList.add(orderItem);
                             }
+                            docRank--;
                         }
 
                         orderListAdapter = new OrderListAdapter(getApplicationContext(), mOrderList);
@@ -180,65 +198,6 @@ public class OrderActivity extends AppCompatActivity implements ClearBillDialog.
         ClearBillDialog clearBillDialog = new ClearBillDialog();
         clearBillDialog.show(getSupportFragmentManager(), "clear bill dialog");
     }
-
-    /*@SuppressWarnings("unchecked")
-    private void addListenerForOrderUpdates() {
-        final DocumentReference docRef = FirebaseFirestore.getInstance().collection("restaurants")
-                .document(restaurantID);
-
-        docRef.collection("orders")
-                .whereEqualTo("session_id", sessionID)
-                .orderBy("timestamp", Query.Direction.DESCENDING)
-                .addSnapshotListener((value, e) -> {
-                    if (e != null) {
-                        Log.w("Error", "Listen failed.", e);
-                        return;
-                    }
-
-                    int startIndex = 0;
-                    int endIndex = 0;
-
-                    assert value != null;
-
-                    for (QueryDocumentSnapshot doc : value) {
-                        Map<String, Object> orderData = (Map<String, Object>) doc.get("items");
-                        assert orderData != null;
-
-                        endIndex += orderData.size();
-
-                        for (Map.Entry<String, Object> entry : orderData.entrySet()) {
-                            String itemID = entry.getKey();
-                            HashMap<String, Object> item = (HashMap<String, Object>) entry.getValue();
-
-                            for (int i = startIndex; i < endIndex; i++) {
-
-                                Log.d(getString(R.string.tag_debug), "Item ID " + itemID);
-                                Log.d(getString(R.string.tag_debug), "Current ID " + mOrderList.get(i).getId());
-
-                                if (mOrderList.get(i).getId().equals(itemID)) {
-                                    if (String.valueOf(item.get("status")).equals("pending")) {
-                                        mOrderList.get(i).setStatus(OrderStatus.PENDING);
-                                    }
-                                    else if (String.valueOf(item.get("status")).equals("accepted")) {
-                                        mOrderList.get(i).setStatus(OrderStatus.ACCEPTED);
-                                    }
-                                    else if (String.valueOf(item.get("status")).equals("rejected")) {
-                                        mOrderList.get(i).setStatus(OrderStatus.REJECTED);
-                                    }
-                                    else if (String.valueOf(item.get("status")).equals("cancelled")) {
-                                        mOrderList.get(i).setStatus(OrderStatus.CANCELLED);
-                                    }
-                                    break;
-                                }
-                            }
-                        }
-
-                        startIndex = endIndex;
-                    }
-
-                    orderListAdapter.notifyDataSetChanged();
-                });
-    }*/
 
     private void addListenerForOrderDetailsUpdate() {
         final DocumentReference docRef = FirebaseFirestore.getInstance().collection("restaurants")
