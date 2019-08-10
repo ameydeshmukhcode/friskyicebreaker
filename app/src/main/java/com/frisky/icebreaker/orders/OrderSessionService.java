@@ -14,7 +14,6 @@ import android.util.Log;
 import androidx.core.app.NotificationCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
-import com.frisky.icebreaker.HomeActivity;
 import com.frisky.icebreaker.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
@@ -96,7 +95,11 @@ public class OrderSessionService extends Service {
         super.onDestroy();
         Log.d(getString(R.string.tag_debug), "Service Stopped");
 
-        Intent notificationIntent = new Intent(this, HomeActivity.class);
+        Intent notificationIntent = new Intent(this, OrderSummaryActivity.class);
+        notificationIntent.putExtra("restaurant_name", sharedPreferences.getString("restaurant_name", ""));
+        notificationIntent.putExtra("table_name", sharedPreferences.getString("table_name", ""));
+        notificationIntent.putExtra("restaurant_id", sharedPreferences.getString("restaurant_id", ""));
+        notificationIntent.putExtra("session_id", sharedPreferences.getString("session_id", ""));
         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
                 Intent.FLAG_ACTIVITY_CLEAR_TASK |
                 Intent.FLAG_ACTIVITY_NEW_TASK);
