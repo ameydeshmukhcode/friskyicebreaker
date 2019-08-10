@@ -1,18 +1,18 @@
 package com.frisky.icebreaker.profile;
 
 import android.content.Intent;
-import com.google.android.material.tabs.TabLayout;
-import androidx.viewpager.widget.ViewPager;
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
+
 import com.frisky.icebreaker.R;
-import com.frisky.icebreaker.SettingsActivity;
 import com.frisky.icebreaker.ui.base.UIActivity;
+import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -63,8 +63,8 @@ public class ProfileActivity extends AppCompatActivity implements UIActivity {
 
         mSettingsButton = findViewById(R.id.button_settings);
         mSettingsButton.setOnClickListener(v -> {
-            Intent editProfile = new Intent(getApplicationContext(), SettingsActivity.class);
-            startActivity(editProfile);
+            //Intent editProfile = new Intent(getApplicationContext(), SettingsActivity.class);
+            //startActivity(editProfile);
         });
 
         mProfileImageAdapter = new ProfileImageAdapter(getApplicationContext());
