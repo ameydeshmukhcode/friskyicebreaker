@@ -59,6 +59,7 @@
     <string name="about">About</string>
     <string name="sample_bio">Some long text which no one cares about.</string>
     <string name="edit_profile">Edit Profile</string>
+    <string name="setup_your_profile">Setup your profile</string>
     <!--Edit Profile-->
     <string name="gender">Gender</string>
     <string name="interest">Interested In</string>
@@ -93,8 +94,8 @@
     <string name="type_message">Type a message&#8230;</string>
     <string name="send_message">Send</string>
 
-    <!--Settings Activity-->
-    <string name="settings">Settings</string>
+    <!--Options Activity-->
+    <string name="options">Options</string>
 
     <!--Menu/Cart/Order Activity-->
     <string name="at">You\'re at</string>
