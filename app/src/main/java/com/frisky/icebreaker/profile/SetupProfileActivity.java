@@ -2,6 +2,7 @@ package com.frisky.icebreaker.profile;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
@@ -19,7 +20,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import com.frisky.icebreaker.HomeActivity;
+import com.frisky.icebreaker.OptionsActivity;
 import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.ui.assistant.RoundRectTransformation;
 import com.frisky.icebreaker.ui.base.FormActivity;
@@ -65,6 +66,7 @@ public class SetupProfileActivity extends AppCompatActivity implements FormActiv
     FirebaseStorage mStorage;
     StorageReference mStorageReference;
     FirebaseFirestore mFirestore;
+    SharedPreferences sharedPreferences;
 
     boolean imageNotSelected = true;
 
@@ -77,6 +79,8 @@ public class SetupProfileActivity extends AppCompatActivity implements FormActiv
         mStorage = FirebaseStorage.getInstance();
         mStorageReference = mStorage.getReference();
         mFirestore = FirebaseFirestore.getInstance();
+
+        sharedPreferences = getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE);
 
         initUI();
     }
@@ -247,8 +251,9 @@ public class SetupProfileActivity extends AppCompatActivity implements FormActiv
                             .addOnCompleteListener(task -> {
                                 if (task.isSuccessful()) {
                                     Log.d(getString(R.string.tag_debug), "User profile updated.");
-                                    Intent launchHome = new Intent(getApplicationContext(), HomeActivity.class);
-                                    startActivity(launchHome);
+                                    sharedPreferences.edit().putBoolean("profile_setup_complete", true).apply();
+                                    Intent launchOptions = new Intent(getApplicationContext(), OptionsActivity.class);
+                                    startActivity(launchOptions);
                                     finish();
                                 }
                             });
