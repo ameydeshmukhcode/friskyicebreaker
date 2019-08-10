@@ -51,7 +51,7 @@
             android:parentActivityName=".HomeActivity" />
         <activity android:name=".orders.CartActivity" />
         <activity android:name=".orders.OrderActivity" />
-        <activity android:name=".SettingsActivity" />
+        <activity android:name=".OptionsActivity" />
     </application>
 
 </manifest>

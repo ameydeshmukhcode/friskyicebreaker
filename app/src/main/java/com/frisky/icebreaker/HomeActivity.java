@@ -23,7 +23,6 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import com.frisky.icebreaker.notifications.NotificationsFragment;
 import com.frisky.icebreaker.orders.MenuActivity;
 import com.frisky.icebreaker.orders.QRScanActivity;
-import com.frisky.icebreaker.profile.ProfileActivity;
 import com.frisky.icebreaker.restaurants.RestaurantViewFragment;
 import com.frisky.icebreaker.ui.base.UIActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -95,8 +94,8 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
                 loadFragment(new NotificationsFragment());
                 break;
 
-            case R.id.bottom_nav_profile:
-                Intent startProfileActivity = new Intent(getApplicationContext(), ProfileActivity.class);
+            case R.id.bottom_nav_options:
+                Intent startProfileActivity = new Intent(getApplicationContext(), OptionsActivity.class);
                 startActivity(startProfileActivity);
                 break;
         }
