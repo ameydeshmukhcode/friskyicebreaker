@@ -26,6 +26,9 @@ import com.frisky.icebreaker.orders.QRScanActivity;
 import com.frisky.icebreaker.restaurants.RestaurantViewFragment;
 import com.frisky.icebreaker.ui.base.UIActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Map;
 
@@ -63,6 +66,8 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
                 new IntentFilter("SessionEnd"));
 
         loadFragment(new RestaurantViewFragment());
+
+        checkForProfileSetup();
     }
 
     @Override
@@ -129,6 +134,25 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
 
 //        mIceBreakerButton = findViewById(R.id.button_icebreaker);
 //        mIceBreakerButton.setOnClickListener(v -> loadFragment(new IceBreakerFragment()));
+    }
+
+
+    private void checkForProfileSetup() {
+        FirebaseFirestore.getInstance().collection("users")
+                .document(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot snapshot = task.getResult();
+                        if (snapshot == null)
+                            return;
+                        boolean profileSetup = false;
+                        if (snapshot.contains("profile_setup_complete")) {
+                            profileSetup = snapshot.getBoolean("profile_setup_complete");
+                        }
+                        sharedPreferences.edit().putBoolean("profile_setup_complete", profileSetup).apply();
+                    }
+                });
     }
 
     private void checkSessionDetails() {

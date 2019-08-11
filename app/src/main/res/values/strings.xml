@@ -119,6 +119,7 @@
     <string name="in_cart">In cart</string>
     <string name="order_rank">Order #</string>
     <string name="order_time">Order time - </string>
+    <string name="order_summary">Order Summary</string>
     <!-- Status -->
     <string name="status_pending">Pending</string>
     <string name="status_accepted">Accepted</string>
@@ -132,6 +133,12 @@
     <string name="bill_amount_to_be_paid">Bill amount to be paid</string>
     <string name="bill_requested">Bill Requested</string>
     <string name="view_order_summary">View Order Summary</string>
+
+    <!-- Order Receipt -->
+    <string name="vat">VAT</string>
+    <string name="cgst">CGST</string>
+    <string name="sgst">SGST</string>
+    <string name="total_tax">Total tax</string>
 
     <!-- Session Start Dialog -->
     <string name="start_new_session">Start new Session?</string>

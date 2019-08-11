@@ -14,7 +14,6 @@ import android.util.Log;
 import androidx.core.app.NotificationCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
-import com.frisky.icebreaker.HomeActivity;
 import com.frisky.icebreaker.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
@@ -96,10 +95,7 @@ public class OrderSessionService extends Service {
         super.onDestroy();
         Log.d(getString(R.string.tag_debug), "Service Stopped");
 
-        Intent notificationIntent = new Intent(this, HomeActivity.class);
-        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
-                Intent.FLAG_ACTIVITY_CLEAR_TASK |
-                Intent.FLAG_ACTIVITY_NEW_TASK);
+        Intent notificationIntent = new Intent(this, OrderSummaryActivity.class);
         PendingIntent pendingIntent =
                 PendingIntent.getActivity(this, 0, notificationIntent, 0);
 
@@ -214,10 +210,6 @@ public class OrderSessionService extends Service {
     private void disableSession() {
         sharedPreferences.edit()
                 .putBoolean("session_active", false)
-                .remove("restaurant_id")
-                .remove("restaurant_name")
-                .remove("session_id")
-                .remove("table_name")
                 .remove("table_id")
                 .remove("bill_requested")
                 .remove("bill_amount")
