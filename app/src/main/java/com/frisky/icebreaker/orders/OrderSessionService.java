@@ -96,13 +96,12 @@ public class OrderSessionService extends Service {
         Log.d(getString(R.string.tag_debug), "Service Stopped");
 
         Intent notificationIntent = new Intent(this, OrderSummaryActivity.class);
-        notificationIntent.putExtra("restaurant_name", sharedPreferences.getString("restaurant_name", ""));
-        notificationIntent.putExtra("table_name", sharedPreferences.getString("table_name", ""));
-        notificationIntent.putExtra("restaurant_id", sharedPreferences.getString("restaurant_id", ""));
-        notificationIntent.putExtra("session_id", sharedPreferences.getString("session_id", ""));
-        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
-                Intent.FLAG_ACTIVITY_CLEAR_TASK |
-                Intent.FLAG_ACTIVITY_NEW_TASK);
+        sharedPreferences.edit()
+                .putString("R", sharedPreferences.getString("restaurant_name", ""))
+                .putString("T", sharedPreferences.getString("table_name", ""))
+                .putString("S", sharedPreferences.getString("session_id", ""))
+                .putString("RID", sharedPreferences.getString("restaurant_id", ""))
+                .apply();
         PendingIntent pendingIntent =
                 PendingIntent.getActivity(this, 0, notificationIntent, 0);
 
