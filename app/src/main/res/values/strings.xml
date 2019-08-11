@@ -134,6 +134,12 @@
     <string name="bill_requested">Bill Requested</string>
     <string name="view_order_summary">View Order Summary</string>
 
+    <!-- Order Receipt -->
+    <string name="vat">VAT</string>
+    <string name="cgst">CGST</string>
+    <string name="sgst">SGST</string>
+    <string name="total_tax">Total tax</string>
+
     <!-- Session Start Dialog -->
     <string name="start_new_session">Start new Session?</string>
     <string name="start_new_session_info">Start a new session to:\n- Browse the Menu
