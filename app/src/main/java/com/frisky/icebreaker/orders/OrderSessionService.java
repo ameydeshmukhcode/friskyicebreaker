@@ -96,12 +96,6 @@ public class OrderSessionService extends Service {
         Log.d(getString(R.string.tag_debug), "Service Stopped");
 
         Intent notificationIntent = new Intent(this, OrderSummaryActivity.class);
-        sharedPreferences.edit()
-                .putString("R", sharedPreferences.getString("restaurant_name", ""))
-                .putString("T", sharedPreferences.getString("table_name", ""))
-                .putString("S", sharedPreferences.getString("session_id", ""))
-                .putString("RID", sharedPreferences.getString("restaurant_id", ""))
-                .apply();
         PendingIntent pendingIntent =
                 PendingIntent.getActivity(this, 0, notificationIntent, 0);
 
@@ -216,10 +210,6 @@ public class OrderSessionService extends Service {
     private void disableSession() {
         sharedPreferences.edit()
                 .putBoolean("session_active", false)
-                .remove("restaurant_id")
-                .remove("restaurant_name")
-                .remove("session_id")
-                .remove("table_name")
                 .remove("table_id")
                 .remove("bill_requested")
                 .remove("bill_amount")
