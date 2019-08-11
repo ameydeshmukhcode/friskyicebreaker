@@ -64,24 +64,24 @@ public class OrderSummaryActivity extends AppCompatActivity implements UIActivit
         orderListAdapter = new OrderListAdapter(getApplicationContext(), mOrderList);
         mOrderListRecyclerView.setAdapter(orderListAdapter);
 
-        if (sharedPreferences.contains("R")) {
-            mRestaurantName.setText(sharedPreferences.getString("R", ""));
+        if (sharedPreferences.contains("restaurant_name")) {
+            mRestaurantName.setText(sharedPreferences.getString("restaurant_name", ""));
         }
 
-        if (sharedPreferences.contains("T")) {
-            mTableName.setText(sharedPreferences.getString("T", ""));
+        if (sharedPreferences.contains("table_name")) {
+            mTableName.setText(sharedPreferences.getString("table_name", ""));
         }
 
-        if (sharedPreferences.contains("S") && sharedPreferences.contains("RID")) {
-            getOrderDetails(sharedPreferences.getString("RID", ""),
-                    sharedPreferences.getString("S", ""));
+        if (sharedPreferences.contains("session_id") && sharedPreferences.contains("restaurant_id")) {
+            getOrderDetails(sharedPreferences.getString("restaurant_id", ""),
+                    sharedPreferences.getString("session_id", ""));
         }
 
         sharedPreferences.edit()
-                .remove("R")
-                .remove("T")
-                .remove("RID")
-                .remove("S")
+                .remove("restaurant_name")
+                .remove("table_name")
+                .remove("restaurant_id")
+                .remove("session_id")
                 .apply();
     }
 
