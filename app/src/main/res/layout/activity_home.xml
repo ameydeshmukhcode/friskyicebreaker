@@ -46,7 +46,7 @@
         app:layout_constraintStart_toStartOf="parent"
         android:background="@color/tintLight"
         app:menu="@menu/menu_bottom_nav"
-        app:labelVisibilityMode="unlabeled" />
+        app:labelVisibilityMode="labeled" />
 
     <!--<ImageButton-->
         <!--android:id="@+id/button_icebreaker"-->
