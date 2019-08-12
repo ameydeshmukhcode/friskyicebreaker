@@ -95,7 +95,7 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
                 }
                 break;
 
-            case R.id.bottom_nav_notifications:
+            case R.id.bottom_nav_history:
                 loadFragment(new NotificationsFragment());
                 break;
 
