@@ -72,7 +72,4 @@
 
     <dimen name="sign_up_layout_height">64dp</dimen>
     <dimen name="image_tabs_height">10dp</dimen>
-
-    <!-- Override -->
-    <dimen name="design_bottom_navigation_height" tools:override="true">50dp</dimen>
 </resources>
