@@ -95,13 +95,8 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
                 }
                 break;
 
-            case R.id.bottom_nav_history:
+            case R.id.bottom_nav_orders:
                 loadFragment(new NotificationsFragment());
-                break;
-
-            case R.id.bottom_nav_options:
-                Intent startProfileActivity = new Intent(getApplicationContext(), OptionsActivity.class);
-                startActivity(startProfileActivity);
                 break;
         }
 
@@ -109,7 +104,7 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
     }
 
     public void initUI() {
-//        ImageButton mSocialButton;
+        ImageButton mOptionsButton;
         ImageButton mScanQRCodeButton;
 //        ImageButton mIceBreakerButton;
 
@@ -121,9 +116,12 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
         mBottomSheetDetails = findViewById(R.id.text_details);
         mBottomSheetButton = findViewById(R.id.button_menu);
 
-//        mSocialButton = findViewById(R.id.button_app_bar_right);
-//        mSocialButton.setImageResource(R.drawable.ic_chat);
-//        mSocialButton.setOnClickListener(v -> loadFragment(new SocialFragment()));
+        mOptionsButton = findViewById(R.id.button_app_bar_right);
+        mOptionsButton.setImageResource(R.drawable.ic_settings);
+        mOptionsButton.setOnClickListener(v -> {
+            Intent startProfileActivity = new Intent(getApplicationContext(), OptionsActivity.class);
+            startActivity(startProfileActivity);
+        });
 
         mScanQRCodeButton = findViewById(R.id.button_app_bar_left);
         mScanQRCodeButton.setImageResource(R.drawable.ic_qr_code);
