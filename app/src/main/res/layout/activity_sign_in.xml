@@ -21,7 +21,6 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
-        android:id="@+id/app_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="64dp"
@@ -63,7 +62,6 @@
             app:srcCompat="@drawable/googleg_standard_color_18" />
 
         <TextView
-            android:id="@+id/google_account_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
@@ -119,7 +117,6 @@
             app:srcCompat="@drawable/ic_email" />
 
         <TextView
-            android:id="@+id/email_account_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"

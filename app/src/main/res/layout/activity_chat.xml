@@ -7,7 +7,6 @@
     tools:context=".social.ChatActivity">
 
     <include
-        android:id="@+id/app_bar_chat"
         layout="@layout/app_bar"
         android:layout_width="0dp"
         android:layout_height="@dimen/app_bar_height"
@@ -40,7 +39,6 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageButton
-        android:id="@+id/button_send_message"
         android:layout_width="0dp"
         android:layout_height="@dimen/button_send_message_dimen"
         android:layout_marginEnd="4dp"

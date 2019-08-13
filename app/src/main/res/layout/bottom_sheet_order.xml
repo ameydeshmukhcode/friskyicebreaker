@@ -9,7 +9,6 @@
     android:elevation="4dp">
 
     <TextView
-        android:id="@+id/view_order_summary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
