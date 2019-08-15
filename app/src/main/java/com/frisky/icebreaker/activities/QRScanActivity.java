@@ -1,0 +1,160 @@
+package com.frisky.icebreaker.activities;
+
+import android.Manifest;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.os.Bundle;
+import android.util.Log;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
+import com.budiyev.android.codescanner.CodeScanner;
+import com.budiyev.android.codescanner.CodeScannerView;
+import com.frisky.icebreaker.R;
+import com.frisky.icebreaker.ui.components.dialogs.ConfirmSessionStartDialog;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+public class QRScanActivity extends AppCompatActivity implements ConfirmSessionStartDialog.OnConfirmSessionStart {
+
+    public static final int MY_PERMISSIONS_REQUEST_CAMERA = 1;
+    CodeScanner mCodeScanner;
+
+    SharedPreferences sharedPreferences;
+
+    String restaurantID;
+    String tableID;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_qr_scan);
+
+        sharedPreferences = getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE);
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA},
+                    MY_PERMISSIONS_REQUEST_CAMERA);
+        }
+        else {
+            setupScannerView();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (mCodeScanner != null)
+            mCodeScanner.startPreview();
+    }
+
+    @Override
+    protected void onPause() {
+        if (mCodeScanner != null)
+            mCodeScanner.releaseResources();
+        super.onPause();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (grantResults.length > 0) {
+            if (requestCode == MY_PERMISSIONS_REQUEST_CAMERA) {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    setupScannerView();
+                }
+                else {
+                    super.onBackPressed();
+                }
+            }
+        }
+    }
+
+    private void setupScannerView() {
+        CodeScannerView scannerView = findViewById(R.id.scanner_view);
+        mCodeScanner = new CodeScanner(this, scannerView);
+
+        mCodeScanner.setDecodeCallback(result -> runOnUiThread(() -> {
+            final String qrCodeData = result.getText();
+
+            boolean isSessionActive = sharedPreferences.getBoolean("session_active", false);
+
+            if (!qrCodeData.contains("frisky")) {
+                Toast.makeText(getBaseContext(),"QR Code not recognised", Toast.LENGTH_LONG).show();
+                mCodeScanner.startPreview();
+            }
+            else if (isSessionActive) {
+                Toast.makeText(getBaseContext(),"Session Already Active", Toast.LENGTH_LONG).show();
+                mCodeScanner.startPreview();
+            }
+            else {
+                restaurantID = qrCodeData.split("\\+")[1];
+                tableID = qrCodeData.split("\\+")[2];
+
+                DocumentReference tableRef = FirebaseFirestore.getInstance()
+                        .collection("restaurants")
+                        .document(restaurantID)
+                        .collection("tables")
+                        .document(tableID);
+
+                tableRef.get().addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        if (document == null)
+                            return;
+                        if (document.exists()) {
+                            boolean isOccupied = false;
+                            if (document.contains("occupied")) {
+                                isOccupied = (boolean) document.get("occupied");
+                            }
+                            if (!isOccupied) {
+                                ConfirmSessionStartDialog confirmSessionStartDialog = new ConfirmSessionStartDialog();
+                                confirmSessionStartDialog.show(getSupportFragmentManager(), "confirm session start dialog");
+                            }
+                            else {
+                                Toast.makeText(getBaseContext(),"Table is Occupied", Toast.LENGTH_LONG).show();
+                                mCodeScanner.startPreview();
+                            }
+                            Log.d(getString(R.string.tag_debug), "DocumentSnapshot data: " + document.getData());
+                        }
+                        else {
+                            Log.e("Doesn't exist", "No such document");
+                        }
+                    }
+                    else {
+                        Log.e("Task", "failed with ", task.getException());
+                    }
+                });
+            }
+        }));
+        mCodeScanner.startPreview();
+    }
+
+    @Override
+    public void sessionStart(boolean choice) {
+        if (choice) {
+            mCodeScanner.stopPreview();
+            startNewSession();
+        }
+        else {
+            mCodeScanner.startPreview();
+        }
+    }
+
+    private void startNewSession() {
+        Intent showMenu = new Intent(getBaseContext(), MenuActivity.class);
+        showMenu.putExtra("start_new_session", true);
+        showMenu.putExtra("restaurant_id", restaurantID);
+        showMenu.putExtra("table_id", tableID);
+        startActivity(showMenu);
+        finish();
+    }
+}
