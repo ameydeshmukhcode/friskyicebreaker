@@ -21,7 +21,7 @@ public class CartListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private ArrayList<MenuItem> mCartList;
     private OnOrderUpdateListener orderUpdateListener;
 
-    CartListAdapter(ArrayList<MenuItem> cartList, OnOrderUpdateListener listener) {
+    public CartListAdapter(ArrayList<MenuItem> cartList, OnOrderUpdateListener listener) {
         this.mCartList = cartList;
         this.orderUpdateListener = listener;
     }

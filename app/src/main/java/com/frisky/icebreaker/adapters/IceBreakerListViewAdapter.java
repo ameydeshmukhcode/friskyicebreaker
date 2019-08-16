@@ -41,7 +41,7 @@ public class IceBreakerListViewAdapter extends RecyclerView.Adapter<IceBreakerLi
         }
     }
 
-    IceBreakerListViewAdapter(List<User> usersList, Context context) {
+    public IceBreakerListViewAdapter(List<User> usersList, Context context) {
         this.mUsersList = usersList;
         this.mContext = context;
     }

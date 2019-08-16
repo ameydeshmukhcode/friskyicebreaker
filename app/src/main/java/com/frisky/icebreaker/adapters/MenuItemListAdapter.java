@@ -1,13 +1,13 @@
 package com.frisky.icebreaker.adapters;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.core.structures.MenuItem;
@@ -54,7 +54,7 @@ public class MenuItemListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }
     }
 
-    MenuItemListAdapter(List<Object> menu, HashMap<String, String> categories, OnOrderUpdateListener listener) {
+    public MenuItemListAdapter(List<Object> menu, HashMap<String, String> categories, OnOrderUpdateListener listener) {
         this.mMenu = menu;
         this.mCategories = categories;
         this.orderUpdateListener = listener;

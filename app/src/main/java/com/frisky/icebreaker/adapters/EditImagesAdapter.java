@@ -1,14 +1,15 @@
 package com.frisky.icebreaker.adapters;
 
 import android.net.Uri;
-import androidx.annotation.NonNull;
-import androidx.fragment.app.FragmentActivity;
-import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.ui.assistant.RoundRectTransformation;
@@ -36,7 +37,7 @@ public class EditImagesAdapter extends RecyclerView.Adapter<EditImagesAdapter.Im
         }
     }
 
-    EditImagesAdapter(FragmentActivity activity) {
+    public EditImagesAdapter(FragmentActivity activity) {
         mActivity = activity;
         getProfileImage();
     }

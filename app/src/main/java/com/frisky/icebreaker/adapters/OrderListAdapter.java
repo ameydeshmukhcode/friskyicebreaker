@@ -30,7 +30,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     private final int ORDER_HEADER = 77;
     private final int ORDER_ITEM = 88;
 
-    OrderListAdapter(Context context, ArrayList<Object> orderList) {
+    public OrderListAdapter(Context context, ArrayList<Object> orderList) {
         this.mContext = context;
         this.mOrderList = orderList;
     }
