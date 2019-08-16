@@ -1,6 +1,7 @@
 package com.frisky.icebreaker.activities;
 
 import android.annotation.SuppressLint;
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
@@ -39,6 +40,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+
+import static com.frisky.icebreaker.notifications.NotificationFactory.createNotification;
 
 public class OrderActivity extends AppCompatActivity implements ClearBillDialog.OnClearBillListener {
 
@@ -104,16 +107,11 @@ public class OrderActivity extends AppCompatActivity implements ClearBillDialog.
             String title = sharedPreferences.getString("restaurant_name", "") + " " +
                     sharedPreferences.getString("table_name", "");
 
-            NotificationCompat.Builder builder = new
-                    NotificationCompat.Builder(this, getString(R.string.n_channel_order))
-                    .setSmallIcon(R.drawable.logo)
-                    .setContentTitle(title)
-                    .setContentText("Click here to order more")
-                    .setPriority(NotificationCompat.PRIORITY_HIGH)
-                    // Set the intent that will fire when the user taps the notification
-                    .setContentIntent(pendingIntent);
+            Notification notification = createNotification(this, getString(R.string.n_channel_order), R.drawable.logo,
+                    title, "Click here to order more",
+                    NotificationCompat.PRIORITY_HIGH, pendingIntent);
 
-            notificationManager.notify(R.integer.n_order_session_service, builder.build());
+            notificationManager.notify(R.integer.n_order_session_service, notification);
         }
 
         addListenerForOrderDetailsUpdate();

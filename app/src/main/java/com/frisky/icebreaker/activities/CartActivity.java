@@ -1,5 +1,6 @@
 package com.frisky.icebreaker.activities;
 
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
@@ -28,6 +29,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+
+import static com.frisky.icebreaker.notifications.NotificationFactory.createNotification;
 
 public class CartActivity extends AppCompatActivity implements UIActivity,
         ConfirmOrderDialog.OnConfirmOrderListener, OnOrderUpdateListener {
@@ -140,16 +143,11 @@ public class CartActivity extends AppCompatActivity implements UIActivity,
                         PendingIntent pendingIntent =
                                 PendingIntent.getActivity(this, 0, notificationIntent, 0);
 
-                        NotificationCompat.Builder builder = new
-                                NotificationCompat.Builder(this, getString(R.string.n_channel_order))
-                                .setSmallIcon(R.drawable.logo)
-                                .setContentTitle("Order Placed")
-                                .setContentText("Your order has been placed. Awaiting Confirmation.")
-                                .setPriority(NotificationCompat.PRIORITY_HIGH)
-                                // Set the intent that will fire when the user taps the notification
-                                .setContentIntent(pendingIntent);
+                        Notification notification = createNotification(this, getString(R.string.n_channel_order), R.drawable.logo,
+                                "Order Placed", "Your order has been placed. Awaiting Confirmation.",
+                                NotificationCompat.PRIORITY_HIGH, pendingIntent);
 
-                        notificationManager.notify(R.integer.n_order_session_service, builder.build());
+                        notificationManager.notify(R.integer.n_order_session_service, notification);
 
                         sharedPreferences.edit().putBoolean("order_active", true).apply();
 

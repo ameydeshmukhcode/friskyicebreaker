@@ -1,6 +1,6 @@
 package com.frisky.icebreaker.services;
 
-import android.app.NotificationChannel;
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -24,6 +24,9 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Objects;
+
+import static com.frisky.icebreaker.notifications.NotificationFactory.createNotification;
+import static com.frisky.icebreaker.notifications.NotificationFactory.createNotificationChannel;
 
 public class OrderSessionService extends Service {
 
@@ -55,19 +58,13 @@ public class OrderSessionService extends Service {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             if (notificationManager.getNotificationChannel(getString(R.string.n_channel_session)) == null) {
                 int importance = NotificationManager.IMPORTANCE_HIGH;
-                NotificationChannel sessionChannel = new NotificationChannel(getString(R.string.n_channel_session),
-                        getString(R.string.n_channel_name_session), importance);
-                sessionChannel.setDescription(getString(R.string.n_channel_desc_session));
-                // Register the channel with the system; you can't change the importance
-                // or other notification behaviors after this
-                notificationManager.createNotificationChannel(sessionChannel);
 
-                NotificationChannel orderChannel = new NotificationChannel(getString(R.string.n_channel_order),
-                        getString(R.string.n_channel_name_order), importance);
-                orderChannel.setSound(null, null);
-                orderChannel.setDescription(getString(R.string.n_channel_desc_order));
+                notificationManager.createNotificationChannel(createNotificationChannel(getString(R.string.n_channel_session),
+                        getString(R.string.n_channel_name_session), getString(R.string.n_channel_desc_session), importance));
 
-                notificationManager.createNotificationChannel(orderChannel);
+                notificationManager.createNotificationChannel(createNotificationChannel(getString(R.string.n_channel_order),
+                        getString(R.string.n_channel_name_order), getString(R.string.n_channel_desc_order), importance,
+                        null, null));
             }
         }
 
@@ -75,16 +72,12 @@ public class OrderSessionService extends Service {
         PendingIntent pendingIntent =
                 PendingIntent.getActivity(this, 0, notificationIntent, 0);
 
-        NotificationCompat.Builder builder = new
-                NotificationCompat.Builder(this, getString(R.string.n_channel_session))
-                .setSmallIcon(R.drawable.logo)
-                .setContentTitle("Welcome to " + sharedPreferences.getString("restaurant_name", ""))
-                .setContentText("You're on " + sharedPreferences.getString("table_name", ""))
-                .setPriority(NotificationCompat.PRIORITY_HIGH)
-                // Set the intent that will fire when the user taps the notification
-                .setContentIntent(pendingIntent);
+        Notification notification = createNotification(this, getString(R.string.n_channel_session), R.drawable.logo,
+                "Welcome to " + sharedPreferences.getString("restaurant_name", ""),
+                "You're on " + sharedPreferences.getString("table_name", ""),
+                NotificationCompat.PRIORITY_HIGH, pendingIntent);
 
-        startForeground(R.integer.n_order_session_service, builder.build());
+        startForeground(R.integer.n_order_session_service, notification);
     }
 
     @Override
@@ -102,17 +95,12 @@ public class OrderSessionService extends Service {
         PendingIntent pendingIntent =
                 PendingIntent.getActivity(this, 0, notificationIntent, 0);
 
-        NotificationCompat.Builder builder = new
-                NotificationCompat.Builder(this, getString(R.string.n_channel_session))
-                .setSmallIcon(R.drawable.logo)
-                .setContentTitle("Session Ended")
-                .setContentText("Click here to view your order receipt")
-                .setPriority(NotificationCompat.PRIORITY_HIGH)
-                // Set the intent that will fire when the user taps the notification
-                .setContentIntent(pendingIntent)
-                .setAutoCancel(true);
+        Notification notification = createNotification(this, getString(R.string.n_channel_session), R.drawable.logo,
+                "Session Ended",
+                "Click here to view your order receipt",
+                NotificationCompat.PRIORITY_HIGH, pendingIntent, true);
 
-        notificationManager.notify(R.integer.n_order_session_service, builder.build());
+        notificationManager.notify(R.integer.n_order_session_service, notification);
 
         sendSessionEndBroadcast(getApplicationContext());
 
@@ -152,17 +140,11 @@ public class OrderSessionService extends Service {
                             PendingIntent pendingIntent =
                                     PendingIntent.getActivity(this, 0, notificationIntent, 0);
 
-                            NotificationCompat.Builder builder = new
-                                    NotificationCompat.Builder(this, getString(R.string.n_channel_order))
-                                    .setSmallIcon(R.drawable.logo)
-                                    .setContentTitle("Order Update")
-                                    .setContentText("Click here to view")
-                                    .setPriority(NotificationCompat.PRIORITY_HIGH)
-                                    // Set the intent that will fire when the user taps the notification
-                                    .setContentIntent(pendingIntent)
-                                    .setAutoCancel(true);
+                            Notification notification = createNotification(this, getString(R.string.n_channel_order),
+                                    R.drawable.logo, "Order Update", "Click here to view",
+                                    NotificationCompat.PRIORITY_HIGH, pendingIntent, true);
 
-                            notificationManager.notify(R.integer.n_order_session_service, builder.build());
+                            notificationManager.notify(R.integer.n_order_session_service, notification);
 
                             sendOrderUpdateBroadcast(getApplicationContext());
                         }
