@@ -120,6 +120,20 @@ public class OrderActivity extends AppCompatActivity implements ClearBillDialog.
                 new BroadcastReceiver() {
                     @Override
                     public void onReceive(Context context, Intent intent) {
+                        Intent clearBill = new Intent(getApplicationContext(), HomeActivity.class);
+                        clearBill.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
+                                Intent.FLAG_ACTIVITY_CLEAR_TASK |
+                                Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(clearBill);
+                        finish();
+                    }
+                },
+                new IntentFilter("SessionEnd"));
+
+        LocalBroadcastManager.getInstance(this).registerReceiver(
+                new BroadcastReceiver() {
+                    @Override
+                    public void onReceive(Context context, Intent intent) {
                         getOrderDetails();
                     }
                 },

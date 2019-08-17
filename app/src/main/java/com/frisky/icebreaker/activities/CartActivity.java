@@ -3,7 +3,10 @@ package com.frisky.icebreaker.activities;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,6 +17,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -57,6 +61,20 @@ public class CartActivity extends AppCompatActivity implements UIActivity,
         sharedPreferences = getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE);
 
         mFunctions = FirebaseFunctions.getInstance();
+
+        LocalBroadcastManager.getInstance(this).registerReceiver(
+                new BroadcastReceiver() {
+                    @Override
+                    public void onReceive(Context context, Intent intent) {
+                        Intent clearBill = new Intent(getApplicationContext(), HomeActivity.class);
+                        clearBill.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
+                                Intent.FLAG_ACTIVITY_CLEAR_TASK |
+                                Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(clearBill);
+                        finish();
+                    }
+                },
+                new IntentFilter("SessionEnd"));
 
         initUI();
     }
