@@ -1,0 +1,34 @@
+package com.frisky.icebreaker.fragments;
+
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
+
+import com.frisky.icebreaker.R;
+import com.frisky.icebreaker.adapters.SocialPagerAdapter;
+import com.google.android.material.tabs.TabLayout;
+
+public class SocialFragment extends Fragment {
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup viewGroup, @Nullable Bundle savedInstanceState) {
+        View view;
+        view = inflater.inflate(R.layout.fragment_social, viewGroup, false);
+
+        final ViewPager viewPager = view.findViewById(R.id.pager_social);
+        SocialPagerAdapter myPagerAdapter = new SocialPagerAdapter(getFragmentManager());
+        viewPager.setAdapter(myPagerAdapter);
+
+        TabLayout tabLayout = view.findViewById(R.id.tab_social);
+        tabLayout.setupWithViewPager(viewPager, true);
+
+        return view;
+    }
+}

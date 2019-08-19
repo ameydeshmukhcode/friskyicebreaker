@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".restaurants.RestaurantActivity">
+    tools:context=".activities.RestaurantActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar_container"
@@ -16,7 +16,6 @@
         android:theme="@style/FriskyAppBarOverlay">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
-            android:id="@+id/app_bar_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
@@ -36,9 +35,7 @@
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <include
-        android:id="@+id/content_pub"
-        layout="@layout/content_restaurant" />
+    <include layout="@layout/content_restaurant" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_chat_room"

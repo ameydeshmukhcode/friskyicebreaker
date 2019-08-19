@@ -20,7 +20,6 @@
     <color name="transparent">@android:color/transparent</color>
 
     <!--Facebook-->
-    <color name="colorFacebook">#3b579d</color>
 
     <!--Rating Badges-->
     <color name="rating_very_high">#208927</color>

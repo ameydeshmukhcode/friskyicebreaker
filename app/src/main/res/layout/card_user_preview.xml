@@ -73,7 +73,6 @@
         <!--app:layout_constraintTop_toTopOf="@+id/text_name" />-->
 
         <ImageButton
-            android:id="@+id/button_connect"
             android:layout_width="@dimen/button_square_small_dimen"
             android:layout_height="@dimen/button_square_small_dimen"
             android:layout_marginTop="16dp"

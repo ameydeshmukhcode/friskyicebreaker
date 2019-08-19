@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".orders.OrderSummaryActivity">
+    tools:context=".activities.OrderSummaryActivity">
 
     <ImageButton
         android:id="@+id/button_back"
@@ -17,7 +17,6 @@
         app:srcCompat="@drawable/ic_arrow_back" />
 
     <TextView
-        android:id="@+id/order_summary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/museosans300"
@@ -84,7 +83,6 @@
         app:layout_constraintTop_toBottomOf="@+id/text_date_time" />
 
     <ScrollView
-        android:id="@+id/scroll_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
@@ -130,7 +128,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/divider2" />
 
             <TextView
-                android:id="@+id/rupee_vat"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="4dp"
@@ -165,7 +162,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/vat" />
 
             <TextView
-                android:id="@+id/rupee_cgst"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="4dp"
@@ -199,7 +195,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/cgst" />
 
             <TextView
-                android:id="@+id/rupee_sgst"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="4dp"
@@ -233,7 +228,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/sgst" />
 
             <TextView
-                android:id="@+id/rupee_total_tax"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="4dp"
@@ -282,7 +276,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/divider3" />
 
             <TextView
-                android:id="@+id/rupee_final_total"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="4dp"

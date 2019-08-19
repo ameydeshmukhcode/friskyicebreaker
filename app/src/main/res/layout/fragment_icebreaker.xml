@@ -16,7 +16,6 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <Switch
-            android:id="@+id/switch_hide_visibility"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:buttonTint="@color/backgroundDark"

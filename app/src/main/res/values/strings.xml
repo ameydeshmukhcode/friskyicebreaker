@@ -1,9 +1,7 @@
 <resources>
     <!-- Common -->
     <string name="app_name">Frisky</string>
-    <string name="username">Username</string>
     <string name="password">Password</string>
-    <string name="comma">,</string>
     <string name="email">Email</string>
     <string name="logout">Log Out</string>
     <string name="version">Version</string>
@@ -22,7 +20,6 @@
     <!--Login Page-->
     <string name="sign_in">Sign In</string>
     <string name="password_forgot">Forgot Password?</string>
-    <string name="alternate_sign_in">or sign in with</string>
     <string name="no_account">Don\'t have an account?</string>
     <string name="sign_up">Sign Up</string>
     <string name="use_google_account">Use Google Account</string>
@@ -35,9 +32,7 @@
     <string name="terms">By signing in, you\'re agreeing to our Terms and Privacy Policy</string>
 
     <!--Restaurant Activity-->
-    <string name="live_count">Live count</string>
     <!--Restaurant View-->
-    <string name="search_restaurants">Search restaurants&#8230;</string>
     <string name="filters">Filters</string>
     <!-- Restaurant Filters -->
     <string name="sort_by">Sort by</string>
@@ -46,10 +41,6 @@
     <string name="features">Features</string>
 
     <!--Social-->
-    <string name="chats">Chats</string>
-    <string name="pending">Pending</string>
-    <string name="ping_rec">You have been pinged by </string>
-    <string name="ping_send">You have pinged </string>
 
     <!--IceBreaker-->
     <string name="hide_visibility">Hide Visibility</string>
@@ -61,15 +52,11 @@
     <string name="edit_profile">Edit Profile</string>
     <string name="setup_your_profile">Setup your profile</string>
     <!--Edit Profile-->
-    <string name="gender">Gender</string>
-    <string name="interest">Interested In</string>
     <string name="male">Male</string>
     <string name="female">Female</string>
     <string name="other">Other</string>
     <string name="photo">Photo</string>
     <string name="bio">Bio</string>
-    <string name="dob">Date of Birth</string>
-    <string name="done">Done</string>
     <string-array name="genders">
         <item>@string/male</item>
         <item>@string/female</item>
@@ -78,11 +65,8 @@
     <!--Image Picker Dialog-->
     <string name="pick_image">Pick Image</string>
     <string name="image_gallery">Choose from Gallery</string>
-    <string name="image_camera">Take a new photo</string>
 
     <!-- Notifications -->
-    <string name="clear_all">Clear All</string>
-    <string name="unread">Unread:</string>
 
     <!--Setup Profile-->
     <string name="update_image">Click the image above to upload your profile picture</string>
@@ -102,7 +86,6 @@
     <string name="your_order">Your Order</string>
     <string name="currently_at">Currently at</string>
     <string name="cart_active">You have items in the cart</string>
-    <string name="view_menu">View Menu</string>
     <string name="your_total">Your total:</string>
     <string name="cart_total">Cart total:</string>
     <string name="item_total">Item total:</string>
@@ -110,11 +93,9 @@
     <string name="clear_bill">Clear Bill</string>
     <string name="rupee">\u20B9</string>
     <string name="view">View</string>
-    <string name="add">Add</string>
     <string name="menu">Menu</string>
     <string name="confirm_order">Confirm Order</string>
     <string name="clear_bill_ask">Clear Bill?</string>
-    <string name="add_more">Add More</string>
     <string name="unavailable">Unavailable</string>
     <string name="in_cart">In cart</string>
     <string name="order_rank">Order #</string>
@@ -122,9 +103,6 @@
     <string name="order_summary">Order Summary</string>
     <!-- Status -->
     <string name="status_pending">Pending</string>
-    <string name="status_accepted">Accepted</string>
-    <string name="status_rejected">Rejected</string>
-    <string name="status_cancelled">Cancelled</string>
     <!-- Confirm Order Dialog -->
     <string name="confirm_order_info">Send order to kitchen for preparation?</string>
     <!-- Clear Bill Dialog -->
@@ -153,6 +131,5 @@
     <!-- Debug -->
     <string name="tag_debug">Frisky Debug</string>
     <string name="home">Home</string>
-    <string name="history">History</string>
     <string name="orders">Orders</string>
 </resources>
