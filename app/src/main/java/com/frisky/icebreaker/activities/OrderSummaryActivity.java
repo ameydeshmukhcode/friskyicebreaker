@@ -52,7 +52,6 @@ public class OrderSummaryActivity extends AppCompatActivity implements UIActivit
     @Override
     public void initUI() {
         mRestaurantName = findViewById(R.id.text_restaurant);
-        mTableName = findViewById(R.id.text_table);
         mOrderDateTime = findViewById(R.id.text_date_time);
         mFinalTotal = findViewById(R.id.text_final_total);
         mOrderListRecyclerView = findViewById(R.id.recycler_view_final_order);
@@ -65,25 +64,14 @@ public class OrderSummaryActivity extends AppCompatActivity implements UIActivit
         orderListAdapter = new OrderListAdapter(getApplicationContext(), mOrderList);
         mOrderListRecyclerView.setAdapter(orderListAdapter);
 
-        if (sharedPreferences.contains("restaurant_name")) {
-            mRestaurantName.setText(sharedPreferences.getString("restaurant_name", ""));
+        if (getIntent().hasExtra("session_id") && getIntent().hasExtra("restaurant_id")) {
+            getOrderSummary(getIntent().getStringExtra("restaurant_id"),
+                    getIntent().getStringExtra("session_id"));
         }
 
-        if (sharedPreferences.contains("table_name")) {
-            mTableName.setText(sharedPreferences.getString("table_name", ""));
+        if (getIntent().hasExtra("restaurant_name")) {
+            mRestaurantName.setText(getIntent().getStringExtra("restaurant_name"));
         }
-
-        if (sharedPreferences.contains("session_id") && sharedPreferences.contains("restaurant_id")) {
-            getOrderDetails(sharedPreferences.getString("restaurant_id", ""),
-                    sharedPreferences.getString("session_id", ""));
-        }
-
-        sharedPreferences.edit()
-                .remove("restaurant_name")
-                .remove("table_name")
-                .remove("restaurant_id")
-                .remove("session_id")
-                .apply();
     }
 
     private void getOrderSummary(String restaurant, String session) {
