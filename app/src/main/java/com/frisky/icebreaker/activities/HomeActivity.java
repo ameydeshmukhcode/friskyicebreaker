@@ -21,7 +21,7 @@ import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.frisky.icebreaker.R;
-import com.frisky.icebreaker.fragments.NotificationsFragment;
+import com.frisky.icebreaker.fragments.OrderHistoryFragment;
 import com.frisky.icebreaker.fragments.RestaurantViewFragment;
 import com.frisky.icebreaker.interfaces.UIActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -95,7 +95,7 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
                 break;
 
             case R.id.bottom_nav_orders:
-                loadFragment(new NotificationsFragment());
+                loadFragment(new OrderHistoryFragment());
                 break;
         }
 
