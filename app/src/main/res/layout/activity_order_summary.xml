@@ -32,30 +32,14 @@
         android:id="@+id/text_restaurant"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         android:fontFamily="@font/museosans700"
         android:text="@string/placeholder_text"
         android:textAllCaps="true"
-        android:textSize="@dimen/app_bar_text_size"
-        app:layout_constraintBottom_toBottomOf="@+id/text_table"
-        app:layout_constraintEnd_toStartOf="@+id/text_table"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/text_table" />
-
-    <TextView
-        android:id="@+id/text_table"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/bg_round_rect"
-        android:fontFamily="@font/museosans700"
-        android:gravity="center"
-        android:padding="@dimen/bg_round_rect_radius"
-        android:text="@string/placeholder_text"
-        android:textAllCaps="true"
-        android:textColor="@color/textDark"
         android:textSize="@dimen/app_bar_text_size"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/text_restaurant"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_back" />
 
     <TextView
@@ -68,7 +52,7 @@
         android:textSize="@dimen/text_subtitle_size"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_table" />
+        app:layout_constraintTop_toBottomOf="@+id/text_restaurant" />
 
     <View
         android:id="@+id/divider"
