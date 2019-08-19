@@ -57,6 +57,10 @@ public class OrderSummaryListAdapter extends RecyclerView.Adapter<OrderSummaryLi
 
         holder.mOrderCard.setOnClickListener(v -> {
             Intent showSummary = new Intent(mContext, OrderSummaryActivity.class);
+            showSummary.putExtra("session_id", summary.getSessionID());
+            showSummary.putExtra("restaurant_id", summary.getRestaurantID());
+            showSummary.putExtra("restaurant_name", summary.getRestaurantName());
+            mContext.startActivity(showSummary);
         });
     }
 
