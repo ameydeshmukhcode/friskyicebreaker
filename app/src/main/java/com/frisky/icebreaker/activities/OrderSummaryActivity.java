@@ -65,7 +65,7 @@ public class OrderSummaryActivity extends AppCompatActivity implements UIActivit
         mOrderListRecyclerView.setAdapter(orderListAdapter);
 
         if (getIntent().hasExtra("session_id") && getIntent().hasExtra("restaurant_id")) {
-            getOrderSummary(getIntent().getStringExtra("restaurant_id"),
+            getOrderDetails(getIntent().getStringExtra("restaurant_id"),
                     getIntent().getStringExtra("session_id"));
         }
 
