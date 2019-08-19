@@ -89,7 +89,7 @@ public class RestaurantViewFragment extends Fragment {
                                 String address = document.getString("address");
                                 String tags = Objects.requireNonNull(document.get("cuisine")).toString();
 
-                                Log.d(getString(R.string.tag_debug), name + " " + address + " " + tags);
+                                Log.d("Frisky Debug", name + " " + address + " " + tags);
 
                                 Restaurant restaurant = new Restaurant(Uri.parse(image), document.getId(), name, name, address,
                                         tags.substring(1, tags.length() - 1), 4.5);
