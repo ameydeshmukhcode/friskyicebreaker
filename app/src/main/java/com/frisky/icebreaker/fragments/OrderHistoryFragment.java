@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.frisky.icebreaker.R;
+import com.frisky.icebreaker.adapters.OrderSummaryListAdapter;
 import com.frisky.icebreaker.core.structures.OrderSummary;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
@@ -29,6 +30,7 @@ import java.util.Objects;
 public class OrderHistoryFragment extends Fragment {
 
     private List<OrderSummary> mSessionHistoryList = new ArrayList<>();
+    private OrderSummaryListAdapter mOrderSummaryAdapter;
 
     @Nullable
     @Override
@@ -44,6 +46,9 @@ public class OrderHistoryFragment extends Fragment {
         // use a linear layout manager
         mPubViewLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerPubView.setLayoutManager(mPubViewLayoutManager);
+
+        mOrderSummaryAdapter = new OrderSummaryListAdapter(mSessionHistoryList, getContext());
+        mRecyclerPubView.setAdapter(mOrderSummaryAdapter);
 
         return view;
     }
@@ -71,6 +76,8 @@ public class OrderHistoryFragment extends Fragment {
                                     String.valueOf(restTask.getResult().get("name")),
                             document.getId(), endTime);
                             mSessionHistoryList.add(summary);
+
+                            mOrderSummaryAdapter.notifyDataSetChanged();
                         });
                     }
                 }
