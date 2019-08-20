@@ -7,8 +7,11 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.frisky.icebreaker.R;
+import com.frisky.icebreaker.adapters.MenuImagesAdapter;
 import com.frisky.icebreaker.interfaces.UIActivity;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -75,5 +78,17 @@ public class RestaurantActivity extends AppCompatActivity implements UIActivity 
             Snackbar.make(view, "Start Restaurant chat room here", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
         });
+
+        RecyclerView mRecyclerMenuView;
+        mRecyclerMenuView = findViewById(R.id.recycler_view_menu);
+
+        LinearLayoutManager mMenuViewLayoutManager;
+        // use a linear layout manager
+        mMenuViewLayoutManager = new LinearLayoutManager(this);
+        mMenuViewLayoutManager.setOrientation(RecyclerView.HORIZONTAL);
+        mRecyclerMenuView.setLayoutManager(mMenuViewLayoutManager);
+
+        // specify an adapter (see also next example)
+        mRecyclerMenuView.setAdapter(new MenuImagesAdapter());
     }
 }
