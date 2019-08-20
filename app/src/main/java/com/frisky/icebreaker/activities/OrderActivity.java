@@ -47,6 +47,7 @@ public class OrderActivity extends AppCompatActivity implements ClearBillDialog.
 
     ImageButton mBackButton;
     Button mClearBill;
+    Button mAddMoreButton;
     TextView mOrderTotalText;
 
     SharedPreferences sharedPreferences;
@@ -68,6 +69,14 @@ public class OrderActivity extends AppCompatActivity implements ClearBillDialog.
 
         mBackButton = findViewById(R.id.button_back);
         mBackButton.setOnClickListener(v -> super.onBackPressed());
+
+        mAddMoreButton = findViewById(R.id.button_order_more);
+        mAddMoreButton.setOnClickListener(v -> {
+            Intent goToMenu = new Intent(this, MenuActivity.class);
+            goToMenu.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(goToMenu);
+            finish();
+        });
 
         mClearBill = findViewById(R.id.button_clear_bill);
         mClearBill.setOnClickListener(v -> clearBill());
