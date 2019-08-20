@@ -3,9 +3,9 @@ package com.frisky.icebreaker.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.frisky.icebreaker.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -23,8 +23,8 @@ public class SignInActivity extends AppCompatActivity {
 
     private static final int RC_SIGN_IN = 1;
 
-    ConstraintLayout mUseEmailButton;
-    ConstraintLayout mUseGoogleButton;
+    Button mUseEmailButton;
+    Button mUseGoogleButton;
 
     FirebaseAuth mAuth;
     
