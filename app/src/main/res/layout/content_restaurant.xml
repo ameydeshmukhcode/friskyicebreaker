@@ -70,57 +70,51 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/text_pub_name" />
 
-        <!--<androidx.constraintlayout.widget.ConstraintLayout-->
-            <!--android:id="@+id/layout_live_count"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginEnd="16dp"-->
-            <!--android:padding="0dp"-->
-            <!--app:layout_constraintEnd_toEndOf="parent"-->
-            <!--app:layout_constraintTop_toBottomOf="@+id/text_cuisine">-->
+        <Button
+            android:id="@+id/button_get_directions"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/button_primary_height"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="24dp"
+            android:background="@drawable/bg_round_rect"
+            android:backgroundTint="@color/app"
+            android:drawableStart="@drawable/ic_location"
+            android:drawablePadding="12dp"
+            android:drawableTint="@color/textLight"
+            android:fontFamily="@font/museosans700"
+            android:gravity="start|center_vertical"
+            android:paddingStart="@dimen/input_primary_start_padding"
+            android:paddingEnd="@dimen/input_primary_start_padding"
+            android:text="@string/get_directions"
+            android:textAllCaps="false"
+            android:textColor="@color/textLight"
+            android:textSize="@dimen/text_title_size"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_cuisine" />
 
-            <!--<View-->
-                <!--android:id="@+id/live_indicator"-->
-                <!--android:layout_width="@dimen/live_indicator_dimen"-->
-                <!--android:layout_height="@dimen/live_indicator_dimen"-->
-                <!--android:background="@drawable/bg_circular"-->
-                <!--android:backgroundTint="@color/appGreen"-->
-                <!--app:layout_constraintBottom_toBottomOf="@+id/live_count"-->
-                <!--app:layout_constraintEnd_toStartOf="@+id/live_count"-->
-                <!--app:layout_constraintStart_toStartOf="parent"-->
-                <!--app:layout_constraintTop_toTopOf="parent" />-->
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/museosans300"
+            android:text="@string/menu"
+            android:textSize="@dimen/text_subtitle_size"
+            app:layout_constraintStart_toStartOf="@+id/text_cuisine"
+            app:layout_constraintTop_toBottomOf="@+id/button_get_directions" />
 
-            <!--<TextView-->
-                <!--android:id="@+id/live_count"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_marginStart="4dp"-->
-                <!--android:fontFamily="@font/museosans300"-->
-                <!--android:text="@string/live_count"-->
-                <!--android:textAllCaps="true"-->
-                <!--android:textColor="@color/textDark"-->
-                <!--app:layout_constraintEnd_toEndOf="parent"-->
-                <!--app:layout_constraintStart_toEndOf="@+id/live_indicator"-->
-                <!--app:layout_constraintTop_toTopOf="parent" />-->
-
-            <!--<TextView-->
-                <!--android:id="@+id/text_live_count_value"-->
-                <!--android:layout_width="0dp"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_marginTop="8dp"-->
-                <!--android:background="@drawable/bg_round_rect"-->
-                <!--android:fontFamily="@font/museosans700"-->
-                <!--android:gravity="center"-->
-                <!--android:padding="6dp"-->
-                <!--android:text="@string/placeholder_number"-->
-                <!--android:textColor="@color/textDark"-->
-                <!--android:textSize="@dimen/text_large_title_size"-->
-                <!--app:layout_constraintBottom_toBottomOf="parent"-->
-                <!--app:layout_constraintEnd_toEndOf="@+id/live_count"-->
-                <!--app:layout_constraintStart_toStartOf="@+id/live_indicator"-->
-                <!--app:layout_constraintTop_toBottomOf="@+id/live_count" />-->
-
-        <!--</androidx.constraintlayout.widget.ConstraintLayout>-->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view_menu"
+            android:layout_width="340dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

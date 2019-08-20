@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/bg_round_rect_top"
-    android:backgroundTint="@color/colorAccent"
+    android:backgroundTint="@color/tintLight"
     android:elevation="4dp">
 
     <TextView
@@ -15,7 +15,7 @@
         android:layout_marginBottom="16dp"
         android:fontFamily="@font/museosans700"
         android:text="@string/view_order_summary"
-        android:textColor="@color/textLight"
+        android:textColor="@color/app"
         android:textSize="@dimen/text_title_size"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

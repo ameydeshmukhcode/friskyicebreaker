@@ -132,4 +132,6 @@
     <string name="tag_debug">Frisky Debug</string>
     <string name="home">Home</string>
     <string name="orders">Orders</string>
+    <string name="order_more">Order More</string>
+    <string name="get_directions">Get Directions</string>
 </resources>

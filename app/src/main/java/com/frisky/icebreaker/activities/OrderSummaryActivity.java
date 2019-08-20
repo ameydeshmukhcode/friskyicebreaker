@@ -1,8 +1,8 @@
 package com.frisky.icebreaker.activities;
 
 import android.annotation.SuppressLint;
-import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,24 +28,20 @@ import java.util.Objects;
 public class OrderSummaryActivity extends AppCompatActivity implements UIActivity {
 
     TextView mRestaurantName;
-    TextView mTableName;
     TextView mOrderDateTime;
     TextView mFinalTotal;
+    ImageButton mBackButton;
 
     RecyclerView mOrderListRecyclerView;
 
     ArrayList<Object> mOrderList = new ArrayList<>();
 
     OrderListAdapter orderListAdapter;
-
-    SharedPreferences sharedPreferences;
-
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_summary);
-        sharedPreferences = getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE);
-
         initUI();
     }
 
@@ -55,6 +51,9 @@ public class OrderSummaryActivity extends AppCompatActivity implements UIActivit
         mOrderDateTime = findViewById(R.id.text_date_time);
         mFinalTotal = findViewById(R.id.text_final_total);
         mOrderListRecyclerView = findViewById(R.id.recycler_view_final_order);
+
+        mBackButton = findViewById(R.id.button_back);
+        mBackButton.setOnClickListener(v -> this.onBackPressed());
 
         RecyclerView.LayoutManager mOrderListViewLayoutManager;
         mOrderListViewLayoutManager = new LinearLayoutManager(getApplicationContext());
