@@ -1,7 +1,6 @@
 package com.frisky.icebreaker.activities;
 
 import android.annotation.SuppressLint;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -38,15 +37,11 @@ public class OrderSummaryActivity extends AppCompatActivity implements UIActivit
     ArrayList<Object> mOrderList = new ArrayList<>();
 
     OrderListAdapter orderListAdapter;
-
-    SharedPreferences sharedPreferences;
-
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_summary);
-        sharedPreferences = getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE);
-
         initUI();
     }
 
