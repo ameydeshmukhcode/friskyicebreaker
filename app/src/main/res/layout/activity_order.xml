@@ -126,7 +126,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
+        android:layout_marginEnd="4dp"
         android:layout_marginBottom="16dp"
         android:background="@drawable/bg_round_rect"
         android:backgroundTint="@color/appGreen"
@@ -136,7 +136,25 @@
         android:textColor="@color/textLight"
         android:textSize="@dimen/text_button_primary_size"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/button_order_more"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/button_order_more"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/bg_round_rect"
+        android:backgroundTint="@color/app"
+        android:fontFamily="@font/museosans700"
+        android:text="@string/order_more"
+        android:textAllCaps="false"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/text_button_primary_size"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/button_clear_bill" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
