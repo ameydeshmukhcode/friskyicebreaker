@@ -11,7 +11,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,6 +19,7 @@ import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.frisky.icebreaker.R;
+import com.frisky.icebreaker.fragments.DiningFragment;
 import com.frisky.icebreaker.fragments.OrderHistoryFragment;
 import com.frisky.icebreaker.fragments.RestaurantViewFragment;
 import com.frisky.icebreaker.interfaces.UIActivity;
@@ -85,12 +85,7 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
                 break;
 
             case R.id.bottom_nav_menu:
-                if (sharedPreferences.contains("bill_requested")) {
-                    Toast.makeText(getApplicationContext(), "Bill Requested.", Toast.LENGTH_LONG).show();
-                }
-                else {
-                    startActivity(mResumeSessionIntent);
-                }
+                loadFragment(new DiningFragment());
                 break;
 
             case R.id.bottom_nav_orders:
