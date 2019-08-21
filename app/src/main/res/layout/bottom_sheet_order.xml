@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/bg_round_rect_top"
-    android:backgroundTint="@color/tintLight"
-    android:elevation="4dp">
+    android:background="@color/tintLight"
+    android:elevation="4dp"
+    android:foreground="?attr/selectableItemBackground">
 
     <TextView
         android:layout_width="wrap_content"
