@@ -8,7 +8,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -22,8 +21,8 @@ import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.adapters.MenuItemListAdapter;
 import com.frisky.icebreaker.core.structures.MenuItem;
 import com.frisky.icebreaker.interfaces.OnOrderUpdateListener;
-import com.frisky.icebreaker.services.OrderSessionService;
 import com.frisky.icebreaker.interfaces.UIActivity;
+import com.frisky.icebreaker.services.OrderSessionService;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
@@ -62,7 +61,6 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
     ConstraintLayout mBottomSheetCart;
     ConstraintLayout mBottomSheetOrder;
     TextView mCartTotalText;
-    Button mViewCartButton;
 
     boolean isSessionActive;
     boolean startNewSession = false;
@@ -84,7 +82,7 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
             setContentView(R.layout.activity_menu);
         }
         else {
-            setContentView(R.layout.activity_menu_empty_state);
+            setContentView(R.layout.fragment_dining_empty_state);
         }
 
         LocalBroadcastManager.getInstance(this).registerReceiver(
@@ -133,8 +131,7 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
             }
 
             mCartTotalText = findViewById(R.id.text_order_amount);
-            mViewCartButton = findViewById(R.id.button_view_order);
-            mViewCartButton.setOnClickListener(v -> {
+            mBottomSheetCart.setOnClickListener(v -> {
                 Intent showOrder = new Intent(getApplicationContext(), CartActivity.class);
                 showOrder.putExtra("cart_list", mCartList);
                 showOrder.putExtra("cart_total", mCartTotal);
@@ -163,8 +160,7 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
                 final String restID = getIntent().getStringExtra("restaurant_id");
                 final String tableID = getIntent().getStringExtra("table_id");
 
-                mViewCartButton = findViewById(R.id.button_view_order);
-                mViewCartButton.setOnClickListener(v -> {
+                mBottomSheetCart.setOnClickListener(v -> {
                     Intent showOrder = new Intent(getApplicationContext(), CartActivity.class);
                     showOrder.putExtra("cart_list", mCartList);
                     showOrder.putExtra("cart_total", mCartTotal);
