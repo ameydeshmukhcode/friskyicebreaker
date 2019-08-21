@@ -10,7 +10,6 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -103,10 +102,6 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
     }
 
     public void initUI() {
-        ImageButton mOptionsButton;
-        ImageButton mScanQRCodeButton;
-//        ImageButton mIceBreakerButton;
-
         mBottomSheet = findViewById(R.id.bottom_sheet_session);
         mBottomSheet.setVisibility(View.GONE);
 
@@ -115,22 +110,8 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
         mBottomSheetDetails = findViewById(R.id.text_details);
         mBottomSheetButton = findViewById(R.id.button_menu);
 
-        mOptionsButton = findViewById(R.id.button_app_bar_right);
-        mOptionsButton.setImageResource(R.drawable.ic_settings);
-        mOptionsButton.setOnClickListener(v -> {
-            Intent startProfileActivity = new Intent(getApplicationContext(), OptionsActivity.class);
-            startActivity(startProfileActivity);
-        });
-
-        mScanQRCodeButton = findViewById(R.id.button_app_bar_left);
-        mScanQRCodeButton.setImageResource(R.drawable.ic_qr_code);
-        mScanQRCodeButton.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), QRScanActivity.class)));
-
         BottomNavigationView navigation = findViewById(R.id.bottom_navigation);
         navigation.setOnNavigationItemSelectedListener(this);
-
-//        mIceBreakerButton = findViewById(R.id.button_icebreaker);
-//        mIceBreakerButton.setOnClickListener(v -> loadFragment(new IceBreakerFragment()));
     }
 
 
