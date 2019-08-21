@@ -126,11 +126,13 @@ public class QRScanActivity extends AppCompatActivity implements ConfirmSessionS
                             Log.d(getString(R.string.tag_debug), "DocumentSnapshot data: " + document.getData());
                         }
                         else {
-                            Log.e("Doesn't exist", "No such document");
+                            Toast.makeText(getBaseContext(),"QR Code invalid", Toast.LENGTH_LONG).show();
+                            mCodeScanner.startPreview();
+                            Log.e(getString(R.string.tag_debug), "No such document");
                         }
                     }
                     else {
-                        Log.e("Task", "failed with ", task.getException());
+                        Log.e(getString(R.string.tag_debug), "failed with ", task.getException());
                     }
                 });
             }
