@@ -84,7 +84,7 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
                 loadFragment(new RestaurantViewFragment());
                 break;
 
-            case R.id.bottom_nav_menu:
+            case R.id.bottom_nav_dine:
                 loadFragment(new DiningFragment());
                 break;
 
