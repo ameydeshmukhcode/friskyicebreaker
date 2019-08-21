@@ -1,6 +1,7 @@
 package com.frisky.icebreaker.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,6 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.frisky.icebreaker.R;
+import com.frisky.icebreaker.activities.OptionsActivity;
 import com.frisky.icebreaker.adapters.RestaurantListAdapter;
 import com.frisky.icebreaker.core.structures.Restaurant;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -41,6 +44,11 @@ public class RestaurantViewFragment extends Fragment {
                 .getSharedPreferences(getString(R.string.app_name), Context.MODE_PRIVATE);
 
         boolean isSessionActive = sharedPreferences.getBoolean("session_active", false);
+
+        ImageButton settingsButton = view.findViewById(R.id.button_settings);
+        settingsButton.setOnClickListener(v -> {
+            startActivity(new Intent(getActivity(), OptionsActivity.class));
+        });
 
         RecyclerView mRecyclerPubView;
         mRecyclerPubView = view.findViewById(R.id.recycler_view);
