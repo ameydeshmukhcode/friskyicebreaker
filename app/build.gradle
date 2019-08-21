@@ -6,8 +6,8 @@ android {
         applicationId "com.frisky.icebreaker"
         minSdkVersion 23
         targetSdkVersion 28
-        versionCode 18
-        versionName "0.10.180"
+        versionCode 19
+        versionName "0.10.182"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
