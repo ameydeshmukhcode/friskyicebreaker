@@ -33,69 +33,49 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/logo_text" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/button_use_google"
         android:layout_width="0dp"
-        android:layout_height="@dimen/button_primary_height"
+        android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
-        android:layout_marginBottom="24dp"
-        android:background="@drawable/bg_circular"
+        android:layout_marginBottom="16dp"
         android:backgroundTint="@color/tintLight"
-        android:contentDescription="@string/google"
-        android:drawableStart="@drawable/googleg_standard_color_18"
-        android:drawablePadding="24dp"
-        android:elevation="2dp"
         android:fontFamily="@font/museosans700"
-        android:gravity="clip_vertical|start|center_vertical"
-        android:paddingStart="40dp"
-        android:paddingTop="4dp"
-        android:paddingEnd="24dp"
-        android:paddingBottom="4dp"
         android:text="@string/use_google_account"
         android:textAllCaps="false"
-        android:textColor="@color/textDark"
+        android:textColor="@color/app"
+        app:cornerRadius="30dp"
         android:textSize="@dimen/text_button_primary_size"
+        android:textAppearance="@style/NoLetterSpacing"
+        app:icon="@drawable/googleg_standard_color_18"
+        app:iconGravity="textStart"
+        app:iconTint="@color/app"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
         app:layout_constraintBottom_toTopOf="@+id/button_use_email"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:rippleColor="@color/backgroundLight" />
 
-    <!--<ImageButton-->
-        <!--android:id="@+id/button_facebook"-->
-        <!--android:layout_width="@dimen/button_sec_login_width"-->
-        <!--android:layout_height="@dimen/button_primary_height"-->
-        <!--android:layout_marginTop="8dp"-->
-        <!--android:background="@drawable/bg_circular"-->
-        <!--android:backgroundTint="@color/colorFacebook"-->
-        <!--android:contentDescription="@string/facebook"-->
-        <!--android:elevation="2dp"-->
-        <!--android:scaleType="fitCenter"-->
-        <!--android:src="@drawable/logo_facebook"-->
-        <!--app:layout_constraintEnd_toEndOf="@+id/divider_right"-->
-        <!--app:layout_constraintStart_toEndOf="@+id/button_google"-->
-        <!--app:layout_constraintTop_toBottomOf="@+id/or_log_in_with" />-->
-
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/button_use_email"
         android:layout_width="0dp"
-        android:layout_height="@dimen/button_primary_height"
-        android:layout_marginBottom="24dp"
-        android:background="@drawable/bg_circular"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="18dp"
+        app:icon="@drawable/ic_email"
+        app:iconGravity="textStart"
         android:backgroundTint="@color/colorPrimary"
-        android:contentDescription="@string/google"
-        android:drawableStart="@drawable/ic_email"
-        android:drawablePadding="24dp"
         android:drawableTint="@color/tintLight"
-        android:elevation="2dp"
         android:fontFamily="@font/museosans700"
-        android:gravity="start|center_vertical"
-        android:paddingStart="40dp"
-        android:paddingTop="4dp"
-        android:paddingBottom="4dp"
+        app:cornerRadius="30dp"
+        android:textAppearance="@style/NoLetterSpacing"
         android:text="@string/use_email"
         android:textAllCaps="false"
         android:textColor="@color/textLight"
         android:textSize="@dimen/text_button_primary_size"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
         app:layout_constraintBottom_toTopOf="@+id/terms"
         app:layout_constraintEnd_toEndOf="@+id/button_use_google"
         app:layout_constraintStart_toStartOf="@+id/button_use_google" />

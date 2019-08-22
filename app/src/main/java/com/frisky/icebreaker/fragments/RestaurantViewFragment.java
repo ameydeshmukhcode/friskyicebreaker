@@ -9,7 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -45,7 +45,7 @@ public class RestaurantViewFragment extends Fragment {
 
         boolean isSessionActive = sharedPreferences.getBoolean("session_active", false);
 
-        ImageButton settingsButton = view.findViewById(R.id.button_settings);
+        Button settingsButton = view.findViewById(R.id.button_settings);
         settingsButton.setOnClickListener(v -> {
             startActivity(new Intent(getActivity(), OptionsActivity.class));
         });

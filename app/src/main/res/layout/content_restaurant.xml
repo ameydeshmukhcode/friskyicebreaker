@@ -70,26 +70,23 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/text_pub_name" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/button_get_directions"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/button_primary_height"
+            app:icon="@drawable/ic_location"
+            android:layout_height="50dp"
+            android:textAppearance="@style/NoLetterSpacing"
             android:layout_marginStart="24dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="24dp"
-            android:background="@drawable/bg_round_rect"
             android:backgroundTint="@color/app"
-            android:drawableStart="@drawable/ic_location"
-            android:drawablePadding="12dp"
-            android:drawableTint="@color/textLight"
             android:fontFamily="@font/museosans700"
-            android:gravity="start|center_vertical"
-            android:paddingStart="@dimen/input_primary_start_padding"
-            android:paddingEnd="@dimen/input_primary_start_padding"
             android:text="@string/get_directions"
             android:textAllCaps="false"
             android:textColor="@color/textLight"
             android:textSize="@dimen/text_title_size"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_cuisine" />

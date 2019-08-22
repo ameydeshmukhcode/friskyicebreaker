@@ -61,7 +61,7 @@
             app:layout_constraintStart_toStartOf="@+id/text_name"
             app:layout_constraintTop_toBottomOf="@+id/text_name" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/button_profile"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -69,11 +69,16 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="8dp"
-            android:background="@drawable/bg_round_rect"
             android:fontFamily="@font/museosans700"
             android:text="@string/setup_your_profile"
             android:textAllCaps="false"
             android:textSize="@dimen/text_title_size"
+            app:icon="@drawable/ic_edit"
+            app:iconTint="@color/tintLight"
+            app:iconGravity="textStart"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:textAppearance="@style/NoLetterSpacing"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -114,18 +119,20 @@
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/button_logout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/backgroundLight"
-        android:drawableTint="@color/tintDark"
         android:fontFamily="@font/museosans700"
-        android:foreground="?attr/selectableItemBackground"
+        android:backgroundTint="@color/backgroundLight"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
         android:text="@string/logout"
         android:textAllCaps="false"
         android:textColor="@color/textDark"
         android:textSize="@dimen/text_title_size"
+        android:textAppearance="@style/NoLetterSpacing"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
