@@ -17,7 +17,7 @@
     <dimen name="input_chat_max_height">94dp</dimen>
 
     <!-- Buttons -->
-    <dimen name="button_primary_height">50dp</dimen>
+    <dimen name="button_primary_height">60dp</dimen>
     <dimen name="button_square_dimen">50dp</dimen>
     <dimen name="button_square_small_dimen">35dp</dimen>
     <dimen name="button_send_message_dimen">44dp</dimen>
