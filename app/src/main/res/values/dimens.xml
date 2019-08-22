@@ -14,13 +14,9 @@
     <dimen name="input_primary_height">50dp</dimen>
     <dimen name="input_primary_start_padding">24dp</dimen>
     <dimen name="input_about_me_height">76dp</dimen>
-    <dimen name="input_chat_max_height">94dp</dimen>
 
     <!-- Buttons -->
-    <dimen name="button_primary_height">60dp</dimen>
     <dimen name="button_square_dimen">50dp</dimen>
-    <dimen name="button_square_small_dimen">35dp</dimen>
-    <dimen name="button_send_message_dimen">44dp</dimen>
 
     <!-- Dividers -->
     <dimen name="divider_height">1dp</dimen>
@@ -41,22 +37,15 @@
     <dimen name="pub_extra_info_size">12sp</dimen>
 
     <!-- Dialogs -->
-    <dimen name="dialog_button_width">70dp</dimen>
-    <dimen name="dialog_button_height">40dp</dimen>
-
-    <dimen name="tab_indicator_height">35dp</dimen>
 
     <!-- Edit Image -->
     <dimen name="edit_image_width">100dp</dimen>
     <dimen name="edit_image_margin">7dp</dimen>
 
     <!-- User List -->
-    <dimen name="user_image_dimen">60dp</dimen>
 
     <!-- Drawable -->
     <dimen name="bg_round_rect_radius">10dp</dimen>
-    <dimen name="bg_chat_radius">22dp</dimen>
 
     <dimen name="sign_up_layout_height">64dp</dimen>
-    <dimen name="image_tabs_height">10dp</dimen>
 </resources>

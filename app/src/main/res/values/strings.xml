@@ -6,8 +6,6 @@
     <string name="logout">Log Out</string>
     <string name="version">Version</string>
     <string name="facebook">Facebook</string>
-    <string name="google">Google</string>
-    <string name="apply">Apply</string>
     <string name="cancel">Cancel</string>
     <string name="ok">OK</string>
     <string name="scan_qr_code">Scan QR Code</string>
@@ -27,27 +25,19 @@
 
     <!--Sign up page-->
     <string name="password_confirm">Confirm Password</string>
-    <string name="name">Name</string>
     <string name="age_check">I\'m 18 years and older.</string>
     <string name="terms">By signing in, you\'re agreeing to our Terms and Privacy Policy</string>
 
     <!--Restaurant Activity-->
     <!--Restaurant View-->
-    <string name="filters">Filters</string>
     <!-- Restaurant Filters -->
-    <string name="sort_by">Sort by</string>
-    <string name="type">Type</string>
-    <string name="city">City</string>
-    <string name="features">Features</string>
 
     <!--Social-->
 
     <!--IceBreaker-->
-    <string name="hide_visibility">Hide Visibility</string>
 
     <!--Profile-->
     <string name="about_me">About me</string>
-    <string name="about">About</string>
     <string name="sample_bio">Some long text which no one cares about.</string>
     <string name="edit_profile">Edit Profile</string>
     <string name="setup_your_profile">Setup your profile</string>
@@ -55,7 +45,6 @@
     <string name="male">Male</string>
     <string name="female">Female</string>
     <string name="other">Other</string>
-    <string name="photo">Photo</string>
     <string name="bio">Bio</string>
     <string-array name="genders">
         <item>@string/male</item>
@@ -75,8 +64,6 @@
     <string name="uploading_details">Uploading Details</string>
 
     <!--Chat Activity-->
-    <string name="type_message">Type a message&#8230;</string>
-    <string name="send_message">Send</string>
 
     <!--Options Activity-->
     <string name="options">Options</string>
@@ -99,7 +86,6 @@
     <string name="unavailable">Unavailable</string>
     <string name="in_cart">In cart</string>
     <string name="order_rank">Order #</string>
-    <string name="order_time">Order time - </string>
     <string name="order_summary">Order Summary</string>
     <!-- Status -->
     <string name="status_pending">Pending</string>
@@ -135,5 +121,4 @@
     <string name="order_more">Order More</string>
     <string name="get_directions">Get Directions</string>
     <string name="dine">Dine</string>
-    <string name="settings">Settings</string>
 </resources>
