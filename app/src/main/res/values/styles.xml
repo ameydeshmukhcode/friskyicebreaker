@@ -15,7 +15,7 @@
     <style name="FriskyPopUpOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="FriskyAppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-    
+
     <style name="FriskyTabTextAppearance" parent="TextAppearance.AppCompat.Widget.Button">
         <item name="android:textAllCaps">false</item>
         <item name="android:fontFamily">@font/museosans700</item>
