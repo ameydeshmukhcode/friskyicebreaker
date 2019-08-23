@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
@@ -17,14 +16,10 @@ import androidx.core.content.res.ResourcesCompat;
 
 import com.frisky.icebreaker.BuildConfig;
 import com.frisky.icebreaker.R;
-import com.frisky.icebreaker.ui.assistant.RoundRectTransformation;
 import com.frisky.icebreaker.interfaces.UIActivity;
+import com.frisky.icebreaker.ui.assistant.RoundRectTransformation;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 public class OptionsActivity extends AppCompatActivity implements UIActivity {
@@ -114,32 +109,11 @@ public class OptionsActivity extends AppCompatActivity implements UIActivity {
             mProfileButton.setText(getString(R.string.edit_profile));
             mProfileButton.setOnClickListener(null);
 
-            FirebaseUser user = mAuth.getCurrentUser();
+            mNameText.setText(sharedPreferences.getString("u_name", ""));
+            mBioText.setText(sharedPreferences.getString("u_bio", ""));
 
-            if (user == null)
-                return;
-
-            StorageReference profileImageRef = FirebaseStorage.getInstance().getReference()
-                    .child("profile_images").child(mAuth.getCurrentUser().getUid());
-
-            profileImageRef.getDownloadUrl().addOnSuccessListener(uri -> {
-                Picasso.get().load(uri).transform(new RoundRectTransformation()).into(mProfileImage);
-                Log.d(getString(R.string.tag_debug), "Image " + uri.toString());
-            }).addOnFailureListener(e -> Log.e("Uri Download Failed", e.getMessage()));
-
-            FirebaseFirestore.getInstance().collection("users")
-                    .document(mAuth.getCurrentUser().getUid())
-                    .get()
-                    .addOnCompleteListener(task -> {
-                        if (task.isSuccessful()) {
-                            DocumentSnapshot document = task.getResult();
-                            if (document == null) {
-                                return;
-                            }
-                            mNameText.setText(document.getString("name"));
-                            mBioText.setText(document.getString("bio"));
-                        }
-                    });
+            Picasso.get().load(sharedPreferences.getString("u_image", ""))
+                    .transform(new RoundRectTransformation()).into(mProfileImage);
         }
     }
 }

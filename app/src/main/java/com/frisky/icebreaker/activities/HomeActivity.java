@@ -27,6 +27,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.Map;
 
@@ -109,10 +111,10 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
         navigation.setOnNavigationItemSelectedListener(this);
     }
 
-
     private void checkForProfileSetup() {
+        final String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
         FirebaseFirestore.getInstance().collection("users")
-                .document(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .document(userID)
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
@@ -122,6 +124,19 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
                         boolean profileSetup = false;
                         if (snapshot.contains("profile_setup_complete")) {
                             profileSetup = snapshot.getBoolean("profile_setup_complete");
+                            if (profileSetup) {
+                                if (snapshot.contains("name") && snapshot.contains("bio")) {
+                                    sharedPreferences.edit().putString("u_name", snapshot.getString("name")).apply();
+                                    sharedPreferences.edit().putString("u_bio", snapshot.getString("bio")).apply();
+
+                                    StorageReference profileImageRef = FirebaseStorage.getInstance().getReference()
+                                            .child("profile_images").child(userID);
+
+                                    profileImageRef.getDownloadUrl().addOnSuccessListener(uri -> {
+                                        sharedPreferences.edit().putString("u_image", uri.toString()).apply();
+                                    }).addOnFailureListener(e -> Log.e("Uri Download Failed", e.getMessage()));
+                                }
+                            }
                         }
                         sharedPreferences.edit().putBoolean("profile_setup_complete", profileSetup).apply();
                     }
