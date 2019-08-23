@@ -60,19 +60,21 @@
         app:layout_constraintStart_toEndOf="@+id/rupee"
         app:layout_constraintTop_toTopOf="@+id/your_total" />
 
-    <TextView
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/view_order"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_marginEnd="16dp"
-        android:background="@color/transparent"
-        android:fontFamily="@font/museosans700"
-        android:gravity="center"
         android:text="@string/view"
-        android:textAllCaps="false"
         android:textColor="@color/colorPrimary"
         android:textSize="@dimen/text_title_size"
+        app:strokeColor="@color/app"
+        android:clickable="false"
+        android:focusable="false"
+        android:textAppearance="@style/FriskyText"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         app:layout_constraintBottom_toBottomOf="@+id/your_total"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/order_active" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
