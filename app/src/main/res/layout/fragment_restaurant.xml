@@ -1,63 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:focusableInTouchMode="true">
-
-    <!--<androidx.constraintlayout.widget.ConstraintLayout-->
-        <!--android:id="@+id/layout_search"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="60dp"-->
-        <!--android:background="@android:color/background_light"-->
-        <!--android:elevation="4dp"-->
-        <!--app:layout_constraintEnd_toEndOf="parent"-->
-        <!--app:layout_constraintStart_toStartOf="parent"-->
-        <!--app:layout_constraintTop_toTopOf="parent">-->
-
-        <!--<EditText-->
-            <!--android:id="@+id/input_search"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="40dp"-->
-            <!--android:layout_marginStart="10dp"-->
-            <!--android:layout_marginTop="10dp"-->
-            <!--android:layout_marginEnd="10dp"-->
-            <!--android:layout_marginBottom="10dp"-->
-            <!--android:background="@drawable/bg_circular"-->
-            <!--android:drawableStart="@drawable/ic_search"-->
-            <!--android:drawablePadding="8dp"-->
-            <!--android:drawableTint="@color/tintDark"-->
-            <!--android:ems="10"-->
-            <!--android:fontFamily="@font/museosans300"-->
-            <!--android:hint="@string/search_restaurants"-->
-            <!--android:inputType="text"-->
-            <!--android:paddingStart="16dp"-->
-            <!--android:paddingEnd="16dp"-->
-            <!--android:textColor="@color/textDark"-->
-            <!--android:textSize="@dimen/text_subtitle_size"-->
-            <!--app:layout_constraintBottom_toBottomOf="parent"-->
-            <!--app:layout_constraintEnd_toStartOf="@+id/button_filters"-->
-            <!--app:layout_constraintStart_toStartOf="parent"-->
-            <!--app:layout_constraintTop_toTopOf="parent" />-->
-
-        <!--<ImageButton-->
-            <!--android:id="@+id/button_filters"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="0dp"-->
-            <!--android:layout_marginTop="10dp"-->
-            <!--android:layout_marginEnd="10dp"-->
-            <!--android:layout_marginBottom="10dp"-->
-            <!--android:background="@drawable/bg_round_rect"-->
-            <!--android:padding="4dp"-->
-            <!--android:src="@drawable/ic_adjust"-->
-            <!--android:tint="@color/tintDark"-->
-            <!--app:layout_constraintBottom_toBottomOf="parent"-->
-            <!--app:layout_constraintDimensionRatio="1"-->
-            <!--app:layout_constraintEnd_toEndOf="parent"-->
-            <!--app:layout_constraintTop_toTopOf="parent" />-->
-
-    <!--</androidx.constraintlayout.widget.ConstraintLayout>-->
 
     <ImageView
         android:id="@+id/app_logo"
@@ -78,9 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         app:icon="@drawable/ic_settings"
-        android:fontFamily="@font/museosans700"
-        android:textAppearance="@style/NoLetterSpacing"
-        android:textAllCaps="false"
+        android:textAppearance="@style/FriskyText"
         app:iconTint="@color/app"
         style="@style/Widget.MaterialComponents.Button.TextButton"
         android:text="@string/options"
