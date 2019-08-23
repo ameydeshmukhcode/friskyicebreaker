@@ -123,4 +123,5 @@
     <string name="dine">Dine</string>
     <string name="visits">Visits</string>
     <string name="add">Add</string>
+    <string name="view_cart">View Cart</string>
 </resources>
