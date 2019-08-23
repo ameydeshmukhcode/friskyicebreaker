@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardBackgroundColor="@color/transparent"
@@ -122,6 +123,22 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/button_add"
             app:layout_constraintStart_toStartOf="@+id/button_remove" />
+
+        <TextView
+            android:id="@+id/add_item"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/bg_round_rect_left"
+            android:backgroundTint="@drawable/button_green_state_colors"
+            android:fontFamily="@font/museosans700"
+            android:gravity="center"
+            android:text="@string/add"
+            android:textColor="@color/textLight"
+            android:textSize="@dimen/text_menu_item_price"
+            app:layout_constraintBottom_toBottomOf="@+id/text_item_count"
+            app:layout_constraintEnd_toStartOf="@+id/button_add"
+            app:layout_constraintStart_toStartOf="@+id/button_remove"
+            app:layout_constraintTop_toTopOf="@+id/text_item_count" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

@@ -34,6 +34,7 @@ public class MenuItemListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         TextView mPrice;
         TextView mCount;
         TextView mAvailable;
+        TextView mAddText;
         MenuItemHolder(View view) {
             super(view);
             mAdd = view.findViewById(R.id.button_add);
@@ -43,6 +44,7 @@ public class MenuItemListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             mPrice = view.findViewById(R.id.text_price);
             mCount = view.findViewById(R.id.text_item_count);
             mAvailable = view.findViewById(R.id.text_available);
+            mAddText = view.findViewById(R.id.add_item);
         }
     }
 
@@ -117,9 +119,13 @@ public class MenuItemListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 MenuItem menuItem = (MenuItem) mMenu.get(position);
                 boolean available = menuItem.getAvailable();
 
+                itemHolder.mAddText.setVisibility(View.VISIBLE);
+                itemHolder.mRemove.setVisibility(View.INVISIBLE);
+                itemHolder.mCount.setVisibility(View.INVISIBLE);
+
                 if (!available) {
                     itemHolder.mAdd.setEnabled(false);
-                    itemHolder.mRemove.setEnabled(false);
+                    itemHolder.mAddText.setEnabled(false);
                     itemHolder.mAvailable.setText(R.string.unavailable);
                 }
 
@@ -129,14 +135,21 @@ public class MenuItemListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 itemHolder.mAdd.setOnClickListener(v -> {
                     int countInc = Integer.parseInt(itemHolder.mCount.getText().toString()) + 1;
                     itemHolder.mCount.setText(String.valueOf(countInc));
+                    itemHolder.mAddText.setVisibility(View.INVISIBLE);
+                    itemHolder.mRemove.setVisibility(View.VISIBLE);
+                    itemHolder.mCount.setVisibility(View.VISIBLE);
                     orderUpdateListener.addToOrder(menuItem);
                 });
+                
                 itemHolder.mRemove.setOnClickListener(v -> {
                     int count = Integer.parseInt(itemHolder.mCount.getText().toString());
-                    if (count > 0) {
-                        int countDec = Integer.parseInt(itemHolder.mCount.getText().toString()) - 1;
-                        itemHolder.mCount.setText(String.valueOf(countDec));
-                        orderUpdateListener.removeFromOrder(menuItem);
+                    int countDec = Integer.parseInt(itemHolder.mCount.getText().toString()) - 1;
+                    itemHolder.mCount.setText(String.valueOf(countDec));
+                    orderUpdateListener.removeFromOrder(menuItem);
+                    if (count == 1) {
+                        itemHolder.mAddText.setVisibility(View.VISIBLE);
+                        itemHolder.mRemove.setVisibility(View.INVISIBLE);
+                        itemHolder.mCount.setVisibility(View.INVISIBLE);
                     }
                 });
                 break;
