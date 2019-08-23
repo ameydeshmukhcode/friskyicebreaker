@@ -19,7 +19,6 @@ import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.interfaces.UIActivity;
 import com.frisky.icebreaker.ui.assistant.RoundRectTransformation;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.squareup.picasso.Picasso;
 
 public class OptionsActivity extends AppCompatActivity implements UIActivity {
@@ -79,20 +78,20 @@ public class OptionsActivity extends AppCompatActivity implements UIActivity {
         Typeface typeface = ResourcesCompat.getFont(getApplicationContext(), R.font.museosans700);
         mToolbarText.setTypeface(typeface);
 
-        mLogoutButton = findViewById(R.id.button_logout);
-        mLogoutButton.setOnClickListener(v -> {
-            mAuth.signOut();
-
-            FirebaseUser user = mAuth.getCurrentUser();
-            if (user == null) {
-                Intent signOutIntent = new Intent(getApplicationContext(), SignInActivity.class);
-                signOutIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
-                        Intent.FLAG_ACTIVITY_CLEAR_TASK |
-                        Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(signOutIntent);
-                finish();
-            }
-        });
+//        mLogoutButton = findViewById(R.id.button_logout);
+//        mLogoutButton.setOnClickListener(v -> {
+//            mAuth.signOut();
+//
+//            FirebaseUser user = mAuth.getCurrentUser();
+//            if (user == null) {
+//                Intent signOutIntent = new Intent(getApplicationContext(), SignInActivity.class);
+//                signOutIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
+//                        Intent.FLAG_ACTIVITY_CLEAR_TASK |
+//                        Intent.FLAG_ACTIVITY_NEW_TASK);
+//                startActivity(signOutIntent);
+//                finish();
+//            }
+//        });
 
         mVersionText = findViewById(R.id.text_version);
         String version = BuildConfig.VERSION_NAME;

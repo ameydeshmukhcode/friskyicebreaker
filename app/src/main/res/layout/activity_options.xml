@@ -85,12 +85,22 @@
             app:layout_constraintTop_toBottomOf="@+id/image_profile" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <ImageView
+        android:id="@+id/frisky"
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/layout_version"
+        app:layout_constraintEnd_toEndOf="@+id/layout_version"
+        app:layout_constraintStart_toStartOf="@+id/layout_version"
+        app:srcCompat="@drawable/logo_text" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layout_version"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/button_logout"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
@@ -118,31 +128,5 @@
             app:layout_constraintStart_toEndOf="@+id/version"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/button_logout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/backgroundLight"
-        style="@style/Widget.MaterialComponents.Button.TextButton"
-        android:text="@string/logout"
-        android:textColor="@color/textDark"
-        android:textSize="@dimen/text_title_size"
-        android:textAppearance="@style/FriskyText"
-        android:insetTop="0dp"
-        android:insetBottom="0dp"
-        app:cornerRadius="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <ImageView
-        android:layout_width="0dp"
-        android:layout_height="30dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/layout_version"
-        app:layout_constraintEnd_toEndOf="@+id/layout_version"
-        app:layout_constraintStart_toStartOf="@+id/layout_version"
-        app:srcCompat="@drawable/logo_text" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
