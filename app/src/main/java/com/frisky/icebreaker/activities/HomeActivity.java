@@ -81,16 +81,17 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        menuItem.setChecked(true);
         switch (menuItem.getItemId()) {
-            case R.id.bottom_nav_home:
+            case R.id.menu_home:
                 loadFragment(new RestaurantViewFragment());
                 break;
 
-            case R.id.bottom_nav_dine:
+            case R.id.menu_dine:
                 loadFragment(new DiningFragment());
                 break;
 
-            case R.id.bottom_nav_orders:
+            case R.id.menu_visits:
                 loadFragment(new OrderHistoryFragment());
                 break;
         }
@@ -107,7 +108,7 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
         mBottomSheetDetails = findViewById(R.id.text_details);
         mBottomSheetButton = findViewById(R.id.button_menu);
 
-        BottomNavigationView navigation = findViewById(R.id.bottom_navigation);
+        BottomNavigationView navigation = findViewById(R.id.bottom_nav);
         navigation.setOnNavigationItemSelectedListener(this);
     }
 
