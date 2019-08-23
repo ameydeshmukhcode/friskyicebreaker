@@ -133,6 +133,7 @@
         android:textAppearance="@style/NoLetterSpacing"
         android:insetTop="0dp"
         android:insetBottom="0dp"
+        app:cornerRadius="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
