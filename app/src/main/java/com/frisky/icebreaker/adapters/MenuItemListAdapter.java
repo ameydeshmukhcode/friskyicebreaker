@@ -119,9 +119,16 @@ public class MenuItemListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 MenuItem menuItem = (MenuItem) mMenu.get(position);
                 boolean available = menuItem.getAvailable();
 
-                itemHolder.mAddText.setVisibility(View.VISIBLE);
-                itemHolder.mRemove.setVisibility(View.INVISIBLE);
-                itemHolder.mCount.setVisibility(View.INVISIBLE);
+                if (Integer.parseInt(itemHolder.mCount.getText().toString()) > 0) {
+                    itemHolder.mAddText.setVisibility(View.INVISIBLE);
+                    itemHolder.mRemove.setVisibility(View.VISIBLE);
+                    itemHolder.mCount.setVisibility(View.VISIBLE);
+                }
+                else {
+                    itemHolder.mAddText.setVisibility(View.VISIBLE);
+                    itemHolder.mRemove.setVisibility(View.INVISIBLE);
+                    itemHolder.mCount.setVisibility(View.INVISIBLE);
+                }
 
                 if (!available) {
                     itemHolder.mAdd.setEnabled(false);
