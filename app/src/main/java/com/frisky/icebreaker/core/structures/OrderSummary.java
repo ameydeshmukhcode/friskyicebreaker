@@ -6,11 +6,14 @@ public class OrderSummary {
     private String sessionID;
     private String endTime;
 
-    public OrderSummary(String restaurantID, String restaurantName, String sessionID, String endTime) {
+    private int totalAmount;
+
+    public OrderSummary(String restaurantID, String restaurantName, String sessionID, String endTime, int totalAmount) {
         this.restaurantID = restaurantID;
         this.restaurantName = restaurantName;
         this.sessionID = sessionID;
         this.endTime = endTime;
+        this.totalAmount = totalAmount;
     }
 
     public String getRestaurantID() {
@@ -27,5 +30,9 @@ public class OrderSummary {
 
     public String getEndTime() {
         return endTime;
+    }
+
+    public int getTotalAmount() {
+        return totalAmount;
     }
 }
