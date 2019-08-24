@@ -66,19 +66,21 @@ public class OrderHistoryFragment extends Fragment {
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         if (document == null)
                             return;
-                        @SuppressLint("SimpleDateFormat")
-                        SimpleDateFormat formatter = new SimpleDateFormat("dd MMM YYYY hh:mm a");
-                        String endTime = formatter.format((Objects
-                                .requireNonNull(document.getTimestamp("end_time")).toDate()));
-                        int total = Integer.parseInt(document.get("bill_amount").toString());
-                        final DocumentReference restaurantReference = document.getReference().getParent().getParent();
-                        restaurantReference.get().addOnCompleteListener(restTask -> {
-                            OrderSummary summary = new OrderSummary(restaurantReference.getId(),
-                                    String.valueOf(restTask.getResult().get("name")),
-                            document.getId(), endTime, total);
-                            mSessionHistoryList.add(summary);
-                            mOrderSummaryAdapter.notifyDataSetChanged();
-                        });
+                        if (document.contains("bill_amount")) {
+                            @SuppressLint("SimpleDateFormat")
+                            SimpleDateFormat formatter = new SimpleDateFormat("dd MMM YYYY hh:mm a");
+                            String endTime = formatter.format((Objects
+                                    .requireNonNull(document.getTimestamp("end_time")).toDate()));
+                            int total = Integer.parseInt(document.get("bill_amount").toString());
+                            final DocumentReference restaurantReference = document.getReference().getParent().getParent();
+                            restaurantReference.get().addOnCompleteListener(restTask -> {
+                                OrderSummary summary = new OrderSummary(restaurantReference.getId(),
+                                        String.valueOf(restTask.getResult().get("name")),
+                                        document.getId(), endTime, total);
+                                mSessionHistoryList.add(summary);
+                                mOrderSummaryAdapter.notifyDataSetChanged();
+                            });
+                        }
                     }
                 }
             }
