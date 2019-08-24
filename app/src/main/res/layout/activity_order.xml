@@ -60,8 +60,6 @@
         android:id="@+id/recycler_view_order_list"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
         android:padding="8dp"
         app:layout_constraintBottom_toTopOf="@+id/divider_bottom"
         app:layout_constraintEnd_toEndOf="parent"
