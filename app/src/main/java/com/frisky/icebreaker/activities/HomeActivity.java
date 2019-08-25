@@ -15,6 +15,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
@@ -31,8 +32,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 public class HomeActivity extends AppCompatActivity implements UIActivity, BottomNavigationView.OnNavigationItemSelectedListener {
@@ -151,6 +150,15 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
     }
 
     private void checkSessionDetails() {
+        Fragment dineFragment = getSupportFragmentManager().findFragmentByTag("dine");
+
+        if (dineFragment != null) {
+            getSupportFragmentManager().beginTransaction()
+                .detach(dineFragment)
+                .attach(dineFragment)
+                .commit();
+        }
+
         boolean isSessionActive = sharedPreferences.getBoolean("session_active", false);
         if (isSessionActive) {
             setupSessionDetails();
