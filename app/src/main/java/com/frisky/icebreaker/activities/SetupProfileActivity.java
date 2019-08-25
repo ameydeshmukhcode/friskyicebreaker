@@ -211,10 +211,12 @@ public class SetupProfileActivity extends AppCompatActivity implements FormActiv
             return;
 
         final String userUid = user.getUid();
+        final String name = mNameInput.getText().toString();
+        final String bio = mBioInput.getText().toString();
 
         Map<String, Object> userDetails = new HashMap<>();
-        userDetails.put("name", mNameInput.getText().toString());
-        userDetails.put("bio", mBioInput.getText().toString());
+        userDetails.put("name", name);
+        userDetails.put("bio", bio);
         userDetails.put("gender", mGenderSpinner.getSelectedItem().toString());
         userDetails.put("date_of_birth", mDateOfBirthInput.getText().toString());
         userDetails.put("profile_setup_complete", true);
@@ -222,8 +224,13 @@ public class SetupProfileActivity extends AppCompatActivity implements FormActiv
         mFirestore.collection("users")
                 .document(userUid)
                 .set(userDetails, SetOptions.merge())
-                .addOnSuccessListener(aVoid -> Log.d(getString(R.string.tag_debug),
-                        "DocumentSnapshot successfully written!"))
+                .addOnSuccessListener(aVoid -> {
+                    sharedPreferences.edit()
+                            .putString("u_name", name)
+                            .putString("u_bio", bio)
+                            .apply();
+                    Log.d(getString(R.string.tag_debug), "DocumentSnapshot successfully written!");
+                })
                 .addOnFailureListener(e -> Log.e("Failed", e.getMessage(), e));
 
         final UploadTask uploadTask = mStorageReference.child("profile_images")
@@ -239,8 +246,6 @@ public class SetupProfileActivity extends AppCompatActivity implements FormActiv
 
         uploadTask.addOnSuccessListener(taskSnapshot -> mStorageReference.child("profile_images").child(userUid)
                 .getDownloadUrl().addOnSuccessListener(uri -> {
-                    String name = mNameInput.getText().toString();
-
                     UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                             .setDisplayName(name)
                             .setPhotoUri(uri)
@@ -250,7 +255,10 @@ public class SetupProfileActivity extends AppCompatActivity implements FormActiv
                             .addOnCompleteListener(task -> {
                                 if (task.isSuccessful()) {
                                     Log.d(getString(R.string.tag_debug), "User profile updated.");
-                                    sharedPreferences.edit().putBoolean("profile_setup_complete", true).apply();
+                                    sharedPreferences.edit()
+                                            .putBoolean("profile_setup_complete", true)
+                                            .putString("u_image", uri.toString())
+                                            .apply();
                                     Intent launchOptions = new Intent(getApplicationContext(), OptionsActivity.class);
                                     startActivity(launchOptions);
                                     finish();

@@ -36,19 +36,14 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.RestaurantActivity" />
-        <activity android:name=".activities.ProfileActivity" />
         <activity
             android:name=".activities.EditProfileActivity"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".activities.ViewUserActivity" />
         <activity
             android:name=".activities.SetupProfileActivity"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".activities.ChatActivity" />
         <activity android:name=".activities.QRScanActivity" />
-        <activity
-            android:name=".activities.MenuActivity"
-            android:parentActivityName=".activities.HomeActivity" />
+        <activity android:name=".activities.MenuActivity" />
         <activity android:name=".activities.CartActivity" />
         <activity android:name=".activities.OrderActivity" />
         <activity android:name=".activities.OptionsActivity" />

@@ -4,8 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/bg_round_rect_top"
-    android:elevation="4dp">
+    android:background="@color/tintLight"
+    android:elevation="4dp"
+    android:foreground="?attr/selectableItemBackground">
 
     <TextView
         android:id="@+id/order_active"
@@ -59,19 +60,21 @@
         app:layout_constraintStart_toEndOf="@+id/rupee"
         app:layout_constraintTop_toTopOf="@+id/your_total" />
 
-    <Button
-        android:id="@+id/button_view_order"
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/view_order"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_marginEnd="16dp"
-        android:background="@color/transparent"
-        android:fontFamily="@font/museosans700"
-        android:foreground="?attr/selectableItemBackground"
-        android:text="@string/view"
-        android:textAllCaps="false"
-        android:textColor="@color/colorPrimary"
-        android:textSize="@dimen/text_title_size"
+        android:text="@string/view_cart"
+        app:strokeColor="@color/app"
+        android:textColor="@color/app"
+        android:textAppearance="@style/FriskyText"
+        android:textSize="@dimen/text_subtitle_size"
+        android:clickable="false"
+        android:focusable="false"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         app:layout_constraintBottom_toBottomOf="@+id/your_total"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/order_active" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

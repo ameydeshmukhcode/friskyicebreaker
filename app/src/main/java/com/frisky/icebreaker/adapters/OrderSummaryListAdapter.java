@@ -25,12 +25,14 @@ public class OrderSummaryListAdapter extends RecyclerView.Adapter<OrderSummaryLi
     static class OrderSummaryHolder extends RecyclerView.ViewHolder {
         TextView mName;
         TextView mTime;
+        TextView mAmount;
         MaterialCardView mOrderCard;
         OrderSummaryHolder(View view) {
             super(view);
             mName = view.findViewById(R.id.text_restaurant_name);
             mTime = view.findViewById(R.id.text_time);
             mOrderCard = view.findViewById(R.id.card_order_history);
+            mAmount = view.findViewById(R.id.text_total);
         }
     }
 
@@ -54,6 +56,7 @@ public class OrderSummaryListAdapter extends RecyclerView.Adapter<OrderSummaryLi
 
         holder.mName.setText(summary.getRestaurantName());
         holder.mTime.setText(summary.getEndTime());
+        holder.mAmount.setText(String.valueOf(summary.getTotalAmount()));
 
         holder.mOrderCard.setOnClickListener(v -> {
             Intent showSummary = new Intent(mContext, OrderSummaryActivity.class);

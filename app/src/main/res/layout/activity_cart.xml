@@ -60,8 +60,6 @@
         android:id="@+id/recycler_view_cart_list"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
         android:padding="8dp"
         app:layout_constraintBottom_toTopOf="@+id/divider_bottom"
         app:layout_constraintEnd_toEndOf="parent"
@@ -121,20 +119,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/cart_total" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/button_confirm_order"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="16dp"
-        android:background="@drawable/bg_round_rect"
         android:backgroundTint="@color/appGreen"
-        android:fontFamily="@font/museosans700"
         android:text="@string/confirm_order"
-        android:textAllCaps="false"
         android:textColor="@color/textLight"
         android:textSize="@dimen/text_button_primary_size"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:textAppearance="@style/FriskyText"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

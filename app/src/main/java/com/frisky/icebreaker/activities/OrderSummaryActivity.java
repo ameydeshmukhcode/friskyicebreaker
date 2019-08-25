@@ -134,7 +134,10 @@ public class OrderSummaryActivity extends AppCompatActivity implements UIActivit
                                 else if (String.valueOf(item.get("status")).equals("cancelled")) {
                                     orderItem.setStatus(OrderStatus.CANCELLED);
                                 }
-                                mOrderList.add(orderItem);
+
+                                if (orderItem.getStatus() != OrderStatus.PENDING) {
+                                    mOrderList.add(orderItem);
+                                }
                             }
                         }
 

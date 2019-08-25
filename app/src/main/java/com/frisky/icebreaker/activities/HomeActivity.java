@@ -10,24 +10,27 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.frisky.icebreaker.R;
+import com.frisky.icebreaker.fragments.DiningFragment;
 import com.frisky.icebreaker.fragments.OrderHistoryFragment;
 import com.frisky.icebreaker.fragments.RestaurantViewFragment;
 import com.frisky.icebreaker.interfaces.UIActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.Map;
 
@@ -43,6 +46,8 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
     Intent mResumeSessionIntent;
 
     SharedPreferences sharedPreferences;
+
+    ExtendedFloatingActionButton mScanQRCodeFAB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +69,7 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
                 },
                 new IntentFilter("SessionEnd"));
 
-        loadFragment(new RestaurantViewFragment());
+        switchFragment("home");
 
         checkForProfileSetup();
     }
@@ -80,22 +85,18 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        menuItem.setChecked(true);
         switch (menuItem.getItemId()) {
-            case R.id.bottom_nav_home:
-                loadFragment(new RestaurantViewFragment());
+            case R.id.menu_home:
+                switchFragment("home");
                 break;
 
-            case R.id.bottom_nav_menu:
-                if (sharedPreferences.contains("bill_requested")) {
-                    Toast.makeText(getApplicationContext(), "Bill Requested.", Toast.LENGTH_LONG).show();
-                }
-                else {
-                    startActivity(mResumeSessionIntent);
-                }
+            case R.id.menu_dine:
+                switchFragment("dine");
                 break;
 
-            case R.id.bottom_nav_orders:
-                loadFragment(new OrderHistoryFragment());
+            case R.id.menu_history:
+                switchFragment("hist");
                 break;
         }
 
@@ -103,10 +104,6 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
     }
 
     public void initUI() {
-        ImageButton mOptionsButton;
-        ImageButton mScanQRCodeButton;
-//        ImageButton mIceBreakerButton;
-
         mBottomSheet = findViewById(R.id.bottom_sheet_session);
         mBottomSheet.setVisibility(View.GONE);
 
@@ -114,29 +111,16 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
         mBottomSheetInfo = findViewById(R.id.text_info);
         mBottomSheetDetails = findViewById(R.id.text_details);
         mBottomSheetButton = findViewById(R.id.button_menu);
+        mScanQRCodeFAB = findViewById(R.id.fab_scan_qr);
 
-        mOptionsButton = findViewById(R.id.button_app_bar_right);
-        mOptionsButton.setImageResource(R.drawable.ic_settings);
-        mOptionsButton.setOnClickListener(v -> {
-            Intent startProfileActivity = new Intent(getApplicationContext(), OptionsActivity.class);
-            startActivity(startProfileActivity);
-        });
-
-        mScanQRCodeButton = findViewById(R.id.button_app_bar_left);
-        mScanQRCodeButton.setImageResource(R.drawable.ic_qr_code);
-        mScanQRCodeButton.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), QRScanActivity.class)));
-
-        BottomNavigationView navigation = findViewById(R.id.bottom_navigation);
+        BottomNavigationView navigation = findViewById(R.id.bottom_nav);
         navigation.setOnNavigationItemSelectedListener(this);
-
-//        mIceBreakerButton = findViewById(R.id.button_icebreaker);
-//        mIceBreakerButton.setOnClickListener(v -> loadFragment(new IceBreakerFragment()));
     }
 
-
     private void checkForProfileSetup() {
+        final String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
         FirebaseFirestore.getInstance().collection("users")
-                .document(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .document(userID)
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
@@ -146,6 +130,19 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
                         boolean profileSetup = false;
                         if (snapshot.contains("profile_setup_complete")) {
                             profileSetup = snapshot.getBoolean("profile_setup_complete");
+                            if (profileSetup) {
+                                if (snapshot.contains("name") && snapshot.contains("bio")) {
+                                    sharedPreferences.edit().putString("u_name", snapshot.getString("name")).apply();
+                                    sharedPreferences.edit().putString("u_bio", snapshot.getString("bio")).apply();
+
+                                    StorageReference profileImageRef = FirebaseStorage.getInstance().getReference()
+                                            .child("profile_images").child(userID);
+
+                                    profileImageRef.getDownloadUrl().addOnSuccessListener(uri -> {
+                                        sharedPreferences.edit().putString("u_image", uri.toString()).apply();
+                                    }).addOnFailureListener(e -> Log.e("Uri Download Failed", e.getMessage()));
+                                }
+                            }
                         }
                         sharedPreferences.edit().putBoolean("profile_setup_complete", profileSetup).apply();
                     }
@@ -153,6 +150,15 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
     }
 
     private void checkSessionDetails() {
+        Fragment dineFragment = getSupportFragmentManager().findFragmentByTag("dine");
+
+        if (dineFragment != null) {
+            getSupportFragmentManager().beginTransaction()
+                .detach(dineFragment)
+                .attach(dineFragment)
+                .commit();
+        }
+
         boolean isSessionActive = sharedPreferences.getBoolean("session_active", false);
         if (isSessionActive) {
             setupSessionDetails();
@@ -163,6 +169,7 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
     }
 
     private void setupSessionDetails() {
+        mScanQRCodeFAB.setVisibility(View.GONE);
         if (sharedPreferences.contains("bill_requested")) {
             mBottomSheetTitle.setText(getString(R.string.bill_requested));
             mBottomSheetInfo.setText(getString(R.string.bill_amount_to_be_paid));
@@ -181,20 +188,78 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
     }
 
     private void disableSession() {
+        mScanQRCodeFAB.setVisibility(View.VISIBLE);
+        mScanQRCodeFAB.setOnClickListener(v -> startActivity(new Intent(this, QRScanActivity.class)));
         mBottomSheet.setVisibility(View.GONE);
     }
 
-    private void loadFragment(Fragment fragment) {
-        Fragment currentFragment = getSupportFragmentManager().getFragment(Bundle.EMPTY, "");
+    private void switchFragment(String fragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
 
-        if (currentFragment != null)
-            Log.d("Current Frag", currentFragment.toString());
+        if (fragmentManager == null)
+            return;
 
-        Log.d("Change To", fragment.toString());
-
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.home_activity_fragment, fragment)
-                .commit();
+        switch (fragment) {
+            case "home":
+                if(fragmentManager.findFragmentByTag("home") != null) {
+                    //if the fragment exists, show it.
+                    fragmentManager.beginTransaction().show(fragmentManager.findFragmentByTag("home")).commit();
+                }
+                else {
+                    //if the fragment does not exist, add it to fragment manager.
+                    fragmentManager.beginTransaction().add(R.id.home_activity_fragment, new RestaurantViewFragment(), "home").commit();
+                }
+                if(fragmentManager.findFragmentByTag("dine") != null
+                        && fragmentManager.findFragmentByTag("dine").isVisible()){
+                    //if the other fragment is visible, hide it.
+                    fragmentManager.beginTransaction().hide(fragmentManager.findFragmentByTag("dine")).commit();
+                }
+                if(fragmentManager.findFragmentByTag("hist") != null
+                        && fragmentManager.findFragmentByTag("hist").isVisible()){
+                    //if the other fragment is visible, hide it.
+                    fragmentManager.beginTransaction().hide(fragmentManager.findFragmentByTag("hist")).commit();
+                }
+                break;
+            case "dine":
+                if(fragmentManager.findFragmentByTag("dine") != null) {
+                    //if the fragment exists, show it.
+                    fragmentManager.beginTransaction().show(fragmentManager.findFragmentByTag("dine")).commit();
+                }
+                else {
+                    //if the fragment does not exist, add it to fragment manager.
+                    fragmentManager.beginTransaction().add(R.id.home_activity_fragment, new DiningFragment(), "dine").commit();
+                }
+                if(fragmentManager.findFragmentByTag("home") != null
+                        && fragmentManager.findFragmentByTag("home").isVisible()){
+                    //if the other fragment is visible, hide it.
+                    fragmentManager.beginTransaction().hide(fragmentManager.findFragmentByTag("home")).commit();
+                }
+                if(fragmentManager.findFragmentByTag("hist") != null
+                        && fragmentManager.findFragmentByTag("hist").isVisible()){
+                    //if the other fragment is visible, hide it.
+                    fragmentManager.beginTransaction().hide(fragmentManager.findFragmentByTag("hist")).commit();
+                }
+                break;
+            case "hist":
+                if(fragmentManager.findFragmentByTag("hist") != null) {
+                    //if the fragment exists, show it.
+                    fragmentManager.beginTransaction().show(fragmentManager.findFragmentByTag("hist")).commit();
+                }
+                else {
+                    //if the fragment does not exist, add it to fragment manager.
+                    fragmentManager.beginTransaction().add(R.id.home_activity_fragment, new OrderHistoryFragment(), "hist").commit();
+                }
+                if(fragmentManager.findFragmentByTag("dine") != null
+                        && fragmentManager.findFragmentByTag("dine").isVisible()){
+                    //if the other fragment is visible, hide it.
+                    fragmentManager.beginTransaction().hide(fragmentManager.findFragmentByTag("dine")).commit();
+                }
+                if(fragmentManager.findFragmentByTag("home") != null
+                        && fragmentManager.findFragmentByTag("home").isVisible()){
+                    //if the other fragment is visible, hide it.
+                    fragmentManager.beginTransaction().hide(fragmentManager.findFragmentByTag("home")).commit();
+                }
+                break;
+        }
     }
 }

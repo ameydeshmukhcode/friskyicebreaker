@@ -70,51 +70,80 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/text_pub_name" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/button_get_directions"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/button_primary_height"
-            android:layout_marginStart="24dp"
+            android:layout_height="wrap_content"
+            app:icon="@drawable/ic_location"
+            android:textAppearance="@style/FriskyText"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="24dp"
-            android:background="@drawable/bg_round_rect"
-            android:backgroundTint="@color/app"
-            android:drawableStart="@drawable/ic_location"
-            android:drawablePadding="12dp"
-            android:drawableTint="@color/textLight"
-            android:fontFamily="@font/museosans700"
-            android:gravity="start|center_vertical"
-            android:paddingStart="@dimen/input_primary_start_padding"
-            android:paddingEnd="@dimen/input_primary_start_padding"
+            android:layout_marginEnd="16dp"
             android:text="@string/get_directions"
-            android:textAllCaps="false"
-            android:textColor="@color/textLight"
+            android:textColor="@color/app"
             android:textSize="@dimen/text_title_size"
+            app:strokeColor="@color/app"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_cuisine" />
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_menu"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:fontFamily="@font/museosans300"
-            android:text="@string/menu"
-            android:textSize="@dimen/text_subtitle_size"
-            app:layout_constraintStart_toStartOf="@+id/text_cuisine"
-            app:layout_constraintTop_toBottomOf="@+id/button_get_directions" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view_menu"
-            android:layout_width="340dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginEnd="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
+            app:layout_constraintTop_toBottomOf="@+id/button_get_directions">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/museosans300"
+                    android:text="@string/menu"
+                    android:textSize="@dimen/text_subtitle_size"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_view_menu"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/card_menu">
+
+        </com.google.android.material.card.MaterialCardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

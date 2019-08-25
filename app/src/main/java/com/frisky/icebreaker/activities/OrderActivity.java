@@ -68,14 +68,11 @@ public class OrderActivity extends AppCompatActivity implements ClearBillDialog.
         sharedPreferences = getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE);
 
         mBackButton = findViewById(R.id.button_back);
-        mBackButton.setOnClickListener(v -> super.onBackPressed());
+        mBackButton.setOnClickListener(v -> onBackPressed());
 
         mAddMoreButton = findViewById(R.id.button_order_more);
         mAddMoreButton.setOnClickListener(v -> {
-            Intent goToMenu = new Intent(this, MenuActivity.class);
-            goToMenu.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(goToMenu);
-            finish();
+            onBackPressed();
         });
 
         mClearBill = findViewById(R.id.button_clear_bill);
@@ -147,6 +144,15 @@ public class OrderActivity extends AppCompatActivity implements ClearBillDialog.
                     }
                 },
                 new IntentFilter("OrderUpdate"));
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent goToMenu = new Intent(this, MenuActivity.class);
+        goToMenu.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(goToMenu);
+        finish();
     }
 
     @SuppressWarnings("unchecked")

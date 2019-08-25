@@ -12,7 +12,6 @@
     <!-- Others -->
     <color name="backgroundLight">@color/lightAccent</color>
     <color name="backgroundDark">@color/darkAccent</color>
-    <color name="backgroundDarkTranslucent">#CC707070</color>
     <color name="textLight">@android:color/white</color>
     <color name="textDark">@color/darkAccent</color>
     <color name="tintLight">@android:color/white</color>

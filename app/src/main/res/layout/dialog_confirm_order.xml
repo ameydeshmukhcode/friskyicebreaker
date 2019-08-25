@@ -30,37 +30,35 @@
         app:layout_constraintStart_toStartOf="@id/confirm_order"
         app:layout_constraintTop_toBottomOf="@id/confirm_order" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/button_cancel"
-        android:layout_width="@dimen/dialog_button_width"
-        android:layout_height="@dimen/dialog_button_height"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:background="@color/transparent"
-        android:fontFamily="@font/museosans700"
-        android:foreground="?attr/selectableItemBackground"
         android:text="@string/cancel"
-        android:textAllCaps="false"
         android:textColor="@color/colorPrimary"
-        android:textSize="@dimen/text_title_size"
+        android:textSize="@dimen/text_subtitle_size"
+        android:textAppearance="@style/FriskyText"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/button_ok"
         app:layout_constraintTop_toBottomOf="@+id/confirm_order_info" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/button_ok"
-        android:layout_width="@dimen/dialog_button_width"
-        android:layout_height="@dimen/dialog_button_height"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:background="@color/transparent"
-        android:fontFamily="@font/museosans700"
-        android:foreground="?attr/selectableItemBackground"
+        android:backgroundTint="@color/app"
         android:text="@string/ok"
-        android:textAllCaps="false"
-        android:textColor="@color/colorPrimary"
-        android:textSize="@dimen/text_title_size"
+        android:textColor="@color/textLight"
+        android:textSize="@dimen/text_subtitle_size"
+        android:textAppearance="@style/FriskyText"
+        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

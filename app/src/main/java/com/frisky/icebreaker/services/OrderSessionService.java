@@ -24,6 +24,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Objects;
+import java.util.Random;
 
 import static com.frisky.icebreaker.notifications.NotificationFactory.createNotification;
 import static com.frisky.icebreaker.notifications.NotificationFactory.createNotificationChannel;
@@ -95,8 +96,11 @@ public class OrderSessionService extends Service {
         notificationIntent.putExtra("session_id", sharedPreferences.getString("session_id", ""));
         notificationIntent.putExtra("restaurant_id", sharedPreferences.getString("restaurant_id", ""));
         notificationIntent.putExtra("restaurant_name", sharedPreferences.getString("restaurant_name", ""));
+
+        int requestCode = new Random().nextInt();
+
         PendingIntent pendingIntent =
-                PendingIntent.getActivity(this, 0, notificationIntent, 0);
+                PendingIntent.getActivity(this, requestCode, notificationIntent, 0);
 
         Notification notification = createNotification(this, getString(R.string.n_channel_session), R.drawable.logo,
                 "Session Ended",
