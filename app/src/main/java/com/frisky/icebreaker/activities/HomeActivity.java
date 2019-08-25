@@ -24,6 +24,7 @@ import com.frisky.icebreaker.fragments.OrderHistoryFragment;
 import com.frisky.icebreaker.fragments.RestaurantViewFragment;
 import com.frisky.icebreaker.interfaces.UIActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -47,7 +48,7 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
 
     SharedPreferences sharedPreferences;
 
-    List<String> fragments = new ArrayList<>();
+    ExtendedFloatingActionButton mScanQRCodeFAB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,6 +112,7 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
         mBottomSheetInfo = findViewById(R.id.text_info);
         mBottomSheetDetails = findViewById(R.id.text_details);
         mBottomSheetButton = findViewById(R.id.button_menu);
+        mScanQRCodeFAB = findViewById(R.id.fab_scan_qr);
 
         BottomNavigationView navigation = findViewById(R.id.bottom_nav);
         navigation.setOnNavigationItemSelectedListener(this);
@@ -159,6 +161,7 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
     }
 
     private void setupSessionDetails() {
+        mScanQRCodeFAB.setVisibility(View.GONE);
         if (sharedPreferences.contains("bill_requested")) {
             mBottomSheetTitle.setText(getString(R.string.bill_requested));
             mBottomSheetInfo.setText(getString(R.string.bill_amount_to_be_paid));
@@ -177,6 +180,8 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
     }
 
     private void disableSession() {
+        mScanQRCodeFAB.setVisibility(View.VISIBLE);
+        mScanQRCodeFAB.setOnClickListener(v -> startActivity(new Intent(this, QRScanActivity.class)));
         mBottomSheet.setVisibility(View.GONE);
     }
 
