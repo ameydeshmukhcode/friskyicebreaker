@@ -14,8 +14,6 @@ import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.adapters.MenuImagesAdapter;
 import com.frisky.icebreaker.interfaces.UIActivity;
 import com.google.android.material.appbar.AppBarLayout;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import static com.frisky.icebreaker.ui.assistant.UIAssistant.getRatingBadgeColor;
 
@@ -71,13 +69,6 @@ public class RestaurantActivity extends AppCompatActivity implements UIActivity 
             String id = getIntent().getStringExtra("id");
             Log.d(getString(R.string.tag_debug), "restaurant " + id);
         }
-
-        FloatingActionButton fab = findViewById(R.id.fab_chat_room);
-        fab.setOnClickListener(view -> {
-            //TODO PUB CHAT ROOM
-            Snackbar.make(view, "Start Restaurant chat room here", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show();
-        });
 
         RecyclerView mRecyclerMenuView;
         mRecyclerMenuView = findViewById(R.id.recycler_view_menu);

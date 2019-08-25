@@ -37,17 +37,4 @@
 
     <include layout="@layout/content_restaurant" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_chat_room"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="16dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:tint="@color/tintLight"
-        app:backgroundTint="@color/colorAccent"
-        app:rippleColor="@color/tintLight"
-        app:srcCompat="@drawable/ic_chat" />
-
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
