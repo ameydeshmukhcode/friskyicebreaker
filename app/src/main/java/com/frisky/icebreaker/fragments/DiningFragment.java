@@ -19,7 +19,7 @@ public class DiningFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_dining_empty_state, container, false);
+        View view = inflater.inflate(R.layout.fragment_dining_scan_qr, container, false);
 
         Button scanQRCodeButton = view.findViewById(R.id.button_scan_qr);
         scanQRCodeButton.setOnClickListener(v -> {
