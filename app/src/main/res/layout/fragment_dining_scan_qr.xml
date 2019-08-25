@@ -42,24 +42,6 @@
             app:layout_constraintTop_toBottomOf="@+id/scan_qr"
             app:srcCompat="@drawable/empty_state_scan_qr" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_scan_qr"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:backgroundTint="@color/app"
-            android:insetTop="0dp"
-            android:insetBottom="0dp"
-            android:text="@string/scan_qr_code"
-            android:textAppearance="@style/FriskyText"
-            android:textColor="@color/textLight"
-            android:textSize="@dimen/text_title_size"
-            app:icon="@drawable/ic_qr_code"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/scan_qr_image" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
