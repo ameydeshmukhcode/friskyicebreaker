@@ -46,30 +46,25 @@
     <string name="female">Female</string>
     <string name="other">Other</string>
     <string name="bio">Bio</string>
-    <string-array name="genders">
-        <item>@string/male</item>
-        <item>@string/female</item>
-        <item>@string/other</item>
-    </string-array>
-    <!--Image Picker Dialog-->
     <string name="pick_image">Pick Image</string>
+    <!--Image Picker Dialog-->
     <string name="image_gallery">Choose from Gallery</string>
+    <string name="update_image">Click the image above to upload your profile picture</string>
 
     <!-- Notifications -->
 
     <!--Setup Profile-->
-    <string name="update_image">Click the image above to upload your profile picture</string>
     <string name="enter_name">Enter Name</string>
     <string name="enter_bio">Enter Bio</string>
     <string name="uploading_details">Uploading Details</string>
+    <string name="options">Options</string>
 
     <!--Chat Activity-->
 
     <!--Options Activity-->
-    <string name="options">Options</string>
+    <string name="at">You\'re at</string>
 
     <!--Menu/Cart/Order Activity-->
-    <string name="at">You\'re at</string>
     <string name="your_order">Your Order</string>
     <string name="currently_at">Currently at</string>
     <string name="cart_active">You have items in the cart</string>
@@ -87,35 +82,35 @@
     <string name="in_cart">In cart</string>
     <string name="order_rank">Order #</string>
     <string name="order_summary">Order Summary</string>
-    <!-- Status -->
     <string name="status_pending">Pending</string>
-    <!-- Confirm Order Dialog -->
+    <!-- Status -->
     <string name="confirm_order_info">Send order to kitchen for preparation?</string>
-    <!-- Clear Bill Dialog -->
+    <!-- Confirm Order Dialog -->
     <string name="clear_bill_info">You are about to request the bill and end your session.
         You won\'t be able to order anymore items after you confirm.</string>
+    <!-- Clear Bill Dialog -->
     <string name="bill_amount_to_be_paid">Bill amount to be paid</string>
     <string name="bill_requested">Bill Requested</string>
     <string name="view_order_summary">View Order Summary</string>
+    <string name="vat">VAT</string>
 
     <!-- Order Receipt -->
-    <string name="vat">VAT</string>
     <string name="cgst">CGST</string>
     <string name="sgst">SGST</string>
     <string name="total_tax">Total tax</string>
+    <string name="start_new_session">Start new Session?</string>
 
     <!-- Session Start Dialog -->
-    <string name="start_new_session">Start new Session?</string>
     <string name="start_new_session_info">Start a new session to:\n- Browse the Menu
         \n- Place Orders\n- Get Order and Bill updates</string>
     <string name="start">Start</string>
-
-    <!--Empty state -->
     <string name="empty_state_scan_qr">You haven\'t ordered anything yet.\nTo get the menu and start ordering,
         \nscan the QR code on the table.</string>
 
-    <!-- Debug -->
+    <!--Empty state -->
     <string name="tag_debug">Frisky Debug</string>
+
+    <!-- Debug -->
     <string name="home">Home</string>
     <string name="orders">Orders</string>
     <string name="order_more">Order More</string>
@@ -125,4 +120,11 @@
     <string name="add">Add</string>
     <string name="view_cart">View Cart</string>
     <string name="history">History</string>
+    <string name="skip">Skip</string>
+    <string name="next">Next</string>
+    <string-array name="genders">
+        <item>@string/male</item>
+        <item>@string/female</item>
+        <item>@string/other</item>
+    </string-array>
 </resources>
