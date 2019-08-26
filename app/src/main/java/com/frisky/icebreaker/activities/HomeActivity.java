@@ -48,6 +48,7 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
     SharedPreferences sharedPreferences;
 
     ExtendedFloatingActionButton mScanQRCodeFAB;
+    BottomNavigationView navigation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,7 +114,7 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
         mBottomSheetButton = findViewById(R.id.button_menu);
         mScanQRCodeFAB = findViewById(R.id.fab_scan_qr);
 
-        BottomNavigationView navigation = findViewById(R.id.bottom_nav);
+        navigation = findViewById(R.id.bottom_nav);
         navigation.setOnNavigationItemSelectedListener(this);
     }
 
@@ -170,6 +171,8 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
 
     private void setupSessionDetails() {
         mScanQRCodeFAB.setVisibility(View.GONE);
+        navigation.getOrCreateBadge(R.id.menu_dine);
+        navigation.getBadge(R.id.menu_dine).setBackgroundColor(getColor(R.color.appGreen));
         if (sharedPreferences.contains("bill_requested")) {
             mBottomSheetTitle.setText(getString(R.string.bill_requested));
             mBottomSheetInfo.setText(getString(R.string.bill_amount_to_be_paid));
@@ -188,6 +191,7 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
     }
 
     private void disableSession() {
+        navigation.removeBadge(R.id.menu_dine);
         mScanQRCodeFAB.setVisibility(View.VISIBLE);
         mScanQRCodeFAB.setOnClickListener(v -> startActivity(new Intent(this, QRScanActivity.class)));
         mBottomSheet.setVisibility(View.GONE);
