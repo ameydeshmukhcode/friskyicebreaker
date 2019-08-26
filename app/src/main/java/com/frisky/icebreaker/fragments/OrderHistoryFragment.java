@@ -42,6 +42,10 @@ public class OrderHistoryFragment extends Fragment {
         RecyclerView mRecyclerPubView;
         mRecyclerPubView = view.findViewById(R.id.recycler_view);
 
+        mRecyclerPubView.setPadding(0, 0, 0, 0);
+        mRecyclerPubView.setPadding(0, 0, 0, 225);
+        mRecyclerPubView.setClipToPadding(false);
+
         RecyclerView.LayoutManager mPubViewLayoutManager;
         // use a linear layout manager
         mPubViewLayoutManager = new LinearLayoutManager(getContext());

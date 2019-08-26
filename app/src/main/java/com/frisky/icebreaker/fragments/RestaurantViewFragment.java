@@ -40,11 +40,6 @@ public class RestaurantViewFragment extends Fragment {
         View view;
         view = inflater.inflate(R.layout.fragment_restaurant, viewGroup, false);
 
-        SharedPreferences sharedPreferences = Objects.requireNonNull(getActivity())
-                .getSharedPreferences(getString(R.string.app_name), Context.MODE_PRIVATE);
-
-        boolean isSessionActive = sharedPreferences.getBoolean("session_active", false);
-
         Button settingsButton = view.findViewById(R.id.button_settings);
         settingsButton.setOnClickListener(v -> {
             startActivity(new Intent(getActivity(), OptionsActivity.class));
@@ -53,21 +48,9 @@ public class RestaurantViewFragment extends Fragment {
         RecyclerView mRecyclerPubView;
         mRecyclerPubView = view.findViewById(R.id.recycler_view);
 
-        FragmentManager fragmentManager = getFragmentManager();
-
-//        ImageButton filtersButton;
-//        filtersButton = view.findViewById(R.id.button_filters);
-//        filtersButton.setOnClickListener(v -> {
-//            FiltersDialog filtersDialog = new FiltersDialog();
-//            if (fragmentManager != null)
-//                filtersDialog.show(fragmentManager, "pick image dialog");
-//        });
-
-        if (isSessionActive) {
-            mRecyclerPubView.setPadding(0, 0, 0, 0);
-            mRecyclerPubView.setPadding(0, 0, 0, 225);
-            mRecyclerPubView.setClipToPadding(false);
-        }
+        mRecyclerPubView.setPadding(0, 0, 0, 0);
+        mRecyclerPubView.setPadding(0, 0, 0, 225);
+        mRecyclerPubView.setClipToPadding(false);
 
         RecyclerView.LayoutManager mPubViewLayoutManager;
         // use a linear layout manager
