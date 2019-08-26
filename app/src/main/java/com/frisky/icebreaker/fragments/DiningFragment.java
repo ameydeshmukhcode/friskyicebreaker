@@ -44,7 +44,7 @@ public class DiningFragment extends Fragment {
                 table.setText(sharedPreferences.getString("table_name", ""));
                 Button showOrders = view.findViewById(R.id.button_show_orders);
                 showOrders.setOnClickListener(v -> {
-                    if (sharedPreferences.contains("order_active")) {
+                    if (!sharedPreferences.contains("order_active")) {
                         Toast toast = Toast.makeText(getActivity(), "No orders placed yet!", Toast.LENGTH_SHORT);
                         toast.setGravity(Gravity.CENTER, 0, 0);
                         toast.show();
