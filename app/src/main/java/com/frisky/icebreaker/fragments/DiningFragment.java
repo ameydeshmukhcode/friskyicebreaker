@@ -12,6 +12,8 @@ import androidx.fragment.app.Fragment;
 
 import com.frisky.icebreaker.R;
 
+import java.util.Objects;
+
 import static android.content.Context.MODE_PRIVATE;
 
 public class DiningFragment extends Fragment {
@@ -22,7 +24,7 @@ public class DiningFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view;
 
-        SharedPreferences sharedPreferences = getActivity()
+        SharedPreferences sharedPreferences = Objects.requireNonNull(getActivity())
                 .getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE);
 
         if (sharedPreferences.getBoolean("session_active", false)) {
