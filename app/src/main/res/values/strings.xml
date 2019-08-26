@@ -125,4 +125,5 @@
     <string name="add">Add</string>
     <string name="view_cart">View Cart</string>
     <string name="history">History</string>
+    <string name="dine_fragment_bill_requested">Bill Requested. The waiter will collect payment from you.</string>
 </resources>
