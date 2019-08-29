@@ -176,8 +176,12 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
                                 available = false;
                             }
                         }
+                        String description = "";
+                        if (document.contains("description")) {
+                            description = document.getString("description");
+                        }
                         int cost = Integer.parseInt(Objects.requireNonNull(document.getString("cost")));
-                        MenuItem item = new MenuItem(document.getId(), name, name + " description", cost, available);
+                        MenuItem item = new MenuItem(document.getId(), name, description, cost, available);
                         mMenu.add(item);
                         mMenuListViewAdapter.notifyDataSetChanged();
                     }
