@@ -1,42 +1,58 @@
 {
   "project_info": {
-    "project_number": "1089331425628",
-    "firebase_url": "https://friskyicebreaker-rld.firebaseio.com",
-    "project_id": "friskyicebreaker-rld",
-    "storage_bucket": "friskyicebreaker-rld.appspot.com"
+    "project_number": "719761927765",
+    "firebase_url": "https://frisky-app.firebaseio.com",
+    "project_id": "frisky-app",
+    "storage_bucket": "frisky-app.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1089331425628:android:7f0d5839cea17bd2",
+        "mobilesdk_app_id": "1:719761927765:android:7f0d5839cea17bd2",
         "android_client_info": {
           "package_name": "com.frisky.icebreaker"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1089331425628-t32kl1gv3a45vfn7462dr4a1t379babv.apps.googleusercontent.com",
+          "client_id": "719761927765-1qaqlrtboccss3bemc5rr0b2re8oo8pg.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.frisky.icebreaker",
-            "certificate_hash": "3e83974aace6aa8180a49465f1dab6237f647341"
+            "certificate_hash": "dff3e79fd78dca80c8af06d77a987d75ee2938cf"
           }
         },
         {
-          "client_id": "1089331425628-dqt9fet1u566u565b9jo5vgndd5abtku.apps.googleusercontent.com",
+          "client_id": "719761927765-rqg0hkic5564rs772tr6rcbtge95hr0n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.frisky.icebreaker",
+            "certificate_hash": "0a0f3ccc76abecf23884e81620673ad3929e0511"
+          }
+        },
+        {
+          "client_id": "719761927765-p55un7rc5u4gaogjdgdjc2ason7t7r8d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.frisky.icebreaker",
+            "certificate_hash": "7cc41ba70de8f3cf4136b6e47bb8cf2ca6a829f7"
+          }
+        },
+        {
+          "client_id": "719761927765-vud4ij0pch9c9k47k0k0d9a1d7h2v2mh.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBrNTq0QGBSN7RJlQRnU2qXBJ1w8Bf6HM8"
+          "current_key": "AIzaSyC2rsUWPDfmztp7nx-HJ3iHqSJSWTj7i3Y"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1089331425628-dqt9fet1u566u565b9jo5vgndd5abtku.apps.googleusercontent.com",
+              "client_id": "719761927765-vud4ij0pch9c9k47k0k0d9a1d7h2v2mh.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

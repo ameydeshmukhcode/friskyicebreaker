@@ -18,6 +18,8 @@ import com.budiyev.android.codescanner.CodeScannerView;
 import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.services.OrderSessionService;
 import com.frisky.icebreaker.ui.components.dialogs.ConfirmSessionStartDialog;
+import com.frisky.icebreaker.ui.components.dialogs.ProgressDialog;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -38,6 +40,8 @@ public class QRScanActivity extends AppCompatActivity implements ConfirmSessionS
 
     String restaurantID;
     String tableID;
+
+    ProgressDialog progressDialog = new ProgressDialog("Retrieving the Menu");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -152,6 +156,8 @@ public class QRScanActivity extends AppCompatActivity implements ConfirmSessionS
     public void sessionStart(boolean choice) {
         if (choice) {
             mCodeScanner.stopPreview();
+            progressDialog.show(getSupportFragmentManager(), "progress dialog");
+            progressDialog.setCancelable(false);
             getRestaurantAndTableDetails(restaurantID, tableID);
             initUserSession(restaurantID, tableID);
         }
@@ -161,6 +167,7 @@ public class QRScanActivity extends AppCompatActivity implements ConfirmSessionS
     }
 
     private void showMenu() {
+        progressDialog.dismiss();
         Intent showMenu = new Intent(getBaseContext(), MenuActivity.class);
         startActivity(showMenu);
         finish();
@@ -187,7 +194,7 @@ public class QRScanActivity extends AppCompatActivity implements ConfirmSessionS
             else {
                 Log.e("Task", "failed with ", task.getException());
             }
-        });
+        }).addOnFailureListener(e -> progressDialog.dismiss());
 
         DocumentReference tableRef = firebaseFirestore
                 .collection("restaurants")
@@ -212,7 +219,7 @@ public class QRScanActivity extends AppCompatActivity implements ConfirmSessionS
             else {
                 Log.e("Task", "failed with ", task.getException());
             }
-        });
+        }).addOnFailureListener(e -> progressDialog.dismiss());
     }
 
     private void initUserSession(final String restID, final String tableID) {
@@ -266,9 +273,13 @@ public class QRScanActivity extends AppCompatActivity implements ConfirmSessionS
                                             Intent orderSession = new Intent(getApplicationContext(), OrderSessionService.class);
                                             startService(orderSession);
                                             showMenu();
-                                        });
+                                        })
+                                        .addOnFailureListener(e -> progressDialog.dismiss());
                             });
                 })
-                .addOnFailureListener(e -> Log.e("", "Error adding document", e));
+                .addOnFailureListener(e -> {
+                    Log.e("", "Error adding document", e);
+                    progressDialog.dismiss();
+                });
     }
 }

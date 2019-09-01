@@ -3,6 +3,7 @@ package com.frisky.icebreaker.activities;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,11 +29,11 @@ public class SlideshowActivity extends AppCompatActivity {
         else {
             setContentView(R.layout.activity_slideshow);
 
-            ViewPager slideshow = findViewById(R.id.pager_slideshow);
-            slideshow.setAdapter(new SlideshowAdapter(getApplicationContext()));
-
             Button skipButton = findViewById(R.id.button_skip);
             Button nextButton = findViewById(R.id.button_next);
+
+            ViewPager slideshow = findViewById(R.id.pager_slideshow);
+            slideshow.setAdapter(new SlideshowAdapter(getApplicationContext()));
 
             skipButton.setOnClickListener(v -> {
                 sharedPreferences.edit().putBoolean("slideshow_complete", true).apply();
@@ -40,15 +41,42 @@ public class SlideshowActivity extends AppCompatActivity {
                 finish();
             });
 
+            nextButton.setText("Next");
             nextButton.setOnClickListener(v -> {
                 int currentItem = slideshow.getCurrentItem();
-                if (currentItem != 2) {
-                    slideshow.setCurrentItem(currentItem + 1);
+                slideshow.setCurrentItem(currentItem + 1);
+            });
+
+            slideshow.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                @Override
+                public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
                 }
-                else {
-                    sharedPreferences.edit().putBoolean("slideshow_complete", true).apply();
-                    startActivity(new Intent(getApplicationContext(), SignInActivity.class));
-                    finish();
+
+                @Override
+                public void onPageSelected(int position) {
+                    if (position == 2) {
+                        skipButton.setVisibility(View.GONE);
+                        nextButton.setText("Continue");
+                        nextButton.setOnClickListener(v -> {
+                            sharedPreferences.edit().putBoolean("slideshow_complete", true).apply();
+                            startActivity(new Intent(getApplicationContext(), SignInActivity.class));
+                            finish();
+                        });
+                    }
+                    else {
+                        skipButton.setVisibility(View.VISIBLE);
+                        nextButton.setText("Next");
+                        nextButton.setOnClickListener(v -> {
+                            int currentItem = slideshow.getCurrentItem();
+                            slideshow.setCurrentItem(currentItem + 1);
+                        });
+                    }
+                }
+
+                @Override
+                public void onPageScrollStateChanged(int state) {
+
                 }
             });
         }
