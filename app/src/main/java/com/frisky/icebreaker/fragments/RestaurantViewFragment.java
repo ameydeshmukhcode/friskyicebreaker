@@ -75,10 +75,22 @@ public class RestaurantViewFragment extends Fragment {
                     if (task.isSuccessful()) {
                         if (task.getResult() != null) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                String image = document.getString("image");
-                                String name = document.getString("name");
-                                String address = document.getString("address");
-                                String tags = Objects.requireNonNull(document.get("cuisine")).toString();
+                                String image = "";
+                                String name = "";
+                                String address = "";
+                                String tags = "";
+                                if (document.contains("image")) {
+                                    image = document.getString("image");
+                                }
+                                if (document.contains("name")) {
+                                    name = document.getString("name");
+                                }
+                                if (document.contains("address")) {
+                                    address = document.getString("address");
+                                }
+                                if (document.contains("cuisine")) {
+                                    tags = Objects.requireNonNull(document.get("cuisine")).toString();
+                                }
 
                                 Log.d("Frisky Debug", name + " " + address + " " + tags);
 
