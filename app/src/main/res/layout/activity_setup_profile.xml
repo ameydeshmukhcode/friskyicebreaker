@@ -26,77 +26,18 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_done" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layout_progress"
+    <ScrollView
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_height="0dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_cancel">
 
-        <TextView
-            android:id="@+id/uploading_details"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/museosans300"
-            android:text="@string/uploading_details"
-            android:textColor="@color/textDark"
-            android:textSize="@dimen/text_subtitle_size"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ProgressBar
-            android:id="@+id/progress_upload"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/uploading_details" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <ScrollView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layout_progress">
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
-            <ImageView
-                android:id="@+id/image_profile"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginStart="64dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="64dp"
-                android:scaleType="centerCrop"
-                app:layout_constraintDimensionRatio="1:1"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_person" />
-
-            <TextView
-                android:id="@+id/update_image"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:fontFamily="@font/museosans300"
-                android:gravity="center"
-                android:text="@string/update_image"
-                android:textColor="@color/textDark"
-                app:layout_constraintEnd_toEndOf="@+id/image_profile"
-                app:layout_constraintStart_toStartOf="@+id/image_profile"
-                app:layout_constraintTop_toBottomOf="@+id/image_profile" />
 
             <EditText
                 android:id="@+id/input_name"
@@ -136,6 +77,41 @@
                 app:layout_constraintStart_toStartOf="@+id/input_name"
                 app:layout_constraintTop_toBottomOf="@+id/input_name" />
 
+            <EditText
+                android:id="@+id/input_bio"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/input_about_me_height"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="32dp"
+                android:background="@drawable/bg_round_rect"
+                android:ems="10"
+                android:fontFamily="@font/museosans300"
+                android:gravity="start|top"
+                android:hint="@string/enter_bio"
+                android:inputType="textMultiLine"
+                android:padding="@dimen/bg_round_rect_radius"
+                android:textColor="@color/textDark"
+                android:textIsSelectable="true"
+                android:textSize="@dimen/text_multiline_input_size"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/input_name"
+                app:layout_constraintStart_toStartOf="@+id/bio"
+                app:layout_constraintTop_toBottomOf="@+id/bio" />
+
+            <ImageView
+                android:id="@+id/image_profile"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="64dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="64dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_person" />
+
             <Spinner
                 android:id="@+id/spinner_gender"
                 android:layout_width="0dp"
@@ -158,26 +134,18 @@
                 app:layout_constraintStart_toStartOf="@+id/input_name"
                 app:layout_constraintTop_toBottomOf="@+id/input_date_of_birth" />
 
-            <EditText
-                android:id="@+id/input_bio"
+            <TextView
+                android:id="@+id/update_image"
                 android:layout_width="0dp"
-                android:layout_height="@dimen/input_about_me_height"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:layout_marginBottom="32dp"
-                android:background="@drawable/bg_round_rect"
-                android:ems="10"
                 android:fontFamily="@font/museosans300"
-                android:gravity="start|top"
-                android:hint="@string/enter_bio"
-                android:inputType="textMultiLine"
-                android:padding="@dimen/bg_round_rect_radius"
+                android:gravity="center"
+                android:text="@string/update_image"
                 android:textColor="@color/textDark"
-                android:textIsSelectable="true"
-                android:textSize="@dimen/text_multiline_input_size"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/input_name"
-                app:layout_constraintStart_toStartOf="@+id/bio"
-                app:layout_constraintTop_toBottomOf="@+id/bio" />
+                app:layout_constraintEnd_toEndOf="@+id/image_profile"
+                app:layout_constraintStart_toStartOf="@+id/image_profile"
+                app:layout_constraintTop_toBottomOf="@+id/image_profile" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

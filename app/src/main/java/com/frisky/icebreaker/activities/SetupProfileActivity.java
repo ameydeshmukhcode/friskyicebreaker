@@ -8,23 +8,21 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.frisky.icebreaker.R;
-import com.frisky.icebreaker.ui.assistant.RoundRectTransformation;
 import com.frisky.icebreaker.interfaces.FormActivity;
 import com.frisky.icebreaker.interfaces.UIActivity;
+import com.frisky.icebreaker.ui.assistant.RoundRectTransformation;
 import com.frisky.icebreaker.ui.components.dialogs.PickImageDialog;
+import com.frisky.icebreaker.ui.components.dialogs.ProgressDialog;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
@@ -55,8 +53,6 @@ public class SetupProfileActivity extends AppCompatActivity implements FormActiv
     TextView mNameInput;
     TextView mBioInput;
     TextView mDateOfBirthInput;
-    ProgressBar mProgressBar;
-    ConstraintLayout mProgressLayout;
     Spinner mGenderSpinner;
 
     PickImageDialog pickImageDialog;
@@ -89,7 +85,6 @@ public class SetupProfileActivity extends AppCompatActivity implements FormActiv
         mNameInput = findViewById(R.id.input_name);
         mBioInput = findViewById(R.id.input_bio);
         mDateOfBirthInput = findViewById(R.id.input_date_of_birth);
-        mProgressLayout = findViewById(R.id.layout_progress);
         mProfileImage = findViewById(R.id.image_profile);
         mCancelButton = findViewById(R.id.button_cancel);
         mDoneButton = findViewById(R.id.button_done);
@@ -99,9 +94,6 @@ public class SetupProfileActivity extends AppCompatActivity implements FormActiv
         ArrayAdapter adapter = ArrayAdapter.createFromResource(this, R.array.genders, R.layout.spinner_item);
         adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         mGenderSpinner.setAdapter(adapter);
-
-        mProgressBar = findViewById(R.id.progress_upload);
-        mProgressLayout.setVisibility(View.GONE);
 
         enableForm();
     }
@@ -205,6 +197,11 @@ public class SetupProfileActivity extends AppCompatActivity implements FormActiv
 
     private void updateProfileData() {
         disableForm();
+
+        ProgressDialog progressDialog = new ProgressDialog("Uploading your details");
+        progressDialog.setCancelable(false);
+        progressDialog.show(getSupportFragmentManager(), "progress dialog");
+
         final FirebaseUser user = mAuth.getCurrentUser();
 
         if (user == null)
@@ -231,18 +228,13 @@ public class SetupProfileActivity extends AppCompatActivity implements FormActiv
                             .apply();
                     Log.d(getString(R.string.tag_debug), "DocumentSnapshot successfully written!");
                 })
-                .addOnFailureListener(e -> Log.e("Failed", e.getMessage(), e));
+                .addOnFailureListener(e -> {
+                    progressDialog.dismiss();
+                    Log.e("Failed", e.getMessage(), e);
+                });
 
         final UploadTask uploadTask = mStorageReference.child("profile_images")
                 .child(userUid).putFile(getImageUri());
-
-        mProgressLayout.setVisibility(View.VISIBLE);
-
-        uploadTask.addOnProgressListener(taskSnapshot -> {
-            double progress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
-            int currentProgress = (int) progress;
-            mProgressBar.setProgress(currentProgress);
-        });
 
         uploadTask.addOnSuccessListener(taskSnapshot -> mStorageReference.child("profile_images").child(userUid)
                 .getDownloadUrl().addOnSuccessListener(uri -> {
@@ -259,12 +251,14 @@ public class SetupProfileActivity extends AppCompatActivity implements FormActiv
                                             .putBoolean("profile_setup_complete", true)
                                             .putString("u_image", uri.toString())
                                             .apply();
+                                    progressDialog.dismiss();
                                     Intent launchOptions = new Intent(getApplicationContext(), OptionsActivity.class);
                                     startActivity(launchOptions);
                                     finish();
                                 }
                             });
                 })).addOnFailureListener(e -> {
+            progressDialog.dismiss();
             enableForm();
             Log.e("Upload Error", e.getMessage());
         });
