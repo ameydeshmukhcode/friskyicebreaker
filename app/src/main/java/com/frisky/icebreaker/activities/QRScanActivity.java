@@ -18,6 +18,7 @@ import com.budiyev.android.codescanner.CodeScannerView;
 import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.services.OrderSessionService;
 import com.frisky.icebreaker.ui.components.dialogs.ConfirmSessionStartDialog;
+import com.frisky.icebreaker.ui.components.dialogs.ProgressDialog;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -38,6 +39,8 @@ public class QRScanActivity extends AppCompatActivity implements ConfirmSessionS
 
     String restaurantID;
     String tableID;
+
+    ProgressDialog progressDialog = new ProgressDialog("Retrieving the Menu");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -152,6 +155,8 @@ public class QRScanActivity extends AppCompatActivity implements ConfirmSessionS
     public void sessionStart(boolean choice) {
         if (choice) {
             mCodeScanner.stopPreview();
+            progressDialog.show(getSupportFragmentManager(), "progress dialog");
+            progressDialog.setCancelable(false);
             getRestaurantAndTableDetails(restaurantID, tableID);
             initUserSession(restaurantID, tableID);
         }
@@ -161,6 +166,7 @@ public class QRScanActivity extends AppCompatActivity implements ConfirmSessionS
     }
 
     private void showMenu() {
+        progressDialog.dismiss();
         Intent showMenu = new Intent(getBaseContext(), MenuActivity.class);
         startActivity(showMenu);
         finish();

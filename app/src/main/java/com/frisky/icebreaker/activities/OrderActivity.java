@@ -28,6 +28,7 @@ import com.frisky.icebreaker.core.structures.OrderDetailsHeader;
 import com.frisky.icebreaker.core.structures.OrderItem;
 import com.frisky.icebreaker.core.structures.OrderStatus;
 import com.frisky.icebreaker.ui.components.dialogs.ClearBillDialog;
+import com.frisky.icebreaker.ui.components.dialogs.ProgressDialog;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -59,6 +60,8 @@ public class OrderActivity extends AppCompatActivity implements ClearBillDialog.
 
     String restaurantID;
     String sessionID;
+
+    ProgressDialog progressDialog = new ProgressDialog("Requesting the Bill");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -256,6 +259,8 @@ public class OrderActivity extends AppCompatActivity implements ClearBillDialog.
     @Override
     public void clearBill(boolean choice) {
         if (choice) {
+            progressDialog.show(getSupportFragmentManager(), "progress dialog");
+            progressDialog.setCancelable(false);
             final FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
             String restaurantID = sharedPreferences.getString("restaurant_id", "");
             String sessionID = sharedPreferences.getString("session_id", "");
@@ -305,6 +310,7 @@ public class OrderActivity extends AppCompatActivity implements ClearBillDialog.
 
                                     sharedPreferences.edit().putBoolean("bill_requested", true).apply();
 
+                                    progressDialog.dismiss();
                                     Intent clearBill = new Intent(this, HomeActivity.class);
                                     clearBill.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
                                             Intent.FLAG_ACTIVITY_CLEAR_TASK |

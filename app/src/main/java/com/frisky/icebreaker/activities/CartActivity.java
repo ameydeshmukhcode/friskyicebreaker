@@ -27,6 +27,7 @@ import com.frisky.icebreaker.core.structures.MenuItem;
 import com.frisky.icebreaker.interfaces.OnOrderUpdateListener;
 import com.frisky.icebreaker.interfaces.UIActivity;
 import com.frisky.icebreaker.ui.components.dialogs.ConfirmOrderDialog;
+import com.frisky.icebreaker.ui.components.dialogs.ProgressDialog;
 import com.google.firebase.functions.FirebaseFunctions;
 
 import java.util.ArrayList;
@@ -52,6 +53,8 @@ public class CartActivity extends AppCompatActivity implements UIActivity,
     SharedPreferences sharedPreferences;
 
     FirebaseFunctions mFunctions;
+
+    ProgressDialog progressDialog = new ProgressDialog("Placing your order");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,6 +143,8 @@ public class CartActivity extends AppCompatActivity implements UIActivity,
                 order.put(item.getId(), item.getCount());
             }
 
+            progressDialog.show(getSupportFragmentManager(), "progress dialog");
+            progressDialog.setCancelable(false);
             placeOrder(order);
         }
     }
@@ -168,6 +173,8 @@ public class CartActivity extends AppCompatActivity implements UIActivity,
                         notificationManager.notify(R.integer.n_order_session_service, notification);
 
                         sharedPreferences.edit().putBoolean("order_active", true).apply();
+
+                        progressDialog.dismiss();
 
                         Intent showOrder = new Intent(this, OrderActivity.class);
                         startActivity(showOrder);
