@@ -3,6 +3,7 @@ package com.frisky.icebreaker.activities;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -40,6 +41,12 @@ public class SlideshowActivity extends AppCompatActivity {
                 finish();
             });
 
+            nextButton.setText("Next");
+            nextButton.setOnClickListener(v -> {
+                int currentItem = slideshow.getCurrentItem();
+                slideshow.setCurrentItem(currentItem + 1);
+            });
+
             slideshow.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
                 @Override
                 public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -49,6 +56,7 @@ public class SlideshowActivity extends AppCompatActivity {
                 @Override
                 public void onPageSelected(int position) {
                     if (position == 2) {
+                        skipButton.setVisibility(View.GONE);
                         nextButton.setText("Continue");
                         nextButton.setOnClickListener(v -> {
                             sharedPreferences.edit().putBoolean("slideshow_complete", true).apply();
@@ -57,6 +65,7 @@ public class SlideshowActivity extends AppCompatActivity {
                         });
                     }
                     else {
+                        skipButton.setVisibility(View.VISIBLE);
                         nextButton.setText("Next");
                         nextButton.setOnClickListener(v -> {
                             int currentItem = slideshow.getCurrentItem();
