@@ -19,6 +19,7 @@ import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.services.OrderSessionService;
 import com.frisky.icebreaker.ui.components.dialogs.ConfirmSessionStartDialog;
 import com.frisky.icebreaker.ui.components.dialogs.ProgressDialog;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -193,7 +194,7 @@ public class QRScanActivity extends AppCompatActivity implements ConfirmSessionS
             else {
                 Log.e("Task", "failed with ", task.getException());
             }
-        });
+        }).addOnFailureListener(e -> progressDialog.dismiss());
 
         DocumentReference tableRef = firebaseFirestore
                 .collection("restaurants")
@@ -218,7 +219,7 @@ public class QRScanActivity extends AppCompatActivity implements ConfirmSessionS
             else {
                 Log.e("Task", "failed with ", task.getException());
             }
-        });
+        }).addOnFailureListener(e -> progressDialog.dismiss());
     }
 
     private void initUserSession(final String restID, final String tableID) {
@@ -272,9 +273,13 @@ public class QRScanActivity extends AppCompatActivity implements ConfirmSessionS
                                             Intent orderSession = new Intent(getApplicationContext(), OrderSessionService.class);
                                             startService(orderSession);
                                             showMenu();
-                                        });
+                                        })
+                                        .addOnFailureListener(e -> progressDialog.dismiss());
                             });
                 })
-                .addOnFailureListener(e -> Log.e("", "Error adding document", e));
+                .addOnFailureListener(e -> {
+                    Log.e("", "Error adding document", e);
+                    progressDialog.dismiss();
+                });
     }
 }

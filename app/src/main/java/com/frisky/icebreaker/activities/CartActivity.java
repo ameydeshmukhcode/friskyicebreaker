@@ -180,6 +180,9 @@ public class CartActivity extends AppCompatActivity implements UIActivity,
                         startActivity(showOrder);
                         finish();
                     }
+                    else if (!task.isSuccessful()){
+                        progressDialog.dismiss();
+                    }
                     // This continuation runs on either success or failure, but if the task
                     // has failed then getResult() will throw an Exception which will be
                     // propagated down.
