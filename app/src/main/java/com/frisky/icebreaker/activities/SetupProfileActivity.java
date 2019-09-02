@@ -8,6 +8,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -95,6 +96,16 @@ public class SetupProfileActivity extends AppCompatActivity implements FormActiv
         adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         mGenderSpinner.setAdapter(adapter);
 
+        if (getIntent().hasExtra("edit_mode")) {
+            mGenderSpinner.setVisibility(View.GONE);
+            mDateOfBirthInput.setVisibility(View.GONE);
+
+            mNameInput.setHint(sharedPreferences.getString("u_name", ""));
+            mBioInput.setHint(sharedPreferences.getString("u_bio", ""));
+            Picasso.get().load(sharedPreferences.getString("u_image", ""))
+                    .transform(new RoundRectTransformation()).into(mProfileImage);
+        }
+
         enableForm();
     }
 
@@ -173,15 +184,15 @@ public class SetupProfileActivity extends AppCompatActivity implements FormActiv
         });
 
         mDoneButton.setOnClickListener(v -> {
-            if (validateForm()) {
+            if (getIntent().hasExtra("edit_mode")) {
+                updateEditedDetails();
+            }
+            else if (validateForm()) {
                 updateProfileData();
             }
         });
 
-        mCancelButton.setOnClickListener(v -> {
-            FirebaseAuth.getInstance().signOut();
-            SetupProfileActivity.super.onBackPressed();
-        });
+        mCancelButton.setOnClickListener(v -> onBackPressed());
 
         mProfileImage.setOnClickListener(view -> {
             pickImageDialog = new PickImageDialog();
@@ -193,6 +204,119 @@ public class SetupProfileActivity extends AppCompatActivity implements FormActiv
     public void imageUpdated(Uri bitmap) {
         Picasso.get().load(bitmap).transform(new RoundRectTransformation()).into(mProfileImage);
         imageNotSelected = false;
+    }
+
+    private void updateEditedDetails() {
+        disableForm();
+
+        boolean nameEdited = false;
+        boolean bioEdited = false;
+
+        String name = mNameInput.getText().toString();
+        String bio = mBioInput.getText().toString();
+
+        if (!name.matches("")) {
+            nameEdited = true;
+        }
+
+        if (!bio.matches("")) {
+            bioEdited = true;
+        }
+
+        if (!bioEdited && !nameEdited && imageNotSelected) {
+            Toast.makeText(getApplicationContext(), "No changes!", Toast.LENGTH_SHORT).show();
+            enableForm();
+            return;
+        }
+        else {
+            ProgressDialog progressDialog = new ProgressDialog("Updating Your Profile");
+            progressDialog.setCancelable(false);
+            progressDialog.show(getSupportFragmentManager(), "progress dialog");
+
+            final FirebaseUser user = mAuth.getCurrentUser();
+
+            if (user == null)
+                return;
+
+            final String userUid = user.getUid();
+
+            Map<String, Object> userDetails = new HashMap<>();
+
+            if (nameEdited) {
+                userDetails.put("name", name);
+            }
+            if (bioEdited) {
+                userDetails.put("bio", bio);
+            }
+
+            boolean finalNameEdited = nameEdited;
+            boolean finalBioEdited = bioEdited;
+            if (bioEdited || nameEdited) {
+                mFirestore.collection("users")
+                        .document(userUid)
+                        .set(userDetails, SetOptions.merge())
+                        .addOnSuccessListener(aVoid -> {
+                            if (finalNameEdited && finalBioEdited) {
+                                sharedPreferences.edit()
+                                        .putString("u_name", name)
+                                        .putString("u_bio", bio)
+                                        .apply();
+                            }
+                            else if (finalNameEdited) {
+                                sharedPreferences.edit()
+                                        .putString("u_name", name)
+                                        .apply();
+                            }
+                            else if (finalBioEdited) {
+                                sharedPreferences.edit()
+                                        .putString("u_bio", bio)
+                                        .apply();
+                            }
+                            progressDialog.dismiss();
+                            Toast.makeText(getApplicationContext(), "Profile Updated!", Toast.LENGTH_SHORT).show();
+                            Intent launchOptions = new Intent(getApplicationContext(), OptionsActivity.class);
+                            startActivity(launchOptions);
+                            finish();
+                            Log.d(getString(R.string.tag_debug), "DocumentSnapshot successfully written!");
+                        })
+                        .addOnFailureListener(e -> {
+                            progressDialog.dismiss();
+                            Log.e("Failed", e.getMessage(), e);
+                        });
+            }
+
+            if (!imageNotSelected) {
+                final UploadTask uploadTask = mStorageReference.child("profile_images")
+                        .child(userUid).putFile(getImageUri());
+
+                uploadTask.addOnSuccessListener(taskSnapshot -> mStorageReference.child("profile_images").child(userUid)
+                        .getDownloadUrl().addOnSuccessListener(uri -> {
+                            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                    .setPhotoUri(uri)
+                                    .build();
+
+                            user.updateProfile(profileUpdates)
+                                    .addOnCompleteListener(task -> {
+                                        if (task.isSuccessful()) {
+                                            Log.d(getString(R.string.tag_debug), "User profile updated.");
+                                            sharedPreferences.edit()
+                                                    .putBoolean("profile_setup_complete", true)
+                                                    .putString("u_image", uri.toString())
+                                                    .apply();
+                                            progressDialog.dismiss();
+                                            Toast.makeText(getApplicationContext(), "Profile Updated!", Toast.LENGTH_SHORT).show();
+                                            Intent launchOptions = new Intent(getApplicationContext(), OptionsActivity.class);
+                                            startActivity(launchOptions);
+                                            finish();
+                                        }
+                                    });
+                        })).addOnFailureListener(e -> {
+                    progressDialog.dismiss();
+                    enableForm();
+                    Log.e("Upload Error", e.getMessage());
+                });
+            }
+        }
     }
 
     private void updateProfileData() {

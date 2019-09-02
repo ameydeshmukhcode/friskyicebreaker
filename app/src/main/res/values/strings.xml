@@ -106,6 +106,7 @@
     <string name="start">Start</string>
     <string name="empty_state_scan_qr">You haven\'t ordered anything yet.\nTo get the menu and start ordering,
         \nscan the QR code on the table.</string>
+    <string name="empty_state_active_visits">You are not at a restaurant currently.</string>
 
     <!--Empty state -->
     <string name="tag_debug">Frisky Debug</string>
@@ -116,7 +117,6 @@
     <string name="order_more">Order More</string>
     <string name="get_directions">Get Directions</string>
     <string name="dine">Dine</string>
-    <string name="visits">Visits</string>
     <string name="add">Add</string>
     <string name="view_cart">View Cart</string>
     <string name="history">History</string>
@@ -124,6 +124,8 @@
     <string name="show_my_orders">Show my orders</string>
     <string name="skip">Skip</string>
     <string name="next">Next</string>
+    <string name="visits">Visits</string>
+    <string name="current">Current</string>
     <string-array name="genders">
         <item>@string/male</item>
         <item>@string/female</item>
