@@ -78,6 +78,7 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
         viewHolder.mPubCard.setOnClickListener(v -> {
             Intent pubView = new Intent(mContext, RestaurantActivity.class);
             pubView.putExtra("id", restaurant.getID());
+            pubView.putExtra("image", restaurant.getImageUri().toString());
             pubView.putExtra("name", viewHolder.mTitle.getText());
             pubView.putExtra("tags", viewHolder.mCuisine.getText());
             pubView.putExtra("location", viewHolder.mLocation.getText());
