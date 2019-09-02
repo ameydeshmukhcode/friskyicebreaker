@@ -69,13 +69,13 @@ public class RestaurantViewFragment extends Fragment {
 
         if (BuildConfig.DEBUG) {
             mFirestore.collection("restaurants")
-                    .whereEqualTo("debug", true)
+                    .whereEqualTo("status_listing", "debug")
                     .get()
                     .addOnCompleteListener(this::addToRestaurantList);
         }
         else {
             mFirestore.collection("restaurants")
-                    .whereEqualTo("debug", false)
+                    .whereEqualTo("status_listing", "complete")
                     .get()
                     .addOnCompleteListener(this::addToRestaurantList);
         }
@@ -85,12 +85,6 @@ public class RestaurantViewFragment extends Fragment {
         if (task.isSuccessful()) {
             if (task.getResult() != null) {
                 for (QueryDocumentSnapshot document : task.getResult()) {
-                    boolean complete = false;
-                    if (document.contains("complete")) {
-                        complete = (boolean) document.get("complete");
-                    }
-                    if (!complete)
-                        return;
                     String image = "";
                     String name = "";
                     String address = "";
