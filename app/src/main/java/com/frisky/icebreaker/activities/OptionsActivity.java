@@ -106,7 +106,12 @@ public class OptionsActivity extends AppCompatActivity implements UIActivity {
             mNameText.setVisibility(View.VISIBLE);
             mBioText.setVisibility(View.VISIBLE);
             mProfileButton.setText(getString(R.string.edit_profile));
-            mProfileButton.setOnClickListener(null);
+            mProfileButton.setOnClickListener(v -> {
+                Intent editProfile = new Intent(this, SetupProfileActivity.class);
+                editProfile.putExtra("edit_mode", true);
+                startActivity(editProfile);
+                finish();
+            });
 
             mNameText.setText(sharedPreferences.getString("u_name", ""));
             mBioText.setText(sharedPreferences.getString("u_bio", ""));
