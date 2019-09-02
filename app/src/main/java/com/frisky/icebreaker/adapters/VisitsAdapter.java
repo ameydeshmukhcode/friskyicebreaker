@@ -63,11 +63,14 @@ public class VisitsAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        ViewGroup layout = (ViewGroup) inflater.inflate(R.layout.recycler_view, container, false);
+        ViewGroup layout = (ViewGroup) inflater.inflate(R.layout.empty_state_fragment_active_visits, container, false);
         switch (position) {
             case 0:
+                layout = (ViewGroup) inflater.inflate(R.layout.empty_state_fragment_active_visits, container, false);
                 break;
             case 1:
+                layout = (ViewGroup) inflater.inflate(R.layout.recycler_view, container, false);
+
                 getOrderHistory();
 
                 RecyclerView mRecyclerPubView;
