@@ -75,6 +75,7 @@ public class RestaurantViewFragment extends Fragment {
         }
         else {
             mFirestore.collection("restaurants")
+                    .whereEqualTo("debug", false)
                     .get()
                     .addOnCompleteListener(this::addToRestaurantList);
         }
