@@ -96,7 +96,7 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
                 switchFragment("dine");
                 break;
 
-            case R.id.menu_history:
+            case R.id.menu_visits:
                 switchFragment("hist");
                 break;
         }

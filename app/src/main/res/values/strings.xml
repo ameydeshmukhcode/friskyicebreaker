@@ -124,6 +124,8 @@
     <string name="show_my_orders">Show my orders</string>
     <string name="skip">Skip</string>
     <string name="next">Next</string>
+    <string name="visits">Visits</string>
+    <string name="current">Current</string>
     <string-array name="genders">
         <item>@string/male</item>
         <item>@string/female</item>
