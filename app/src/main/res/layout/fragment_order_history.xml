@@ -5,6 +5,30 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tabTextAppearance="@style/FriskyText"
+        app:tabInlineLabel="true">
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:icon="@drawable/ic_status_pending"
+            android:text="@string/current" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:icon="@drawable/ic_history"
+            android:text="@string/history" />
+
+    </com.google.android.material.tabs.TabLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="0dp"
@@ -12,5 +36,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/tabs" />
 </androidx.constraintlayout.widget.ConstraintLayout>
