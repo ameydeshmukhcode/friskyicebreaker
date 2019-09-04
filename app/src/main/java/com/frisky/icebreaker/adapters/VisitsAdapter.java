@@ -2,6 +2,7 @@ package com.frisky.icebreaker.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -120,6 +121,7 @@ public class VisitsAdapter extends PagerAdapter {
                             final DocumentReference restaurantReference = document.getReference().getParent().getParent();
                             restaurantReference.get().addOnCompleteListener(restTask -> {
                                 OrderSummary summary = new OrderSummary(restaurantReference.getId(),
+                                        Uri.parse(restTask.getResult().getString("image")),
                                         String.valueOf(restTask.getResult().get("name")),
                                         document.getId(), endTime, total);
                                 mSessionHistoryList.add(summary);
