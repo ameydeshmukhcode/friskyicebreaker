@@ -245,7 +245,10 @@ public class OrderActivity extends AppCompatActivity implements ClearBillDialog.
 
             if (snapshot != null && snapshot.exists()) {
                 if (snapshot.contains("bill_amount")) {
-                    mOrderTotalText.setText(Objects.requireNonNull(snapshot.get("bill_amount")).toString());
+                    long billAmount = (long) snapshot.get("bill_amount");
+                    @SuppressLint("DefaultLocale")
+                    String amount = String.format("%.2f", (double) billAmount);
+                    mOrderTotalText.setText(amount);
                     sharedPreferences.edit().putInt("bill_amount",
                             Integer.parseInt(Objects.requireNonNull(snapshot.get("bill_amount")).toString())).apply();
                 }
@@ -295,9 +298,13 @@ public class OrderActivity extends AppCompatActivity implements ClearBillDialog.
                                     PendingIntent pendingIntent =
                                             PendingIntent.getActivity(this, 0, notificationIntent, 0);
 
+                                    @SuppressLint("DefaultLocale")
+                                    String amount = String.format("%.2f",
+                                            (double) sharedPreferences.getInt("bill_amount", 0));
+
                                     String billAmountString = "You've requested for the bill. Bill Amount: "
                                             + getString(R.string.rupee)
-                                            + sharedPreferences.getInt("bill_amount", 0);
+                                            + amount;
 
                                     NotificationCompat.Builder builder = new
                                             NotificationCompat.Builder(this, getString(R.string.n_channel_session))

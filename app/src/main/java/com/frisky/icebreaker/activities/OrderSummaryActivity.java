@@ -89,7 +89,11 @@ public class OrderSummaryActivity extends AppCompatActivity implements UIActivit
                            mOrderDateTime.setText(endTime);
                        }
                        if (snapshot.contains("bill_amount")) {
-                           mFinalTotal.setText(String.valueOf(snapshot.get("bill_amount")));
+                           long billAmount = (long) snapshot.get("bill_amount");
+
+                           @SuppressLint("DefaultLocale")
+                           String amount = String.format("%.2f", (double) billAmount);
+                           mFinalTotal.setText(amount);
                        }
                    }
                 });
