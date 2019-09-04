@@ -15,11 +15,11 @@ import androidx.core.content.ContextCompat;
 
 import com.budiyev.android.codescanner.CodeScanner;
 import com.budiyev.android.codescanner.CodeScannerView;
+import com.frisky.icebreaker.BuildConfig;
 import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.services.OrderSessionService;
 import com.frisky.icebreaker.ui.components.dialogs.ConfirmSessionStartDialog;
 import com.frisky.icebreaker.ui.components.dialogs.ProgressDialog;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -111,45 +111,82 @@ public class QRScanActivity extends AppCompatActivity implements ConfirmSessionS
                 restaurantID = qrCodeData.split("\\+")[1];
                 tableID = qrCodeData.split("\\+")[2];
 
-                DocumentReference tableRef = FirebaseFirestore.getInstance()
+                DocumentReference restaurantRef = FirebaseFirestore.getInstance()
                         .collection("restaurants")
-                        .document(restaurantID)
-                        .collection("tables")
-                        .document(tableID);
+                        .document(restaurantID);
 
-                tableRef.get().addOnCompleteListener(task -> {
+                restaurantRef.get().addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         DocumentSnapshot document = task.getResult();
-                        if (document == null)
-                            return;
-                        if (document.exists()) {
-                            boolean isOccupied = false;
-                            if (document.contains("occupied")) {
-                                isOccupied = (boolean) document.get("occupied");
+                        String status;
+                        if (document != null) {
+                            if (document.contains("status_listing")) {
+                                status = document.getString("status_listing");
+
+                                if (status == null)
+                                    return;
+
+                                if (BuildConfig.DEBUG) {
+                                    if (!status.contains("debug")) {
+                                        Toast.makeText(getBaseContext(),"QR Code invalid", Toast.LENGTH_LONG).show();
+                                        mCodeScanner.startPreview();
+                                    }
+                                    else {
+                                        continueSessionStart(restaurantRef);
+                                    }
+                                }
+                                else {
+                                    if (status.contains("debug")) {
+                                        Toast.makeText(getBaseContext(),"QR Code invalid", Toast.LENGTH_LONG).show();
+                                        mCodeScanner.startPreview();
+                                    }
+                                    else {
+                                        continueSessionStart(restaurantRef);
+                                    }
+                                }
                             }
-                            if (!isOccupied) {
-                                ConfirmSessionStartDialog confirmSessionStartDialog = new ConfirmSessionStartDialog();
-                                confirmSessionStartDialog.show(getSupportFragmentManager(), "confirm session start dialog");
-                            }
-                            else {
-                                Toast.makeText(getBaseContext(),"Table is Occupied", Toast.LENGTH_LONG).show();
-                                mCodeScanner.startPreview();
-                            }
-                            Log.d(getString(R.string.tag_debug), "DocumentSnapshot data: " + document.getData());
                         }
-                        else {
-                            Toast.makeText(getBaseContext(),"QR Code invalid", Toast.LENGTH_LONG).show();
-                            mCodeScanner.startPreview();
-                            Log.e(getString(R.string.tag_debug), "No such document");
-                        }
-                    }
-                    else {
-                        Log.e(getString(R.string.tag_debug), "failed with ", task.getException());
                     }
                 });
             }
         }));
         mCodeScanner.startPreview();
+    }
+
+    private void continueSessionStart(DocumentReference restaurantRef) {
+        DocumentReference tableRef = restaurantRef.collection("tables")
+                .document(tableID);
+
+        tableRef.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                DocumentSnapshot document = task.getResult();
+                if (document == null)
+                    return;
+                if (document.exists()) {
+                    boolean isOccupied = false;
+                    if (document.contains("occupied")) {
+                        isOccupied = (boolean) document.get("occupied");
+                    }
+                    if (!isOccupied) {
+                        ConfirmSessionStartDialog confirmSessionStartDialog = new ConfirmSessionStartDialog();
+                        confirmSessionStartDialog.show(getSupportFragmentManager(), "confirm session start dialog");
+                    }
+                    else {
+                        Toast.makeText(getBaseContext(),"Table is Occupied", Toast.LENGTH_LONG).show();
+                        mCodeScanner.startPreview();
+                    }
+                    Log.d(getString(R.string.tag_debug), "DocumentSnapshot data: " + document.getData());
+                }
+                else {
+                    Toast.makeText(getBaseContext(),"QR Code invalid", Toast.LENGTH_LONG).show();
+                    mCodeScanner.startPreview();
+                    Log.e(getString(R.string.tag_debug), "No such document");
+                }
+            }
+            else {
+                Log.e(getString(R.string.tag_debug), "failed with ", task.getException());
+            }
+        });
     }
 
     @Override

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,6 +15,7 @@ import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.activities.OrderSummaryActivity;
 import com.frisky.icebreaker.core.structures.OrderSummary;
 import com.google.android.material.card.MaterialCardView;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -26,12 +28,14 @@ public class OrderSummaryListAdapter extends RecyclerView.Adapter<OrderSummaryLi
         TextView mName;
         TextView mTime;
         TextView mAmount;
+        ImageView mRestaurantImage;
         MaterialCardView mOrderCard;
         OrderSummaryHolder(View view) {
             super(view);
             mName = view.findViewById(R.id.text_restaurant_name);
             mTime = view.findViewById(R.id.text_time);
             mOrderCard = view.findViewById(R.id.card_order_history);
+            mRestaurantImage = view.findViewById(R.id.image_restaurant);
             mAmount = view.findViewById(R.id.text_total);
         }
     }
@@ -57,6 +61,8 @@ public class OrderSummaryListAdapter extends RecyclerView.Adapter<OrderSummaryLi
         holder.mName.setText(summary.getRestaurantName());
         holder.mTime.setText(summary.getEndTime());
         holder.mAmount.setText(String.valueOf(summary.getTotalAmount()));
+
+        Picasso.get().load(summary.getRestaurantImage()).into(holder.mRestaurantImage);
 
         holder.mOrderCard.setOnClickListener(v -> {
             Intent showSummary = new Intent(mContext, OrderSummaryActivity.class);

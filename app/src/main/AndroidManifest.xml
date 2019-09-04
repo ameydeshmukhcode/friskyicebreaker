@@ -3,6 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.frisky.icebreaker">
 
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
     <application
         android:allowBackup="false"
         android:icon="@mipmap/icon_first"
@@ -31,9 +34,6 @@
         </activity>
         <activity android:name=".activities.RestaurantActivity" />
         <activity
-            android:name=".activities.EditProfileActivity"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
             android:name=".activities.SetupProfileActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".activities.QRScanActivity" />
@@ -47,8 +47,4 @@
             android:enabled="true"
             android:exported="false" />
     </application>
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-
-    <uses-permission android:name="android.permission.CAMERA" />
-
 </manifest>
