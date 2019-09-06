@@ -17,6 +17,7 @@ import androidx.viewpager.widget.PagerAdapter;
 
 import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.core.structures.OrderSummary;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -115,29 +116,36 @@ public class VisitsAdapter extends PagerAdapter {
                 .get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 if (task.getResult() != null) {
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        if (document == null)
-                            return;
-                        if (document.contains("amount_payable")) {
-                            @SuppressLint("SimpleDateFormat")
-                            SimpleDateFormat formatter = new SimpleDateFormat("dd MMM YYYY hh:mm a");
-                            String endTime = formatter.format((Objects
-                                    .requireNonNull(document.getTimestamp("end_time")).toDate()));
-                            double total = Double.parseDouble(document.getString("amount_payable"));
-                            final DocumentReference restaurantReference = document.getReference().getParent().getParent();
-                            restaurantReference.get().addOnCompleteListener(restTask -> {
-                                OrderSummary summary = new OrderSummary(restaurantReference.getId(),
-                                        Uri.parse(restTask.getResult().getString("image")),
-                                        String.valueOf(restTask.getResult().get("name")),
-                                        document.getId(), endTime, total);
-                                mSessionHistoryList.add(summary);
-                                mRecyclerPubView.setVisibility(View.VISIBLE);
-                                progressBar.setVisibility(View.GONE);
-                                mOrderSummaryAdapter.notifyDataSetChanged();
-                            });
+                    if (task.getResult().size() > 0) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            if (document == null)
+                                return;
+                            if (document.contains("amount_payable")) {
+                                @SuppressLint("SimpleDateFormat")
+                                SimpleDateFormat formatter = new SimpleDateFormat("dd MMM YYYY hh:mm a");
+                                String endTime = formatter.format((Objects
+                                        .requireNonNull(document.getTimestamp("end_time")).toDate()));
+                                double total = Double.parseDouble(document.getString("amount_payable"));
+                                final DocumentReference restaurantReference = document.getReference().getParent().getParent();
+                                restaurantReference.get().addOnCompleteListener(restTask -> {
+                                    OrderSummary summary = new OrderSummary(restaurantReference.getId(),
+                                            Uri.parse(restTask.getResult().getString("image")),
+                                            String.valueOf(restTask.getResult().get("name")),
+                                            document.getId(), endTime, total);
+                                    mSessionHistoryList.add(summary);
+                                    mRecyclerPubView.setVisibility(View.VISIBLE);
+                                    progressBar.setVisibility(View.GONE);
+                                    mOrderSummaryAdapter.notifyDataSetChanged();
+                                });
+                            }
                         }
                     }
+                    else {
+                        mRecyclerPubView.setVisibility(View.VISIBLE);
+                        progressBar.setVisibility(View.GONE);
+                    }
                 }
+
             }
             else {
                 Log.e("error", "Error getting documents: ", task.getException());
