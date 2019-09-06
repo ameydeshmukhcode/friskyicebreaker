@@ -12,7 +12,7 @@ public class OrderSummary {
     private double totalAmount;
 
     public OrderSummary(String restaurantID, Uri restaurantImage, String restaurantName, String sessionID,
-                        String endTime, int totalAmount) {
+                        String endTime, double totalAmount) {
         this.restaurantImage = restaurantImage;
         this.restaurantID = restaurantID;
         this.restaurantName = restaurantName;

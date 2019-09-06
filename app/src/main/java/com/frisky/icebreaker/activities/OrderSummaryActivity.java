@@ -88,11 +88,11 @@ public class OrderSummaryActivity extends AppCompatActivity implements UIActivit
                                    .requireNonNull(snapshot.getTimestamp("end_time")).toDate()));
                            mOrderDateTime.setText(endTime);
                        }
-                       if (snapshot.contains("bill_amount")) {
-                           long billAmount = (long) snapshot.get("bill_amount");
+                       if (snapshot.contains("amount_payable")) {
+                           double billAmount = Double.parseDouble(snapshot.getString("amount_payable"));
 
                            @SuppressLint("DefaultLocale")
-                           String amount = String.format("%.2f", (double) billAmount);
+                           String amount = String.format("%.2f", billAmount);
                            mFinalTotal.setText(amount);
                        }
                    }

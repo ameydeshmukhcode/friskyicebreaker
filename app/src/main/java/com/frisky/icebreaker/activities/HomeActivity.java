@@ -179,7 +179,7 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
             mBottomSheetInfo.setText(getString(R.string.bill_amount_to_be_paid));
             @SuppressLint("DefaultLocale")
             String amount = String.format("%.2f",
-                    (double) sharedPreferences.getInt("bill_amount", 0));
+                    Double.parseDouble(sharedPreferences.getString("amount_payable", "")));
             String billAmountString = getString(R.string.rupee) + amount;
             mBottomSheetDetails.setText(billAmountString);
             mBottomSheetButton.setVisibility(View.INVISIBLE);

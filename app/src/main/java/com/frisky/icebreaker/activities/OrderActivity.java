@@ -244,13 +244,12 @@ public class OrderActivity extends AppCompatActivity implements ClearBillDialog.
             }
 
             if (snapshot != null && snapshot.exists()) {
-                if (snapshot.contains("bill_amount")) {
-                    long billAmount = (long) snapshot.get("bill_amount");
+                if (snapshot.contains("amount_payable")) {
+                    double billAmount = Double.parseDouble(snapshot.getString("amount_payable"));
                     @SuppressLint("DefaultLocale")
-                    String amount = String.format("%.2f", (double) billAmount);
+                    String amount = String.format("%.2f", billAmount);
                     mOrderTotalText.setText(amount);
-                    sharedPreferences.edit().putInt("bill_amount",
-                            Integer.parseInt(Objects.requireNonNull(snapshot.get("bill_amount")).toString())).apply();
+                    sharedPreferences.edit().putString("amount_payable", snapshot.getString("amount_payable")).apply();
                 }
 
                 Log.d(getString(R.string.tag_debug), "Current data: " + snapshot.getData());
@@ -300,7 +299,7 @@ public class OrderActivity extends AppCompatActivity implements ClearBillDialog.
 
                                     @SuppressLint("DefaultLocale")
                                     String amount = String.format("%.2f",
-                                            (double) sharedPreferences.getInt("bill_amount", 0));
+                                            Double.parseDouble(sharedPreferences.getString("amount_payable", "")));
 
                                     String billAmountString = "You've requested for the bill. Bill Amount: "
                                             + getString(R.string.rupee)
