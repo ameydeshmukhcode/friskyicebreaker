@@ -16,7 +16,6 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -30,7 +29,6 @@ import com.frisky.icebreaker.core.structures.OrderItem;
 import com.frisky.icebreaker.core.structures.OrderStatus;
 import com.frisky.icebreaker.ui.components.dialogs.ClearBillDialog;
 import com.frisky.icebreaker.ui.components.dialogs.ProgressDialog;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -52,6 +50,8 @@ public class OrderActivity extends AppCompatActivity implements ClearBillDialog.
     Button mClearBill;
     Button mAddMoreButton;
     TextView mOrderTotalText;
+    TextView mGST;
+    TextView mBillAmount;
 
     SharedPreferences sharedPreferences;
 
@@ -84,6 +84,8 @@ public class OrderActivity extends AppCompatActivity implements ClearBillDialog.
         mClearBill.setOnClickListener(v -> clearBill());
 
         mOrderTotalText = findViewById(R.id.text_order_total);
+        mBillAmount = findViewById(R.id.text_bill_amount);
+        mGST = findViewById(R.id.text_gst);
 
         TextView mTableSerial = findViewById(R.id.text_table);
         mTableSerial.setText(sharedPreferences.getString("table_name", ""));
@@ -250,6 +252,18 @@ public class OrderActivity extends AppCompatActivity implements ClearBillDialog.
                     String amount = String.format("%.2f", billAmount);
                     mOrderTotalText.setText(amount);
                     sharedPreferences.edit().putString("amount_payable", snapshot.getString("amount_payable")).apply();
+                }
+                if (snapshot.contains("bill_amount")) {
+                    double billAmount = Double.parseDouble(snapshot.getString("bill_amount"));
+                    @SuppressLint("DefaultLocale")
+                    String amount = String.format("%.2f", billAmount);
+                    mBillAmount.setText(amount);
+                }
+                if (snapshot.contains("gst")) {
+                    double billAmount = Double.parseDouble(snapshot.getString("gst"));
+                    @SuppressLint("DefaultLocale")
+                    String amount = String.format("%.2f", billAmount);
+                    mGST.setText(amount);
                 }
 
                 Log.d(getString(R.string.tag_debug), "Current data: " + snapshot.getData());
