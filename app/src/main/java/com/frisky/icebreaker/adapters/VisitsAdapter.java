@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,6 +17,7 @@ import androidx.viewpager.widget.PagerAdapter;
 
 import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.core.structures.OrderSummary;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -32,6 +34,9 @@ public class VisitsAdapter extends PagerAdapter {
     private Context context;
     private List<OrderSummary> mSessionHistoryList = new ArrayList<>();
     private OrderSummaryListAdapter mOrderSummaryAdapter;
+
+    private RecyclerView mRecyclerPubView;
+    private ProgressBar progressBar;
 
     public VisitsAdapter(Context applicationContext) {
         context = applicationContext;
@@ -70,12 +75,14 @@ public class VisitsAdapter extends PagerAdapter {
                 layout = (ViewGroup) inflater.inflate(R.layout.empty_state_fragment_active_visits, container, false);
                 break;
             case 1:
-                layout = (ViewGroup) inflater.inflate(R.layout.recycler_view, container, false);
+                layout = (ViewGroup) inflater.inflate(R.layout.fragment_order_summary_list, container, false);
 
                 getOrderHistory();
 
-                RecyclerView mRecyclerPubView;
+                progressBar = layout.findViewById(R.id.progress_order_summary);
                 mRecyclerPubView = layout.findViewById(R.id.recycler_view);
+
+                mRecyclerPubView.setVisibility(View.GONE);
 
                 mRecyclerPubView.setPadding(0, 0, 0, 0);
                 mRecyclerPubView.setPadding(0, 0, 0, 225);
@@ -109,27 +116,36 @@ public class VisitsAdapter extends PagerAdapter {
                 .get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 if (task.getResult() != null) {
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        if (document == null)
-                            return;
-                        if (document.contains("bill_amount")) {
-                            @SuppressLint("SimpleDateFormat")
-                            SimpleDateFormat formatter = new SimpleDateFormat("dd MMM YYYY hh:mm a");
-                            String endTime = formatter.format((Objects
-                                    .requireNonNull(document.getTimestamp("end_time")).toDate()));
-                            int total = Integer.parseInt(document.get("bill_amount").toString());
-                            final DocumentReference restaurantReference = document.getReference().getParent().getParent();
-                            restaurantReference.get().addOnCompleteListener(restTask -> {
-                                OrderSummary summary = new OrderSummary(restaurantReference.getId(),
-                                        Uri.parse(restTask.getResult().getString("image")),
-                                        String.valueOf(restTask.getResult().get("name")),
-                                        document.getId(), endTime, total);
-                                mSessionHistoryList.add(summary);
-                                mOrderSummaryAdapter.notifyDataSetChanged();
-                            });
+                    if (task.getResult().size() > 0) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            if (document == null)
+                                return;
+                            if (document.contains("amount_payable")) {
+                                @SuppressLint("SimpleDateFormat")
+                                SimpleDateFormat formatter = new SimpleDateFormat("dd MMM YYYY hh:mm a");
+                                String endTime = formatter.format((Objects
+                                        .requireNonNull(document.getTimestamp("end_time")).toDate()));
+                                double total = Double.parseDouble(document.getString("amount_payable"));
+                                final DocumentReference restaurantReference = document.getReference().getParent().getParent();
+                                restaurantReference.get().addOnCompleteListener(restTask -> {
+                                    OrderSummary summary = new OrderSummary(restaurantReference.getId(),
+                                            Uri.parse(restTask.getResult().getString("image")),
+                                            String.valueOf(restTask.getResult().get("name")),
+                                            document.getId(), endTime, total);
+                                    mSessionHistoryList.add(summary);
+                                    mRecyclerPubView.setVisibility(View.VISIBLE);
+                                    progressBar.setVisibility(View.GONE);
+                                    mOrderSummaryAdapter.notifyDataSetChanged();
+                                });
+                            }
                         }
                     }
+                    else {
+                        mRecyclerPubView.setVisibility(View.VISIBLE);
+                        progressBar.setVisibility(View.GONE);
+                    }
                 }
+
             }
             else {
                 Log.e("error", "Error getting documents: ", task.getException());

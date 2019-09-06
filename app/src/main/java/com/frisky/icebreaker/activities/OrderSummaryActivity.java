@@ -2,10 +2,13 @@ package com.frisky.icebreaker.activities;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -30,6 +33,8 @@ public class OrderSummaryActivity extends AppCompatActivity implements UIActivit
     TextView mRestaurantName;
     TextView mOrderDateTime;
     TextView mFinalTotal;
+    TextView mOrderTotal;
+    TextView mGST;
     ImageButton mBackButton;
 
     RecyclerView mOrderListRecyclerView;
@@ -37,6 +42,9 @@ public class OrderSummaryActivity extends AppCompatActivity implements UIActivit
     ArrayList<Object> mOrderList = new ArrayList<>();
 
     OrderListAdapter orderListAdapter;
+    ProgressBar progressBar;
+
+    ConstraintLayout mLayout;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +58,13 @@ public class OrderSummaryActivity extends AppCompatActivity implements UIActivit
         mRestaurantName = findViewById(R.id.text_restaurant);
         mOrderDateTime = findViewById(R.id.text_date_time);
         mFinalTotal = findViewById(R.id.text_final_total);
+        mOrderTotal = findViewById(R.id.text_order_total);
+        mGST = findViewById(R.id.text_gst);
         mOrderListRecyclerView = findViewById(R.id.recycler_view_final_order);
+
+        mLayout = findViewById(R.id.layout_order_summary);
+        mLayout.setVisibility(View.GONE);
+        progressBar = findViewById(R.id.progress_summary);
 
         mBackButton = findViewById(R.id.button_back);
         mBackButton.setOnClickListener(v -> this.onBackPressed());
@@ -59,12 +73,13 @@ public class OrderSummaryActivity extends AppCompatActivity implements UIActivit
         mOrderListViewLayoutManager = new LinearLayoutManager(getApplicationContext());
 
         mOrderListRecyclerView.setLayoutManager(mOrderListViewLayoutManager);
+        mOrderListRecyclerView.setOverScrollMode(View.OVER_SCROLL_NEVER);
 
         orderListAdapter = new OrderListAdapter(getApplicationContext(), mOrderList);
         mOrderListRecyclerView.setAdapter(orderListAdapter);
 
         if (getIntent().hasExtra("session_id") && getIntent().hasExtra("restaurant_id")) {
-            getOrderDetails(getIntent().getStringExtra("restaurant_id"),
+            getOrderSummary(getIntent().getStringExtra("restaurant_id"),
                     getIntent().getStringExtra("session_id"));
         }
 
@@ -88,9 +103,28 @@ public class OrderSummaryActivity extends AppCompatActivity implements UIActivit
                                    .requireNonNull(snapshot.getTimestamp("end_time")).toDate()));
                            mOrderDateTime.setText(endTime);
                        }
-                       if (snapshot.contains("bill_amount")) {
-                           mFinalTotal.setText(String.valueOf(snapshot.get("bill_amount")));
+                       if (snapshot.contains("amount_payable")) {
+                           double billAmount = Double.parseDouble(snapshot.getString("amount_payable"));
+
+                           @SuppressLint("DefaultLocale")
+                           String amount = String.format("%.2f", billAmount);
+                           mFinalTotal.setText(amount);
                        }
+                       if (snapshot.contains("bill_amount")) {
+                           double billAmount = Double.parseDouble(snapshot.getString("bill_amount"));
+
+                           @SuppressLint("DefaultLocale")
+                           String amount = String.format("%.2f", billAmount);
+                           mOrderTotal.setText(amount);
+                       }
+                       if (snapshot.contains("gst")) {
+                           double billAmount = Double.parseDouble(snapshot.getString("gst"));
+
+                           @SuppressLint("DefaultLocale")
+                           String amount = String.format("%.2f", billAmount);
+                           mGST.setText(amount);
+                       }
+                       getOrderDetails(restaurant, session);
                    }
                 });
     }
@@ -143,8 +177,8 @@ public class OrderSummaryActivity extends AppCompatActivity implements UIActivit
 
                         orderListAdapter = new OrderListAdapter(getApplicationContext(), mOrderList);
                         mOrderListRecyclerView.setAdapter(orderListAdapter);
-
-                        getOrderSummary(restaurantID, sessionID);
+                        mLayout.setVisibility(View.VISIBLE);
+                        progressBar.setVisibility(View.GONE);
                     }
                 });
     }

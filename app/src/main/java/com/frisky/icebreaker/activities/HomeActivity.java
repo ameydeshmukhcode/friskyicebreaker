@@ -1,5 +1,6 @@
 package com.frisky.icebreaker.activities;
 
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -176,8 +177,10 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
         if (sharedPreferences.contains("bill_requested")) {
             mBottomSheetTitle.setText(getString(R.string.bill_requested));
             mBottomSheetInfo.setText(getString(R.string.bill_amount_to_be_paid));
-            String billAmountString = getString(R.string.rupee) +
-                    sharedPreferences.getInt("bill_amount", 0);
+            @SuppressLint("DefaultLocale")
+            String amount = String.format("%.2f",
+                    Double.parseDouble(sharedPreferences.getString("amount_payable", "")));
+            String billAmountString = getString(R.string.rupee) + amount;
             mBottomSheetDetails.setText(billAmountString);
             mBottomSheetButton.setVisibility(View.INVISIBLE);
         }

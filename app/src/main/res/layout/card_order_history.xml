@@ -104,7 +104,7 @@
             android:layout_marginStart="2dp"
             android:layout_marginBottom="4dp"
             android:fontFamily="@font/museosans700"
-            android:text="@string/placeholder_text"
+            android:text="@string/default_number"
             android:textSize="@dimen/pub_extra_info_size"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/total"

@@ -1,5 +1,6 @@
 package com.frisky.icebreaker.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -60,7 +61,9 @@ public class OrderSummaryListAdapter extends RecyclerView.Adapter<OrderSummaryLi
 
         holder.mName.setText(summary.getRestaurantName());
         holder.mTime.setText(summary.getEndTime());
-        holder.mAmount.setText(String.valueOf(summary.getTotalAmount()));
+        @SuppressLint("DefaultLocale")
+        String amount = String.format("%.2f", summary.getTotalAmount());
+        holder.mAmount.setText(amount);
 
         Picasso.get().load(summary.getRestaurantImage()).into(holder.mRestaurantImage);
 
