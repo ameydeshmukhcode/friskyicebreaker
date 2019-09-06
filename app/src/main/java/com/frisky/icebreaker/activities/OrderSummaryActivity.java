@@ -33,6 +33,8 @@ public class OrderSummaryActivity extends AppCompatActivity implements UIActivit
     TextView mRestaurantName;
     TextView mOrderDateTime;
     TextView mFinalTotal;
+    TextView mOrderTotal;
+    TextView mGST;
     ImageButton mBackButton;
 
     RecyclerView mOrderListRecyclerView;
@@ -56,6 +58,8 @@ public class OrderSummaryActivity extends AppCompatActivity implements UIActivit
         mRestaurantName = findViewById(R.id.text_restaurant);
         mOrderDateTime = findViewById(R.id.text_date_time);
         mFinalTotal = findViewById(R.id.text_final_total);
+        mOrderTotal = findViewById(R.id.text_order_total);
+        mGST = findViewById(R.id.text_gst);
         mOrderListRecyclerView = findViewById(R.id.recycler_view_final_order);
 
         mLayout = findViewById(R.id.layout_order_summary);
@@ -69,6 +73,7 @@ public class OrderSummaryActivity extends AppCompatActivity implements UIActivit
         mOrderListViewLayoutManager = new LinearLayoutManager(getApplicationContext());
 
         mOrderListRecyclerView.setLayoutManager(mOrderListViewLayoutManager);
+        mOrderListRecyclerView.setOverScrollMode(View.OVER_SCROLL_NEVER);
 
         orderListAdapter = new OrderListAdapter(getApplicationContext(), mOrderList);
         mOrderListRecyclerView.setAdapter(orderListAdapter);
@@ -104,6 +109,20 @@ public class OrderSummaryActivity extends AppCompatActivity implements UIActivit
                            @SuppressLint("DefaultLocale")
                            String amount = String.format("%.2f", billAmount);
                            mFinalTotal.setText(amount);
+                       }
+                       if (snapshot.contains("bill_amount")) {
+                           double billAmount = Double.parseDouble(snapshot.getString("bill_amount"));
+
+                           @SuppressLint("DefaultLocale")
+                           String amount = String.format("%.2f", billAmount);
+                           mOrderTotal.setText(amount);
+                       }
+                       if (snapshot.contains("gst")) {
+                           double billAmount = Double.parseDouble(snapshot.getString("gst"));
+
+                           @SuppressLint("DefaultLocale")
+                           String amount = String.format("%.2f", billAmount);
+                           mGST.setText(amount);
                        }
                        getOrderDetails(restaurant, session);
                    }

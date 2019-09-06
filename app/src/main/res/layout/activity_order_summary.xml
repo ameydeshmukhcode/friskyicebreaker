@@ -39,13 +39,13 @@
                 android:layout_height="wrap_content">
 
                 <TextView
-                    android:id="@+id/vat"
+                    android:id="@+id/order_total"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="8dp"
                     android:fontFamily="@font/museosans300"
-                    android:text="@string/vat"
+                    android:text="@string/order_total"
                     android:textSize="@dimen/text_subtitle_size"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/divider2" />
@@ -57,32 +57,32 @@
                     android:fontFamily="@font/museosans300"
                     android:text="@string/rupee"
                     android:textSize="@dimen/text_subtitle_size"
-                    app:layout_constraintBottom_toBottomOf="@+id/text_vat"
-                    app:layout_constraintEnd_toStartOf="@+id/text_vat"
-                    app:layout_constraintTop_toTopOf="@+id/text_vat" />
+                    app:layout_constraintBottom_toBottomOf="@+id/text_order_total"
+                    app:layout_constraintEnd_toStartOf="@+id/text_order_total"
+                    app:layout_constraintTop_toTopOf="@+id/text_order_total" />
 
                 <TextView
-                    android:id="@+id/text_vat"
+                    android:id="@+id/text_order_total"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="24dp"
                     android:fontFamily="@font/museosans300"
                     android:text="@string/default_number"
                     android:textSize="@dimen/text_subtitle_size"
-                    app:layout_constraintBottom_toBottomOf="@+id/vat"
+                    app:layout_constraintBottom_toBottomOf="@+id/order_total"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/vat" />
+                    app:layout_constraintTop_toTopOf="@+id/order_total" />
 
                 <TextView
-                    android:id="@+id/cgst"
+                    android:id="@+id/gst"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:fontFamily="@font/museosans300"
-                    android:text="@string/cgst"
+                    android:text="@string/gst"
                     android:textSize="@dimen/text_subtitle_size"
-                    app:layout_constraintStart_toStartOf="@+id/vat"
-                    app:layout_constraintTop_toBottomOf="@+id/vat" />
+                    app:layout_constraintStart_toStartOf="@+id/order_total"
+                    app:layout_constraintTop_toBottomOf="@+id/order_total" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -91,86 +91,20 @@
                     android:fontFamily="@font/museosans300"
                     android:text="@string/rupee"
                     android:textSize="@dimen/text_subtitle_size"
-                    app:layout_constraintBottom_toBottomOf="@+id/text_cgst"
-                    app:layout_constraintEnd_toStartOf="@+id/text_cgst"
-                    app:layout_constraintTop_toTopOf="@+id/text_cgst" />
+                    app:layout_constraintBottom_toBottomOf="@+id/text_gst"
+                    app:layout_constraintEnd_toStartOf="@+id/text_gst"
+                    app:layout_constraintTop_toTopOf="@+id/text_gst" />
 
                 <TextView
-                    android:id="@+id/text_cgst"
+                    android:id="@+id/text_gst"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:fontFamily="@font/museosans300"
                     android:text="@string/default_number"
                     android:textSize="@dimen/text_subtitle_size"
-                    app:layout_constraintEnd_toEndOf="@+id/text_vat"
-                    app:layout_constraintTop_toBottomOf="@+id/text_vat" />
-
-                <TextView
-                    android:id="@+id/sgst"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:fontFamily="@font/museosans300"
-                    android:text="@string/sgst"
-                    android:textSize="@dimen/text_subtitle_size"
-                    app:layout_constraintStart_toStartOf="@+id/cgst"
-                    app:layout_constraintTop_toBottomOf="@+id/cgst" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="4dp"
-                    android:fontFamily="@font/museosans300"
-                    android:text="@string/rupee"
-                    android:textSize="@dimen/text_subtitle_size"
-                    app:layout_constraintBottom_toBottomOf="@+id/text_sgst"
-                    app:layout_constraintEnd_toStartOf="@+id/text_sgst"
-                    app:layout_constraintTop_toTopOf="@+id/text_sgst" />
-
-                <TextView
-                    android:id="@+id/text_sgst"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:fontFamily="@font/museosans300"
-                    android:text="@string/default_number"
-                    android:textSize="@dimen/text_subtitle_size"
-                    app:layout_constraintEnd_toEndOf="@+id/text_cgst"
-                    app:layout_constraintTop_toBottomOf="@+id/text_cgst" />
-
-                <TextView
-                    android:id="@+id/total_tax"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:fontFamily="@font/museosans300"
-                    android:text="@string/total_tax"
-                    android:textSize="@dimen/text_subtitle_size"
-                    app:layout_constraintStart_toStartOf="@+id/sgst"
-                    app:layout_constraintTop_toBottomOf="@+id/sgst" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="4dp"
-                    android:fontFamily="@font/museosans300"
-                    android:text="@string/rupee"
-                    android:textSize="@dimen/text_subtitle_size"
-                    app:layout_constraintBottom_toBottomOf="@+id/text_total_tax"
-                    app:layout_constraintEnd_toStartOf="@+id/text_total_tax"
-                    app:layout_constraintTop_toTopOf="@+id/text_total_tax" />
-
-                <TextView
-                    android:id="@+id/text_total_tax"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:fontFamily="@font/museosans300"
-                    android:text="@string/default_number"
-                    android:textSize="@dimen/text_subtitle_size"
-                    app:layout_constraintEnd_toEndOf="@+id/text_sgst"
-                    app:layout_constraintTop_toBottomOf="@+id/text_sgst" />
+                    app:layout_constraintEnd_toEndOf="@+id/text_order_total"
+                    app:layout_constraintTop_toBottomOf="@+id/text_order_total" />
 
                 <TextView
                     android:id="@+id/your_total"
@@ -180,7 +114,7 @@
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="16dp"
                     android:fontFamily="@font/museosans700"
-                    android:text="@string/your_total"
+                    android:text="@string/final_total"
                     android:textSize="@dimen/text_title_size"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -214,7 +148,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/divider_height"
                     android:layout_marginStart="16dp"
-                    android:layout_marginTop="4dp"
+                    android:layout_marginTop="8dp"
                     android:layout_marginEnd="16dp"
                     android:background="@color/lightAccent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -231,7 +165,7 @@
                     android:background="@color/lightAccent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/total_tax" />
+                    app:layout_constraintTop_toBottomOf="@+id/gst" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler_view_final_order"
