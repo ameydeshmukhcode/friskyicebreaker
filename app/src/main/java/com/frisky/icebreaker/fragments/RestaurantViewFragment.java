@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -34,6 +35,9 @@ public class RestaurantViewFragment extends Fragment {
     private List<Restaurant> mRestaurantList = new ArrayList<>();
     private RecyclerView.Adapter mPubViewAdapter;
 
+    private ProgressBar mProgressBar;
+    private RecyclerView mRecyclerPubView;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup viewGroup, @Nullable Bundle savedInstanceState) {
@@ -43,8 +47,10 @@ public class RestaurantViewFragment extends Fragment {
         Button settingsButton = view.findViewById(R.id.button_settings);
         settingsButton.setOnClickListener(v -> startActivity(new Intent(getActivity(), OptionsActivity.class)));
 
-        RecyclerView mRecyclerPubView;
+        mProgressBar = view.findViewById(R.id.progress_restaurant_list);
         mRecyclerPubView = view.findViewById(R.id.recycler_view);
+
+        mRecyclerPubView.setVisibility(View.GONE);
 
         mRecyclerPubView.setPadding(0, 0, 0, 0);
         mRecyclerPubView.setPadding(0, 0, 0, 225);
@@ -107,7 +113,8 @@ public class RestaurantViewFragment extends Fragment {
                     Restaurant restaurant = new Restaurant(Uri.parse(image), document.getId(), name, name, address,
                             tags.substring(1, tags.length() - 1), 4.5);
                     mRestaurantList.add(restaurant);
-
+                    mProgressBar.setVisibility(View.GONE);
+                    mRecyclerPubView.setVisibility(View.VISIBLE);
                     mPubViewAdapter.notifyDataSetChanged();
                 }
             }

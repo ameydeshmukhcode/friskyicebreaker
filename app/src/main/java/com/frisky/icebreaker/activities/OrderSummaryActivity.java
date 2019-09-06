@@ -2,10 +2,13 @@ package com.frisky.icebreaker.activities;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -37,6 +40,9 @@ public class OrderSummaryActivity extends AppCompatActivity implements UIActivit
     ArrayList<Object> mOrderList = new ArrayList<>();
 
     OrderListAdapter orderListAdapter;
+    ProgressBar progressBar;
+
+    ConstraintLayout mLayout;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +58,10 @@ public class OrderSummaryActivity extends AppCompatActivity implements UIActivit
         mFinalTotal = findViewById(R.id.text_final_total);
         mOrderListRecyclerView = findViewById(R.id.recycler_view_final_order);
 
+        mLayout = findViewById(R.id.layout_order_summary);
+        mLayout.setVisibility(View.GONE);
+        progressBar = findViewById(R.id.progress_summary);
+
         mBackButton = findViewById(R.id.button_back);
         mBackButton.setOnClickListener(v -> this.onBackPressed());
 
@@ -64,7 +74,7 @@ public class OrderSummaryActivity extends AppCompatActivity implements UIActivit
         mOrderListRecyclerView.setAdapter(orderListAdapter);
 
         if (getIntent().hasExtra("session_id") && getIntent().hasExtra("restaurant_id")) {
-            getOrderDetails(getIntent().getStringExtra("restaurant_id"),
+            getOrderSummary(getIntent().getStringExtra("restaurant_id"),
                     getIntent().getStringExtra("session_id"));
         }
 
@@ -95,6 +105,7 @@ public class OrderSummaryActivity extends AppCompatActivity implements UIActivit
                            String amount = String.format("%.2f", billAmount);
                            mFinalTotal.setText(amount);
                        }
+                       getOrderDetails(restaurant, session);
                    }
                 });
     }
@@ -147,8 +158,8 @@ public class OrderSummaryActivity extends AppCompatActivity implements UIActivit
 
                         orderListAdapter = new OrderListAdapter(getApplicationContext(), mOrderList);
                         mOrderListRecyclerView.setAdapter(orderListAdapter);
-
-                        getOrderSummary(restaurantID, sessionID);
+                        mLayout.setVisibility(View.VISIBLE);
+                        progressBar.setVisibility(View.GONE);
                     }
                 });
     }

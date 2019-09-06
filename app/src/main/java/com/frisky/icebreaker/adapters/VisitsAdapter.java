@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -32,6 +33,9 @@ public class VisitsAdapter extends PagerAdapter {
     private Context context;
     private List<OrderSummary> mSessionHistoryList = new ArrayList<>();
     private OrderSummaryListAdapter mOrderSummaryAdapter;
+
+    private RecyclerView mRecyclerPubView;
+    private ProgressBar progressBar;
 
     public VisitsAdapter(Context applicationContext) {
         context = applicationContext;
@@ -70,12 +74,14 @@ public class VisitsAdapter extends PagerAdapter {
                 layout = (ViewGroup) inflater.inflate(R.layout.empty_state_fragment_active_visits, container, false);
                 break;
             case 1:
-                layout = (ViewGroup) inflater.inflate(R.layout.recycler_view, container, false);
+                layout = (ViewGroup) inflater.inflate(R.layout.fragment_order_summary_list, container, false);
 
                 getOrderHistory();
 
-                RecyclerView mRecyclerPubView;
+                progressBar = layout.findViewById(R.id.progress_order_summary);
                 mRecyclerPubView = layout.findViewById(R.id.recycler_view);
+
+                mRecyclerPubView.setVisibility(View.GONE);
 
                 mRecyclerPubView.setPadding(0, 0, 0, 0);
                 mRecyclerPubView.setPadding(0, 0, 0, 225);
@@ -125,6 +131,8 @@ public class VisitsAdapter extends PagerAdapter {
                                         String.valueOf(restTask.getResult().get("name")),
                                         document.getId(), endTime, total);
                                 mSessionHistoryList.add(summary);
+                                mRecyclerPubView.setVisibility(View.VISIBLE);
+                                progressBar.setVisibility(View.GONE);
                                 mOrderSummaryAdapter.notifyDataSetChanged();
                             });
                         }
