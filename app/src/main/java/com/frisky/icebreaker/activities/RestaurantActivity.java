@@ -40,7 +40,7 @@ public class RestaurantActivity extends AppCompatActivity implements UIActivity 
     AppBarLayout mAppBarLayout;
     Toolbar mToolbar;
 
-    List<Uri> mMenuList = new ArrayList<>();
+    ArrayList<Uri> mMenuList = new ArrayList<>();
 
     MenuImagesAdapter menuImagesAdapter;
 
