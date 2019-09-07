@@ -3,9 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.frisky.icebreaker">
 
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <uses-permission android:name="android.permission.CAMERA" />
-
     <application
         android:allowBackup="false"
         android:icon="@mipmap/icon_first"
@@ -14,6 +11,7 @@
         android:roundIcon="@mipmap/icon_first_round"
         android:theme="@style/FriskyAppTheme"
         tools:ignore="UnusedAttribute">
+        <activity android:name=".activities.MenuViewActivity"></activity>
         <activity android:name=".activities.SlideshowActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,7 +19,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".activities.SignInActivity" />
         <activity android:name=".activities.SignInEmailActivity" />
         <activity android:name=".activities.SignUpActivity" />
@@ -42,9 +39,14 @@
         <activity android:name=".activities.OrderActivity" />
         <activity android:name=".activities.OptionsActivity" />
         <activity android:name=".activities.OrderSummaryActivity" />
+
         <service
             android:name=".services.OrderSessionService"
             android:enabled="true"
             android:exported="false" />
     </application>
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
 </manifest>
