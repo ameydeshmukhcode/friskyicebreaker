@@ -1,8 +1,8 @@
 package com.frisky.icebreaker.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
-import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.frisky.icebreaker.R;
+import com.frisky.icebreaker.activities.MenuViewActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -19,10 +20,10 @@ import java.util.List;
 
 public class MenuImagesAdapter extends RecyclerView.Adapter<MenuImagesAdapter.ImageViewHolder> {
 
-    List<Uri> mMenuList = new ArrayList<>();
-    Context context;
+    private ArrayList<Uri> mMenuList;
+    private Context context;
 
-    public MenuImagesAdapter(Context applicationContext, List<Uri> list) {
+    public MenuImagesAdapter(Context applicationContext, ArrayList<Uri> list) {
         this.context = applicationContext;
         this.mMenuList = list;
     }
@@ -47,6 +48,13 @@ public class MenuImagesAdapter extends RecyclerView.Adapter<MenuImagesAdapter.Im
     @Override
     public void onBindViewHolder(@NonNull ImageViewHolder holder, int position) {
         Picasso.get().load(mMenuList.get(position)).into(holder.menuImage);
+        holder.menuImage.setOnClickListener(v -> {
+            Intent showMenu = new Intent(context.getApplicationContext(), MenuViewActivity.class);
+            showMenu.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            showMenu.putParcelableArrayListExtra("menu_list", mMenuList);
+            showMenu.putExtra("menu_page", position);
+            context.getApplicationContext().startActivity(showMenu);
+        });
     }
 
     @Override
