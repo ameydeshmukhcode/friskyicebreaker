@@ -128,6 +128,7 @@
     <string name="current">Current</string>
     <string name="gst">GST</string>
     <string name="final_total">Final Total</string>
+    <string name="beta_banner">Welcome to the frisky beta!\nHelp us get better</string>
     <string-array name="genders">
         <item>@string/male</item>
         <item>@string/female</item>
