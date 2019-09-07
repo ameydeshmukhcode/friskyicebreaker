@@ -20,7 +20,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/museosans900"
+            android:fontFamily="@font/museosans700"
             android:gravity="center"
             android:padding="16dp"
             android:text="@string/beta_banner"
