@@ -8,7 +8,7 @@ public class MenuItem implements Serializable {
     private String description;
     private int price;
     private boolean available;
-    private int count = 1;
+    private int count = 0;
 
     public MenuItem(String id, String name, String description, int price, boolean available) {
         this.id = id;

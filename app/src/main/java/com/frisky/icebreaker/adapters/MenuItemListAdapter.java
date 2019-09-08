@@ -119,10 +119,11 @@ public class MenuItemListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 MenuItem menuItem = (MenuItem) mMenu.get(position);
                 boolean available = menuItem.getAvailable();
 
-                if (Integer.parseInt(itemHolder.mCount.getText().toString()) > 0) {
+                if (menuItem.getCount() > 0) {
                     itemHolder.mAddText.setVisibility(View.INVISIBLE);
                     itemHolder.mRemove.setVisibility(View.VISIBLE);
                     itemHolder.mCount.setVisibility(View.VISIBLE);
+                    itemHolder.mCount.setText(String.valueOf(menuItem.getCount()));
                 }
                 else {
                     itemHolder.mAddText.setVisibility(View.VISIBLE);
@@ -141,8 +142,8 @@ public class MenuItemListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 itemHolder.mPrice.setText(String.valueOf(menuItem.getPrice()));
 
                 itemHolder.mAddText.setOnClickListener(v -> {
-                    int countInc = Integer.parseInt(itemHolder.mCount.getText().toString()) + 1;
-                    itemHolder.mCount.setText(String.valueOf(countInc));
+                    menuItem.incrementCount();
+                    itemHolder.mCount.setText(String.valueOf(menuItem.getCount()));
                     itemHolder.mAddText.setVisibility(View.INVISIBLE);
                     itemHolder.mRemove.setVisibility(View.VISIBLE);
                     itemHolder.mCount.setVisibility(View.VISIBLE);
@@ -150,8 +151,8 @@ public class MenuItemListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 });
 
                 itemHolder.mAdd.setOnClickListener(v -> {
-                    int countInc = Integer.parseInt(itemHolder.mCount.getText().toString()) + 1;
-                    itemHolder.mCount.setText(String.valueOf(countInc));
+                    menuItem.incrementCount();
+                    itemHolder.mCount.setText(String.valueOf(menuItem.getCount()));
                     itemHolder.mAddText.setVisibility(View.INVISIBLE);
                     itemHolder.mRemove.setVisibility(View.VISIBLE);
                     itemHolder.mCount.setVisibility(View.VISIBLE);
@@ -159,11 +160,10 @@ public class MenuItemListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 });
                 
                 itemHolder.mRemove.setOnClickListener(v -> {
-                    int count = Integer.parseInt(itemHolder.mCount.getText().toString());
-                    int countDec = Integer.parseInt(itemHolder.mCount.getText().toString()) - 1;
-                    itemHolder.mCount.setText(String.valueOf(countDec));
+                    menuItem.decrementCount();
+                    itemHolder.mCount.setText(String.valueOf(menuItem.getCount()));
                     orderUpdateListener.removeFromOrder(menuItem);
-                    if (count == 1) {
+                    if (menuItem.getCount() == 0) {
                         itemHolder.mAddText.setVisibility(View.VISIBLE);
                         itemHolder.mRemove.setVisibility(View.INVISIBLE);
                         itemHolder.mCount.setVisibility(View.INVISIBLE);

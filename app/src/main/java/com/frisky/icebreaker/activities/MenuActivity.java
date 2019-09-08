@@ -208,7 +208,6 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
             boolean updatedItem = false;
             for (int i = 0; i < mCartList.size(); i++) {
                 if (mCartList.get(i).getId().equals(item.getId())) {
-                    mCartList.get(i).incrementCount();
                     updatedItem = true;
                     break;
                 }
@@ -234,11 +233,8 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
 
         for (int i = 0; i < mCartList.size(); i++) {
             if (mCartList.get(i).getId().equals(item.getId())) {
-                if (mCartList.get(i).getCount() == 1) {
+                if (mCartList.get(i).getCount() == 0) {
                     mCartList.remove(i);
-                }
-                else {
-                    mCartList.get(i).decrementCount();
                 }
                 break;
             }
