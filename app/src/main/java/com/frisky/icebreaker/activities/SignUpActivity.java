@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.interfaces.FormActivity;
 import com.frisky.icebreaker.interfaces.UIActivity;
+import com.frisky.icebreaker.ui.components.dialogs.ProgressDialog;
 import com.google.firebase.FirebaseNetworkException;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
@@ -29,6 +30,8 @@ public class SignUpActivity extends AppCompatActivity implements FormActivity, U
     ImageButton mBackButton;
 
     FirebaseAuth mAuth;
+
+    ProgressDialog progressDialog = new ProgressDialog("Signing up with Frisky");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +57,8 @@ public class SignUpActivity extends AppCompatActivity implements FormActivity, U
     }
 
     private void handleSignUp(String email, String password) {
+        progressDialog.show(getSupportFragmentManager(), "signing up");
+        progressDialog.setCancelable(false);
         mErrorText.setText("");
         if (validateForm()) {
             mAuth.createUserWithEmailAndPassword(email, password)
@@ -64,10 +69,12 @@ public class SignUpActivity extends AppCompatActivity implements FormActivity, U
                                     Toast.LENGTH_SHORT).show();
                             mAuth.signOut();
                             // go back to SignInActivity and finish this
+                            progressDialog.dismiss();
                             super.onBackPressed();
                             finish();
                         }
                         else if (!task.isSuccessful()) {
+                            progressDialog.dismiss();
                             try {
                                 if (task.getException() != null)
                                     throw task.getException();
@@ -93,6 +100,9 @@ public class SignUpActivity extends AppCompatActivity implements FormActivity, U
                             }
                         }
                     });
+        }
+        else {
+            progressDialog.dismiss();
         }
     }
 

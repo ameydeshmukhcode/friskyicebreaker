@@ -5,11 +5,13 @@ import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
@@ -19,6 +21,7 @@ import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.interfaces.UIActivity;
 import com.frisky.icebreaker.ui.assistant.RoundRectTransformation;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.squareup.picasso.Picasso;
 
 public class OptionsActivity extends AppCompatActivity implements UIActivity {
@@ -78,20 +81,27 @@ public class OptionsActivity extends AppCompatActivity implements UIActivity {
         Typeface typeface = ResourcesCompat.getFont(getApplicationContext(), R.font.museosans700);
         mToolbarText.setTypeface(typeface);
 
-//        mLogoutButton = findViewById(R.id.button_logout);
-//        mLogoutButton.setOnClickListener(v -> {
-//            mAuth.signOut();
-//
-//            FirebaseUser user = mAuth.getCurrentUser();
-//            if (user == null) {
-//                Intent signOutIntent = new Intent(getApplicationContext(), SignInActivity.class);
-//                signOutIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
-//                        Intent.FLAG_ACTIVITY_CLEAR_TASK |
-//                        Intent.FLAG_ACTIVITY_NEW_TASK);
-//                startActivity(signOutIntent);
-//                finish();
-//            }
-//        });
+        mLogoutButton = findViewById(R.id.button_logout);
+        mLogoutButton.setOnClickListener(v -> {
+            if (!sharedPreferences.getBoolean("session_active", false)) {
+                mAuth.signOut();
+
+                FirebaseUser user = mAuth.getCurrentUser();
+                if (user == null) {
+                    Intent signOutIntent = new Intent(getApplicationContext(), SignInActivity.class);
+                    signOutIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
+                            Intent.FLAG_ACTIVITY_CLEAR_TASK |
+                            Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(signOutIntent);
+                    finish();
+                }
+            }
+            else {
+                Toast toast = Toast.makeText(this, "You have an active session!", Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.CENTER, 0, 0);
+                toast.show();
+            }
+        });
 
         mVersionText = findViewById(R.id.text_version);
         String version = BuildConfig.VERSION_NAME;
