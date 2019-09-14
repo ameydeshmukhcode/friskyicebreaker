@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.interfaces.FormActivity;
 import com.frisky.icebreaker.interfaces.UIActivity;
+import com.frisky.icebreaker.ui.components.dialogs.ProgressDialog;
 import com.google.firebase.FirebaseNetworkException;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
@@ -34,6 +35,8 @@ public class SignInEmailActivity extends AppCompatActivity implements UIActivity
     FirebaseAuth mAuth;
 
     private int PW_ENTRY_FAILED = 0;
+
+    ProgressDialog progressDialog = new ProgressDialog("Signing you in");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,6 +140,8 @@ public class SignInEmailActivity extends AppCompatActivity implements UIActivity
     }
 
     private void handleLogin() {
+        progressDialog.show(getSupportFragmentManager(), "signing in");
+        progressDialog.setCancelable(false);
         mErrorText.setText("");
         mErrorText.setOnClickListener(null);
         if (validateForm()){
@@ -146,6 +151,7 @@ public class SignInEmailActivity extends AppCompatActivity implements UIActivity
                             verifyLogin();
                         }
                         else {
+                            progressDialog.dismiss();
                             try {
                                 if (task.getException() != null)
                                     throw task.getException();
@@ -179,6 +185,9 @@ public class SignInEmailActivity extends AppCompatActivity implements UIActivity
                         }
                     });
         }
+        else {
+            progressDialog.dismiss();
+        }
     }
 
     private void verifyLogin() {
@@ -188,6 +197,7 @@ public class SignInEmailActivity extends AppCompatActivity implements UIActivity
         boolean emailVerified = user.isEmailVerified();
 
         if (!emailVerified) {
+            progressDialog.dismiss();
             mErrorText.setText(getString(R.string.error_email_not_verified));
             mErrorText.setOnClickListener(v -> user.sendEmailVerification()
                     .addOnCompleteListener(task -> {
@@ -204,6 +214,8 @@ public class SignInEmailActivity extends AppCompatActivity implements UIActivity
         launchHome.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
                 Intent.FLAG_ACTIVITY_CLEAR_TASK |
                 Intent.FLAG_ACTIVITY_NEW_TASK);
+
+        progressDialog.dismiss();
         startActivity(launchHome);
         finish();
     }

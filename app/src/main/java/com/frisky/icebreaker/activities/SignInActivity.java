@@ -8,6 +8,7 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.frisky.icebreaker.R;
+import com.frisky.icebreaker.ui.components.dialogs.ProgressDialog;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -29,6 +30,8 @@ public class SignInActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
     
     GoogleSignInClient mGoogleSignInClient;
+
+    ProgressDialog progressDialog = new ProgressDialog("Signing you in");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +76,8 @@ public class SignInActivity extends AppCompatActivity {
                 // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 if (account != null) {
+                    progressDialog.show(getSupportFragmentManager(), "sign in");
+                    progressDialog.setCancelable(false);
                     firebaseAuthWithGoogle(account);
                 }
             }
@@ -88,10 +93,12 @@ public class SignInActivity extends AppCompatActivity {
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
+                        progressDialog.dismiss();
                         // Sign in success, update UI with the signed-in user's information
                         goToHome();
                     }
                     else {
+                        progressDialog.dismiss();
                         // If sign in fails, display a message to the user.
                         Log.w("Warning", "signInWithCredential:failure", task.getException());
                     }
