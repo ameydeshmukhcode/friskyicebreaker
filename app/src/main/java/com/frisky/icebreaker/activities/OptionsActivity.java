@@ -5,11 +5,13 @@ import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
@@ -81,16 +83,23 @@ public class OptionsActivity extends AppCompatActivity implements UIActivity {
 
         mLogoutButton = findViewById(R.id.button_logout);
         mLogoutButton.setOnClickListener(v -> {
-            mAuth.signOut();
+            if (!sharedPreferences.getBoolean("session_active", false)) {
+                mAuth.signOut();
 
-            FirebaseUser user = mAuth.getCurrentUser();
-            if (user == null) {
-                Intent signOutIntent = new Intent(getApplicationContext(), SignInActivity.class);
-                signOutIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
-                        Intent.FLAG_ACTIVITY_CLEAR_TASK |
-                        Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(signOutIntent);
-                finish();
+                FirebaseUser user = mAuth.getCurrentUser();
+                if (user == null) {
+                    Intent signOutIntent = new Intent(getApplicationContext(), SignInActivity.class);
+                    signOutIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
+                            Intent.FLAG_ACTIVITY_CLEAR_TASK |
+                            Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(signOutIntent);
+                    finish();
+                }
+            }
+            else {
+                Toast toast = Toast.makeText(this, "You have an active session!", Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.CENTER, 0, 0);
+                toast.show();
             }
         });
 
