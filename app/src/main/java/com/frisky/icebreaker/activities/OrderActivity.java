@@ -247,23 +247,23 @@ public class OrderActivity extends AppCompatActivity implements ClearBillDialog.
 
             if (snapshot != null && snapshot.exists()) {
                 if (snapshot.contains("amount_payable")) {
-                    double billAmount = Double.parseDouble(snapshot.getString("amount_payable"));
+                    float amountPayable = Float.parseFloat(snapshot.getString("amount_payable"));
                     @SuppressLint("DefaultLocale")
-                    String amount = String.format("%.2f", billAmount);
-                    mOrderTotalText.setText(amount);
+                    String amountText = String.format("%.2f", amountPayable);
+                    mOrderTotalText.setText(amountText);
                     sharedPreferences.edit().putString("amount_payable", snapshot.getString("amount_payable")).apply();
                 }
                 if (snapshot.contains("bill_amount")) {
-                    double billAmount = Double.parseDouble(snapshot.getString("bill_amount"));
+                    float billAmount = Float.parseFloat(snapshot.getString("bill_amount"));
                     @SuppressLint("DefaultLocale")
-                    String amount = String.format("%.2f", billAmount);
-                    mBillAmount.setText(amount);
+                    String amountText = String.format("%.2f", billAmount);
+                    mBillAmount.setText(amountText);
                 }
                 if (snapshot.contains("gst")) {
-                    double billAmount = Double.parseDouble(snapshot.getString("gst"));
+                    float gst = Float.parseFloat(snapshot.getString("gst"));
                     @SuppressLint("DefaultLocale")
-                    String amount = String.format("%.2f", billAmount);
-                    mGST.setText(amount);
+                    String amountText = String.format("%.2f", gst);
+                    mGST.setText(amountText);
                 }
 
                 Log.d(getString(R.string.tag_debug), "Current data: " + snapshot.getData());
@@ -311,9 +311,11 @@ public class OrderActivity extends AppCompatActivity implements ClearBillDialog.
                                     PendingIntent pendingIntent =
                                             PendingIntent.getActivity(this, 0, notificationIntent, 0);
 
+                                    float amountPayable = Float.parseFloat(sharedPreferences
+                                            .getString("amount_payable", "0.00"));
+
                                     @SuppressLint("DefaultLocale")
-                                    String amount = String.format("%.2f",
-                                            Double.parseDouble(sharedPreferences.getString("amount_payable", "")));
+                                    String amount = String.format("%.2f", amountPayable);
 
                                     String billAmountString = "You've requested for the bill. Bill Amount: "
                                             + getString(R.string.rupee)
