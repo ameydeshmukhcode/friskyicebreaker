@@ -115,39 +115,7 @@ public class QRScanActivity extends AppCompatActivity implements ConfirmSessionS
                         .collection("restaurants")
                         .document(restaurantID);
 
-                restaurantRef.get().addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        DocumentSnapshot document = task.getResult();
-                        String status;
-                        if (document != null) {
-                            if (document.contains("status_listing")) {
-                                status = document.getString("status_listing");
-
-                                if (status == null)
-                                    return;
-
-                                if (BuildConfig.DEBUG) {
-                                    if (!status.contains("debug")) {
-                                        Toast.makeText(getBaseContext(),"QR Code invalid", Toast.LENGTH_LONG).show();
-                                        mCodeScanner.startPreview();
-                                    }
-                                    else {
-                                        continueSessionStart(restaurantRef);
-                                    }
-                                }
-                                else {
-                                    if (status.contains("debug")) {
-                                        Toast.makeText(getBaseContext(),"QR Code invalid", Toast.LENGTH_LONG).show();
-                                        mCodeScanner.startPreview();
-                                    }
-                                    else {
-                                        continueSessionStart(restaurantRef);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                });
+                continueSessionStart(restaurantRef);
             }
         }));
         mCodeScanner.startPreview();
