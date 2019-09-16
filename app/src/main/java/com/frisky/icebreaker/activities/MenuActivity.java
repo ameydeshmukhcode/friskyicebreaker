@@ -23,10 +23,8 @@ import com.frisky.icebreaker.core.structures.MenuCategory;
 import com.frisky.icebreaker.core.structures.MenuItem;
 import com.frisky.icebreaker.interfaces.OnOrderUpdateListener;
 import com.frisky.icebreaker.interfaces.UIActivity;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
@@ -98,9 +96,7 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
 
         if (sharedPreferences.getBoolean("order_active", false)) {
             mBottomSheetOrder.setVisibility(View.VISIBLE);
-            mBottomSheetOrder.setOnClickListener(v -> {
-                startActivity(new Intent(getApplicationContext(), OrderActivity.class));
-            });
+            mBottomSheetOrder.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), OrderActivity.class)));
             mRecyclerMenuListView.setPadding(0, 0, 0, 0);
             mRecyclerMenuListView.setPadding(0, 0, 0, 225);
             mRecyclerMenuListView.setClipToPadding(false);
@@ -256,9 +252,7 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
         else {
             if (sharedPreferences.getBoolean("order_active", false)) {
                 mBottomSheetOrder.setVisibility(View.VISIBLE);
-                mBottomSheetOrder.setOnClickListener(v -> {
-                    startActivity(new Intent(getApplicationContext(), OrderActivity.class));
-                });
+                mBottomSheetOrder.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), OrderActivity.class)));
                 mBottomSheetCart.setVisibility(View.GONE);
             }
             else {
