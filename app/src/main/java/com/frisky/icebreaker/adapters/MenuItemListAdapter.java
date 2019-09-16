@@ -10,16 +10,15 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.frisky.icebreaker.R;
+import com.frisky.icebreaker.core.structures.MenuCategory;
 import com.frisky.icebreaker.core.structures.MenuItem;
 import com.frisky.icebreaker.interfaces.OnOrderUpdateListener;
 
-import java.util.HashMap;
 import java.util.List;
 
 public class MenuItemListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<Object> mMenu;
-    private HashMap<String, String> mCategories;
 
     private final int CATEGORY_VIEW = 77;
     private final int MENU_ITEM_VIEW = 88;
@@ -56,15 +55,14 @@ public class MenuItemListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }
     }
 
-    public MenuItemListAdapter(List<Object> menu, HashMap<String, String> categories, OnOrderUpdateListener listener) {
+    public MenuItemListAdapter(List<Object> menu, OnOrderUpdateListener listener) {
         this.mMenu = menu;
-        this.mCategories = categories;
         this.orderUpdateListener = listener;
     }
 
     @Override
     public int getItemViewType(int position) {
-        if (mMenu.get(position) instanceof String) {
+        if (mMenu.get(position) instanceof MenuCategory) {
             return CATEGORY_VIEW;
         }
         else if (mMenu.get(position) instanceof MenuItem) {
@@ -101,7 +99,7 @@ public class MenuItemListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder viewHolder, int position) {
         int CURRENT_VIEW = 0;
 
-        if (mMenu.get(position) instanceof String) {
+        if (mMenu.get(position) instanceof MenuCategory) {
             CURRENT_VIEW = CATEGORY_VIEW;
         }
         else if (mMenu.get(position) instanceof MenuItem) {
@@ -111,7 +109,7 @@ public class MenuItemListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         switch (CURRENT_VIEW) {
             case CATEGORY_VIEW:
                 MenuSubCategoryHolder view = (MenuSubCategoryHolder) viewHolder;
-                view.mName.setText(mCategories.get(mMenu.get(position).toString()));
+                view.mName.setText(((MenuCategory) mMenu.get(position)).getName());
                 break;
 
             case MENU_ITEM_VIEW:
