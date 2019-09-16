@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.adapters.MenuItemListAdapter;
+import com.frisky.icebreaker.core.structures.MenuCategory;
 import com.frisky.icebreaker.core.structures.MenuItem;
 import com.frisky.icebreaker.interfaces.OnOrderUpdateListener;
 import com.frisky.icebreaker.interfaces.UIActivity;
@@ -29,7 +30,6 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
@@ -43,7 +43,8 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
     TextView mTableSerial;
 
     private List<Object> mMenu = new ArrayList<>();
-    private HashMap<String, String> mCategories = new HashMap<>();
+    private List<MenuCategory> mCategories = new ArrayList<>();
+    String restaurantID;
 
     int mCartTotal = 0;
     ArrayList<MenuItem> mCartList = new ArrayList<>();
@@ -61,6 +62,8 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
 
         sharedPreferences = getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE);
         setContentView(R.layout.activity_menu);
+
+        restaurantID = sharedPreferences.getString("restaurant_id", "");
 
         LocalBroadcastManager.getInstance(this).registerReceiver(
                 new BroadcastReceiver() {
@@ -120,10 +123,10 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
     private void setUserSession() {
         mRestName.setText(sharedPreferences.getString("restaurant_name", ""));
         mTableSerial.setText(sharedPreferences.getString("table_name", ""));
-        setMenu(sharedPreferences.getString("restaurant_id", ""));
+        setMenu();
     }
 
-    private void setMenu(String restaurant) {
+    private void setMenu() {
         mRecyclerMenuListView.setOverScrollMode(View.OVER_SCROLL_NEVER);
 
         RecyclerView.LayoutManager mMenuListViewLayoutManager;
@@ -132,43 +135,49 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
         mRecyclerMenuListView.setLayoutManager(mMenuListViewLayoutManager);
 
         // specify an adapter (see also next example)
-        mMenuListViewAdapter = new MenuItemListAdapter(mMenu, mCategories, this);
+        mMenuListViewAdapter = new MenuItemListAdapter(mMenu, this);
         mRecyclerMenuListView.setAdapter(mMenuListViewAdapter);
 
-        prepareMenuData(restaurant);
+        prepareMenuData();
     }
 
-    private void prepareMenuData(String restID) {
+    private void prepareMenuData() {
         FirebaseFirestore firestore = FirebaseFirestore.getInstance();
 
-        CollectionReference categoriesRef = firestore.collection("restaurants").document(restID)
-                .collection("categories");
-
-        categoriesRef.get().addOnCompleteListener(task -> {
+        firestore.collection("restaurants")
+                .document(restaurantID)
+                .collection("categories")
+                .orderBy("order")
+                .get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 if (task.getResult() != null) {
                     for (DocumentSnapshot document : task.getResult()) {
-                        mCategories.put(document.getId(), document.getString("name"));
+                        MenuCategory menuCategory = new MenuCategory(document.getId(),  document.getString("name"));
+                        mCategories.add(menuCategory);
                     }
+                    int current = 0;
+                    getMenuCategory(current);
                 }
             }
         });
+    }
 
-        Query itemsListRef = firestore.collection("restaurants").document(restID)
-                .collection("items").orderBy("category_id");
+    private void getMenuCategory(int index) {
+        if (index > mCategories.size() - 1) {
+            return;
+        }
 
-        itemsListRef.get().addOnCompleteListener(task -> {
+        final MenuCategory menuCategory = mCategories.get(index);
+
+        FirebaseFirestore.getInstance()
+                .collection("restaurants").document(restaurantID)
+                .collection("items")
+                .whereEqualTo("category_id", menuCategory.getId())
+                .get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
-                String category = "";
                 if (task.getResult() != null) {
+                    mMenu.add(menuCategory);
                     for (QueryDocumentSnapshot document : task.getResult()) {
-                        String currentCategory = document.getString("category_id");
-                        if (currentCategory == null)
-                            return;
-                        if (!category.equals(currentCategory)) {
-                            category = currentCategory;
-                            mMenu.add(currentCategory);
-                        }
                         boolean available = true;
                         String name = document.getString("name");
                         if (document.contains("is_available")) {
@@ -185,6 +194,7 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
                         mMenu.add(item);
                         mMenuListViewAdapter.notifyDataSetChanged();
                     }
+                    getMenuCategory(index + 1);
                 }
             }
             else {
