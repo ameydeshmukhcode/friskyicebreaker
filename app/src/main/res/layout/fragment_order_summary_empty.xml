@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/museosans300"
             android:gravity="center"
-            android:text="@string/empty_state_active_visits"
+            android:text="@string/empty_state_order_summary"
             android:textAllCaps="false"
             android:textSize="@dimen/text_title_size"
             app:layout_constraintEnd_toEndOf="parent"
