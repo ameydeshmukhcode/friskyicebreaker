@@ -3,7 +3,7 @@ package com.frisky.icebreaker.activities;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageButton;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -35,7 +35,7 @@ public class OrderSummaryActivity extends AppCompatActivity implements UIActivit
     TextView mFinalTotal;
     TextView mOrderTotal;
     TextView mGST;
-    ImageButton mBackButton;
+    Button mBackButton;
 
     RecyclerView mOrderListRecyclerView;
 

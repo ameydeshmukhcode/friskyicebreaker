@@ -13,7 +13,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -46,7 +45,7 @@ import static com.frisky.icebreaker.notifications.NotificationFactory.createNoti
 
 public class OrderActivity extends AppCompatActivity implements ClearBillDialog.OnClearBillListener {
 
-    ImageButton mBackButton;
+    Button mBackButton;
     Button mClearBill;
     Button mAddMoreButton;
     TextView mOrderTotalText;
