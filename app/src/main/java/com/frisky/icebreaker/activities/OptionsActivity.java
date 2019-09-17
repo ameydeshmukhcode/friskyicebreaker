@@ -2,19 +2,16 @@ package com.frisky.icebreaker.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Typeface;
 import android.os.Bundle;
-import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.res.ResourcesCompat;
+import androidx.appcompat.widget.Toolbar;
 
 import com.frisky.icebreaker.BuildConfig;
 import com.frisky.icebreaker.R;
@@ -26,9 +23,6 @@ import com.squareup.picasso.Picasso;
 
 public class OptionsActivity extends AppCompatActivity implements UIActivity {
 
-    ImageButton mBackButton;
-    ImageView mToolbarLogo;
-    TextView mToolbarText;
     Button mLogoutButton;
     Button mProfileButton;
 
@@ -37,6 +31,8 @@ public class OptionsActivity extends AppCompatActivity implements UIActivity {
     TextView mBioText;
 
     TextView mVersionText;
+
+    Toolbar mToolbar;
 
     FirebaseAuth mAuth;
     SharedPreferences sharedPreferences;
@@ -54,17 +50,16 @@ public class OptionsActivity extends AppCompatActivity implements UIActivity {
 
     @Override
     public void initUI() {
-        mBackButton = findViewById(R.id.button_app_bar_left);
-        mBackButton.setImageResource(R.drawable.ic_arrow_back);
-        mBackButton.setOnClickListener(v -> OptionsActivity.super.onBackPressed());
-
-        mToolbarLogo = findViewById(R.id.image_logo_text);
-        mToolbarLogo.setVisibility(View.GONE);
-
         mProfileImage = findViewById(R.id.image_profile);
         mNameText = findViewById(R.id.text_name);
         mBioText = findViewById(R.id.text_bio);
         mProfileButton = findViewById(R.id.button_profile);
+
+        mToolbar = findViewById(R.id.toolbar_options);
+
+        mToolbar.setNavigationIcon(R.drawable.ic_arrow_back);
+        mToolbar.setNavigationOnClickListener(v -> onBackPressed());
+        mToolbar.setTitle(getString(R.string.options));
 
         mProfileImage.setVisibility(View.GONE);
         mNameText.setVisibility(View.GONE);
@@ -74,12 +69,6 @@ public class OptionsActivity extends AppCompatActivity implements UIActivity {
             startActivity(new Intent(this, SetupProfileActivity.class));
             finish();
         });
-
-        mToolbarText = findViewById(R.id.text_app_bar);
-        mToolbarText.setText(R.string.options);
-        mToolbarText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
-        Typeface typeface = ResourcesCompat.getFont(getApplicationContext(), R.font.museosans700);
-        mToolbarText.setTypeface(typeface);
 
         mLogoutButton = findViewById(R.id.button_logout);
         mLogoutButton.setOnClickListener(v -> {
