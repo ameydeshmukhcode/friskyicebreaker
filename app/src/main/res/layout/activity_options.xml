@@ -97,7 +97,7 @@
         android:id="@+id/layout_version"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@id/button_logout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -129,18 +129,20 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button_logout"
+        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:insetTop="0dp"
         android:insetBottom="0dp"
         android:text="@string/logout"
         android:textAppearance="@style/FriskyText"
+        android:textColor="@color/textDark"
         android:textSize="@dimen/text_title_size"
+        app:backgroundTint="@color/backgroundLight"
         app:cornerRadius="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        style="@style/Widget.MaterialComponents.Button.UnelevatedButton" >
+        app:layout_constraintStart_toStartOf="parent">
 
     </com.google.android.material.button.MaterialButton>
 
