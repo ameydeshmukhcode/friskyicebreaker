@@ -8,7 +8,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageButton;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -36,7 +36,7 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
 
     SharedPreferences sharedPreferences;
 
-    ImageButton mBackButton;
+    Button mBackButton;
     TextView mRestName;
     TextView mTableSerial;
 

@@ -1,6 +1,5 @@
 package com.frisky.icebreaker.activities;
 
-import android.content.pm.PackageInfo;
 import android.content.res.ColorStateList;
 import android.net.Uri;
 import android.os.Bundle;
@@ -26,7 +25,6 @@ import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import static com.frisky.icebreaker.ui.assistant.UIAssistant.getRatingBadgeColor;
 
@@ -58,7 +56,7 @@ public class RestaurantActivity extends AppCompatActivity implements UIActivity 
         mLocationText = findViewById(R.id.text_location);
         mImageHeader = findViewById(R.id.image_restaurant_header);
         mAppBarLayout = findViewById(R.id.app_bar_container);
-        mToolbar = findViewById(R.id.app_bar_pub);
+        mToolbar = findViewById(R.id.toolbar_restaurant);
 
         mToolbar.setNavigationIcon(R.drawable.ic_arrow_back);
         mToolbar.setNavigationOnClickListener(v -> onBackPressed());

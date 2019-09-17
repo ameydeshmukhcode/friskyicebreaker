@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,7 +26,7 @@ public class SignUpActivity extends AppCompatActivity implements FormActivity, U
     EditText mPasswordInput;
     EditText mConfirmPasswordInput;
     TextView mErrorText;
-    ImageButton mBackButton;
+    Button mBackButton;
 
     FirebaseAuth mAuth;
 

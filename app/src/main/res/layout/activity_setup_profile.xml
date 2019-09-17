@@ -6,27 +6,39 @@
     android:layout_height="match_parent"
     tools:context=".activities.SetupProfileActivity">
 
-    <ImageButton
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/button_cancel"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
         android:layout_width="@dimen/button_square_dimen"
         android:layout_height="@dimen/button_square_dimen"
-        android:background="@color/transparent"
-        android:tint="@color/tintDark"
+        android:layout_gravity="center"
+        app:icon="@drawable/ic_close"
+        app:iconGravity="textEnd"
+        app:iconTint="@android:color/black"
+        app:rippleColor="@color/tintDark"
+        android:layout_marginStart="8dp"
+        app:strokeColor="@android:color/transparent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_close" />
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageButton
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/button_done"
-        android:layout_width="@dimen/button_square_dimen"
-        android:layout_height="@dimen/button_square_dimen"
-        android:background="@color/transparent"
-        android:tint="@color/tintDark"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/FriskyText"
+        android:text="@string/done"
+        app:icon="@drawable/ic_status_accepted"
+        app:iconTint="@android:color/black"
+        android:textColor="@android:color/black"
+        android:layout_marginEnd="8dp"
+        app:rippleColor="@color/tintDark"
+        app:layout_constraintBottom_toBottomOf="@+id/button_cancel"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_done" />
+        app:layout_constraintTop_toTopOf="@+id/button_cancel" />
 
     <ScrollView
+        android:id="@+id/scrollView2"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"

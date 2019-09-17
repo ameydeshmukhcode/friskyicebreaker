@@ -6,15 +6,20 @@
     android:layout_height="match_parent"
     tools:context=".activities.SignUpActivity">
 
-    <ImageButton
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/button_back"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
         android:layout_width="@dimen/button_square_dimen"
         android:layout_height="@dimen/button_square_dimen"
-        android:background="@color/transparent"
-        android:tint="@color/tintDark"
+        android:layout_gravity="center"
+        app:icon="@drawable/ic_arrow_back"
+        app:iconGravity="textEnd"
+        app:iconTint="@android:color/black"
+        app:rippleColor="@color/tintDark"
+        android:layout_marginStart="8dp"
+        app:strokeColor="@android:color/transparent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_arrow_back" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/input_email"

@@ -3,7 +3,8 @@ package com.frisky.icebreaker.activities;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageButton;
+import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
@@ -20,8 +21,11 @@ public class MenuViewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_view);
 
-        ImageButton nextButton = findViewById(R.id.button_next_image);
-        ImageButton prevButton = findViewById(R.id.button_previous_image);
+        Button nextButton = findViewById(R.id.button_next_image);
+        Button prevButton = findViewById(R.id.button_previous_image);
+
+        TextView textCurrent = findViewById(R.id.text_current_page);
+        TextView totalPages = findViewById(R.id.text_total_pages);
 
         ViewPager slideshow = findViewById(R.id.pager_menu_pages);
         ArrayList<Uri> mMenuList = getIntent().getParcelableArrayListExtra("menu_list");
@@ -36,14 +40,17 @@ public class MenuViewActivity extends AppCompatActivity {
         });
 
         if (currentPage == 0) {
-            prevButton.setVisibility(View.GONE);
+            prevButton.setVisibility(View.INVISIBLE);
         }
         else if (currentPage == (mMenuList.size() - 1)) {
-            nextButton.setVisibility(View.GONE);
+            nextButton.setVisibility(View.INVISIBLE);
         }
 
         slideshow.setAdapter(new MenuViewAdapter(getApplicationContext(), mMenuList));
         slideshow.setCurrentItem(currentPage);
+
+        textCurrent.setText(String.valueOf(currentPage + 1));
+        totalPages.setText(String.valueOf(mMenuList.size()));
 
         slideshow.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -53,11 +60,12 @@ public class MenuViewActivity extends AppCompatActivity {
 
             @Override
             public void onPageSelected(int position) {
+                textCurrent.setText(String.valueOf(position + 1));
                 if (position == 0) {
-                    prevButton.setVisibility(View.GONE);
+                    prevButton.setVisibility(View.INVISIBLE);
                 }
                 else if (position == (mMenuList.size() - 1)) {
-                    nextButton.setVisibility(View.GONE);
+                    nextButton.setVisibility(View.INVISIBLE);
                 }
                 else {
                     nextButton.setVisibility(View.VISIBLE);

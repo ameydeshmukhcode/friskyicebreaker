@@ -14,8 +14,9 @@
         <item name="android:letterSpacing">0</item>
     </style>
 
-    <style name="FriskyPopUpOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="FriskyToolbarText" parent="FriskyText">
+        <item name="android:textSize">20sp</item>
+    </style>
 
     <style name="FriskyAppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
 </resources>

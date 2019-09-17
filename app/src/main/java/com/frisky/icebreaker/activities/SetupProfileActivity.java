@@ -10,7 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.ImageButton;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -49,8 +49,8 @@ public class SetupProfileActivity extends AppCompatActivity implements FormActiv
         PickImageDialog.OnImageUpdatedListener {
 
     ImageView mProfileImage;
-    ImageButton mCancelButton;
-    ImageButton mDoneButton;
+    Button mCancelButton;
+    Button mDoneButton;
     TextView mNameInput;
     TextView mBioInput;
     TextView mDateOfBirthInput;
