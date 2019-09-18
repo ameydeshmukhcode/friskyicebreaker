@@ -22,7 +22,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class SignInEmailActivity extends AppCompatActivity implements UIActivity, FormActivity {
 
-    TextView mSignUpLink;
+    Button mSignUpLink;
     TextView mForgotPasswordLink;
     TextView mErrorText;
     Button mLoginButton;
