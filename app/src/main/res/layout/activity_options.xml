@@ -51,7 +51,7 @@
 
         <TextView
             android:id="@+id/text_bio"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
@@ -59,7 +59,6 @@
             android:text="@string/placeholder_text"
             android:textSize="@dimen/text_title_size"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/text_name"
             app:layout_constraintTop_toBottomOf="@+id/text_name" />
 

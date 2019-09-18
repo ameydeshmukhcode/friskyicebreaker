@@ -22,8 +22,8 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class SignInEmailActivity extends AppCompatActivity implements UIActivity, FormActivity {
 
-    TextView mSignUpLink;
-    TextView mForgotPasswordLink;
+    Button mSignUpLink;
+    Button mForgotPasswordLink;
     TextView mErrorText;
     Button mLoginButton;
     Button mBackButton;

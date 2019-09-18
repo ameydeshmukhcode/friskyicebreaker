@@ -16,7 +16,6 @@ import com.frisky.icebreaker.activities.MenuViewActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MenuImagesAdapter extends RecyclerView.Adapter<MenuImagesAdapter.ImageViewHolder> {
 
@@ -32,7 +31,7 @@ public class MenuImagesAdapter extends RecyclerView.Adapter<MenuImagesAdapter.Im
         ImageView menuImage;
         ImageViewHolder(View view) {
             super(view);
-            menuImage = view.findViewById(R.id.image_edit);
+            menuImage = view.findViewById(R.id.image_menu_preview);
         }
     }
 
@@ -40,7 +39,7 @@ public class MenuImagesAdapter extends RecyclerView.Adapter<MenuImagesAdapter.Im
     @Override
     public MenuImagesAdapter.ImageViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, final int viewType) {
         final View itemView = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.view_edit_image, viewGroup, false);
+                .inflate(R.layout.image_menu_preview, viewGroup, false);
 
         return new MenuImagesAdapter.ImageViewHolder(itemView);
     }

@@ -131,6 +131,7 @@
     <string name="beta_banner">Welcome to the frisky beta!\nHelp us get better</string>
     <string name="empty_state_order_summary">You do not have any visits yet!</string>
     <string name="done">Done</string>
+    <string name="date_of_birth">Date of Birth</string>
     <string-array name="genders">
         <item>@string/male</item>
         <item>@string/female</item>

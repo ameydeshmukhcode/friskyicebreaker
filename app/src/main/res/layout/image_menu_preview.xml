@@ -8,7 +8,7 @@
     app:srcCompat="@drawable/placeholder">
 
     <ImageView
-        android:id="@+id/image_edit"
+        android:id="@+id/image_menu_preview"
         android:layout_width="75dp"
         android:layout_height="100dp"
         android:layout_marginStart="@dimen/edit_image_margin"
