@@ -36,7 +36,7 @@
         android:inputType="textEmailAddress"
         android:paddingStart="@dimen/input_primary_start_padding"
         android:paddingEnd="@dimen/input_primary_start_padding"
-        android:textColor="@color/textDark"
+        android:textColor="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_back" />
@@ -53,7 +53,7 @@
         android:inputType="textPassword"
         android:paddingStart="@dimen/input_primary_start_padding"
         android:paddingEnd="@dimen/input_primary_start_padding"
-        android:textColor="@color/textDark"
+        android:textColor="@android:color/black"
         app:layout_constraintEnd_toEndOf="@+id/input_email"
         app:layout_constraintStart_toStartOf="@+id/input_email"
         app:layout_constraintTop_toBottomOf="@+id/input_email" />
@@ -70,7 +70,7 @@
         android:inputType="textPassword"
         android:paddingStart="@dimen/input_primary_start_padding"
         android:paddingEnd="@dimen/input_primary_start_padding"
-        android:textColor="@color/textDark"
+        android:textColor="@android:color/black"
         app:layout_constraintEnd_toEndOf="@+id/input_password"
         app:layout_constraintStart_toStartOf="@+id/input_password"
         app:layout_constraintTop_toBottomOf="@+id/input_password" />
