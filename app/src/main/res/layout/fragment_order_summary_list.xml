@@ -13,6 +13,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <include
+        android:id="@+id/fragment_empty_state"
+        layout="@layout/fragment_order_summary_empty_state"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <com.facebook.shimmer.ShimmerFrameLayout
         android:id="@+id/shimmer_list"
         android:layout_width="0dp"
@@ -26,25 +36,22 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <include layout="@layout/card_order_history_placeholder" />
+
             <include layout="@layout/card_order_history_placeholder" />
+
             <include layout="@layout/card_order_history_placeholder" />
+
             <include layout="@layout/card_order_history_placeholder" />
+
             <include layout="@layout/card_order_history_placeholder" />
+
             <include layout="@layout/card_order_history_placeholder" />
+
             <include layout="@layout/card_order_history_placeholder" />
         </LinearLayout>
 
     </com.facebook.shimmer.ShimmerFrameLayout>
-
-    <include
-        android:id="@+id/fragment_empty_state"
-        layout="@layout/fragment_order_summary_empty_state"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
