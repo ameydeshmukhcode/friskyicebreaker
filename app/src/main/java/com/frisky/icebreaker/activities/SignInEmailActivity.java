@@ -214,7 +214,6 @@ public class SignInEmailActivity extends AppCompatActivity implements UIActivity
                 Intent.FLAG_ACTIVITY_CLEAR_TASK |
                 Intent.FLAG_ACTIVITY_NEW_TASK);
 
-        progressDialog.dismiss();
         startActivity(launchHome);
         finish();
     }

@@ -173,8 +173,6 @@ public class CartActivity extends AppCompatActivity implements UIActivity,
 
                         sharedPreferences.edit().putBoolean("order_active", true).apply();
 
-                        progressDialog.dismiss();
-
                         Intent showOrder = new Intent(this, OrderActivity.class);
                         startActivity(showOrder);
                         finish();

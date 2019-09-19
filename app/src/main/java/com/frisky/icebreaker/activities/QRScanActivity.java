@@ -172,7 +172,6 @@ public class QRScanActivity extends AppCompatActivity implements ConfirmSessionS
     }
 
     private void showMenu() {
-        progressDialog.dismiss();
         Intent showMenu = new Intent(getBaseContext(), MenuActivity.class);
         startActivity(showMenu);
         finish();
