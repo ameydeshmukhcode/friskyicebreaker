@@ -33,7 +33,6 @@ import java.util.Objects;
 public class OrderHistoryFragment extends Fragment {
 
     private List<OrderSummary> mSessionHistoryList = new ArrayList<>();
-    private RecyclerView mRecyclerPubView;
     private OrderSummaryListAdapter mOrderSummaryAdapter;
     private ConstraintLayout mEmptyState;
     private ShimmerFrameLayout mShimmerFrame;
@@ -43,11 +42,10 @@ public class OrderHistoryFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_order_summary_list, container, false);
 
-        mRecyclerPubView = view.findViewById(R.id.recycler_view);
+        RecyclerView mRecyclerPubView = view.findViewById(R.id.recycler_view);
         mEmptyState = view.findViewById(R.id.fragment_empty_state);
         mShimmerFrame = view.findViewById(R.id.shimmer_list);
 
-        mRecyclerPubView.setVisibility(View.GONE);
         mEmptyState.setVisibility(View.GONE);
 
         mRecyclerPubView.setPadding(0, 0, 0, 0);
@@ -78,7 +76,6 @@ public class OrderHistoryFragment extends Fragment {
             if (task.isSuccessful()) {
                 if (task.getResult() != null) {
                     if (task.getResult().size() > 0) {
-                        mRecyclerPubView.setVisibility(View.VISIBLE);
                         mShimmerFrame.stopShimmer();
                         mShimmerFrame.setVisibility(View.GONE);
                         mEmptyState.setVisibility(View.GONE);
@@ -98,7 +95,6 @@ public class OrderHistoryFragment extends Fragment {
                                             String.valueOf(restTask.getResult().get("name")),
                                             document.getId(), endTime, total);
                                     mSessionHistoryList.add(summary);
-                                    mRecyclerPubView.setVisibility(View.VISIBLE);
                                     mOrderSummaryAdapter.notifyDataSetChanged();
                                 });
                             }
@@ -107,7 +103,6 @@ public class OrderHistoryFragment extends Fragment {
                     else {
                         mShimmerFrame.stopShimmer();
                         mShimmerFrame.setVisibility(View.GONE);
-                        mRecyclerPubView.setVisibility(View.GONE);
                         mEmptyState.setVisibility(View.VISIBLE);
                     }
                 }
