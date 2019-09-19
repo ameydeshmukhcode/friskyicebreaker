@@ -111,9 +111,9 @@ public class RestaurantViewFragment extends Fragment {
                     Restaurant restaurant = new Restaurant(Uri.parse(image), document.getId(), name, name, address,
                             tags.substring(1, tags.length() - 1), 4.5);
                     mRestaurantList.add(restaurant);
+                    mPubViewAdapter.notifyDataSetChanged();
                     mShimmerViewContainer.stopShimmer();
                     mShimmerViewContainer.setVisibility(View.GONE);
-                    mPubViewAdapter.notifyDataSetChanged();
                 }
             }
         }

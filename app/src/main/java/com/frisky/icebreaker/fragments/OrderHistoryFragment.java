@@ -76,8 +76,6 @@ public class OrderHistoryFragment extends Fragment {
             if (task.isSuccessful()) {
                 if (task.getResult() != null) {
                     if (task.getResult().size() > 0) {
-                        mShimmerFrame.stopShimmer();
-                        mShimmerFrame.setVisibility(View.GONE);
                         mEmptyState.setVisibility(View.GONE);
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             if (document == null)
@@ -96,6 +94,8 @@ public class OrderHistoryFragment extends Fragment {
                                             document.getId(), endTime, total);
                                     mSessionHistoryList.add(summary);
                                     mOrderSummaryAdapter.notifyDataSetChanged();
+                                    mShimmerFrame.stopShimmer();
+                                    mShimmerFrame.setVisibility(View.GONE);
                                 });
                             }
                         }
