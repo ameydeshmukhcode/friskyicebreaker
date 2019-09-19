@@ -1,7 +1,6 @@
 package com.frisky.icebreaker.fragments;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,10 +10,12 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.adapters.OrderSummaryListAdapter;
 import com.frisky.icebreaker.core.structures.OrderSummary;
@@ -34,19 +35,36 @@ public class OrderHistoryFragment extends Fragment {
     private List<OrderSummary> mSessionHistoryList = new ArrayList<>();
     private RecyclerView mRecyclerPubView;
     private OrderSummaryListAdapter mOrderSummaryAdapter;
-
-    private View rootView;
-    private ViewGroup rootContainer;
+    private ConstraintLayout mEmptyState;
+    private ShimmerFrameLayout mShimmerFrame;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.progress_icon, container, false);
-        rootContainer = container;
+        View view = inflater.inflate(R.layout.fragment_order_summary_list, container, false);
+
+        mRecyclerPubView = view.findViewById(R.id.recycler_view);
+        mEmptyState = view.findViewById(R.id.fragment_empty_state);
+        mShimmerFrame = view.findViewById(R.id.shimmer_list);
+
+        mRecyclerPubView.setVisibility(View.GONE);
+        mEmptyState.setVisibility(View.GONE);
+
+        mRecyclerPubView.setPadding(0, 0, 0, 0);
+        mRecyclerPubView.setPadding(0, 0, 0, 225);
+        mRecyclerPubView.setClipToPadding(false);
+
+        RecyclerView.LayoutManager mPubViewLayoutManager;
+        // use a linear layout manager
+        mPubViewLayoutManager = new LinearLayoutManager(getContext());
+        mRecyclerPubView.setLayoutManager(mPubViewLayoutManager);
+
+        mOrderSummaryAdapter = new OrderSummaryListAdapter(mSessionHistoryList, getContext());
+        mRecyclerPubView.setAdapter(mOrderSummaryAdapter);
 
         getOrderHistory();
 
-        return rootView;
+        return view;
     }
 
     private void getOrderHistory() {
@@ -60,30 +78,6 @@ public class OrderHistoryFragment extends Fragment {
             if (task.isSuccessful()) {
                 if (task.getResult() != null) {
                     if (task.getResult().size() > 0) {
-
-                        LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                        rootView = inflater.inflate(R.layout.fragment_order_summary_list, rootContainer, false);
-                        ViewGroup view = (ViewGroup) getView();
-
-                        mRecyclerPubView = rootView.findViewById(R.id.recycler_view);
-
-                        mRecyclerPubView.setVisibility(View.GONE);
-
-                        mRecyclerPubView.setPadding(0, 0, 0, 0);
-                        mRecyclerPubView.setPadding(0, 0, 0, 225);
-                        mRecyclerPubView.setClipToPadding(false);
-
-                        RecyclerView.LayoutManager mPubViewLayoutManager;
-                        // use a linear layout manager
-                        mPubViewLayoutManager = new LinearLayoutManager(getContext());
-                        mRecyclerPubView.setLayoutManager(mPubViewLayoutManager);
-
-                        mOrderSummaryAdapter = new OrderSummaryListAdapter(mSessionHistoryList, getContext());
-                        mRecyclerPubView.setAdapter(mOrderSummaryAdapter);
-
-                        view.removeAllViews();
-                        view.addView(rootView);
-
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             if (document == null)
                                 return;
@@ -105,13 +99,16 @@ public class OrderHistoryFragment extends Fragment {
                                 });
                             }
                         }
+                        mShimmerFrame.stopShimmer();
+                        mShimmerFrame.setVisibility(View.GONE);
+                        mRecyclerPubView.setVisibility(View.VISIBLE);
+                        mEmptyState.setVisibility(View.GONE);
                     }
                     else {
-                        LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                        rootView = inflater.inflate(R.layout.fragment_order_summary_empty_state, rootContainer, false);
-                        ViewGroup view = (ViewGroup) getView();
-                        view.removeAllViews();
-                        view.addView(rootView);
+                        mShimmerFrame.stopShimmer();
+                        mShimmerFrame.setVisibility(View.GONE);
+                        mRecyclerPubView.setVisibility(View.GONE);
+                        mEmptyState.setVisibility(View.VISIBLE);
                     }
                 }
 
