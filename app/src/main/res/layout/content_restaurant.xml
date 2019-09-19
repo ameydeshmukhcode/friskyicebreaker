@@ -113,7 +113,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/textView" />
 
                 <com.facebook.shimmer.ShimmerFrameLayout
-                    android:id="@+id/shimmer_list"
+                    android:id="@+id/shimmer_menu_list"
                     android:layout_width="0dp"
                     android:layout_height="120dp"
                     android:layout_marginStart="8dp"
