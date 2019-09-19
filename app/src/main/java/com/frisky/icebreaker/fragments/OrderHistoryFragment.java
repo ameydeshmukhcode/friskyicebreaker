@@ -78,6 +78,10 @@ public class OrderHistoryFragment extends Fragment {
             if (task.isSuccessful()) {
                 if (task.getResult() != null) {
                     if (task.getResult().size() > 0) {
+                        mRecyclerPubView.setVisibility(View.VISIBLE);
+                        mShimmerFrame.stopShimmer();
+                        mShimmerFrame.setVisibility(View.GONE);
+                        mEmptyState.setVisibility(View.GONE);
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             if (document == null)
                                 return;
@@ -99,10 +103,6 @@ public class OrderHistoryFragment extends Fragment {
                                 });
                             }
                         }
-                        mShimmerFrame.stopShimmer();
-                        mShimmerFrame.setVisibility(View.GONE);
-                        mRecyclerPubView.setVisibility(View.VISIBLE);
-                        mEmptyState.setVisibility(View.GONE);
                     }
                     else {
                         mShimmerFrame.stopShimmer();
