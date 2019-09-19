@@ -111,6 +111,8 @@
     <!--Empty state -->
     <string name="tag_debug">Frisky Debug</string>
 
+    <string name="rupee_long">\u20B9\u20B9\u20B9\u20B9\u20B9</string>
+
     <!-- Debug -->
     <string name="home">Home</string>
     <string name="orders">Orders</string>
@@ -132,6 +134,8 @@
     <string name="empty_state_order_summary">You do not have any visits yet!</string>
     <string name="done">Done</string>
     <string name="date_of_birth">Date of Birth</string>
+    <string name="visited_on">Visited On</string>
+    <string name="total_amount">Total Amount</string>
     <string-array name="genders">
         <item>@string/male</item>
         <item>@string/female</item>
