@@ -108,7 +108,7 @@ public class OrderHistoryFragment extends Fragment {
                     }
                     else {
                         LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                        rootView = inflater.inflate(R.layout.fragment_order_summary_empty, rootContainer, false);
+                        rootView = inflater.inflate(R.layout.fragment_order_summary_empty_state, rootContainer, false);
                         ViewGroup view = (ViewGroup) getView();
                         view.removeAllViews();
                         view.addView(rootView);
