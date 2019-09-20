@@ -52,6 +52,7 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
 
     ConstraintLayout mBottomSheetCart;
     ConstraintLayout mBottomSheetOrder;
+    ConstraintLayout mDummyMenu;
     TextView mCartTotalText;
 
     @Override
@@ -84,6 +85,8 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
     public void initUI() {
         mBackButton = findViewById(R.id.button_back);
         mBackButton.setOnClickListener(v -> MenuActivity.super.onBackPressed());
+
+        mDummyMenu = findViewById(R.id.dummy_menu);
 
         mRestName = findViewById(R.id.text_pub_name);
         mTableSerial = findViewById(R.id.text_table);
@@ -189,6 +192,7 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
                         MenuItem item = new MenuItem(document.getId(), name, description, cost, available);
                         mMenu.add(item);
                         mMenuListViewAdapter.notifyDataSetChanged();
+                        mDummyMenu.setVisibility(View.GONE);
                     }
                     getMenuCategory(index + 1);
                 }
