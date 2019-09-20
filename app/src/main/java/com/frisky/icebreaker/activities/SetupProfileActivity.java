@@ -272,7 +272,6 @@ public class SetupProfileActivity extends AppCompatActivity implements FormActiv
                                         .putString("u_bio", bio)
                                         .apply();
                             }
-                            progressDialog.dismiss();
                             Toast.makeText(getApplicationContext(), "Profile Updated!", Toast.LENGTH_SHORT).show();
                             Intent launchOptions = new Intent(getApplicationContext(), OptionsActivity.class);
                             startActivity(launchOptions);

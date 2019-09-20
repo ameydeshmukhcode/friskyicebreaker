@@ -93,7 +93,6 @@ public class SignInActivity extends AppCompatActivity {
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
-                        progressDialog.dismiss();
                         // Sign in success, update UI with the signed-in user's information
                         goToHome();
                     }

@@ -68,7 +68,6 @@ public class SignUpActivity extends AppCompatActivity implements FormActivity, U
                                     Toast.LENGTH_SHORT).show();
                             mAuth.signOut();
                             // go back to SignInActivity and finish this
-                            progressDialog.dismiss();
                             super.onBackPressed();
                             finish();
                         }

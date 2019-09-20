@@ -333,7 +333,6 @@ public class OrderActivity extends AppCompatActivity implements ClearBillDialog.
 
                                     sharedPreferences.edit().putBoolean("bill_requested", true).apply();
 
-                                    progressDialog.dismiss();
                                     Intent clearBill = new Intent(this, HomeActivity.class);
                                     clearBill.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
                                             Intent.FLAG_ACTIVITY_CLEAR_TASK |

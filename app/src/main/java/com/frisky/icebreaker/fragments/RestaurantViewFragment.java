@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.frisky.icebreaker.BuildConfig;
 import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.activities.OptionsActivity;
@@ -35,8 +35,7 @@ public class RestaurantViewFragment extends Fragment {
     private List<Restaurant> mRestaurantList = new ArrayList<>();
     private RecyclerView.Adapter mPubViewAdapter;
 
-    private ProgressBar mProgressBar;
-    private RecyclerView mRecyclerPubView;
+    private ShimmerFrameLayout mShimmerViewContainer;
 
     @Nullable
     @Override
@@ -47,10 +46,9 @@ public class RestaurantViewFragment extends Fragment {
         Button settingsButton = view.findViewById(R.id.button_settings);
         settingsButton.setOnClickListener(v -> startActivity(new Intent(getActivity(), OptionsActivity.class)));
 
-        mProgressBar = view.findViewById(R.id.progress_restaurant_list);
-        mRecyclerPubView = view.findViewById(R.id.recycler_view);
+        mShimmerViewContainer = view.findViewById(R.id.shimmer_list);
 
-        mRecyclerPubView.setVisibility(View.GONE);
+        RecyclerView mRecyclerPubView = view.findViewById(R.id.recycler_view);
 
         mRecyclerPubView.setPadding(0, 0, 0, 0);
         mRecyclerPubView.setPadding(0, 0, 0, 225);
@@ -113,9 +111,9 @@ public class RestaurantViewFragment extends Fragment {
                     Restaurant restaurant = new Restaurant(Uri.parse(image), document.getId(), name, name, address,
                             tags.substring(1, tags.length() - 1), 4.5);
                     mRestaurantList.add(restaurant);
-                    mProgressBar.setVisibility(View.GONE);
-                    mRecyclerPubView.setVisibility(View.VISIBLE);
                     mPubViewAdapter.notifyDataSetChanged();
+                    mShimmerViewContainer.stopShimmer();
+                    mShimmerViewContainer.setVisibility(View.GONE);
                 }
             }
         }
