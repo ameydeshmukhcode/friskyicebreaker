@@ -6,16 +6,17 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.budiyev.android.codescanner.CodeScanner;
 import com.budiyev.android.codescanner.CodeScannerView;
-import com.frisky.icebreaker.BuildConfig;
 import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.services.OrderSessionService;
 import com.frisky.icebreaker.ui.components.dialogs.ConfirmSessionStartDialog;
@@ -34,7 +35,9 @@ import java.util.Map;
 public class QRScanActivity extends AppCompatActivity implements ConfirmSessionStartDialog.OnConfirmSessionStart {
 
     public static final int MY_PERMISSIONS_REQUEST_CAMERA = 1;
+
     CodeScanner mCodeScanner;
+    ConstraintLayout mDummyMenu;
 
     SharedPreferences sharedPreferences;
 
@@ -49,6 +52,9 @@ public class QRScanActivity extends AppCompatActivity implements ConfirmSessionS
         setContentView(R.layout.activity_qr_scan);
 
         sharedPreferences = getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE);
+
+        mDummyMenu = findViewById(R.id.dummy_menu);
+        mDummyMenu.setVisibility(View.GONE);
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -163,6 +169,7 @@ public class QRScanActivity extends AppCompatActivity implements ConfirmSessionS
             mCodeScanner.stopPreview();
             progressDialog.show(getSupportFragmentManager(), "progress dialog");
             progressDialog.setCancelable(false);
+            mDummyMenu.setVisibility(View.VISIBLE);
             getRestaurantAndTableDetails(restaurantID, tableID);
             initUserSession(restaurantID, tableID);
         }
@@ -198,7 +205,7 @@ public class QRScanActivity extends AppCompatActivity implements ConfirmSessionS
             else {
                 Log.e("Task", "failed with ", task.getException());
             }
-        }).addOnFailureListener(e -> progressDialog.dismiss());
+        }).addOnFailureListener(e -> updateOnSessionStartFail());
 
         DocumentReference tableRef = firebaseFirestore
                 .collection("restaurants")
@@ -223,7 +230,7 @@ public class QRScanActivity extends AppCompatActivity implements ConfirmSessionS
             else {
                 Log.e("Task", "failed with ", task.getException());
             }
-        }).addOnFailureListener(e -> progressDialog.dismiss());
+        }).addOnFailureListener(e -> updateOnSessionStartFail());
     }
 
     private void initUserSession(final String restID, final String tableID) {
@@ -278,12 +285,17 @@ public class QRScanActivity extends AppCompatActivity implements ConfirmSessionS
                                             startService(orderSession);
                                             showMenu();
                                         })
-                                        .addOnFailureListener(e -> progressDialog.dismiss());
+                                        .addOnFailureListener(e -> updateOnSessionStartFail());
                             });
                 })
                 .addOnFailureListener(e -> {
                     Log.e("", "Error adding document", e);
-                    progressDialog.dismiss();
+                    updateOnSessionStartFail();
                 });
+    }
+
+    private void updateOnSessionStartFail() {
+        mDummyMenu.setVisibility(View.GONE);
+        progressDialog.dismiss();
     }
 }
