@@ -144,9 +144,7 @@ public class MenuItemListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 itemHolder.mName.setText(menuItem.getName());
                 itemHolder.mDescription.setText(menuItem.getDescription());
                 itemHolder.mPrice.setText(String.valueOf(menuItem.getPrice()));
-                if (menuItem.getDietType() != DietType.NONE) {
-                    itemHolder.mDietTypeIcon.setImageResource(getTypeIcon(menuItem.getDietType()));
-                }
+                itemHolder.mDietTypeIcon.setImageResource(getTypeIcon(menuItem.getDietType()));
 
                 itemHolder.mAddText.setOnClickListener(v -> {
                     menuItem.incrementCount();

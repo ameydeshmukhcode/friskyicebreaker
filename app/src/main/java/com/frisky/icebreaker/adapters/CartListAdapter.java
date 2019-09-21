@@ -69,9 +69,7 @@ public class CartListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         cartItemHolder.mName.setText(item.getName());
         cartItemHolder.mCount.setText(String.valueOf(count));
         cartItemHolder.mPrice.setText(String.valueOf(item.getPrice()));
-        if (item.getDietType() != DietType.NONE){
-            cartItemHolder.mDietTypeIcon.setImageResource(getTypeIcon(item.getDietType()));
-        }
+        cartItemHolder.mDietTypeIcon.setImageResource(getTypeIcon(item.getDietType()));
         cartItemHolder.mItemTotal.setText(String.valueOf(item.getPrice() * count));
         cartItemHolder.mAdd.setOnClickListener(v -> {
             int countInc = Integer.parseInt(cartItemHolder.mCount.getText().toString()) + 1;
