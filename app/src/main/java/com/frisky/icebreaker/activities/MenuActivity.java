@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.adapters.MenuItemListAdapter;
+import com.frisky.icebreaker.core.structures.DietType;
 import com.frisky.icebreaker.core.structures.MenuCategory;
 import com.frisky.icebreaker.core.structures.MenuItem;
 import com.frisky.icebreaker.interfaces.OnOrderUpdateListener;
@@ -30,6 +31,8 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
+import static com.frisky.icebreaker.ui.assistant.UIAssistant.getDietTypeFromString;
 
 public class MenuActivity extends AppCompatActivity implements UIActivity,
         OnOrderUpdateListener {
@@ -188,8 +191,12 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
                         if (document.contains("description")) {
                             description = document.getString("description");
                         }
+                        DietType type = DietType.NONE;
+                        if (document.contains("type")) {
+                            type = getDietTypeFromString(document.getString("type"));
+                        }
                         int cost = Integer.parseInt(Objects.requireNonNull(document.getString("cost")));
-                        MenuItem item = new MenuItem(document.getId(), name, description, cost, available);
+                        MenuItem item = new MenuItem(document.getId(), name, description, cost, available, type);
                         mMenu.add(item);
                         mMenuListViewAdapter.notifyDataSetChanged();
                         mDummyMenu.setVisibility(View.GONE);
