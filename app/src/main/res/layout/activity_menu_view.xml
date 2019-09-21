@@ -8,17 +8,10 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button_cancel"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
-        android:layout_width="38dp"
-        android:layout_height="@dimen/button_square_dimen"
-        android:layout_gravity="center"
+        style="@style/FriskyCircleButton"
         app:icon="@drawable/ic_close"
         app:iconGravity="textEnd"
-        app:iconTint="@android:color/black"
-        app:rippleColor="@color/tintDark"
         android:layout_marginStart="8dp"
-        app:cornerRadius="25dp"
-        app:strokeColor="@android:color/transparent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -91,36 +84,22 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_next_image"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
-            android:layout_width="38dp"
-            android:layout_height="@dimen/button_square_dimen"
-            android:layout_gravity="center"
+            style="@style/FriskyCircleButton"
             android:layout_marginStart="32dp"
-            app:cornerRadius="25dp"
             app:icon="@drawable/ic_chevron_right"
             app:iconGravity="textEnd"
-            app:iconTint="@android:color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/text_total_pages"
-            app:layout_constraintTop_toTopOf="@+id/button_previous_image"
-            app:rippleColor="@color/tintDark"
-            app:strokeColor="@android:color/transparent" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_previous_image"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
-            android:layout_width="38dp"
-            android:layout_height="@dimen/button_square_dimen"
-            android:layout_gravity="center"
+            style="@style/FriskyCircleButton"
             app:icon="@drawable/ic_chevron_left"
             app:iconGravity="textEnd"
-            app:iconTint="@android:color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:rippleColor="@color/tintDark"
-            app:cornerRadius="25dp"
-            app:strokeColor="@android:color/transparent" />
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
