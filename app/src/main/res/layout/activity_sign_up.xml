@@ -8,7 +8,7 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button_back"
-        style="@style/FriskyCircleButton"
+        style="@style/ButtonCircle"
         app:icon="@drawable/ic_arrow_back"
         app:iconGravity="textEnd"
         android:layout_marginStart="8dp"
@@ -70,7 +70,7 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button_sign_up"
-        style="@style/FriskyPrimaryButton"
+        style="@style/ButtonPrimary"
         android:layout_marginTop="16dp"
         android:text="@string/sign_up"
         app:layout_constraintEnd_toEndOf="@+id/input_confirm_password"

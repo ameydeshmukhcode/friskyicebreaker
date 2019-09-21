@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="FriskyCircleButton" parent="Widget.MaterialComponents.Button.OutlinedButton.Icon">
+    <style name="ButtonCircle" parent="Widget.MaterialComponents.Button.OutlinedButton.Icon">
         <item name="android:layout_width">38dp</item>
         <item name="android:layout_height">@dimen/button_square_dimen</item>
         <item name="iconTint">@android:color/black</item>
@@ -9,19 +9,19 @@
         <item name="strokeColor">@android:color/transparent</item>
     </style>
 
-    <style name="FriskyTextButton" parent="Widget.MaterialComponents.Button.TextButton">
+    <style name="ButtonText" parent="Widget.MaterialComponents.Button.TextButton">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textAppearance">@style/FriskyText</item>
     </style>
 
-    <style name="FriskyTextButtonBlack" parent="FriskyTextButton">
+    <style name="ButtonTextBlack" parent="ButtonText">
         <item name="rippleColor">@color/tintDark</item>
         <item name="iconTint">@android:color/black</item>
         <item name="android:textColor">@android:color/black</item>
     </style>
 
-    <style name="FriskyPrimaryButton" parent="Widget.MaterialComponents.Button">
+    <style name="ButtonPrimary" parent="Widget.MaterialComponents.Button">
         <item name="cornerRadius">30dp</item>
         <item name="iconTint">@color/tintLight</item>
         <item name="android:backgroundTint">@color/colorPrimary</item>

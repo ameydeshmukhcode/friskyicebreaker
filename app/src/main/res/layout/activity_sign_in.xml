@@ -35,7 +35,7 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button_use_google"
-        style="@style/FriskyPrimaryButton"
+        style="@style/ButtonPrimary"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="16dp"
@@ -52,7 +52,7 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button_use_email"
-        style="@style/FriskyPrimaryButton"
+        style="@style/ButtonPrimary"
         android:layout_marginBottom="18dp"
         app:icon="@drawable/ic_email"
         app:iconGravity="textStart"
