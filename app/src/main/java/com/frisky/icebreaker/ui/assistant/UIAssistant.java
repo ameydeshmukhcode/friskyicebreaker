@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 
 import com.frisky.icebreaker.R;
+import com.frisky.icebreaker.core.structures.DietType;
 import com.frisky.icebreaker.core.structures.OrderStatus;
 
 import java.io.File;
@@ -48,6 +49,16 @@ public class UIAssistant {
         }
 
         return R.drawable.ic_status_rejected;
+    }
+
+    public static int getTypeIcon(DietType type) {
+        switch (type) {
+            case VEG: return R.drawable.ic_veg;
+            case NON_VEG: return R.drawable.ic_non_veg;
+            case EGG: return R.drawable.ic_egg;
+        }
+
+        return R.drawable.ic_veg;
     }
 
     public static String getStatusText(OrderStatus status) {
