@@ -2,8 +2,6 @@ package com.frisky.icebreaker.core.structures;
 
 import java.io.Serializable;
 
-import static com.frisky.icebreaker.core.structures.DietType.NONE;
-
 public class MenuItem implements Serializable {
     private String id;
     private String name;
@@ -11,7 +9,7 @@ public class MenuItem implements Serializable {
     private int price;
     private boolean available;
     private int count = 0;
-    private DietType dietType = NONE;
+    private DietType dietType;
 
     public MenuItem(String id, String name, String description, int price, boolean available, DietType dietType) {
         this.id = id;
