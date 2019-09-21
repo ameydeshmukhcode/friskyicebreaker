@@ -64,6 +64,7 @@ public class UIAssistant {
 
     public static int getTypeIcon(DietType type) {
         switch (type) {
+            case NONE: return R.drawable.bg_badge;
             case VEG: return R.drawable.ic_veg;
             case NON_VEG: return R.drawable.ic_non_veg;
             case EGG: return R.drawable.ic_egg;
