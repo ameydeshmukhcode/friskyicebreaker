@@ -4,17 +4,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.frisky.icebreaker.R;
+import com.frisky.icebreaker.core.structures.DietType;
 import com.frisky.icebreaker.core.structures.MenuItem;
 import com.frisky.icebreaker.interfaces.OnOrderUpdateListener;
 
 import java.util.ArrayList;
 import java.util.Objects;
+
+import static com.frisky.icebreaker.ui.assistant.UIAssistant.getTypeIcon;
 
 public class CartListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -29,6 +33,7 @@ public class CartListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     static class CartListViewHolder extends RecyclerView.ViewHolder {
         ImageButton mAdd;
         ImageButton mRemove;
+        ImageView mDietTypeIcon;
         TextView mName;
         TextView mPrice;
         TextView mStatus;
@@ -38,6 +43,7 @@ public class CartListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             super(view);
             mName = view.findViewById(R.id.text_name);
             mPrice = view.findViewById(R.id.text_price);
+            mDietTypeIcon = view.findViewById(R.id.image_diet_type);
             mStatus = view.findViewById(R.id.in_cart);
             mCount = view.findViewById(R.id.text_item_count);
             mItemTotal = view.findViewById(R.id.text_cart_item_total);
@@ -63,6 +69,9 @@ public class CartListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         cartItemHolder.mName.setText(item.getName());
         cartItemHolder.mCount.setText(String.valueOf(count));
         cartItemHolder.mPrice.setText(String.valueOf(item.getPrice()));
+        if (item.getDietType() != DietType.NONE){
+            cartItemHolder.mDietTypeIcon.setImageResource(getTypeIcon(item.getDietType()));
+        }
         cartItemHolder.mItemTotal.setText(String.valueOf(item.getPrice() * count));
         cartItemHolder.mAdd.setOnClickListener(v -> {
             int countInc = Integer.parseInt(cartItemHolder.mCount.getText().toString()) + 1;

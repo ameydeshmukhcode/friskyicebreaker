@@ -4,17 +4,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.frisky.icebreaker.R;
+import com.frisky.icebreaker.core.structures.DietType;
 import com.frisky.icebreaker.core.structures.MenuCategory;
 import com.frisky.icebreaker.core.structures.MenuItem;
 import com.frisky.icebreaker.interfaces.OnOrderUpdateListener;
 
 import java.util.List;
+
+import static com.frisky.icebreaker.ui.assistant.UIAssistant.getTypeIcon;
 
 public class MenuItemListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -28,6 +32,7 @@ public class MenuItemListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     static class MenuItemHolder extends RecyclerView.ViewHolder {
         ImageButton mAdd;
         ImageButton mRemove;
+        ImageView mDietTypeIcon;
         TextView mName;
         TextView mDescription;
         TextView mPrice;
@@ -38,6 +43,7 @@ public class MenuItemListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             super(view);
             mAdd = view.findViewById(R.id.button_add);
             mRemove = view.findViewById(R.id.button_remove);
+            mDietTypeIcon = view.findViewById(R.id.image_diet_type);
             mName = view.findViewById(R.id.text_name);
             mDescription = view.findViewById(R.id.text_description);
             mPrice = view.findViewById(R.id.text_price);
@@ -138,7 +144,10 @@ public class MenuItemListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 itemHolder.mName.setText(menuItem.getName());
                 itemHolder.mDescription.setText(menuItem.getDescription());
                 itemHolder.mPrice.setText(String.valueOf(menuItem.getPrice()));
-
+                if (menuItem.getDietType() != DietType.NONE) {
+                    itemHolder.mDietTypeIcon.setImageResource(getTypeIcon(menuItem.getDietType()));
+                }
+                
                 itemHolder.mAddText.setOnClickListener(v -> {
                     menuItem.incrementCount();
                     itemHolder.mCount.setText(String.valueOf(menuItem.getCount()));
