@@ -33,4 +33,10 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">0dp</item>
     </style>
+
+    <style name="ButtonOutlined" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:textAppearance">@style/FriskyText</item>
+        <item name="strokeColor">@color/app</item>
+        <item name="iconTint">@color/app</item>
+    </style>
 </resources>
