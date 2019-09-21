@@ -40,7 +40,7 @@
             android:id="@+id/text_current_page"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="32dp"
             android:fontFamily="@font/museosans700"
             android:text="@string/default_number"
             android:textColor="@android:color/black"
@@ -79,7 +79,8 @@
             android:layout_width="38dp"
             android:layout_height="@dimen/button_square_dimen"
             android:layout_gravity="center"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="32dp"
+            app:cornerRadius="25dp"
             app:icon="@drawable/ic_chevron_right"
             app:iconGravity="textEnd"
             app:iconTint="@android:color/black"
@@ -88,7 +89,6 @@
             app:layout_constraintStart_toEndOf="@+id/text_total_pages"
             app:layout_constraintTop_toTopOf="@+id/button_previous_image"
             app:rippleColor="@color/tintDark"
-            app:cornerRadius="25dp"
             app:strokeColor="@android:color/transparent" />
 
         <com.google.android.material.button.MaterialButton
