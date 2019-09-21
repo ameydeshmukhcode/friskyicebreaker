@@ -8,7 +8,7 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button_cancel"
-        style="@style/ButtonCircle"
+        style="@style/Button.Circle"
         app:icon="@drawable/ic_close"
         app:iconGravity="textEnd"
         android:layout_marginStart="8dp"
@@ -17,7 +17,7 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button_done"
-        style="@style/ButtonTextBlack"
+        style="@style/Button.Text.Black"
         android:text="@string/done"
         app:icon="@drawable/ic_status_accepted"
         android:layout_marginEnd="8dp"

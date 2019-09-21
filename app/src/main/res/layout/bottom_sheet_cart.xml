@@ -69,7 +69,7 @@
         android:textSize="@dimen/text_subtitle_size"
         android:clickable="false"
         android:focusable="false"
-        style="@style/ButtonOutlined"
+        style="@style/Button.Outlined"
         app:layout_constraintBottom_toBottomOf="@+id/your_total"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/order_active" />

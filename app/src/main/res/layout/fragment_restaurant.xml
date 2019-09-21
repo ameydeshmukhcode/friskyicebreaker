@@ -46,7 +46,7 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button_settings"
-        style="@style/ButtonCircle"
+        style="@style/Button.Circle"
         app:icon="@drawable/ic_settings"
         app:iconGravity="textEnd"
         app:iconTint="@color/app"

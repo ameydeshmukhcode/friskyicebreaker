@@ -8,7 +8,7 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button_back"
-        style="@style/ButtonCircle"
+        style="@style/Button.Circle"
         app:icon="@drawable/ic_arrow_back"
         app:iconGravity="textEnd"
         android:layout_marginStart="8dp"
@@ -67,7 +67,7 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button_login"
-        style="@style/ButtonPrimary"
+        style="@style/Button.Primary"
         android:text="@string/sign_in"
         app:layout_constraintEnd_toEndOf="@+id/input_password"
         app:layout_constraintStart_toStartOf="@+id/input_password"
