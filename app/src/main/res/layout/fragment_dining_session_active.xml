@@ -150,21 +150,18 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/button_show_orders"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                style="@style/ButtonOutlined"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
                 android:text="@string/show_my_orders"
-                android:textAppearance="@style/FriskyText"
-                android:textColor="@color/app"
                 android:textSize="@dimen/text_title_size"
                 app:icon="@drawable/ic_show_orders"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/recycler_view_last_order"
-                app:strokeColor="@color/app" />
+                app:layout_constraintTop_toBottomOf="@id/recycler_view_last_order" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.card.MaterialCardView>

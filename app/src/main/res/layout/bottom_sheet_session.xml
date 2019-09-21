@@ -62,14 +62,11 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button_menu"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        style="@style/ButtonOutlined"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_marginEnd="16dp"
         android:text="@string/menu"
-        app:strokeColor="@color/app"
-        android:textColor="@color/app"
-        android:textAppearance="@style/FriskyText"
         android:textSize="@dimen/text_subtitle_size"
         app:layout_constraintBottom_toBottomOf="@+id/text_info"
         app:layout_constraintEnd_toEndOf="parent"
