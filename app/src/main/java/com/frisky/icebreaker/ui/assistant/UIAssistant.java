@@ -51,6 +51,17 @@ public class UIAssistant {
         return R.drawable.ic_status_rejected;
     }
 
+    public static String getStatusText(OrderStatus status) {
+        switch (status) {
+            case PENDING: return "Pending";
+            case ACCEPTED: return "Accepted";
+            case REJECTED: return "Rejected";
+            case CANCELLED: return "Cancelled";
+        }
+
+        return "";
+    }
+
     public static int getTypeIcon(DietType type) {
         switch (type) {
             case VEG: return R.drawable.ic_veg;
@@ -61,15 +72,15 @@ public class UIAssistant {
         return R.drawable.ic_veg;
     }
 
-    public static String getStatusText(OrderStatus status) {
-        switch (status) {
-            case PENDING: return "Pending";
-            case ACCEPTED: return "Accepted";
-            case REJECTED: return "Rejected";
-            case CANCELLED: return "Cancelled";
+    public static DietType getDietTypeFromString(String type) {
+        switch (type) {
+            case "NONE": return DietType.NONE;
+            case "VEG": return DietType.VEG;
+            case "NON_VEG": return DietType.NON_VEG;
+            case "CONTAINS_EGG": return DietType.EGG;
         }
 
-        return "";
+        return DietType.NONE;
     }
 
     public static File compressImage(File file, Context context) throws IOException {
