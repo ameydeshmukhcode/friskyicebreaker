@@ -22,6 +22,7 @@ import com.frisky.icebreaker.activities.OrderActivity;
 import com.frisky.icebreaker.adapters.OrderListAdapter;
 import com.frisky.icebreaker.core.structures.OrderItem;
 import com.frisky.icebreaker.core.structures.OrderStatus;
+import com.google.android.material.card.MaterialCardView;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -41,6 +42,9 @@ public class DiningFragment extends Fragment {
     private OrderListAdapter orderListAdapter;
     private RecyclerView mOrderListRecyclerView;
 
+    private TextView recommendedItems;
+    private MaterialCardView recommendedCard;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -56,6 +60,9 @@ public class DiningFragment extends Fragment {
             else {
                 view = inflater.inflate(R.layout.fragment_dining_session_active, container, false);
 
+                String restID = sharedPreferences.getString("restaurant_id", "");
+                String sessionID = sharedPreferences.getString("session_id", "");
+
                 TextView noOrders = view.findViewById(R.id.no_orders);
 
                 TextView restaurant = view.findViewById(R.id.text_pub_name);
@@ -65,6 +72,12 @@ public class DiningFragment extends Fragment {
 
                 Button showOrders = view.findViewById(R.id.button_show_orders);
                 showOrders.setVisibility(View.GONE);
+
+                recommendedCard = view.findViewById(R.id.card_recommendations);
+
+                recommendedCard.setVisibility(View.GONE);
+
+                recommendedItems = view.findViewById(R.id.text_recommendations);
 
                 mOrderListRecyclerView = view.findViewById(R.id.recycler_view_last_order);
 
@@ -77,9 +90,9 @@ public class DiningFragment extends Fragment {
                 orderListAdapter = new OrderListAdapter(getContext(), mOrderList);
                 mOrderListRecyclerView.setAdapter(orderListAdapter);
 
+                getRecommendedItems(sharedPreferences.getString("restaurant_id", ""));
+
                 if (sharedPreferences.contains("order_active")) {
-                    String restID = sharedPreferences.getString("restaurant_id", "");
-                    String sessionID = sharedPreferences.getString("session_id", "");
                     getOrderDetails(restID, sessionID);
                     noOrders.setVisibility(View.GONE);
                     showOrders.setVisibility(View.VISIBLE);
@@ -102,6 +115,32 @@ public class DiningFragment extends Fragment {
             view = inflater.inflate(R.layout.fragment_dining_scan_qr, container, false);
             return view;
         }
+    }
+
+    private void getRecommendedItems(String restaurantID) {
+        final DocumentReference docRef = FirebaseFirestore.getInstance().collection("restaurants")
+                .document(restaurantID);
+
+        docRef.collection("items")
+                .whereEqualTo("recommended", true)
+                .orderBy("name")
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        QuerySnapshot result = task.getResult();
+
+                        if (result.size() > 0) {
+                            recommendedCard.setVisibility(View.VISIBLE);
+                            StringBuilder currentItems = new StringBuilder(recommendedItems.getText().toString());
+                            for (DocumentSnapshot snapshot : result.getDocuments()) {
+                                if (snapshot.contains("name")) {
+                                    currentItems.append(snapshot.getString("name")).append(", ");
+                                }
+                            }
+                            recommendedItems.setText(currentItems.substring(0, currentItems.length() - 2));
+                        }
+                    }
+                });
     }
 
     @SuppressWarnings("unchecked")
