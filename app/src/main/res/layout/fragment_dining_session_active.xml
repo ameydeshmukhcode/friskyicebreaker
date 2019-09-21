@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -50,22 +51,78 @@
         app:layout_constraintStart_toEndOf="@+id/text_pub_name"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/button_show_orders"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_width="wrap_content"
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_orders"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="32dp"
-        android:layout_marginEnd="16dp"
-        android:text="@string/show_my_orders"
-        android:textAppearance="@style/FriskyText"
-        android:textColor="@color/app"
-        android:textSize="@dimen/text_title_size"
-        app:icon="@drawable/ic_show_orders"
+        android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_table"
-        app:strokeColor="@color/app" />
+        app:layout_constraintTop_toBottomOf="@+id/text_table">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/no_orders"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:fontFamily="@font/museosans700"
+                android:text="@string/no_orders"
+                android:textSize="@dimen/text_title_size"
+                app:layout_constraintBottom_toBottomOf="@+id/recycler_view_last_order"
+                app:layout_constraintEnd_toEndOf="@+id/recycler_view_last_order"
+                app:layout_constraintStart_toStartOf="@+id/recycler_view_last_order"
+                app:layout_constraintTop_toTopOf="@+id/recycler_view_last_order" />
+
+            <TextView
+                android:id="@+id/orders"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/museosans300"
+                android:text="@string/last_order"
+                android:textSize="@dimen/text_subtitle_size"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view_last_order"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:minHeight="50dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/orders" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_show_orders"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:text="@string/show_my_orders"
+                android:textAppearance="@style/FriskyText"
+                android:textColor="@color/app"
+                android:textSize="@dimen/text_title_size"
+                app:icon="@drawable/ic_show_orders"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/recycler_view_last_order"
+                app:strokeColor="@color/app" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
