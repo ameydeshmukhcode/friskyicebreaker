@@ -14,15 +14,32 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.activities.OrderActivity;
+import com.frisky.icebreaker.adapters.OrderListAdapter;
+import com.frisky.icebreaker.core.structures.OrderItem;
+import com.frisky.icebreaker.core.structures.OrderStatus;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import static android.content.Context.MODE_PRIVATE;
 
 public class DiningFragment extends Fragment {
+
+    private ArrayList<Object> mOrderList = new ArrayList<>();
+    private OrderListAdapter orderListAdapter;
+    private RecyclerView mOrderListRecyclerView;
 
     @Nullable
     @Override
@@ -38,11 +55,36 @@ public class DiningFragment extends Fragment {
             }
             else {
                 view = inflater.inflate(R.layout.fragment_dining_session_active, container, false);
+
+                TextView noOrders = view.findViewById(R.id.no_orders);
+
                 TextView restaurant = view.findViewById(R.id.text_pub_name);
                 TextView table = view.findViewById(R.id.text_table);
                 restaurant.setText(sharedPreferences.getString("restaurant_name", ""));
                 table.setText(sharedPreferences.getString("table_name", ""));
+
                 Button showOrders = view.findViewById(R.id.button_show_orders);
+                showOrders.setVisibility(View.GONE);
+
+                mOrderListRecyclerView = view.findViewById(R.id.recycler_view_last_order);
+
+                RecyclerView.LayoutManager mOrderListViewLayoutManager;
+                mOrderListViewLayoutManager = new LinearLayoutManager(getContext());
+
+                mOrderListRecyclerView.setLayoutManager(mOrderListViewLayoutManager);
+                mOrderListRecyclerView.setOverScrollMode(View.OVER_SCROLL_NEVER);
+
+                orderListAdapter = new OrderListAdapter(getContext(), mOrderList);
+                mOrderListRecyclerView.setAdapter(orderListAdapter);
+
+                if (sharedPreferences.contains("order_active")) {
+                    String restID = sharedPreferences.getString("restaurant_id", "");
+                    String sessionID = sharedPreferences.getString("session_id", "");
+                    getOrderDetails(restID, sessionID);
+                    noOrders.setVisibility(View.GONE);
+                    showOrders.setVisibility(View.VISIBLE);
+                }
+
                 showOrders.setOnClickListener(v -> {
                     if (!sharedPreferences.contains("order_active")) {
                         Toast toast = Toast.makeText(getActivity(), "No orders placed yet!", Toast.LENGTH_SHORT);
@@ -60,5 +102,59 @@ public class DiningFragment extends Fragment {
             view = inflater.inflate(R.layout.fragment_dining_scan_qr, container, false);
             return view;
         }
+    }
+
+    @SuppressWarnings("unchecked")
+    private void getOrderDetails(String restaurantID, String sessionID) {
+        final DocumentReference docRef = FirebaseFirestore.getInstance().collection("restaurants")
+                .document(restaurantID);
+
+        docRef.collection("orders")
+                .whereEqualTo("session_id", sessionID)
+                .orderBy("timestamp", Query.Direction.DESCENDING)
+                .limit(1)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        mOrderList.clear();
+
+                        QuerySnapshot document = task.getResult();
+                        assert document != null;
+
+                        for (DocumentSnapshot snapshot : document.getDocuments()) {
+
+                            Map<String, Object> orderData = (Map<String, Object>) snapshot.get("items");
+                            assert orderData != null;
+
+                            for (Map.Entry<String, Object> entry : orderData.entrySet()) {
+                                String itemID = entry.getKey();
+                                HashMap<String, Object> item = (HashMap<String, Object>) entry.getValue();
+
+                                String name = String.valueOf(item.get("name"));
+                                int count = Integer.parseInt(String.valueOf(item.get("quantity")));
+                                int price = Integer.parseInt(String.valueOf(item.get("cost")));
+                                OrderItem orderItem = new OrderItem(itemID, name, count, (count * price));
+
+                                if (String.valueOf(item.get("status")).equals("pending")) {
+                                    orderItem.setStatus(OrderStatus.PENDING);
+                                }
+                                else if (String.valueOf(item.get("status")).equals("accepted")) {
+                                    orderItem.setStatus(OrderStatus.ACCEPTED);
+                                }
+                                else if (String.valueOf(item.get("status")).equals("rejected")) {
+                                    orderItem.setStatus(OrderStatus.REJECTED);
+                                }
+                                else if (String.valueOf(item.get("status")).equals("cancelled")) {
+                                    orderItem.setStatus(OrderStatus.CANCELLED);
+                                }
+
+                                mOrderList.add(orderItem);
+                            }
+                        }
+
+                        orderListAdapter = new OrderListAdapter(getContext(), mOrderList);
+                        mOrderListRecyclerView.setAdapter(orderListAdapter);
+                    }
+                });
     }
 }
