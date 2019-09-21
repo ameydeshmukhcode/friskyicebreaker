@@ -70,17 +70,9 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button_sign_up"
-        android:layout_width="0dp"
+        style="@style/FriskyPrimaryButton"
         android:layout_marginTop="16dp"
-        android:layout_height="wrap_content"
-        app:cornerRadius="30dp"
-        android:textAppearance="@style/FriskyText"
-        android:backgroundTint="@color/colorPrimary"
         android:text="@string/sign_up"
-        android:textColor="@color/textLight"
-        android:textSize="@dimen/text_button_primary_size"
-        android:insetTop="0dp"
-        android:insetBottom="0dp"
         app:layout_constraintEnd_toEndOf="@+id/input_confirm_password"
         app:layout_constraintStart_toStartOf="@+id/input_confirm_password"
         app:layout_constraintTop_toBottomOf="@+id/input_confirm_password" />

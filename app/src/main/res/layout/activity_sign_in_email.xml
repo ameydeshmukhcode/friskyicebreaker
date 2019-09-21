@@ -67,16 +67,8 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button_login"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:cornerRadius="30dp"
-        android:textAppearance="@style/FriskyText"
-        android:backgroundTint="@color/colorPrimary"
+        style="@style/FriskyPrimaryButton"
         android:text="@string/sign_in"
-        android:textColor="@color/textLight"
-        android:textSize="@dimen/text_button_primary_size"
-        android:insetTop="0dp"
-        android:insetBottom="0dp"
         app:layout_constraintEnd_toEndOf="@+id/input_password"
         app:layout_constraintStart_toStartOf="@+id/input_password"
         app:layout_constraintTop_toBottomOf="@+id/link_forgot_password" />
