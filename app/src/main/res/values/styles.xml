@@ -28,4 +28,16 @@
         <item name="cornerRadius">25dp</item>
         <item name="strokeColor">@android:color/transparent</item>
     </style>
+
+    <style name="FriskyTextButton" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAppearance">@style/FriskyText</item>
+    </style>
+
+    <style name="FriskyTextButtonBlack" parent="FriskyTextButton">
+        <item name="rippleColor">@color/tintDark</item>
+        <item name="iconTint">@android:color/black</item>
+        <item name="android:textColor">@android:color/black</item>
+    </style>
 </resources>
