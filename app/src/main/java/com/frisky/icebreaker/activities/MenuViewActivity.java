@@ -23,6 +23,7 @@ public class MenuViewActivity extends AppCompatActivity {
 
         Button nextButton = findViewById(R.id.button_next_image);
         Button prevButton = findViewById(R.id.button_previous_image);
+        Button mCancelButton = findViewById(R.id.button_cancel);
 
         TextView textCurrent = findViewById(R.id.text_current_page);
         TextView totalPages = findViewById(R.id.text_total_pages);
@@ -30,6 +31,8 @@ public class MenuViewActivity extends AppCompatActivity {
         ViewPager slideshow = findViewById(R.id.pager_menu_pages);
         ArrayList<Uri> mMenuList = getIntent().getParcelableArrayListExtra("menu_list");
         int currentPage = getIntent().getIntExtra("menu_page", 0);
+
+        mCancelButton.setOnClickListener(v -> onBackPressed());
 
         nextButton.setOnClickListener(v -> {
             slideshow.setCurrentItem(slideshow.getCurrentItem() + 1);
