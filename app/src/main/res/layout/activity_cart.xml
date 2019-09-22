@@ -120,18 +120,12 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button_confirm_order"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        style="@style/Button.Unelevated"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="16dp"
         android:backgroundTint="@color/appGreen"
         android:text="@string/confirm_order"
-        android:textColor="@color/textLight"
-        android:textSize="@dimen/text_button_primary_size"
-        android:insetTop="0dp"
-        android:insetBottom="0dp"
-        android:textAppearance="@style/FriskyText"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
