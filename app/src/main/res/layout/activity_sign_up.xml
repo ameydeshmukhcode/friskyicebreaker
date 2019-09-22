@@ -9,73 +9,85 @@
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button_back"
         style="@style/Button.Circle"
+        android:layout_marginStart="8dp"
         app:icon="@drawable/ic_arrow_back"
         app:iconGravity="textEnd"
-        android:layout_marginStart="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/input_email"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/emailInput"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
-        android:layout_height="@dimen/input_primary_height"
+        android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="24dp"
-        android:background="@drawable/bg_circular"
-        android:ems="10"
-        android:fontFamily="@font/museosans300"
         android:hint="@string/email"
-        android:inputType="textEmailAddress"
-        android:paddingStart="@dimen/input_primary_start_padding"
-        android:paddingEnd="@dimen/input_primary_start_padding"
-        android:textColor="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_back" />
+        app:layout_constraintTop_toBottomOf="@+id/button_back">
 
-    <EditText
-        android:id="@+id/input_password"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@id/input_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/museosans300"
+            android:textColor="@android:color/black" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/passwordInput"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
-        android:layout_height="@dimen/input_primary_height"
+        android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:background="@drawable/bg_circular"
-        android:ems="10"
-        android:fontFamily="@font/museosans300"
         android:hint="@string/password"
-        android:inputType="textPassword"
-        android:paddingStart="@dimen/input_primary_start_padding"
-        android:paddingEnd="@dimen/input_primary_start_padding"
-        android:textColor="@android:color/black"
-        app:layout_constraintEnd_toEndOf="@+id/input_email"
-        app:layout_constraintStart_toStartOf="@+id/input_email"
-        app:layout_constraintTop_toBottomOf="@+id/input_email" />
+        app:endIconMode="password_toggle"
+        app:layout_constraintEnd_toEndOf="@+id/emailInput"
+        app:layout_constraintStart_toStartOf="@+id/emailInput"
+        app:layout_constraintTop_toBottomOf="@+id/emailInput">
 
-    <EditText
-        android:id="@+id/input_confirm_password"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@id/input_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/museosans300"
+            android:inputType="textPassword"
+            android:textColor="@android:color/black" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/confirmPasswordInput"
         android:layout_width="0dp"
-        android:layout_height="@dimen/input_primary_height"
+        android:layout_height="wrap_content"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_marginTop="16dp"
-        android:background="@drawable/bg_circular"
-        android:ems="10"
-        android:fontFamily="@font/museosans300"
         android:hint="@string/password_confirm"
-        android:inputType="textPassword"
-        android:paddingStart="@dimen/input_primary_start_padding"
-        android:paddingEnd="@dimen/input_primary_start_padding"
-        android:textColor="@android:color/black"
-        app:layout_constraintEnd_toEndOf="@+id/input_password"
-        app:layout_constraintStart_toStartOf="@+id/input_password"
-        app:layout_constraintTop_toBottomOf="@+id/input_password" />
+        app:endIconMode="password_toggle"
+        app:layout_constraintEnd_toEndOf="@+id/passwordInput"
+        app:layout_constraintStart_toStartOf="@+id/passwordInput"
+        app:layout_constraintTop_toBottomOf="@+id/passwordInput">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/input_confirm_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/museosans300"
+            android:inputType="textPassword"
+            android:textColor="@android:color/black" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button_sign_up"
         style="@style/Button.Primary"
         android:layout_marginTop="16dp"
         android:text="@string/sign_up"
-        app:layout_constraintEnd_toEndOf="@+id/input_confirm_password"
-        app:layout_constraintStart_toStartOf="@+id/input_confirm_password"
-        app:layout_constraintTop_toBottomOf="@+id/input_confirm_password" />
+        app:layout_constraintEnd_toEndOf="@+id/confirmPasswordInput"
+        app:layout_constraintStart_toStartOf="@+id/confirmPasswordInput"
+        app:layout_constraintTop_toBottomOf="@+id/confirmPasswordInput" />
 
     <TextView
         android:id="@+id/text_error"
