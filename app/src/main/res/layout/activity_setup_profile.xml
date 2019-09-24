@@ -26,7 +26,6 @@
         app:layout_constraintTop_toTopOf="@+id/button_cancel" />
 
     <ScrollView
-        android:id="@+id/scrollView2"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
@@ -125,7 +124,6 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/bioInput"
                 style="@style/Input.Primary"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"

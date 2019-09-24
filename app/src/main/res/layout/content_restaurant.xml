@@ -71,7 +71,6 @@
             app:layout_constraintTop_toTopOf="@+id/text_pub_name" />
 
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/card_menu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
