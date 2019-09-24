@@ -2,7 +2,6 @@
     xmlns:tools="http://schemas.android.com/tools" >
 
     <!-- App Bar -->
-    <dimen name="app_bar_height">50dp</dimen>
     <dimen name="app_bar_extended_height">180dp</dimen>
 
     <!-- Bottom Nav -->
