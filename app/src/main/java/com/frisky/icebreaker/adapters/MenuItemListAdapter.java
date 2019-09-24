@@ -3,7 +3,6 @@ package com.frisky.icebreaker.adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -11,10 +10,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.frisky.icebreaker.R;
-import com.frisky.icebreaker.core.structures.DietType;
 import com.frisky.icebreaker.core.structures.MenuCategory;
 import com.frisky.icebreaker.core.structures.MenuItem;
 import com.frisky.icebreaker.interfaces.OnOrderUpdateListener;
+import com.google.android.material.button.MaterialButton;
 
 import java.util.List;
 
@@ -30,15 +29,15 @@ public class MenuItemListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private OnOrderUpdateListener orderUpdateListener;
 
     static class MenuItemHolder extends RecyclerView.ViewHolder {
-        ImageButton mAdd;
-        ImageButton mRemove;
+        MaterialButton mAdd;
+        MaterialButton mRemove;
+        MaterialButton mAddItem;
         ImageView mDietTypeIcon;
         TextView mName;
         TextView mDescription;
         TextView mPrice;
         TextView mCount;
         TextView mAvailable;
-        TextView mAddText;
         MenuItemHolder(View view) {
             super(view);
             mAdd = view.findViewById(R.id.button_add);
@@ -49,7 +48,7 @@ public class MenuItemListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             mPrice = view.findViewById(R.id.text_price);
             mCount = view.findViewById(R.id.text_item_count);
             mAvailable = view.findViewById(R.id.text_available);
-            mAddText = view.findViewById(R.id.add_item);
+            mAddItem = view.findViewById(R.id.button_add_item);
         }
     }
 
@@ -124,21 +123,21 @@ public class MenuItemListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 boolean available = menuItem.getAvailable();
 
                 if (menuItem.getCount() > 0) {
-                    itemHolder.mAddText.setVisibility(View.INVISIBLE);
-                    itemHolder.mRemove.setVisibility(View.VISIBLE);
-                    itemHolder.mCount.setVisibility(View.VISIBLE);
+                    itemHolder.mAddItem.setVisibility(View.INVISIBLE);
                     itemHolder.mCount.setText(String.valueOf(menuItem.getCount()));
                 }
                 else {
-                    itemHolder.mAddText.setVisibility(View.VISIBLE);
-                    itemHolder.mRemove.setVisibility(View.INVISIBLE);
-                    itemHolder.mCount.setVisibility(View.INVISIBLE);
+                    itemHolder.mAddItem.setVisibility(View.VISIBLE);
                 }
 
                 if (!available) {
-                    itemHolder.mAdd.setEnabled(false);
-                    itemHolder.mAddText.setEnabled(false);
+                    itemHolder.mAddItem.setEnabled(false);
+                    itemHolder.mAvailable.setVisibility(View.VISIBLE);
                     itemHolder.mAvailable.setText(R.string.unavailable);
+                }
+                else {
+                    itemHolder.mAddItem.setEnabled(true);
+                    itemHolder.mAvailable.setVisibility(View.GONE);
                 }
 
                 itemHolder.mName.setText(menuItem.getName());
@@ -146,10 +145,10 @@ public class MenuItemListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 itemHolder.mPrice.setText(String.valueOf(menuItem.getPrice()));
                 itemHolder.mDietTypeIcon.setImageResource(getTypeIcon(menuItem.getDietType()));
 
-                itemHolder.mAddText.setOnClickListener(v -> {
+                itemHolder.mAddItem.setOnClickListener(v -> {
                     menuItem.incrementCount();
                     itemHolder.mCount.setText(String.valueOf(menuItem.getCount()));
-                    itemHolder.mAddText.setVisibility(View.INVISIBLE);
+                    itemHolder.mAddItem.setVisibility(View.INVISIBLE);
                     itemHolder.mRemove.setVisibility(View.VISIBLE);
                     itemHolder.mCount.setVisibility(View.VISIBLE);
                     orderUpdateListener.addToOrder(menuItem);
@@ -158,7 +157,7 @@ public class MenuItemListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 itemHolder.mAdd.setOnClickListener(v -> {
                     menuItem.incrementCount();
                     itemHolder.mCount.setText(String.valueOf(menuItem.getCount()));
-                    itemHolder.mAddText.setVisibility(View.INVISIBLE);
+                    itemHolder.mAddItem.setVisibility(View.INVISIBLE);
                     itemHolder.mRemove.setVisibility(View.VISIBLE);
                     itemHolder.mCount.setVisibility(View.VISIBLE);
                     orderUpdateListener.addToOrder(menuItem);
@@ -169,7 +168,7 @@ public class MenuItemListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     itemHolder.mCount.setText(String.valueOf(menuItem.getCount()));
                     orderUpdateListener.removeFromOrder(menuItem);
                     if (menuItem.getCount() == 0) {
-                        itemHolder.mAddText.setVisibility(View.VISIBLE);
+                        itemHolder.mAddItem.setVisibility(View.VISIBLE);
                         itemHolder.mRemove.setVisibility(View.INVISIBLE);
                         itemHolder.mCount.setVisibility(View.INVISIBLE);
                     }

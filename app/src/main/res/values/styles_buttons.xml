@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Button.Circle" parent="Widget.MaterialComponents.Button.OutlinedButton.Icon">
+        <item name="android:layout_width">38dp</item>
+        <item name="android:layout_height">@dimen/button_square_dimen</item>
+        <item name="iconTint">@color/tintDark</item>
+        <item name="rippleColor">@color/lightAccent</item>
+        <item name="cornerRadius">25dp</item>
+        <item name="strokeColor">@android:color/transparent</item>
+    </style>
+
+    <style name="Button.Text" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAppearance">@style/FriskyText</item>
+    </style>
+
+    <style name="Button.Text.Black" parent="Button.Text">
+        <item name="rippleColor">@color/lightAccent</item>
+        <item name="iconTint">@color/tintDark</item>
+        <item name="android:textColor">@color/tintDark</item>
+    </style>
+
+    <style name="Button.Primary" parent="Widget.MaterialComponents.Button">
+        <item name="cornerRadius">30dp</item>
+        <item name="iconTint">@color/tintLight</item>
+        <item name="android:backgroundTint">@color/colorPrimary</item>
+        <item name="android:textColor">@color/textLight</item>
+        <item name="android:textSize">@dimen/text_button_primary_size</item>
+        <item name="android:textAppearance">@style/FriskyText</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">0dp</item>
+    </style>
+
+    <style name="Button.Outlined" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:textAppearance">@style/FriskyText</item>
+        <item name="strokeColor">@color/app</item>
+        <item name="iconTint">@color/app</item>
+    </style>
+
+    <style name="Button.Dialog.Primary" parent="Widget.MaterialComponents.Button.UnelevatedButton">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_marginBottom">8dp</item>
+        <item name="android:layout_marginEnd">8dp</item>
+        <item name="backgroundTint">@color/app</item>
+        <item name="android:textSize">@dimen/text_subtitle_size</item>
+        <item name="android:textAppearance">@style/FriskyText</item>
+    </style>
+
+    <style name="Button.Dialog.Secondary" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">8dp</item>
+        <item name="android:layout_marginEnd">8dp</item>
+        <item name="android:layout_marginTop">32dp</item>
+        <item name="android:textColor">@color/app</item>
+        <item name="android:textSize">@dimen/text_subtitle_size</item>
+        <item name="android:textAppearance">@style/FriskyText</item>
+    </style>
+
+    <style name="Button.Unelevated" parent="Widget.MaterialComponents.Button.UnelevatedButton">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAppearance">@style/FriskyText</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:textSize">@dimen/text_button_primary_size</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+</resources>

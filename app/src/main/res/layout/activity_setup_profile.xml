@@ -8,38 +8,24 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button_cancel"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
-        android:layout_width="38dp"
-        android:layout_height="@dimen/button_square_dimen"
-        android:layout_gravity="center"
+        style="@style/Button.Circle"
         app:icon="@drawable/ic_close"
         app:iconGravity="textEnd"
-        app:iconTint="@android:color/black"
-        app:rippleColor="@color/tintDark"
         android:layout_marginStart="8dp"
-        app:cornerRadius="25dp"
-        app:strokeColor="@android:color/transparent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button_done"
-        style="@style/Widget.MaterialComponents.Button.TextButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="@style/FriskyText"
+        style="@style/Button.Text.Black"
         android:text="@string/done"
         app:icon="@drawable/ic_status_accepted"
-        app:iconTint="@android:color/black"
-        android:textColor="@android:color/black"
         android:layout_marginEnd="8dp"
-        app:rippleColor="@color/tintDark"
         app:layout_constraintBottom_toBottomOf="@+id/button_cancel"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/button_cancel" />
 
     <ScrollView
-        android:id="@+id/scrollView2"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
@@ -51,65 +37,6 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
-            <EditText
-                android:id="@+id/input_name"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/input_primary_height"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:background="@drawable/bg_circular"
-                android:ems="10"
-                android:fontFamily="@font/museosans300"
-                android:hint="@string/enter_name"
-                android:inputType="textPersonName"
-                android:paddingStart="@dimen/input_primary_start_padding"
-                android:paddingEnd="@dimen/input_primary_start_padding"
-                android:textColor="@android:color/black"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/update_image" />
-
-            <EditText
-                android:id="@+id/input_date_of_birth"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/input_primary_height"
-                android:layout_marginTop="16dp"
-                android:background="@drawable/bg_circular"
-                android:editable="false"
-                android:ems="10"
-                android:focusable="false"
-                android:fontFamily="@font/museosans300"
-                android:hint="@string/date_of_birth"
-                android:inputType="date"
-                android:paddingStart="@dimen/input_primary_start_padding"
-                android:paddingEnd="@dimen/input_primary_start_padding"
-                android:textColor="@android:color/black"
-                app:layout_constraintEnd_toStartOf="@+id/spinner_gender"
-                app:layout_constraintStart_toStartOf="@+id/input_name"
-                app:layout_constraintTop_toBottomOf="@+id/input_name" />
-
-            <EditText
-                android:id="@+id/input_bio"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/input_about_me_height"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="32dp"
-                android:background="@drawable/bg_round_rect"
-                android:ems="10"
-                android:fontFamily="@font/museosans300"
-                android:gravity="start|top"
-                android:hint="@string/enter_bio"
-                android:inputType="textMultiLine"
-                android:padding="@dimen/bg_round_rect_radius"
-                android:textColor="@android:color/black"
-                android:textIsSelectable="true"
-                android:textSize="@dimen/text_multiline_input_size"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/input_name"
-                app:layout_constraintStart_toStartOf="@+id/bio"
-                app:layout_constraintTop_toBottomOf="@+id/bio" />
 
             <ImageView
                 android:id="@+id/image_profile"
@@ -125,28 +52,6 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_person" />
 
-            <Spinner
-                android:id="@+id/spinner_gender"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/input_primary_height"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                app:layout_constraintEnd_toEndOf="@+id/input_name"
-                app:layout_constraintStart_toEndOf="@+id/input_date_of_birth"
-                app:layout_constraintTop_toTopOf="@+id/input_date_of_birth" />
-
-            <TextView
-                android:id="@+id/bio"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:fontFamily="@font/museosans300"
-                android:text="@string/bio"
-                android:textColor="@color/textDark"
-                android:textSize="@dimen/text_subtitle_size"
-                app:layout_constraintStart_toStartOf="@+id/input_name"
-                app:layout_constraintTop_toBottomOf="@+id/input_date_of_birth" />
-
             <TextView
                 android:id="@+id/update_image"
                 android:layout_width="0dp"
@@ -159,6 +64,94 @@
                 app:layout_constraintEnd_toEndOf="@+id/image_profile"
                 app:layout_constraintStart_toStartOf="@+id/image_profile"
                 app:layout_constraintTop_toBottomOf="@+id/image_profile" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/nameInput"
+                style="@style/Input.Primary"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="24dp"
+                android:hint="@string/enter_name"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/update_image">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/input_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/museosans300"
+                    android:textColor="@android:color/black" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/dobInput"
+                style="@style/Input.Primary"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:hint="@string/date_of_birth"
+                app:layout_constraintEnd_toStartOf="@+id/genderLayout"
+                app:layout_constraintStart_toStartOf="@+id/nameInput"
+                app:layout_constraintTop_toBottomOf="@+id/nameInput">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/input_date_of_birth"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/museosans300"
+                    android:textColor="@android:color/black" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/genderLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="8dp"
+                android:hint="@string/gender"
+                app:layout_constraintBottom_toBottomOf="@+id/dobInput"
+                app:layout_constraintEnd_toEndOf="@+id/nameInput"
+                app:layout_constraintStart_toEndOf="@+id/dobInput"
+                app:layout_constraintTop_toTopOf="@+id/dobInput">
+
+                <AutoCompleteTextView
+                    android:id="@+id/dropdown_gender"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/museosans300"
+                    android:editable="false" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Input.Primary"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:hint="@string/bio"
+                app:counterEnabled="true"
+                app:counterMaxLength="50"
+                app:counterTextAppearance="@style/FriskyText"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/nameInput"
+                app:layout_constraintStart_toStartOf="@+id/nameInput"
+                app:layout_constraintTop_toBottomOf="@+id/dobInput">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/input_bio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/museosans300"
+                    android:textColor="@android:color/black" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <View
+                android:id="@+id/dobView"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="@+id/dobInput"
+                app:layout_constraintEnd_toEndOf="@+id/dobInput"
+                app:layout_constraintStart_toStartOf="@+id/dobInput"
+                app:layout_constraintTop_toTopOf="@+id/dobInput" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

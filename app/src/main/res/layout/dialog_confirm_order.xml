@@ -32,32 +32,16 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button_cancel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
         android:text="@string/cancel"
-        android:textColor="@color/colorPrimary"
-        android:textSize="@dimen/text_subtitle_size"
-        android:textAppearance="@style/FriskyText"
-        style="@style/Widget.MaterialComponents.Button.TextButton"
+        style="@style/Button.Dialog.Secondary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/button_ok"
         app:layout_constraintTop_toBottomOf="@+id/confirm_order_info" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button_ok"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:backgroundTint="@color/app"
         android:text="@string/ok"
-        android:textColor="@color/textLight"
-        android:textSize="@dimen/text_subtitle_size"
-        android:textAppearance="@style/FriskyText"
-        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+        style="@style/Button.Dialog.Primary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

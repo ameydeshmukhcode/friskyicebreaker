@@ -32,8 +32,8 @@
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar_restaurant"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/app_bar_height"
-                android:minHeight="@dimen/app_bar_height"
+                android:layout_height="?attr/actionBarSize"
+                android:minHeight="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
                 app:navigationIcon="@drawable/ic_arrow_back"
                 app:popupTheme="@style/FriskyAppBarOverlay" />

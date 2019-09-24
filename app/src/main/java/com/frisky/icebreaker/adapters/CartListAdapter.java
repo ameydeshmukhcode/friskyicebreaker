@@ -3,7 +3,6 @@ package com.frisky.icebreaker.adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -11,9 +10,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.frisky.icebreaker.R;
-import com.frisky.icebreaker.core.structures.DietType;
 import com.frisky.icebreaker.core.structures.MenuItem;
 import com.frisky.icebreaker.interfaces.OnOrderUpdateListener;
+import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -31,8 +30,8 @@ public class CartListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     static class CartListViewHolder extends RecyclerView.ViewHolder {
-        ImageButton mAdd;
-        ImageButton mRemove;
+        MaterialButton mAdd;
+        MaterialButton mRemove;
         ImageView mDietTypeIcon;
         TextView mName;
         TextView mPrice;
