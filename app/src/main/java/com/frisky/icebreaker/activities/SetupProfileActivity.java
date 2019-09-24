@@ -10,9 +10,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +24,7 @@ import com.frisky.icebreaker.interfaces.UIActivity;
 import com.frisky.icebreaker.ui.assistant.RoundRectTransformation;
 import com.frisky.icebreaker.ui.components.dialogs.PickImageDialog;
 import com.frisky.icebreaker.ui.components.dialogs.ProgressDialog;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
@@ -53,8 +54,11 @@ public class SetupProfileActivity extends AppCompatActivity implements FormActiv
     Button mDoneButton;
     TextView mNameInput;
     TextView mBioInput;
+    TextInputLayout dobLayout;
+    TextInputLayout genderLayout;
     TextView mDateOfBirthInput;
-    Spinner mGenderSpinner;
+    View dobView;
+    AutoCompleteTextView mGenderPicker;
 
     PickImageDialog pickImageDialog;
 
@@ -90,18 +94,26 @@ public class SetupProfileActivity extends AppCompatActivity implements FormActiv
         mCancelButton = findViewById(R.id.button_cancel);
         mDoneButton = findViewById(R.id.button_done);
 
-        mGenderSpinner = findViewById(R.id.spinner_gender);
+        dobView = findViewById(R.id.dobView);
+        dobLayout = findViewById(R.id.dobInput);
+        genderLayout = findViewById(R.id.genderLayout);
 
-        ArrayAdapter adapter = ArrayAdapter.createFromResource(this, R.array.genders, R.layout.spinner_item);
-        adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
-        mGenderSpinner.setAdapter(adapter);
+        mGenderPicker = findViewById(R.id.dropdown_gender);
+
+        String[] GENDERS = new String[] {"Male", "Female", "Other"};
+
+        ArrayAdapter<String> adapter =
+                new ArrayAdapter<>(
+                        getBaseContext(),
+                        R.layout.dropdown_text,
+                        GENDERS);
+
+        mGenderPicker.setAdapter(adapter);
 
         if (getIntent().hasExtra("edit_mode")) {
-            mGenderSpinner.setVisibility(View.GONE);
-            mDateOfBirthInput.setVisibility(View.GONE);
+            genderLayout.setVisibility(View.GONE);
+            dobLayout.setVisibility(View.GONE);
 
-            mNameInput.setHint(sharedPreferences.getString("u_name", ""));
-            mBioInput.setHint(sharedPreferences.getString("u_bio", ""));
             Picasso.get().load(sharedPreferences.getString("u_image", ""))
                     .transform(new RoundRectTransformation()).into(mProfileImage);
         }
@@ -133,6 +145,18 @@ public class SetupProfileActivity extends AppCompatActivity implements FormActiv
             return false;
         }
 
+        if (bio.length() > 50) {
+            Toast.makeText(SetupProfileActivity.this, "Bio too long",
+                    Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (mGenderPicker.getText().toString().matches("")) {
+            Toast.makeText(SetupProfileActivity.this, "Gender not selected",
+                    Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
         if (imageNotSelected) {
             Toast.makeText(SetupProfileActivity.this, "Pick a profile photo",
                     Toast.LENGTH_SHORT).show();
@@ -149,7 +173,7 @@ public class SetupProfileActivity extends AppCompatActivity implements FormActiv
         mCancelButton.setOnClickListener(null);
         mNameInput.setEnabled(false);
         mBioInput.setEnabled(false);
-        mGenderSpinner.setEnabled(false);
+        mGenderPicker.setEnabled(false);
         mDateOfBirthInput.setEnabled(false);
     }
 
@@ -157,12 +181,11 @@ public class SetupProfileActivity extends AppCompatActivity implements FormActiv
     public void enableForm() {
         mNameInput.setEnabled(true);
         mBioInput.setEnabled(true);
-        mGenderSpinner.setEnabled(true);
+        mGenderPicker.setEnabled(true);
         mDateOfBirthInput.setEnabled(true);
 
-        Calendar calendar = Calendar.getInstance();
-
         final DatePickerDialog.OnDateSetListener date = (view, year, monthOfYear, dayOfMonth) -> {
+            Calendar calendar = Calendar.getInstance();
             calendar.set(Calendar.YEAR, year);
             calendar.set(Calendar.MONTH, monthOfYear);
             calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
@@ -172,7 +195,8 @@ public class SetupProfileActivity extends AppCompatActivity implements FormActiv
             mDateOfBirthInput.setText(sdf.format(calendar.getTime()));
         };
 
-        mDateOfBirthInput.setOnClickListener(v -> {
+        dobView.setOnClickListener(v -> {
+            Calendar calendar = Calendar.getInstance();
             DatePickerDialog datePickerDialog = new DatePickerDialog(v.getContext(), date,
                     calendar.get(Calendar.YEAR),
                     calendar.get(Calendar.MONTH),
@@ -267,7 +291,7 @@ public class SetupProfileActivity extends AppCompatActivity implements FormActiv
                                         .putString("u_name", name)
                                         .apply();
                             }
-                            else if (finalBioEdited) {
+                            else {
                                 sharedPreferences.edit()
                                         .putString("u_bio", bio)
                                         .apply();
@@ -337,7 +361,7 @@ public class SetupProfileActivity extends AppCompatActivity implements FormActiv
         Map<String, Object> userDetails = new HashMap<>();
         userDetails.put("name", name);
         userDetails.put("bio", bio);
-        userDetails.put("gender", mGenderSpinner.getSelectedItem().toString());
+        userDetails.put("gender", mGenderPicker.getText().toString());
         userDetails.put("date_of_birth", mDateOfBirthInput.getText().toString());
         userDetails.put("profile_setup_complete", true);
 
