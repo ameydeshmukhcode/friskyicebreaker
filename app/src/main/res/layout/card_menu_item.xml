@@ -22,7 +22,7 @@
             android:fontFamily="@font/museosans700"
             android:text="@string/placeholder_text"
             android:textSize="@dimen/text_menu_item_title"
-            app:layout_constraintEnd_toStartOf="@+id/add_item"
+            app:layout_constraintEnd_toStartOf="@+id/button_add_item"
             app:layout_constraintStart_toEndOf="@+id/image_diet_type"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -72,47 +72,76 @@
             app:layout_constraintStart_toStartOf="@+id/text_name"
             app:layout_constraintTop_toBottomOf="@+id/rupee" />
 
-        <ImageButton
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/button_remove"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:background="@drawable/bg_round_rect_left"
-            android:backgroundTint="@drawable/button_green_state_colors"
-            android:src="@drawable/ic_remove"
-            android:tint="@color/tintLight"
-            app:layout_constraintBottom_toBottomOf="@+id/text_item_count"
-            app:layout_constraintDimensionRatio="h,1:1"
+            style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:backgroundTint="@color/appGreen"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            app:icon="@drawable/ic_remove"
+            app:iconGravity="textStart"
+            app:iconPadding="0dp"
+            app:layout_constraintBottom_toBottomOf="@+id/button_add"
             app:layout_constraintEnd_toStartOf="@+id/text_item_count"
-            app:layout_constraintTop_toTopOf="@+id/text_item_count"
-            app:layout_constraintVertical_bias="0.512" />
+            app:layout_constraintStart_toStartOf="@+id/button_add_item"
+            app:layout_constraintTop_toTopOf="@+id/button_add">
+
+        </com.google.android.material.button.MaterialButton>
 
         <TextView
             android:id="@+id/text_item_count"
-            android:layout_width="0dp"
+            android:layout_width="26dp"
             android:layout_height="0dp"
-            android:background="@color/backgroundLight"
             android:fontFamily="@font/museosans700"
             android:gravity="center"
             android:text="@string/default_number"
-            android:textSize="@dimen/text_menu_item_price"
+            android:textSize="@dimen/text_title_size"
             app:layout_constraintBottom_toBottomOf="@+id/button_add"
-            app:layout_constraintDimensionRatio="w,1:1"
             app:layout_constraintEnd_toStartOf="@+id/button_add"
+            app:layout_constraintStart_toEndOf="@+id/button_remove"
             app:layout_constraintTop_toTopOf="@+id/button_add" />
 
-        <ImageButton
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/button_add"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
+            style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
             android:layout_marginEnd="24dp"
-            android:background="@drawable/bg_round_rect_right"
-            android:backgroundTint="@drawable/button_green_state_colors"
-            android:src="@drawable/ic_add"
-            android:tint="@color/tintLight"
+            android:backgroundTint="@color/appGreen"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            app:icon="@drawable/ic_add"
+            app:iconGravity="textStart"
+            app:iconPadding="0dp"
             app:layout_constraintBottom_toBottomOf="@+id/text_price"
-            app:layout_constraintDimensionRatio="h,1:1"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/text_name" />
+            app:layout_constraintStart_toEndOf="@+id/text_item_count"
+            app:layout_constraintTop_toTopOf="@+id/text_name">
+
+        </com.google.android.material.button.MaterialButton>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_add_item"
+            style="@style/Widget.MaterialComponents.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="26dp"
+            android:layout_marginEnd="24dp"
+            android:backgroundTint="@color/appGreen"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:text="@string/add"
+            android:textAppearance="@style/FriskyText"
+            android:textSize="12sp"
+            app:icon="@drawable/ic_add"
+            app:iconGravity="textEnd"
+            app:iconPadding="0dp"
+            app:layout_constraintBottom_toBottomOf="@+id/text_price"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/text_name">
+
+        </com.google.android.material.button.MaterialButton>
 
         <TextView
             android:id="@+id/text_available"
@@ -123,24 +152,8 @@
             android:textColor="@color/appRed"
             android:textSize="@dimen/text_menu_item_description"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/button_add"
-            app:layout_constraintStart_toStartOf="@+id/button_remove" />
-
-        <TextView
-            android:id="@+id/add_item"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:background="@drawable/bg_round_rect_left"
-            android:backgroundTint="@drawable/button_green_state_colors"
-            android:fontFamily="@font/museosans700"
-            android:gravity="center"
-            android:text="@string/add"
-            android:textColor="@color/textLight"
-            android:textSize="@dimen/text_menu_item_price"
-            app:layout_constraintBottom_toBottomOf="@+id/text_item_count"
-            app:layout_constraintEnd_toStartOf="@+id/button_add"
-            app:layout_constraintStart_toStartOf="@+id/button_remove"
-            app:layout_constraintTop_toTopOf="@+id/text_item_count" />
+            app:layout_constraintEnd_toEndOf="@+id/button_add_item"
+            app:layout_constraintStart_toStartOf="@+id/button_add_item" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>
