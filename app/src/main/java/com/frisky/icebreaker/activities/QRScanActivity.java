@@ -45,6 +45,7 @@ public class QRScanActivity extends AppCompatActivity implements ConfirmSessionS
 
     String restaurantID;
     String tableID;
+    String qrCodeData;
 
     ProgressDialog progressDialog = new ProgressDialog("Retrieving the Menu");
 
@@ -104,25 +105,10 @@ public class QRScanActivity extends AppCompatActivity implements ConfirmSessionS
         mCodeScanner = new CodeScanner(this, scannerView);
 
         mCodeScanner.setDecodeCallback(result -> runOnUiThread(() -> {
-            final String qrCodeData = result.getText();
+            qrCodeData = result.getText();
 
-            boolean isSessionActive = sharedPreferences.getBoolean("session_active", false);
-
-            if (!qrCodeData.contains("frisky") || (qrCodeData.split("\\+").length != 3)) {
-                Toast.makeText(getBaseContext(),"Invalid QR Code", Toast.LENGTH_LONG).show();
-                mCodeScanner.startPreview();
-            }
-            else if (isSessionActive) {
-                Toast.makeText(getBaseContext(),"Session Already Active", Toast.LENGTH_LONG).show();
-                mCodeScanner.startPreview();
-            }
-            else {
-                restaurantID = qrCodeData.split("\\+")[1];
-                tableID = qrCodeData.split("\\+")[2];
-
-                ConfirmSessionStartDialog confirmSessionStartDialog = new ConfirmSessionStartDialog();
-                confirmSessionStartDialog.show(getSupportFragmentManager(), "confirm session start dialog");
-            }
+            ConfirmSessionStartDialog confirmSessionStartDialog = new ConfirmSessionStartDialog();
+            confirmSessionStartDialog.show(getSupportFragmentManager(), "confirm session start dialog");
         }));
         mCodeScanner.startPreview();
     }
@@ -144,6 +130,17 @@ public class QRScanActivity extends AppCompatActivity implements ConfirmSessionS
     }
 
     private void continueSessionStart() {
+        if (!qrCodeData.contains("frisky") || (qrCodeData.split("\\+").length != 3)) {
+            Toast.makeText(getBaseContext(),"Invalid QR Code", Toast.LENGTH_LONG).show();
+            updateOnSessionStartFail();
+            mCodeScanner.startPreview();
+            return;
+        }
+        else {
+            restaurantID = qrCodeData.split("\\+")[1];
+            tableID = qrCodeData.split("\\+")[2];
+        }
+        
         DocumentReference restaurantRef = FirebaseFirestore.getInstance()
                 .collection("restaurants")
                 .document(restaurantID);
