@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -36,6 +37,7 @@ public class QRScanActivity extends AppCompatActivity implements ConfirmSessionS
 
     public static final int MY_PERMISSIONS_REQUEST_CAMERA = 1;
 
+    FrameLayout mScanner;
     CodeScanner mCodeScanner;
     ConstraintLayout mDummyMenu;
 
@@ -53,6 +55,7 @@ public class QRScanActivity extends AppCompatActivity implements ConfirmSessionS
 
         sharedPreferences = getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE);
 
+        mScanner = findViewById(R.id.frame_scanner);
         mDummyMenu = findViewById(R.id.dummy_menu);
         mDummyMenu.setVisibility(View.GONE);
 
@@ -105,8 +108,8 @@ public class QRScanActivity extends AppCompatActivity implements ConfirmSessionS
 
             boolean isSessionActive = sharedPreferences.getBoolean("session_active", false);
 
-            if (!qrCodeData.contains("frisky")) {
-                Toast.makeText(getBaseContext(),"QR Code not recognised", Toast.LENGTH_LONG).show();
+            if (!qrCodeData.contains("frisky") || (qrCodeData.split("\\+").length != 3)) {
+                Toast.makeText(getBaseContext(),"Invalid QR Code", Toast.LENGTH_LONG).show();
                 mCodeScanner.startPreview();
             }
             else if (isSessionActive) {
@@ -117,17 +120,34 @@ public class QRScanActivity extends AppCompatActivity implements ConfirmSessionS
                 restaurantID = qrCodeData.split("\\+")[1];
                 tableID = qrCodeData.split("\\+")[2];
 
-                DocumentReference restaurantRef = FirebaseFirestore.getInstance()
-                        .collection("restaurants")
-                        .document(restaurantID);
-
-                continueSessionStart(restaurantRef);
+                ConfirmSessionStartDialog confirmSessionStartDialog = new ConfirmSessionStartDialog();
+                confirmSessionStartDialog.show(getSupportFragmentManager(), "confirm session start dialog");
             }
         }));
         mCodeScanner.startPreview();
     }
 
-    private void continueSessionStart(DocumentReference restaurantRef) {
+    @Override
+    public void sessionStart(boolean choice) {
+        if (choice) {
+            progressDialog.show(getSupportFragmentManager(), "progress dialog");
+            progressDialog.setCancelable(false);
+            mDummyMenu.setVisibility(View.VISIBLE);
+            mCodeScanner.stopPreview();
+            mCodeScanner.releaseResources();
+            mScanner.setVisibility(View.GONE);
+            continueSessionStart();
+        }
+        else {
+            mCodeScanner.startPreview();
+        }
+    }
+
+    private void continueSessionStart() {
+        DocumentReference restaurantRef = FirebaseFirestore.getInstance()
+                .collection("restaurants")
+                .document(restaurantID);
+
         DocumentReference tableRef = restaurantRef.collection("tables")
                 .document(tableID);
 
@@ -141,18 +161,20 @@ public class QRScanActivity extends AppCompatActivity implements ConfirmSessionS
                     if (document.contains("occupied")) {
                         isOccupied = (boolean) document.get("occupied");
                     }
-                    if (!isOccupied) {
-                        ConfirmSessionStartDialog confirmSessionStartDialog = new ConfirmSessionStartDialog();
-                        confirmSessionStartDialog.show(getSupportFragmentManager(), "confirm session start dialog");
+                    if (isOccupied) {
+                        Toast.makeText(getBaseContext(),"Table is Occupied", Toast.LENGTH_LONG).show();
+                        updateOnSessionStartFail();
+                        mCodeScanner.startPreview();
                     }
                     else {
-                        Toast.makeText(getBaseContext(),"Table is Occupied", Toast.LENGTH_LONG).show();
-                        mCodeScanner.startPreview();
+                        getRestaurantAndTableDetails(restaurantID, tableID);
+                        initUserSession(restaurantID, tableID);
                     }
                     Log.d(getString(R.string.tag_debug), "DocumentSnapshot data: " + document.getData());
                 }
                 else {
-                    Toast.makeText(getBaseContext(),"QR Code invalid", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getBaseContext(),"Invalid QR Code", Toast.LENGTH_LONG).show();
+                    updateOnSessionStartFail();
                     mCodeScanner.startPreview();
                     Log.e(getString(R.string.tag_debug), "No such document");
                 }
@@ -161,27 +183,6 @@ public class QRScanActivity extends AppCompatActivity implements ConfirmSessionS
                 Log.e(getString(R.string.tag_debug), "failed with ", task.getException());
             }
         });
-    }
-
-    @Override
-    public void sessionStart(boolean choice) {
-        if (choice) {
-            mCodeScanner.stopPreview();
-            progressDialog.show(getSupportFragmentManager(), "progress dialog");
-            progressDialog.setCancelable(false);
-            mDummyMenu.setVisibility(View.VISIBLE);
-            getRestaurantAndTableDetails(restaurantID, tableID);
-            initUserSession(restaurantID, tableID);
-        }
-        else {
-            mCodeScanner.startPreview();
-        }
-    }
-
-    private void showMenu() {
-        Intent showMenu = new Intent(getBaseContext(), MenuActivity.class);
-        startActivity(showMenu);
-        finish();
     }
 
     private void getRestaurantAndTableDetails(String restID, String tableID) {
@@ -294,8 +295,15 @@ public class QRScanActivity extends AppCompatActivity implements ConfirmSessionS
                 });
     }
 
+    private void showMenu() {
+        Intent showMenu = new Intent(getBaseContext(), MenuActivity.class);
+        startActivity(showMenu);
+        finish();
+    }
+
     private void updateOnSessionStartFail() {
         mDummyMenu.setVisibility(View.GONE);
+        mScanner.setVisibility(View.VISIBLE);
         progressDialog.dismiss();
     }
 }
