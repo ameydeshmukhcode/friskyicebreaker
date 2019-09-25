@@ -140,7 +140,7 @@ public class QRScanActivity extends AppCompatActivity implements ConfirmSessionS
             restaurantID = qrCodeData.split("\\+")[1];
             tableID = qrCodeData.split("\\+")[2];
         }
-        
+
         DocumentReference restaurantRef = FirebaseFirestore.getInstance()
                 .collection("restaurants")
                 .document(restaurantID);
