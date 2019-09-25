@@ -149,8 +149,6 @@ public class MenuItemListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     menuItem.incrementCount();
                     itemHolder.mCount.setText(String.valueOf(menuItem.getCount()));
                     itemHolder.mAddItem.setVisibility(View.INVISIBLE);
-                    itemHolder.mRemove.setVisibility(View.VISIBLE);
-                    itemHolder.mCount.setVisibility(View.VISIBLE);
                     orderUpdateListener.addToOrder(menuItem);
                 });
 
@@ -158,8 +156,6 @@ public class MenuItemListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     menuItem.incrementCount();
                     itemHolder.mCount.setText(String.valueOf(menuItem.getCount()));
                     itemHolder.mAddItem.setVisibility(View.INVISIBLE);
-                    itemHolder.mRemove.setVisibility(View.VISIBLE);
-                    itemHolder.mCount.setVisibility(View.VISIBLE);
                     orderUpdateListener.addToOrder(menuItem);
                 });
                 
@@ -169,8 +165,6 @@ public class MenuItemListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     orderUpdateListener.removeFromOrder(menuItem);
                     if (menuItem.getCount() == 0) {
                         itemHolder.mAddItem.setVisibility(View.VISIBLE);
-                        itemHolder.mRemove.setVisibility(View.INVISIBLE);
-                        itemHolder.mCount.setVisibility(View.INVISIBLE);
                     }
                 });
                 break;
