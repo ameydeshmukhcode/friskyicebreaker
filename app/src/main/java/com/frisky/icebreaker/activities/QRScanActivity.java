@@ -18,6 +18,7 @@ import androidx.core.content.ContextCompat;
 
 import com.budiyev.android.codescanner.CodeScanner;
 import com.budiyev.android.codescanner.CodeScannerView;
+import com.frisky.icebreaker.BuildConfig;
 import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.ui.components.dialogs.ConfirmSessionStartDialog;
 import com.frisky.icebreaker.ui.components.dialogs.ProgressDialog;
@@ -28,6 +29,7 @@ import com.google.firebase.functions.FirebaseFunctions;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class QRScanActivity extends AppCompatActivity implements ConfirmSessionStartDialog.OnConfirmSessionStart {
 
@@ -130,18 +132,43 @@ public class QRScanActivity extends AppCompatActivity implements ConfirmSessionS
             Toast.makeText(getBaseContext(),"Invalid QR Code", Toast.LENGTH_LONG).show();
             updateOnSessionStartFail();
             mCodeScanner.startPreview();
-            return;
         }
         else {
             restaurantID = qrCodeData.split("\\+")[1];
             tableID = qrCodeData.split("\\+")[2];
+
+            if (BuildConfig.DEBUG) {
+                DocumentReference restaurantRef = FirebaseFirestore.getInstance()
+                        .collection("restaurants")
+                        .document(restaurantID);
+
+                restaurantRef.get().addOnCompleteListener(task -> {
+                   if (task.isSuccessful()) {
+                       DocumentSnapshot document = task.getResult();
+                       if (document == null) return;
+                       if (document.exists()) {
+                           if (Objects.equals(document.getString("status_listing"), "debug")) {
+                               checkForTableOccupied();
+                           }
+                           else {
+                               Toast.makeText(getBaseContext(),"Invalid QR Code", Toast.LENGTH_LONG).show();
+                               updateOnSessionStartFail();
+                           }
+                       }
+                   }
+                });
+            }
+            else {
+                checkForTableOccupied();
+            }
         }
+    }
 
-        DocumentReference restaurantRef = FirebaseFirestore.getInstance()
+    private void checkForTableOccupied() {
+        DocumentReference tableRef = FirebaseFirestore.getInstance()
                 .collection("restaurants")
-                .document(restaurantID);
-
-        DocumentReference tableRef = restaurantRef.collection("tables")
+                .document(restaurantID)
+                .collection("tables")
                 .document(tableID);
 
         tableRef.get().addOnCompleteListener(task -> {
@@ -162,7 +189,6 @@ public class QRScanActivity extends AppCompatActivity implements ConfirmSessionS
                     else {
                         createUserSession();
                     }
-                    Log.d(getString(R.string.tag_debug), "DocumentSnapshot data: " + document.getData());
                 }
                 else {
                     Toast.makeText(getBaseContext(),"Invalid QR Code", Toast.LENGTH_LONG).show();
@@ -215,7 +241,7 @@ public class QRScanActivity extends AppCompatActivity implements ConfirmSessionS
                 .putString("restaurant_id", restaurantID)
                 .putString("restaurant_name", restaurantName)
                 .putString("table_id", tableID)
-                .putString("table_name", tableName)
+                .putString("table_name", "Table " + tableName)
                 .apply();
 
         Intent showMenu = new Intent(getBaseContext(), MenuActivity.class);
