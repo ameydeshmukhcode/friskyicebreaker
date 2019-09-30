@@ -232,68 +232,55 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
     private void switchFragment(String fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
 
-        if (fragmentManager == null)
-            return;
+        Fragment homeFragment = fragmentManager.findFragmentByTag("home");
+        Fragment dineFragment = fragmentManager.findFragmentByTag("dine");
+        Fragment visitsFragment = fragmentManager.findFragmentByTag("hist");
 
         switch (fragment) {
             case "home":
-                if(fragmentManager.findFragmentByTag("home") != null) {
+                if(homeFragment != null) {
                     //if the fragment exists, show it.
-                    fragmentManager.beginTransaction().show(fragmentManager.findFragmentByTag("home")).commit();
+                    fragmentManager.beginTransaction().show(homeFragment).commit();
                 }
                 else {
                     //if the fragment does not exist, add it to fragment manager.
                     fragmentManager.beginTransaction().add(R.id.home_activity_fragment, new RestaurantViewFragment(), "home").commit();
                 }
-                if(fragmentManager.findFragmentByTag("dine") != null
-                        && fragmentManager.findFragmentByTag("dine").isVisible()){
+                if(dineFragment != null && dineFragment.isVisible()){
                     //if the other fragment is visible, hide it.
-                    fragmentManager.beginTransaction().hide(fragmentManager.findFragmentByTag("dine")).commit();
+                    fragmentManager.beginTransaction().hide(dineFragment).commit();
                 }
-                if(fragmentManager.findFragmentByTag("hist") != null
-                        && fragmentManager.findFragmentByTag("hist").isVisible()){
+                if(visitsFragment != null && visitsFragment.isVisible()){
                     //if the other fragment is visible, hide it.
-                    fragmentManager.beginTransaction().hide(fragmentManager.findFragmentByTag("hist")).commit();
+                    fragmentManager.beginTransaction().hide(visitsFragment).commit();
                 }
                 break;
             case "dine":
-                if(fragmentManager.findFragmentByTag("dine") != null) {
-                    //if the fragment exists, show it.
-                    fragmentManager.beginTransaction().show(fragmentManager.findFragmentByTag("dine")).commit();
+                if(dineFragment != null) {
+                    fragmentManager.beginTransaction().show(dineFragment).commit();
                 }
                 else {
-                    //if the fragment does not exist, add it to fragment manager.
                     fragmentManager.beginTransaction().add(R.id.home_activity_fragment, new DiningFragment(), "dine").commit();
                 }
-                if(fragmentManager.findFragmentByTag("home") != null
-                        && fragmentManager.findFragmentByTag("home").isVisible()){
-                    //if the other fragment is visible, hide it.
-                    fragmentManager.beginTransaction().hide(fragmentManager.findFragmentByTag("home")).commit();
+                if(homeFragment != null && homeFragment.isVisible()){
+                    fragmentManager.beginTransaction().hide(homeFragment).commit();
                 }
-                if(fragmentManager.findFragmentByTag("hist") != null
-                        && fragmentManager.findFragmentByTag("hist").isVisible()){
-                    //if the other fragment is visible, hide it.
-                    fragmentManager.beginTransaction().hide(fragmentManager.findFragmentByTag("hist")).commit();
+                if(visitsFragment != null && visitsFragment.isVisible()){
+                    fragmentManager.beginTransaction().hide(visitsFragment).commit();
                 }
                 break;
             case "hist":
-                if(fragmentManager.findFragmentByTag("hist") != null) {
-                    //if the fragment exists, show it.
-                    fragmentManager.beginTransaction().show(fragmentManager.findFragmentByTag("hist")).commit();
+                if(visitsFragment != null) {
+                    fragmentManager.beginTransaction().show(visitsFragment).commit();
                 }
                 else {
-                    //if the fragment does not exist, add it to fragment manager.
                     fragmentManager.beginTransaction().add(R.id.home_activity_fragment, new OrderHistoryFragment(), "hist").commit();
                 }
-                if(fragmentManager.findFragmentByTag("dine") != null
-                        && fragmentManager.findFragmentByTag("dine").isVisible()){
-                    //if the other fragment is visible, hide it.
-                    fragmentManager.beginTransaction().hide(fragmentManager.findFragmentByTag("dine")).commit();
+                if(dineFragment != null && dineFragment.isVisible()){
+                    fragmentManager.beginTransaction().hide(dineFragment).commit();
                 }
-                if(fragmentManager.findFragmentByTag("home") != null
-                        && fragmentManager.findFragmentByTag("home").isVisible()){
-                    //if the other fragment is visible, hide it.
-                    fragmentManager.beginTransaction().hide(fragmentManager.findFragmentByTag("home")).commit();
+                if(homeFragment != null && homeFragment.isVisible()){
+                    fragmentManager.beginTransaction().hide(homeFragment).commit();
                 }
                 break;
         }
