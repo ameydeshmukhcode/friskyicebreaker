@@ -30,9 +30,12 @@ import com.google.android.material.floatingactionbutton.ExtendedFloatingActionBu
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class HomeActivity extends AppCompatActivity implements UIActivity, BottomNavigationView.OnNavigationItemSelectedListener {
@@ -61,6 +64,32 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
         for (Map.Entry<String, ?> entry : sharedPreferences.getAll().entrySet()) {
             Log.d(getString(R.string.tag_debug), "Saved Entry " + entry.getKey() + " " + entry.getValue());
         }
+
+        FirebaseInstanceId.getInstance().getInstanceId()
+                .addOnCompleteListener(task -> {
+                    if (!task.isSuccessful()) {
+                        Log.w(getString(R.string.tag_debug), "getInstanceId failed", task.getException());
+                        return;
+                    }
+
+                    // Get new Instance ID token
+                    String token = task.getResult().getToken();
+
+                    Map<String, Object> userDetails = new HashMap<>();
+                    userDetails.put("firebase_instance_id", token);
+
+                    FirebaseFirestore.getInstance()
+                            .collection("users")
+                            .document(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                            .set(userDetails, SetOptions.merge())
+                            .addOnCompleteListener(task1 -> {
+                                Log.d(getString(R.string.tag_debug), "Instance ID Updated");
+                            })
+                    .addOnFailureListener(e -> {
+                        Log.e(getString(R.string.tag_debug), "Instance ID Update failed.");
+                    });
+
+                });
 
         LocalBroadcastManager.getInstance(this).registerReceiver(
                 new BroadcastReceiver() {
