@@ -45,6 +45,7 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
 
     private List<Object> mMenu = new ArrayList<>();
     private List<MenuCategory> mCategories = new ArrayList<>();
+    private List<MenuItem> mItems = new ArrayList<>();
     String restaurantID;
 
     int mCartTotal = 0;
@@ -157,28 +158,20 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
                         MenuCategory menuCategory = new MenuCategory(document.getId(),  document.getString("name"));
                         mCategories.add(menuCategory);
                     }
-                    int current = 0;
-                    getMenuCategory(current);
+                    getItems();
                 }
             }
         });
     }
 
-    private void getMenuCategory(int index) {
-        if (index > mCategories.size() - 1) {
-            return;
-        }
-
-        final MenuCategory menuCategory = mCategories.get(index);
-
+    private void getItems() {
         FirebaseFirestore.getInstance()
                 .collection("restaurants").document(restaurantID)
                 .collection("items")
-                .whereEqualTo("category_id", menuCategory.getId())
+                .orderBy("category_id")
                 .get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 if (task.getResult() != null) {
-                    mMenu.add(menuCategory);
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         boolean available = true;
                         String name = document.getString("name");
@@ -196,18 +189,31 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
                             type = getDietTypeFromString(document.getString("type"));
                         }
                         int cost = Integer.parseInt(Objects.requireNonNull(document.getString("cost")));
-                        MenuItem item = new MenuItem(document.getId(), name, description, cost, available, type);
-                        mMenu.add(item);
-                        mMenuListViewAdapter.notifyDataSetChanged();
-                        mDummyMenu.setVisibility(View.GONE);
+                        MenuItem item = new MenuItem(document.getId(), name, description,
+                                document.getString("category_id"), cost, available, type);
+                        mItems.add(item);
                     }
-                    getMenuCategory(index + 1);
+                    setupMenu();
                 }
             }
             else {
                 Log.e("error", "Error getting documents: ", task.getException());
             }
         });
+    }
+
+    private void setupMenu() {
+        for (int i = 0; i < mCategories.size(); i++) {
+            final MenuCategory category = mCategories.get(i);
+            mMenu.add(category);
+            for (int j = 0; j < mItems.size(); j++) {
+                if (mItems.get(j).getCategory().matches(category.getId())) {
+                    mMenu.add(mItems.get(j));
+                }
+            }
+        }
+        mMenuListViewAdapter.notifyDataSetChanged();
+        mDummyMenu.setVisibility(View.GONE);
     }
 
     @Override
