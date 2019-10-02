@@ -6,15 +6,17 @@ public class MenuItem implements Serializable {
     private String id;
     private String name;
     private String description;
+    private String category;
     private int price;
     private boolean available;
     private int count = 0;
     private DietType dietType;
 
-    public MenuItem(String id, String name, String description, int price, boolean available, DietType dietType) {
+    public MenuItem(String id, String name, String description, String category, int price, boolean available, DietType dietType) {
         this.id = id;
         this.name = name;
         this.description = description;
+        this.category = category;
         this.price = price;
         this.available = available;
         this.dietType = dietType;
@@ -30,6 +32,10 @@ public class MenuItem implements Serializable {
 
     public String getDescription() {
         return description;
+    }
+
+    public String getCategory() {
+        return category;
     }
 
     public int getPrice() {
