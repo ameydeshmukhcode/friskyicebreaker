@@ -104,8 +104,6 @@ public class OrderActivity extends AppCompatActivity implements ClearBillDialog.
 
         mRecyclerOrderListView.setLayoutManager(mOrderListViewLayoutManager);
 
-        getOrderDetails();
-
         if (getIntent().hasExtra("order_ack")) {
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
 
@@ -126,30 +124,8 @@ public class OrderActivity extends AppCompatActivity implements ClearBillDialog.
             notificationManager.notify(R.integer.n_order_session_service, notification);
         }
 
+        addListenerForOrderUpdates();
         addListenerForOrderDetailsUpdate();
-
-        LocalBroadcastManager.getInstance(this).registerReceiver(
-                new BroadcastReceiver() {
-                    @Override
-                    public void onReceive(Context context, Intent intent) {
-                        Intent clearBill = new Intent(getApplicationContext(), HomeActivity.class);
-                        clearBill.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
-                                Intent.FLAG_ACTIVITY_CLEAR_TASK |
-                                Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(clearBill);
-                        finish();
-                    }
-                },
-                new IntentFilter("SessionEnd"));
-
-        LocalBroadcastManager.getInstance(this).registerReceiver(
-                new BroadcastReceiver() {
-                    @Override
-                    public void onReceive(Context context, Intent intent) {
-                        getOrderDetails();
-                    }
-                },
-                new IntentFilter("OrderUpdate"));
     }
 
     @Override
@@ -162,69 +138,65 @@ public class OrderActivity extends AppCompatActivity implements ClearBillDialog.
     }
 
     @SuppressWarnings("unchecked")
-    private void getOrderDetails() {
-        mOrderList.clear();
-
+    private void addListenerForOrderUpdates() {
         final DocumentReference docRef = FirebaseFirestore.getInstance().collection("restaurants")
                 .document(restaurantID);
 
         docRef.collection("orders")
                 .whereEqualTo("session_id", sessionID)
                 .orderBy("timestamp", Query.Direction.DESCENDING)
-                .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        QuerySnapshot document = task.getResult();
-                        assert document != null;
+                .addSnapshotListener(((queryDocumentSnapshots, e) -> {
+                    assert queryDocumentSnapshots != null;
 
-                        int docRank = document.size();
+                    mOrderList.clear();
 
-                        for (DocumentSnapshot snapshot : document.getDocuments()) {
+                    int docRank = queryDocumentSnapshots.size();
 
-                            Map<String, Object> orderData = (Map<String, Object>) snapshot.get("items");
-                            assert orderData != null;
+                    for (DocumentSnapshot snapshot : queryDocumentSnapshots.getDocuments()) {
 
-                            @SuppressLint("SimpleDateFormat")
-                            SimpleDateFormat formatter = new SimpleDateFormat("hh:mm a");
-                            String orderTime = formatter.format((Objects
-                                    .requireNonNull(snapshot.getTimestamp("timestamp")).toDate()));
+                        Map<String, Object> orderData = (Map<String, Object>) snapshot.get("items");
+                        assert orderData != null;
 
-                            OrderDetailsHeader orderDetailsHeader = new OrderDetailsHeader(orderTime, docRank);
-                            mOrderList.add(orderDetailsHeader);
+                        @SuppressLint("SimpleDateFormat")
+                        SimpleDateFormat formatter = new SimpleDateFormat("hh:mm a");
+                        String orderTime = formatter.format((Objects
+                                .requireNonNull(snapshot.getTimestamp("timestamp")).toDate()));
 
-                            Log.d(getString(R.string.tag_debug), "Time " + orderDetailsHeader.getTime());
-                            Log.d(getString(R.string.tag_debug),  "#" + orderDetailsHeader.getRank());
+                        OrderDetailsHeader orderDetailsHeader = new OrderDetailsHeader(orderTime, docRank);
+                        mOrderList.add(orderDetailsHeader);
 
-                            for (Map.Entry<String, Object> entry : orderData.entrySet()) {
-                                String itemID = entry.getKey();
-                                HashMap<String, Object> item = (HashMap<String, Object>) entry.getValue();
+                        Log.d(getString(R.string.tag_debug), "Time " + orderDetailsHeader.getTime());
+                        Log.d(getString(R.string.tag_debug),  "#" + orderDetailsHeader.getRank());
 
-                                String name = String.valueOf(item.get("name"));
-                                int count = Integer.parseInt(String.valueOf(item.get("quantity")));
-                                int price = Integer.parseInt(String.valueOf(item.get("cost")));
-                                OrderItem orderItem = new OrderItem(itemID, name, count, (count * price));
+                        for (Map.Entry<String, Object> entry : orderData.entrySet()) {
+                            String itemID = entry.getKey();
+                            HashMap<String, Object> item = (HashMap<String, Object>) entry.getValue();
 
-                                if (String.valueOf(item.get("status")).equals("pending")) {
-                                    orderItem.setStatus(OrderStatus.PENDING);
-                                }
-                                else if (String.valueOf(item.get("status")).equals("accepted")) {
-                                    orderItem.setStatus(OrderStatus.ACCEPTED);
-                                }
-                                else if (String.valueOf(item.get("status")).equals("rejected")) {
-                                    orderItem.setStatus(OrderStatus.REJECTED);
-                                }
-                                else if (String.valueOf(item.get("status")).equals("cancelled")) {
-                                    orderItem.setStatus(OrderStatus.CANCELLED);
-                                }
-                                mOrderList.add(orderItem);
+                            String name = String.valueOf(item.get("name"));
+                            int count = Integer.parseInt(String.valueOf(item.get("quantity")));
+                            int price = Integer.parseInt(String.valueOf(item.get("cost")));
+                            OrderItem orderItem = new OrderItem(itemID, name, count, (count * price));
+
+                            if (String.valueOf(item.get("status")).equals("pending")) {
+                                orderItem.setStatus(OrderStatus.PENDING);
                             }
-                            docRank--;
+                            else if (String.valueOf(item.get("status")).equals("accepted")) {
+                                orderItem.setStatus(OrderStatus.ACCEPTED);
+                            }
+                            else if (String.valueOf(item.get("status")).equals("rejected")) {
+                                orderItem.setStatus(OrderStatus.REJECTED);
+                            }
+                            else if (String.valueOf(item.get("status")).equals("cancelled")) {
+                                orderItem.setStatus(OrderStatus.CANCELLED);
+                            }
+                            mOrderList.add(orderItem);
                         }
-
-                        orderListAdapter = new OrderListAdapter(getApplicationContext(), mOrderList);
-                        mRecyclerOrderListView.setAdapter(orderListAdapter);
+                        docRank--;
                     }
-                });
+
+                    orderListAdapter = new OrderListAdapter(getApplicationContext(), mOrderList);
+                    mRecyclerOrderListView.setAdapter(orderListAdapter);
+                }));
     }
 
     private void clearBill() {
