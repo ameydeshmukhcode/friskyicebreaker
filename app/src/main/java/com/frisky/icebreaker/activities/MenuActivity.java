@@ -31,6 +31,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
@@ -53,6 +54,8 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
 
     int mCartTotal = 0;
     ArrayList<MenuItem> mCartList = new ArrayList<>();
+
+    HashMap<String, Integer> mCategoryOrderMap = new HashMap<>();
 
     RecyclerView.Adapter mMenuListViewAdapter;
     RecyclerView mRecyclerMenuListView;
@@ -152,7 +155,7 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
         mRecyclerMenuListView.setLayoutManager(mMenuListViewLayoutManager);
 
         // specify an adapter (see also next example)
-        mMenuListViewAdapter = new MenuItemListAdapter(mMenu, this);
+        mMenuListViewAdapter = new MenuItemListAdapter(mMenu, mCategoryOrderMap, this);
         mRecyclerMenuListView.setAdapter(mMenuListViewAdapter);
 
         prepareMenuData();
@@ -220,6 +223,8 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
         for (int i = 0; i < mCategories.size(); i++) {
             final MenuCategory category = mCategories.get(i);
             mMenu.add(category);
+            Log.d(getString(R.string.tag_debug), category.getName() + String.valueOf(mMenu.size() - 1));
+            mCategoryOrderMap.put(category.getName(), mMenu.size() - 1);
             categoryMenu.getMenu().add(category.getName());
             for (int j = 0; j < mItems.size(); j++) {
                 if (mItems.get(j).getCategory().matches(category.getId())) {

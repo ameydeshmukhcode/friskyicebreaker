@@ -15,6 +15,7 @@ import com.frisky.icebreaker.core.structures.MenuItem;
 import com.frisky.icebreaker.interfaces.OnOrderUpdateListener;
 import com.google.android.material.button.MaterialButton;
 
+import java.util.HashMap;
 import java.util.List;
 
 import static com.frisky.icebreaker.ui.assistant.UIAssistant.getTypeIcon;
@@ -22,6 +23,7 @@ import static com.frisky.icebreaker.ui.assistant.UIAssistant.getTypeIcon;
 public class MenuItemListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<Object> mMenu;
+    private HashMap<String, Integer> mCategoryOrderMap;
 
     private final int CATEGORY_VIEW = 77;
     private final int MENU_ITEM_VIEW = 88;
@@ -60,9 +62,10 @@ public class MenuItemListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }
     }
 
-    public MenuItemListAdapter(List<Object> menu, OnOrderUpdateListener listener) {
+    public MenuItemListAdapter(List<Object> menu, HashMap<String, Integer> categoryOrderMap, OnOrderUpdateListener listener) {
         this.mMenu = menu;
         this.orderUpdateListener = listener;
+        this.mCategoryOrderMap = categoryOrderMap;
     }
 
     @Override
