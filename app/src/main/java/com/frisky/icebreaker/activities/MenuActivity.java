@@ -17,6 +17,7 @@ import androidx.appcompat.view.ContextThemeWrapper;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.LinearSmoothScroller;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.frisky.icebreaker.R;
@@ -102,6 +103,20 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
 
         Context wrapper = new ContextThemeWrapper(getApplicationContext(), R.style.FriskyPopUpMenu);
         categoryMenu = new PopupMenu(wrapper, mCategoryPickerButton);
+
+        RecyclerView.SmoothScroller smoothScroller = new LinearSmoothScroller(getApplicationContext()) {
+            @Override protected int getVerticalSnapPreference() {
+                return LinearSmoothScroller.SNAP_TO_START;
+            }
+        };
+
+        categoryMenu.setOnMenuItemClickListener(item -> {
+            String categoryName = item.getTitle().toString();
+            int categoryPosition = mCategoryOrderMap.get(categoryName);
+            smoothScroller.setTargetPosition(categoryPosition);
+            mRecyclerMenuListView.getLayoutManager().startSmoothScroll(smoothScroller);
+            return true;
+        });
 
         mCategoryPickerButton.setOnClickListener(v -> {
             categoryMenu.show();
