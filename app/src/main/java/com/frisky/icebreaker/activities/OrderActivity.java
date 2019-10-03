@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
@@ -34,6 +35,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
+import com.google.firebase.functions.FirebaseFunctions;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -250,71 +252,68 @@ public class OrderActivity extends AppCompatActivity implements ClearBillDialog.
         if (choice) {
             progressDialog.show(getSupportFragmentManager(), "progress dialog");
             progressDialog.setCancelable(false);
+
             final FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
             String restaurantID = sharedPreferences.getString("restaurant_id", "");
             String sessionID = sharedPreferences.getString("session_id", "");
             String tableID = sharedPreferences.getString("table_id", "");
 
-            Map<String, Object> requestBill = new HashMap<>();
-            requestBill.put("bill_requested", true);
+            Map<String, Object> data = new HashMap<>();
+            data.put("restaurant", restaurantID);
+            data.put("table", tableID);
+            data.put("session", sessionID);
 
-            assert restaurantID != null;
-            assert sessionID != null;
-            firebaseFirestore.collection("restaurants")
-                    .document(restaurantID)
-                    .collection("sessions")
-                    .document(sessionID)
-                    .set(requestBill, SetOptions.merge())
-                    .addOnSuccessListener(documentReference -> {
-                        Map<String, Object> clearTable = new HashMap<>();
-                        clearTable.put("bill_requested", true);
+            FirebaseFunctions.getInstance()
+                    .getHttpsCallable("requestBill")
+                    .call(data)
+                    .continueWith(task -> {
+                        if (task.isSuccessful()) {
+                            navigateBackHome();
+                        } else if (!task.isSuccessful()) {
+                            progressDialog.dismiss();
+                            Toast.makeText(getBaseContext(), "Something went wrong :( Try again.", Toast.LENGTH_SHORT).show();
+                        }
 
-                        assert tableID != null;
-                        firebaseFirestore.collection("restaurants")
-                                .document(restaurantID)
-                                .collection("tables")
-                                .document(tableID)
-                                .set(clearTable, SetOptions.merge())
-                                .addOnSuccessListener(doc -> {
-                                    NotificationManager notificationManager = getSystemService(NotificationManager.class);
-
-                                    Intent notificationIntent = new Intent(this, HomeActivity.class);
-                                    PendingIntent pendingIntent =
-                                            PendingIntent.getActivity(this, 0, notificationIntent, 0);
-
-                                    float amountPayable = Float.parseFloat(sharedPreferences
-                                            .getString("amount_payable", "0.00"));
-
-                                    @SuppressLint("DefaultLocale")
-                                    String amount = String.format("%.2f", amountPayable);
-
-                                    String billAmountString = "You've requested for the bill. Bill Amount: "
-                                            + getString(R.string.rupee)
-                                            + amount;
-
-                                    NotificationCompat.Builder builder = new
-                                            NotificationCompat.Builder(this, getString(R.string.n_channel_session))
-                                            .setSmallIcon(R.drawable.logo)
-                                            .setContentTitle("Bill Requested")
-                                            .setContentText(billAmountString)
-                                            .setPriority(NotificationCompat.PRIORITY_HIGH)
-                                            // Set the intent that will fire when the user taps the notification
-                                            .setContentIntent(pendingIntent);
-
-                                    notificationManager.notify(R.integer.n_order_session_service, builder.build());
-
-                                    sharedPreferences.edit().putBoolean("bill_requested", true).apply();
-
-                                    Intent clearBill = new Intent(this, HomeActivity.class);
-                                    clearBill.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
-                                            Intent.FLAG_ACTIVITY_CLEAR_TASK |
-                                            Intent.FLAG_ACTIVITY_NEW_TASK);
-                                    startActivity(clearBill);
-                                    finish();
-                                })
-                        .addOnFailureListener(e -> progressDialog.dismiss());
-                    })
-            .addOnFailureListener(e -> progressDialog.dismiss());
+                        return "requestBill";
+                    });
         }
+    }
+
+    private void navigateBackHome() {
+        NotificationManager notificationManager = getSystemService(NotificationManager.class);
+
+        Intent notificationIntent = new Intent(this, HomeActivity.class);
+        PendingIntent pendingIntent =
+                PendingIntent.getActivity(this, 0, notificationIntent, 0);
+
+        float amountPayable = Float.parseFloat(sharedPreferences
+                .getString("amount_payable", "0.00"));
+
+        @SuppressLint("DefaultLocale")
+        String amount = String.format("%.2f", amountPayable);
+
+        String billAmountString = "You've requested for the bill. Bill Amount: "
+                + getString(R.string.rupee)
+                + amount;
+
+        NotificationCompat.Builder builder = new
+                NotificationCompat.Builder(this, getString(R.string.n_channel_session))
+                .setSmallIcon(R.drawable.logo)
+                .setContentTitle("Bill Requested")
+                .setContentText(billAmountString)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                // Set the intent that will fire when the user taps the notification
+                .setContentIntent(pendingIntent);
+
+        notificationManager.notify(R.integer.n_order_session_service, builder.build());
+
+        sharedPreferences.edit().putBoolean("bill_requested", true).apply();
+
+        Intent clearBill = new Intent(this, HomeActivity.class);
+        clearBill.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
+                Intent.FLAG_ACTIVITY_CLEAR_TASK |
+                Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(clearBill);
+        finish();
     }
 }
