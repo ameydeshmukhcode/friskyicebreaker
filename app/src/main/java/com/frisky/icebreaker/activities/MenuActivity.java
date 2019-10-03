@@ -170,7 +170,7 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
         mRecyclerMenuListView.setLayoutManager(mMenuListViewLayoutManager);
 
         // specify an adapter (see also next example)
-        mMenuListViewAdapter = new MenuItemListAdapter(mMenu, mCategoryOrderMap, this);
+        mMenuListViewAdapter = new MenuItemListAdapter(mMenu, this);
         mRecyclerMenuListView.setAdapter(mMenuListViewAdapter);
 
         prepareMenuData();
