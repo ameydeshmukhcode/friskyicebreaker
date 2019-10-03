@@ -13,6 +13,7 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.view.ContextThemeWrapper;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -96,7 +97,8 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
 
         mCategoryPickerButton = findViewById(R.id.button_category);
 
-        categoryMenu = new PopupMenu(getApplicationContext(), mCategoryPickerButton);
+        Context wrapper = new ContextThemeWrapper(getApplicationContext(), R.style.FriskyPopUpMenu);
+        categoryMenu = new PopupMenu(wrapper, mCategoryPickerButton);
 
         mCategoryPickerButton.setOnClickListener(v -> {
             categoryMenu.show();

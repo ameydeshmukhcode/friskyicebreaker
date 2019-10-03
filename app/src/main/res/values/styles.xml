@@ -19,4 +19,9 @@
     </style>
 
     <style name="FriskyAppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="FriskyPopUpMenu" parent="Widget.AppCompat.PopupMenu">
+        <item name="android:textSize">@dimen/text_subtitle_size</item>
+        <item name="android:fontFamily">@font/museosans300</item>
+    </style>
 </resources>
