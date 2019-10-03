@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -42,6 +43,7 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
     Button mBackButton;
     TextView mRestName;
     TextView mTableSerial;
+    Button mCategoryPickerButton;
 
     private List<Object> mMenu = new ArrayList<>();
     private List<MenuCategory> mCategories = new ArrayList<>();
@@ -58,6 +60,8 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
     ConstraintLayout mBottomSheetOrder;
     ConstraintLayout mDummyMenu;
     TextView mCartTotalText;
+
+    PopupMenu categoryMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +93,14 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
     public void initUI() {
         mBackButton = findViewById(R.id.button_back);
         mBackButton.setOnClickListener(v -> MenuActivity.super.onBackPressed());
+
+        mCategoryPickerButton = findViewById(R.id.button_category);
+
+        categoryMenu = new PopupMenu(getApplicationContext(), mCategoryPickerButton);
+
+        mCategoryPickerButton.setOnClickListener(v -> {
+            categoryMenu.show();
+        });
 
         mDummyMenu = findViewById(R.id.dummy_menu);
 
@@ -206,6 +218,7 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
         for (int i = 0; i < mCategories.size(); i++) {
             final MenuCategory category = mCategories.get(i);
             mMenu.add(category);
+            categoryMenu.getMenu().add(category.getName());
             for (int j = 0; j < mItems.size(); j++) {
                 if (mItems.get(j).getCategory().matches(category.getId())) {
                     mMenu.add(mItems.get(j));
