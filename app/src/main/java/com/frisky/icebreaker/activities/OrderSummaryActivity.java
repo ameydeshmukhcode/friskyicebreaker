@@ -1,7 +1,6 @@
 package com.frisky.icebreaker.activities;
 
 import android.annotation.SuppressLint;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -78,22 +77,6 @@ public class OrderSummaryActivity extends AppCompatActivity implements UIActivit
 
         orderListAdapter = new OrderListAdapter(getApplicationContext(), mOrderList);
         mOrderListRecyclerView.setAdapter(orderListAdapter);
-
-        SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE);;
-
-        if (getIntent().hasExtra("end_session")) {
-            sharedPreferences.edit()
-                    .putBoolean("session_active", false)
-                    .remove("session_id")
-                    .remove("restaurant_id")
-                    .remove("restaurant_name")
-                    .remove("table_id")
-                    .remove("table_name")
-                    .remove("bill_requested")
-                    .remove("bill_amount")
-                    .remove("order_active")
-                    .apply();
-        }
 
         if (getIntent().hasExtra("session_id") && getIntent().hasExtra("restaurant_id")) {
             getOrderSummary(getIntent().getStringExtra("restaurant_id"),
