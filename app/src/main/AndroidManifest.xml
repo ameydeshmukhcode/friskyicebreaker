@@ -40,7 +40,12 @@
         <activity android:name=".activities.CartActivity" />
         <activity android:name=".activities.OrderActivity" />
         <activity android:name=".activities.OptionsActivity" />
-        <activity android:name=".activities.OrderSummaryActivity" />
+        <activity android:name=".activities.OrderSummaryActivity" >
+            <intent-filter>
+                <action android:name="ORDER_SUMMARY" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <service
             android:name=".services.FriskyService"
             android:exported="false">
