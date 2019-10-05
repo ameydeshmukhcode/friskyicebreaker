@@ -108,7 +108,7 @@ public class RestaurantViewFragment extends Fragment {
 
                     Log.d("Frisky Debug", name + " " + address + " " + tags);
 
-                    Restaurant restaurant = new Restaurant(Uri.parse(image), document.getId(), name, name, address,
+                    Restaurant restaurant = new Restaurant(Uri.parse(image), document.getId(), name, address,
                             tags.substring(1, tags.length() - 1), 4.5);
                     mRestaurantList.add(restaurant);
                     mPubViewAdapter.notifyDataSetChanged();

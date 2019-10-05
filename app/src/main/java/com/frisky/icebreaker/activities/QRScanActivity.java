@@ -62,8 +62,7 @@ public class QRScanActivity extends AppCompatActivity implements ConfirmSessionS
                 != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA},
                     MY_PERMISSIONS_REQUEST_CAMERA);
-        }
-        else {
+        } else {
             setupScannerView();
         }
     }
@@ -71,14 +70,12 @@ public class QRScanActivity extends AppCompatActivity implements ConfirmSessionS
     @Override
     protected void onResume() {
         super.onResume();
-        if (mCodeScanner != null)
-            mCodeScanner.startPreview();
+        if (mCodeScanner != null) mCodeScanner.startPreview();
     }
 
     @Override
     protected void onPause() {
-        if (mCodeScanner != null)
-            mCodeScanner.releaseResources();
+        if (mCodeScanner != null) mCodeScanner.releaseResources();
         super.onPause();
     }
 
@@ -90,11 +87,25 @@ public class QRScanActivity extends AppCompatActivity implements ConfirmSessionS
                 // If request is cancelled, the result arrays are empty.
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     setupScannerView();
-                }
-                else {
+                } else {
                     super.onBackPressed();
                 }
             }
+        }
+    }
+
+    @Override
+    public void sessionStart(boolean choice) {
+        if (choice) {
+            progressDialog.show(getSupportFragmentManager(), "progress dialog");
+            progressDialog.setCancelable(false);
+            mDummyMenu.setVisibility(View.VISIBLE);
+            mCodeScanner.stopPreview();
+            mCodeScanner.releaseResources();
+            mScanner.setVisibility(View.GONE);
+            continueSessionStart();
+        } else {
+            mCodeScanner.startPreview();
         }
     }
 
@@ -111,29 +122,12 @@ public class QRScanActivity extends AppCompatActivity implements ConfirmSessionS
         mCodeScanner.startPreview();
     }
 
-    @Override
-    public void sessionStart(boolean choice) {
-        if (choice) {
-            progressDialog.show(getSupportFragmentManager(), "progress dialog");
-            progressDialog.setCancelable(false);
-            mDummyMenu.setVisibility(View.VISIBLE);
-            mCodeScanner.stopPreview();
-            mCodeScanner.releaseResources();
-            mScanner.setVisibility(View.GONE);
-            continueSessionStart();
-        }
-        else {
-            mCodeScanner.startPreview();
-        }
-    }
-
     private void continueSessionStart() {
         if (!qrCodeData.contains("frisky") || (qrCodeData.split("\\+").length != 3)) {
             Toast.makeText(getBaseContext(),"Invalid QR Code", Toast.LENGTH_LONG).show();
             updateOnSessionStartFail();
             mCodeScanner.startPreview();
-        }
-        else {
+        } else {
             restaurantID = qrCodeData.split("\\+")[1];
             tableID = qrCodeData.split("\\+")[2];
 
@@ -149,16 +143,14 @@ public class QRScanActivity extends AppCompatActivity implements ConfirmSessionS
                        if (document.exists()) {
                            if (Objects.equals(document.getString("status_listing"), "debug")) {
                                checkForTableOccupied();
-                           }
-                           else {
+                           } else {
                                Toast.makeText(getBaseContext(),"Invalid QR Code", Toast.LENGTH_LONG).show();
                                updateOnSessionStartFail();
                            }
                        }
                    }
                 });
-            }
-            else {
+            } else {
                 checkForTableOccupied();
             }
         }
@@ -174,8 +166,7 @@ public class QRScanActivity extends AppCompatActivity implements ConfirmSessionS
         tableRef.get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 DocumentSnapshot document = task.getResult();
-                if (document == null)
-                    return;
+                if (document == null) return;
                 if (document.exists()) {
                     boolean isOccupied = false;
                     if (document.contains("occupied")) {
@@ -185,19 +176,16 @@ public class QRScanActivity extends AppCompatActivity implements ConfirmSessionS
                         Toast.makeText(getBaseContext(),"Table is Occupied", Toast.LENGTH_LONG).show();
                         updateOnSessionStartFail();
                         mCodeScanner.startPreview();
-                    }
-                    else {
+                    } else {
                         createUserSession();
                     }
-                }
-                else {
+                } else {
                     Toast.makeText(getBaseContext(),"Invalid QR Code", Toast.LENGTH_LONG).show();
                     updateOnSessionStartFail();
                     mCodeScanner.startPreview();
                     Log.e(getString(R.string.tag_debug), "No such document");
                 }
-            }
-            else {
+            } else {
                 Log.e(getString(R.string.tag_debug), "failed with ", task.getException());
             }
         });
@@ -224,8 +212,7 @@ public class QRScanActivity extends AppCompatActivity implements ConfirmSessionS
                                 showMenu(restaurantName, tableName, sessionID);
                             }
                         }
-                    }
-                    else if (!task.isSuccessful()){
+                    } else if (!task.isSuccessful()){
                         updateOnSessionStartFail();
                         Toast.makeText(getBaseContext(), "Something went wrong :( Try again.", Toast.LENGTH_SHORT).show();
                     }

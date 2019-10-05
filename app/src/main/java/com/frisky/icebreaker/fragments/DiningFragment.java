@@ -38,12 +38,12 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class DiningFragment extends Fragment {
 
-    private ArrayList<Object> mOrderList = new ArrayList<>();
-    private OrderListAdapter orderListAdapter;
     private RecyclerView mOrderListRecyclerView;
-
     private TextView recommendedItems;
     private MaterialCardView recommendedCard;
+
+    private ArrayList<Object> mOrderList = new ArrayList<>();
+    private OrderListAdapter orderListAdapter;
 
     @Nullable
     @Override
@@ -56,8 +56,7 @@ public class DiningFragment extends Fragment {
         if (sharedPreferences.getBoolean("session_active", false)) {
             if (sharedPreferences.getBoolean("bill_requested", false)) {
                 view = inflater.inflate(R.layout.fragment_dining_bill_requested, container, false);
-            }
-            else {
+            } else {
                 view = inflater.inflate(R.layout.fragment_dining_session_active, container, false);
 
                 String restID = sharedPreferences.getString("restaurant_id", "");
@@ -103,15 +102,13 @@ public class DiningFragment extends Fragment {
                         Toast toast = Toast.makeText(getActivity(), "No orders placed yet!", Toast.LENGTH_SHORT);
                         toast.setGravity(Gravity.CENTER, 0, 0);
                         toast.show();
-                    }
-                    else {
+                    } else {
                         startActivity(new Intent(getActivity(), OrderActivity.class));
                     }
                 });
             }
             return view;
-        }
-        else {
+        } else {
             view = inflater.inflate(R.layout.fragment_dining_scan_qr, container, false);
             return view;
         }
@@ -169,21 +166,18 @@ public class DiningFragment extends Fragment {
                                 String itemID = entry.getKey();
                                 HashMap<String, Object> item = (HashMap<String, Object>) entry.getValue();
 
-                                String name = String.valueOf(item.get("name"));
                                 int count = Integer.parseInt(String.valueOf(item.get("quantity")));
+                                String name = String.valueOf(item.get("name"));
                                 int price = Integer.parseInt(String.valueOf(item.get("cost")));
                                 OrderItem orderItem = new OrderItem(itemID, name, count, (count * price));
 
                                 if (String.valueOf(item.get("status")).equals("pending")) {
                                     orderItem.setStatus(OrderStatus.PENDING);
-                                }
-                                else if (String.valueOf(item.get("status")).equals("accepted")) {
+                                } else if (String.valueOf(item.get("status")).equals("accepted")) {
                                     orderItem.setStatus(OrderStatus.ACCEPTED);
-                                }
-                                else if (String.valueOf(item.get("status")).equals("rejected")) {
+                                } else if (String.valueOf(item.get("status")).equals("rejected")) {
                                     orderItem.setStatus(OrderStatus.REJECTED);
-                                }
-                                else if (String.valueOf(item.get("status")).equals("cancelled")) {
+                                } else if (String.valueOf(item.get("status")).equals("cancelled")) {
                                     orderItem.setStatus(OrderStatus.CANCELLED);
                                 }
 

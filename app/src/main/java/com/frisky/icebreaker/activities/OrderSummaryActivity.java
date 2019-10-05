@@ -94,8 +94,7 @@ public class OrderSummaryActivity extends AppCompatActivity implements UIActivit
                 .get().addOnCompleteListener(task -> {
                    if (task.isSuccessful()) {
                        DocumentSnapshot snapshot = task.getResult();
-                       if (snapshot == null)
-                           return;
+                       if (snapshot == null) return;
                        if (snapshot.contains("end_time")) {
                            @SuppressLint("SimpleDateFormat")
                            SimpleDateFormat formatter = new SimpleDateFormat("dd MMM YYYY hh:mm a");
@@ -151,21 +150,18 @@ public class OrderSummaryActivity extends AppCompatActivity implements UIActivit
                                 String itemID = entry.getKey();
                                 HashMap<String, Object> item = (HashMap<String, Object>) entry.getValue();
 
-                                String name = String.valueOf(item.get("name"));
                                 int count = Integer.parseInt(String.valueOf(item.get("quantity")));
                                 int price = Integer.parseInt(String.valueOf(item.get("cost")));
+                                String name = String.valueOf(item.get("name"));
                                 OrderItem orderItem = new OrderItem(itemID, name, count, (count * price));
 
                                 if (String.valueOf(item.get("status")).equals("pending")) {
                                     orderItem.setStatus(OrderStatus.PENDING);
-                                }
-                                else if (String.valueOf(item.get("status")).equals("accepted")) {
+                                } else if (String.valueOf(item.get("status")).equals("accepted")) {
                                     orderItem.setStatus(OrderStatus.ACCEPTED);
-                                }
-                                else if (String.valueOf(item.get("status")).equals("rejected")) {
+                                } else if (String.valueOf(item.get("status")).equals("rejected")) {
                                     orderItem.setStatus(OrderStatus.REJECTED);
-                                }
-                                else if (String.valueOf(item.get("status")).equals("cancelled")) {
+                                } else if (String.valueOf(item.get("status")).equals("cancelled")) {
                                     orderItem.setStatus(OrderStatus.CANCELLED);
                                 }
 

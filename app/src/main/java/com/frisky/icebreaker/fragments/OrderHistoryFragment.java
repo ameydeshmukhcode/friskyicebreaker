@@ -32,10 +32,11 @@ import java.util.Objects;
 
 public class OrderHistoryFragment extends Fragment {
 
-    private List<OrderSummary> mSessionHistoryList = new ArrayList<>();
     private OrderSummaryListAdapter mOrderSummaryAdapter;
     private ConstraintLayout mEmptyState;
     private ShimmerFrameLayout mShimmerFrame;
+
+    private List<OrderSummary> mSessionHistoryList = new ArrayList<>();
 
     @Nullable
     @Override
@@ -78,8 +79,7 @@ public class OrderHistoryFragment extends Fragment {
                     if (task.getResult().size() > 0) {
                         mEmptyState.setVisibility(View.GONE);
                         for (QueryDocumentSnapshot document : task.getResult()) {
-                            if (document == null)
-                                return;
+                            if (document == null) return;
                             if (document.contains("amount_payable")) {
                                 @SuppressLint("SimpleDateFormat")
                                 SimpleDateFormat formatter = new SimpleDateFormat("dd MMM YYYY hh:mm a");
@@ -99,16 +99,14 @@ public class OrderHistoryFragment extends Fragment {
                                 });
                             }
                         }
-                    }
-                    else {
+                    } else {
                         mShimmerFrame.stopShimmer();
                         mShimmerFrame.setVisibility(View.GONE);
                         mEmptyState.setVisibility(View.VISIBLE);
                     }
                 }
 
-            }
-            else {
+            } else {
                 Log.e("error", "Error getting documents: ", task.getException());
             }
         });

@@ -1,10 +1,7 @@
 package com.frisky.icebreaker.activities;
 
 import android.annotation.SuppressLint;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,16 +15,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.fragments.DiningFragment;
 import com.frisky.icebreaker.fragments.OrderHistoryFragment;
 import com.frisky.icebreaker.fragments.RestaurantViewFragment;
 import com.frisky.icebreaker.interfaces.UIActivity;
+import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
@@ -37,6 +35,7 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class HomeActivity extends AppCompatActivity implements UIActivity, BottomNavigationView.OnNavigationItemSelectedListener {
 
@@ -54,12 +53,16 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
     ExtendedFloatingActionButton mScanQRCodeFAB;
     BottomNavigationView navigation;
 
+    FirebaseUser mUser;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         mResumeSessionIntent = new Intent(getApplicationContext(), MenuActivity.class);
         sharedPreferences = getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE);
+
+        mUser = FirebaseAuth.getInstance().getCurrentUser();
 
         for (Map.Entry<String, ?> entry : sharedPreferences.getAll().entrySet()) {
             Log.d(getString(R.string.tag_debug), "Saved Entry " + entry.getKey() + " " + entry.getValue());
@@ -73,32 +76,19 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
                     }
 
                     // Get new Instance ID token
-                    String token = task.getResult().getToken();
+                    String token = Objects.requireNonNull(task.getResult()).getToken();
 
                     Map<String, Object> userDetails = new HashMap<>();
                     userDetails.put("firebase_instance_id", token);
 
                     FirebaseFirestore.getInstance()
                             .collection("users")
-                            .document(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                            .document(mUser.getUid())
                             .set(userDetails, SetOptions.merge())
-                            .addOnCompleteListener(task1 -> {
-                                Log.d(getString(R.string.tag_debug), "Instance ID Updated");
-                            })
-                    .addOnFailureListener(e -> {
-                        Log.e(getString(R.string.tag_debug), "Instance ID Update failed.");
-                    });
+                            .addOnCompleteListener(task1 -> Log.d(getString(R.string.tag_debug), "Instance ID Updated"))
+                    .addOnFailureListener(e -> Log.e(getString(R.string.tag_debug), "Instance ID Update failed."));
 
                 });
-
-        LocalBroadcastManager.getInstance(this).registerReceiver(
-                new BroadcastReceiver() {
-                    @Override
-                    public void onReceive(Context context, Intent intent) {
-                        checkSessionDetails();
-                    }
-                },
-                new IntentFilter("SessionEnd"));
 
         switchFragment("home");
 
@@ -149,15 +139,15 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
     }
 
     private void checkForProfileSetup() {
-        final String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        final String userID = mUser.getUid();
+
         FirebaseFirestore.getInstance().collection("users")
                 .document(userID)
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         DocumentSnapshot snapshot = task.getResult();
-                        if (snapshot == null)
-                            return;
+                        if (snapshot == null) return;
                         boolean profileSetup = false;
                         if (snapshot.contains("profile_setup_complete")) {
                             profileSetup = snapshot.getBoolean("profile_setup_complete");
@@ -169,9 +159,10 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
                                     StorageReference profileImageRef = FirebaseStorage.getInstance().getReference()
                                             .child("profile_images").child(userID);
 
-                                    profileImageRef.getDownloadUrl().addOnSuccessListener(uri -> {
-                                        sharedPreferences.edit().putString("u_image", uri.toString()).apply();
-                                    }).addOnFailureListener(e -> Log.e("Uri Download Failed", e.getMessage()));
+                                    profileImageRef.getDownloadUrl().addOnSuccessListener(uri ->
+                                            sharedPreferences.edit().putString("u_image",
+                                                    uri.toString()).apply()).addOnFailureListener(e ->
+                                            Log.e("Uri Download Failed", e.getMessage()));
                                 }
                             }
                         }
@@ -193,8 +184,7 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
         boolean isSessionActive = sharedPreferences.getBoolean("session_active", false);
         if (isSessionActive) {
             setupSessionDetails();
-        }
-        else {
+        } else {
             disableSession();
         }
     }
@@ -202,7 +192,11 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
     private void setupSessionDetails() {
         mScanQRCodeFAB.setVisibility(View.GONE);
         navigation.getOrCreateBadge(R.id.menu_dine);
-        navigation.getBadge(R.id.menu_dine).setBackgroundColor(getColor(R.color.appGreen));
+
+        BadgeDrawable dineBadge = navigation.getBadge(R.id.menu_dine);
+        assert dineBadge != null;
+        dineBadge.setBackgroundColor(getColor(R.color.appGreen));
+
         if (sharedPreferences.contains("bill_requested")) {
             mBottomSheetTitle.setText(getString(R.string.bill_requested));
             mBottomSheetInfo.setText(getString(R.string.bill_amount_to_be_paid));
@@ -212,8 +206,7 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
             String billAmountString = getString(R.string.rupee) + amount;
             mBottomSheetDetails.setText(billAmountString);
             mBottomSheetButton.setVisibility(View.INVISIBLE);
-        }
-        else {
+        } else {
             mBottomSheetInfo.setText(sharedPreferences.getString("restaurant_name", ""));
             mBottomSheetDetails.setText(sharedPreferences.getString("table_name", ""));
             mBottomSheetButton.setOnClickListener(v -> startActivity(mResumeSessionIntent));
@@ -241,8 +234,7 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
                 if(homeFragment != null) {
                     //if the fragment exists, show it.
                     fragmentManager.beginTransaction().show(homeFragment).commit();
-                }
-                else {
+                } else {
                     //if the fragment does not exist, add it to fragment manager.
                     fragmentManager.beginTransaction().add(R.id.home_activity_fragment, new RestaurantViewFragment(), "home").commit();
                 }
@@ -258,8 +250,7 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
             case "dine":
                 if(dineFragment != null) {
                     fragmentManager.beginTransaction().show(dineFragment).commit();
-                }
-                else {
+                } else {
                     fragmentManager.beginTransaction().add(R.id.home_activity_fragment, new DiningFragment(), "dine").commit();
                 }
                 if(homeFragment != null && homeFragment.isVisible()){
@@ -272,8 +263,7 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
             case "hist":
                 if(visitsFragment != null) {
                     fragmentManager.beginTransaction().show(visitsFragment).commit();
-                }
-                else {
+                } else {
                     fragmentManager.beginTransaction().add(R.id.home_activity_fragment, new OrderHistoryFragment(), "hist").commit();
                 }
                 if(dineFragment != null && dineFragment.isVisible()){

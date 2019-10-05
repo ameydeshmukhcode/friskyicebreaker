@@ -40,19 +40,18 @@ public class SlideshowAdapter extends PagerAdapter {
         ImageView image = layout.findViewById(R.id.image_slideshow);
         switch (position) {
             case 0:
-                title.setText("Scan QR");
-                desc.setText("Scan QR codes on tables at any restaurant to start your dining experience.");
+                title.setText(R.string.scan_qr_code);
+                desc.setText(R.string.scan_qr_code_desc);
                 image.setImageDrawable(context.getDrawable(R.drawable.slide_scan));
                 break;
             case 1:
-                title.setText("Instant Menu");
-                desc.setText("Access the menu and browse your favorite dishes instantly.\n" +
-                        "Place orders without having to wait.");
+                title.setText(R.string.instant_menu);
+                desc.setText(R.string.instant_menu_desc);
                 image.setImageDrawable(context.getDrawable(R.drawable.slide_menu));
                 break;
             case 2:
-                title.setText("Keep Tabs");
-                desc.setText("Get real-time bill and order updates and check your previous orders at anytime.");
+                title.setText(R.string.keep_tabs);
+                desc.setText(R.string.keep_tabs_desc);
                 image.setImageDrawable(context.getDrawable(R.drawable.slide_summary));
                 break;
         }

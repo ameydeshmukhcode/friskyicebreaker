@@ -1,6 +1,6 @@
 package com.frisky.icebreaker.interfaces;
 
-public interface FormActivity {
+public interface FormActivity extends UIActivity {
     boolean validateForm();
     void disableForm();
     void enableForm();

@@ -1,22 +1,13 @@
 package com.frisky.icebreaker.activities;
 
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationCompat;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -34,26 +25,24 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-import static com.frisky.icebreaker.notifications.NotificationFactory.createNotification;
-
 public class CartActivity extends AppCompatActivity implements UIActivity,
         ConfirmOrderDialog.OnConfirmOrderListener, OnOrderUpdateListener {
+
+    FirebaseFunctions mFunctions;
+
+    SharedPreferences sharedPreferences;
 
     Button mConfirmOrderButton;
     Button mBackButton;
     TextView mCartTotalText;
-    int mCartTotal;
 
     RecyclerView mRecyclerCartListView;
     CartListAdapter mCartListAdapter;
 
-    ArrayList<MenuItem> mCartList = new ArrayList<>();
-
-    SharedPreferences sharedPreferences;
-
-    FirebaseFunctions mFunctions;
-
     ProgressDialog progressDialog = new ProgressDialog("Placing your order");
+
+    int mCartTotal;
+    ArrayList<MenuItem> mCartList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,20 +52,6 @@ public class CartActivity extends AppCompatActivity implements UIActivity,
         sharedPreferences = getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE);
 
         mFunctions = FirebaseFunctions.getInstance();
-
-        LocalBroadcastManager.getInstance(this).registerReceiver(
-                new BroadcastReceiver() {
-                    @Override
-                    public void onReceive(Context context, Intent intent) {
-                        Intent clearBill = new Intent(getApplicationContext(), HomeActivity.class);
-                        clearBill.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
-                                Intent.FLAG_ACTIVITY_CLEAR_TASK |
-                                Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(clearBill);
-                        finish();
-                    }
-                },
-                new IntentFilter("SessionEnd"));
 
         initUI();
     }
@@ -89,8 +64,10 @@ public class CartActivity extends AppCompatActivity implements UIActivity,
 
         mConfirmOrderButton = findViewById(R.id.button_confirm_order);
         mConfirmOrderButton.setOnClickListener(v -> {
-            if (mCartList.size() > 0)
-                confirmOrder();
+            if (mCartList.size() > 0) {
+                ConfirmOrderDialog confirmOrderDialog = new ConfirmOrderDialog();
+                confirmOrderDialog.show(getSupportFragmentManager(), "confirm order dialog");
+            }
         });
 
         mCartTotalText = findViewById(R.id.text_order_total);
@@ -100,11 +77,6 @@ public class CartActivity extends AppCompatActivity implements UIActivity,
 
         if (getIntent().hasExtra("cart_list")) {
             mCartList = (ArrayList<MenuItem>) getIntent().getSerializableExtra("cart_list");
-        }
-
-        for (int i = 0; i < mCartList.size(); i++) {
-            Log.d(getString(R.string.tag_debug), "List " + mCartList.get(i).getName() + " " +
-                    mCartList.get(i).getCount());
         }
 
         if (getIntent().hasExtra("cart_total")) {
@@ -126,9 +98,52 @@ public class CartActivity extends AppCompatActivity implements UIActivity,
         mRecyclerCartListView.setAdapter(mCartListAdapter);
     }
 
-    private void confirmOrder() {
-        ConfirmOrderDialog confirmOrderDialog = new ConfirmOrderDialog();
-        confirmOrderDialog.show(getSupportFragmentManager(), "confirm order dialog");
+    @Override
+    public void addToOrder(MenuItem item) {
+        mCartTotal += item.getPrice();
+        mCartTotalText.setText(String.valueOf(mCartTotal));
+
+        if (mCartList.size() == 0) {
+            mCartList.add(item);
+        }
+        else {
+            boolean updatedItem = false;
+            for (int i = 0; i < mCartList.size(); i++) {
+                if (mCartList.get(i).getId().equals(item.getId())) {
+                    mCartList.get(i).incrementCount();
+                    updatedItem = true;
+                    break;
+                }
+            }
+            if (!updatedItem) {
+                mCartList.add(item);
+            }
+        }
+
+        mCartListAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void removeFromOrder(MenuItem item) {
+        mCartTotal -= item.getPrice();
+
+        for (int i = 0; i < mCartList.size(); i++) {
+            if (mCartList.get(i).getId().equals(item.getId())) {
+                if (mCartList.get(i).getCount() == 1) {
+                    mCartList.remove(i);
+                }
+                else {
+                    mCartList.get(i).decrementCount();
+                }
+                mCartListAdapter.notifyDataSetChanged();
+                break;
+            }
+        }
+
+        mCartTotalText.setText(String.valueOf(mCartTotal));
+        if (mCartTotal == 0) {
+            super.onBackPressed();
+        }
     }
 
     @Override
@@ -157,20 +172,6 @@ public class CartActivity extends AppCompatActivity implements UIActivity,
                 .call(data)
                 .continueWith(task -> {
                     if(task.isSuccessful()) {
-                        NotificationManager notificationManager = getSystemService(NotificationManager.class);
-
-                        Intent notificationIntent = new Intent(this, OrderActivity.class);
-                        notificationIntent.putExtra("order_ack", true);
-
-                        PendingIntent pendingIntent =
-                                PendingIntent.getActivity(this, 0, notificationIntent, 0);
-
-                        Notification notification = createNotification(this, getString(R.string.n_channel_order), R.drawable.logo,
-                                "Order Placed", "Your order has been placed. Awaiting Confirmation.",
-                                NotificationCompat.PRIORITY_HIGH, pendingIntent);
-
-                        notificationManager.notify(R.integer.n_order_session_service, notification);
-
                         sharedPreferences.edit().putBoolean("order_active", true).apply();
 
                         Intent showOrder = new Intent(this, OrderActivity.class);
@@ -185,58 +186,5 @@ public class CartActivity extends AppCompatActivity implements UIActivity,
                     // propagated down.
                     return (String) Objects.requireNonNull(task.getResult()).getData();
                 });
-    }
-
-    @Override
-    public void addToOrder(MenuItem item) {
-        mCartTotal += item.getPrice();
-        mCartTotalText.setText(String.valueOf(mCartTotal));
-
-        if (mCartList.size() == 0) {
-            mCartList.add(item);
-        }
-        else {
-            boolean updatedItem = false;
-            for (int i = 0; i < mCartList.size(); i++) {
-                if (mCartList.get(i).getId().equals(item.getId())) {
-                    mCartList.get(i).incrementCount();
-                    updatedItem = true;
-                    break;
-                }
-            }
-            if (!updatedItem) {
-                mCartList.add(item);
-            }
-        }
-
-        mCartListAdapter.notifyDataSetChanged();
-
-        for (int i = 0; i < mCartList.size(); i++) {
-            Log.d(getString(R.string.tag_debug), mCartList.get(i).getName() + " " +
-                    mCartList.get(i).getCount());
-        }
-    }
-
-    @Override
-    public void removeFromOrder(MenuItem item) {
-        mCartTotal -= item.getPrice();
-
-        for (int i = 0; i < mCartList.size(); i++) {
-            if (mCartList.get(i).getId().equals(item.getId())) {
-                if (mCartList.get(i).getCount() == 1) {
-                    mCartList.remove(i);
-                }
-                else {
-                    mCartList.get(i).decrementCount();
-                }
-                mCartListAdapter.notifyDataSetChanged();
-                break;
-            }
-        }
-
-        mCartTotalText.setText(String.valueOf(mCartTotal));
-        if (mCartTotal == 0) {
-            super.onBackPressed();
-        }
     }
 }

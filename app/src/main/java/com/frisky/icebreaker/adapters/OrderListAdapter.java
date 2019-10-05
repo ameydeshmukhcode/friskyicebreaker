@@ -65,8 +65,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     public int getItemViewType(int position) {
         if (mOrderList.get(position) instanceof OrderDetailsHeader) {
             return ORDER_HEADER;
-        }
-        else if (mOrderList.get(position) instanceof OrderItem) {
+        } else if (mOrderList.get(position) instanceof OrderItem) {
             return ORDER_ITEM;
         }
         return super.getItemViewType(position);
@@ -102,8 +101,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
         if (mOrderList.get(position) instanceof OrderDetailsHeader) {
             CURRENT_VIEW = ORDER_HEADER;
-        }
-        else if (mOrderList.get(position) instanceof OrderItem) {
+        } else if (mOrderList.get(position) instanceof OrderItem) {
             CURRENT_VIEW = ORDER_ITEM;
         }
 

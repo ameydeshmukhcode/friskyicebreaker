@@ -20,7 +20,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.interfaces.FormActivity;
-import com.frisky.icebreaker.interfaces.UIActivity;
 import com.frisky.icebreaker.ui.assistant.RoundRectTransformation;
 import com.frisky.icebreaker.ui.components.dialogs.PickImageDialog;
 import com.frisky.icebreaker.ui.components.dialogs.ProgressDialog;
@@ -46,7 +45,7 @@ import java.util.Map;
 
 import static com.frisky.icebreaker.ui.assistant.UIAssistant.compressImage;
 
-public class SetupProfileActivity extends AppCompatActivity implements FormActivity, UIActivity,
+public class SetupProfileActivity extends AppCompatActivity implements FormActivity,
         PickImageDialog.OnImageUpdatedListener {
 
     ImageView mProfileImage;
@@ -54,15 +53,15 @@ public class SetupProfileActivity extends AppCompatActivity implements FormActiv
     Button mDoneButton;
     TextView mNameInput;
     TextView mBioInput;
+    TextView mDateOfBirthInput;
     TextInputLayout dobLayout;
     TextInputLayout genderLayout;
-    TextView mDateOfBirthInput;
-    View dobView;
     AutoCompleteTextView mGenderPicker;
+    View dobView;
 
     PickImageDialog pickImageDialog;
 
-    FirebaseAuth mAuth;
+    FirebaseUser mUser;
     FirebaseStorage mStorage;
     StorageReference mStorageReference;
     FirebaseFirestore mFirestore;
@@ -75,7 +74,7 @@ public class SetupProfileActivity extends AppCompatActivity implements FormActiv
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setup_profile);
 
-        mAuth = FirebaseAuth.getInstance();
+        mUser = FirebaseAuth.getInstance().getCurrentUser();
         mStorage = FirebaseStorage.getInstance();
         mStorageReference = mStorage.getReference();
         mFirestore = FirebaseFirestore.getInstance();
@@ -210,8 +209,7 @@ public class SetupProfileActivity extends AppCompatActivity implements FormActiv
         mDoneButton.setOnClickListener(v -> {
             if (getIntent().hasExtra("edit_mode")) {
                 updateEditedDetails();
-            }
-            else if (validateForm()) {
+            } else if (validateForm()) {
                 updateProfileData();
             }
         });
@@ -250,19 +248,12 @@ public class SetupProfileActivity extends AppCompatActivity implements FormActiv
         if (!bioEdited && !nameEdited && imageNotSelected) {
             Toast.makeText(getApplicationContext(), "No changes!", Toast.LENGTH_SHORT).show();
             enableForm();
-            return;
-        }
-        else {
+        } else {
             ProgressDialog progressDialog = new ProgressDialog("Updating Your Profile");
             progressDialog.setCancelable(false);
             progressDialog.show(getSupportFragmentManager(), "progress dialog");
 
-            final FirebaseUser user = mAuth.getCurrentUser();
-
-            if (user == null)
-                return;
-
-            final String userUid = user.getUid();
+            final String userUid = mUser.getUid();
 
             Map<String, Object> userDetails = new HashMap<>();
 
@@ -285,13 +276,11 @@ public class SetupProfileActivity extends AppCompatActivity implements FormActiv
                                         .putString("u_name", name)
                                         .putString("u_bio", bio)
                                         .apply();
-                            }
-                            else if (finalNameEdited) {
+                            } else if (finalNameEdited) {
                                 sharedPreferences.edit()
                                         .putString("u_name", name)
                                         .apply();
-                            }
-                            else {
+                            } else {
                                 sharedPreferences.edit()
                                         .putString("u_bio", bio)
                                         .apply();
@@ -318,7 +307,7 @@ public class SetupProfileActivity extends AppCompatActivity implements FormActiv
                                     .setPhotoUri(uri)
                                     .build();
 
-                            user.updateProfile(profileUpdates)
+                            mUser.updateProfile(profileUpdates)
                                     .addOnCompleteListener(task -> {
                                         if (task.isSuccessful()) {
                                             Log.d(getString(R.string.tag_debug), "User profile updated.");
@@ -349,12 +338,7 @@ public class SetupProfileActivity extends AppCompatActivity implements FormActiv
         progressDialog.setCancelable(false);
         progressDialog.show(getSupportFragmentManager(), "progress dialog");
 
-        final FirebaseUser user = mAuth.getCurrentUser();
-
-        if (user == null)
-            return;
-
-        final String userUid = user.getUid();
+        final String userUid = mUser.getUid();
         final String name = mNameInput.getText().toString();
         final String bio = mBioInput.getText().toString();
 
@@ -390,7 +374,7 @@ public class SetupProfileActivity extends AppCompatActivity implements FormActiv
                             .setPhotoUri(uri)
                             .build();
 
-                    user.updateProfile(profileUpdates)
+                    mUser.updateProfile(profileUpdates)
                             .addOnCompleteListener(task -> {
                                 if (task.isSuccessful()) {
                                     Log.d(getString(R.string.tag_debug), "User profile updated.");
@@ -421,8 +405,7 @@ public class SetupProfileActivity extends AppCompatActivity implements FormActiv
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, ostream);
             ostream.close();
             return Uri.fromFile(compressImage(tmp, getApplicationContext()));
-        }
-        catch (IOException exp) {
+        } catch (IOException exp) {
             exp.printStackTrace();
         }
 

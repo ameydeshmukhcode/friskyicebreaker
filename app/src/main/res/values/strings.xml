@@ -108,7 +108,6 @@
     <string name="dine_fragment_bill_requested">Bill Requested. The waiter will collect payment from you.</string>
     <string name="show_my_orders">Show all my orders</string>
     <string name="skip">Skip</string>
-    <string name="next">Next</string>
     <string name="visits">Visits</string>
     <string name="gst">GST</string>
     <string name="final_total">Final Total</string>
@@ -123,4 +122,11 @@
     <string name="recommendations">Recommendations</string>
     <string name="gender">Gender</string>
     <string name="category">Category</string>
+    <string name="next">Next</string>
+    <string name="continue_string">Continue</string>
+    <string name="scan_qr_code_desc">Scan QR codes on tables at any restaurant to start your dining experience.</string>
+    <string name="instant_menu">Instant Menu</string>
+    <string name="instant_menu_desc">Access the menu and browse your favorite dishes instantly.\nPlace orders without having to wait.</string>
+    <string name="keep_tabs">Keep Tabs</string>
+    <string name="keep_tabs_desc">Get real-time bill and order updates and check your previous orders at anytime.</string>
 </resources>

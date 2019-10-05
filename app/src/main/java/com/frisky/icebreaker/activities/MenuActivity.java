@@ -1,9 +1,7 @@
 package com.frisky.icebreaker.activities;
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,7 +13,6 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.ContextThemeWrapper;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.LinearSmoothScroller;
 import androidx.recyclerview.widget.RecyclerView;
@@ -47,24 +44,22 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
     TextView mRestName;
     TextView mTableSerial;
     Button mCategoryPickerButton;
-
-    private List<Object> mMenu = new ArrayList<>();
-    private List<MenuCategory> mCategories = new ArrayList<>();
-    private List<MenuItem> mItems = new ArrayList<>();
-    String restaurantID;
-
-    int mCartTotal = 0;
-    ArrayList<MenuItem> mCartList = new ArrayList<>();
-
-    HashMap<String, Integer> mCategoryOrderMap = new HashMap<>();
-
-    RecyclerView.Adapter mMenuListViewAdapter;
-    RecyclerView mRecyclerMenuListView;
-
     ConstraintLayout mBottomSheetCart;
     ConstraintLayout mBottomSheetOrder;
     ConstraintLayout mDummyMenu;
     TextView mCartTotalText;
+
+    RecyclerView.Adapter mMenuListViewAdapter;
+    RecyclerView mRecyclerMenuListView;
+
+    int mCartTotal = 0;
+    String restaurantID;
+    private List<Object> mMenu = new ArrayList<>();
+    private List<MenuCategory> mCategories = new ArrayList<>();
+    private List<MenuItem> mItems = new ArrayList<>();
+    ArrayList<MenuItem> mCartList = new ArrayList<>();
+    HashMap<String, Integer> mCategoryOrderMap = new HashMap<>();
+
 
     PopupMenu categoryMenu;
 
@@ -76,20 +71,6 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
         setContentView(R.layout.activity_menu);
 
         restaurantID = sharedPreferences.getString("restaurant_id", "");
-
-        LocalBroadcastManager.getInstance(this).registerReceiver(
-                new BroadcastReceiver() {
-                    @Override
-                    public void onReceive(Context context, Intent intent) {
-                        Intent clearBill = new Intent(getApplicationContext(), HomeActivity.class);
-                        clearBill.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
-                                Intent.FLAG_ACTIVITY_CLEAR_TASK |
-                                Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(clearBill);
-                        finish();
-                    }
-                },
-                new IntentFilter("SessionEnd"));
 
         initUI();
     }
@@ -118,9 +99,7 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
             return true;
         });
 
-        mCategoryPickerButton.setOnClickListener(v -> {
-            categoryMenu.show();
-        });
+        mCategoryPickerButton.setOnClickListener(v -> categoryMenu.show());
 
         mDummyMenu = findViewById(R.id.dummy_menu);
 
@@ -139,8 +118,7 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
             mRecyclerMenuListView.setPadding(0, 0, 0, 0);
             mRecyclerMenuListView.setPadding(0, 0, 0, 225);
             mRecyclerMenuListView.setClipToPadding(false);
-        }
-        else {
+        } else {
             mBottomSheetOrder.setVisibility(View.GONE);
         }
 
@@ -155,13 +133,65 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
         setUserSession();
     }
 
+    @Override
+    public void addToOrder(MenuItem item) {
+        mBottomSheetOrder.setVisibility(View.GONE);
+
+        mCartTotal += item.getPrice();
+        mBottomSheetCart.setVisibility(View.VISIBLE);
+        mCartTotalText.setText(String.valueOf(mCartTotal));
+
+        if (mCartList.size() == 0) {
+            mCartList.add(item);
+        } else {
+            boolean updatedItem = false;
+            for (int i = 0; i < mCartList.size(); i++) {
+                if (mCartList.get(i).getId().equals(item.getId())) {
+                    updatedItem = true;
+                    break;
+                }
+            }
+            if (!updatedItem) {
+                mCartList.add(item);
+            }
+        }
+
+        mRecyclerMenuListView.setPadding(0, 0, 0, 0);
+        mRecyclerMenuListView.setPadding(0, 0, 0, 225);
+        mRecyclerMenuListView.setClipToPadding(false);
+    }
+
+    @Override
+    public void removeFromOrder(MenuItem item) {
+        mCartTotal -= item.getPrice();
+
+        for (int i = 0; i < mCartList.size(); i++) {
+            if (mCartList.get(i).getId().equals(item.getId())) {
+                if (mCartList.get(i).getCount() == 0) {
+                    mCartList.remove(i);
+                }
+                break;
+            }
+        }
+
+        if (mCartTotal > 0) {
+            mCartTotalText.setText(String.valueOf(mCartTotal));
+        } else {
+            mBottomSheetCart.setVisibility(View.GONE);
+            if (sharedPreferences.getBoolean("order_active", false)) {
+                mBottomSheetOrder.setVisibility(View.VISIBLE);
+                mBottomSheetOrder.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), OrderActivity.class)));
+            } else {
+                mBottomSheetOrder.setVisibility(View.GONE);
+                mRecyclerMenuListView.setPadding(0, 0, 0, 0);
+                mRecyclerMenuListView.setClipToPadding(false);
+            }
+        }
+    }
+
     private void setUserSession() {
         mRestName.setText(sharedPreferences.getString("restaurant_name", ""));
         mTableSerial.setText(sharedPreferences.getString("table_name", ""));
-        setMenu();
-    }
-
-    private void setMenu() {
         mRecyclerMenuListView.setOverScrollMode(View.OVER_SCROLL_NEVER);
 
         RecyclerView.LayoutManager mMenuListViewLayoutManager;
@@ -238,7 +268,6 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
         for (int i = 0; i < mCategories.size(); i++) {
             final MenuCategory category = mCategories.get(i);
             mMenu.add(category);
-            Log.d(getString(R.string.tag_debug), category.getName() + String.valueOf(mMenu.size() - 1));
             mCategoryOrderMap.put(category.getName(), mMenu.size() - 1);
             categoryMenu.getMenu().add(category.getName());
             for (int j = 0; j < mItems.size(); j++) {
@@ -249,70 +278,5 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
         }
         mMenuListViewAdapter.notifyDataSetChanged();
         mDummyMenu.setVisibility(View.GONE);
-    }
-
-    @Override
-    public void addToOrder(MenuItem item) {
-        mBottomSheetOrder.setVisibility(View.GONE);
-
-        mCartTotal += item.getPrice();
-        mBottomSheetCart.setVisibility(View.VISIBLE);
-        mCartTotalText.setText(String.valueOf(mCartTotal));
-
-        if (mCartList.size() == 0) {
-            mCartList.add(item);
-        }
-        else {
-            boolean updatedItem = false;
-            for (int i = 0; i < mCartList.size(); i++) {
-                if (mCartList.get(i).getId().equals(item.getId())) {
-                    updatedItem = true;
-                    break;
-                }
-            }
-            if (!updatedItem) {
-                mCartList.add(item);
-            }
-        }
-
-        for (int i = 0; i < mCartList.size(); i++) {
-            Log.d(getString(R.string.tag_debug), mCartList.get(i).getName() + " " +
-                    mCartList.get(i).getCount());
-        }
-
-        mRecyclerMenuListView.setPadding(0, 0, 0, 0);
-        mRecyclerMenuListView.setPadding(0, 0, 0, 225);
-        mRecyclerMenuListView.setClipToPadding(false);
-    }
-
-    @Override
-    public void removeFromOrder(MenuItem item) {
-        mCartTotal -= item.getPrice();
-
-        for (int i = 0; i < mCartList.size(); i++) {
-            if (mCartList.get(i).getId().equals(item.getId())) {
-                if (mCartList.get(i).getCount() == 0) {
-                    mCartList.remove(i);
-                }
-                break;
-            }
-        }
-
-        if (mCartTotal > 0) {
-            mCartTotalText.setText(String.valueOf(mCartTotal));
-        }
-        else {
-            if (sharedPreferences.getBoolean("order_active", false)) {
-                mBottomSheetOrder.setVisibility(View.VISIBLE);
-                mBottomSheetOrder.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), OrderActivity.class)));
-                mBottomSheetCart.setVisibility(View.GONE);
-            }
-            else {
-                mBottomSheetOrder.setVisibility(View.GONE);
-                mBottomSheetCart.setVisibility(View.GONE);
-                mRecyclerMenuListView.setPadding(0, 0, 0, 0);
-                mRecyclerMenuListView.setClipToPadding(false);
-            }
-        }
     }
 }

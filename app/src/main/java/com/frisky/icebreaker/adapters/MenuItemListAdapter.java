@@ -15,7 +15,6 @@ import com.frisky.icebreaker.core.structures.MenuItem;
 import com.frisky.icebreaker.interfaces.OnOrderUpdateListener;
 import com.google.android.material.button.MaterialButton;
 
-import java.util.HashMap;
 import java.util.List;
 
 import static com.frisky.icebreaker.ui.assistant.UIAssistant.getTypeIcon;
@@ -70,8 +69,7 @@ public class MenuItemListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public int getItemViewType(int position) {
         if (mMenu.get(position) instanceof MenuCategory) {
             return CATEGORY_VIEW;
-        }
-        else if (mMenu.get(position) instanceof MenuItem) {
+        } else if (mMenu.get(position) instanceof MenuItem) {
             return MENU_ITEM_VIEW;
         }
         return super.getItemViewType(position);
@@ -107,8 +105,7 @@ public class MenuItemListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         if (mMenu.get(position) instanceof MenuCategory) {
             CURRENT_VIEW = CATEGORY_VIEW;
-        }
-        else if (mMenu.get(position) instanceof MenuItem) {
+        } else if (mMenu.get(position) instanceof MenuItem) {
             CURRENT_VIEW = MENU_ITEM_VIEW;
         }
 
@@ -126,8 +123,7 @@ public class MenuItemListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 if (menuItem.getCount() > 0) {
                     itemHolder.mAddItem.setVisibility(View.INVISIBLE);
                     itemHolder.mCount.setText(String.valueOf(menuItem.getCount()));
-                }
-                else {
+                } else {
                     itemHolder.mAddItem.setVisibility(View.VISIBLE);
                 }
 
@@ -135,8 +131,7 @@ public class MenuItemListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     itemHolder.mAddItem.setEnabled(false);
                     itemHolder.mAvailable.setVisibility(View.VISIBLE);
                     itemHolder.mAvailable.setText(R.string.unavailable);
-                }
-                else {
+                } else {
                     itemHolder.mAddItem.setEnabled(true);
                     itemHolder.mAvailable.setVisibility(View.GONE);
                 }
