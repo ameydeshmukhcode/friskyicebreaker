@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.core.structures.MenuItem;
-import com.frisky.icebreaker.interfaces.OnOrderUpdateListener;
+import com.frisky.icebreaker.interfaces.OrderUpdateListener;
 import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
@@ -22,9 +22,9 @@ import static com.frisky.icebreaker.ui.assistant.UIAssistant.getTypeIcon;
 public class CartListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private ArrayList<MenuItem> mCartList;
-    private OnOrderUpdateListener orderUpdateListener;
+    private OrderUpdateListener orderUpdateListener;
 
-    public CartListAdapter(ArrayList<MenuItem> cartList, OnOrderUpdateListener listener) {
+    public CartListAdapter(ArrayList<MenuItem> cartList, OrderUpdateListener listener) {
         this.mCartList = cartList;
         this.orderUpdateListener = listener;
     }

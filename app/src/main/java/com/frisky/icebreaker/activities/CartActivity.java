@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.adapters.CartListAdapter;
 import com.frisky.icebreaker.core.structures.MenuItem;
-import com.frisky.icebreaker.interfaces.OnOrderUpdateListener;
+import com.frisky.icebreaker.interfaces.OrderUpdateListener;
 import com.frisky.icebreaker.interfaces.UIActivity;
 import com.frisky.icebreaker.ui.components.dialogs.ConfirmOrderDialog;
 import com.frisky.icebreaker.ui.components.dialogs.ProgressDialog;
@@ -26,7 +26,7 @@ import java.util.Map;
 import java.util.Objects;
 
 public class CartActivity extends AppCompatActivity implements UIActivity,
-        ConfirmOrderDialog.OnConfirmOrderListener, OnOrderUpdateListener {
+        ConfirmOrderDialog.OnConfirmOrderListener, OrderUpdateListener {
 
     FirebaseFunctions mFunctions;
 

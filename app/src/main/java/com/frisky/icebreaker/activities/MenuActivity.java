@@ -22,7 +22,7 @@ import com.frisky.icebreaker.adapters.MenuListAdapter;
 import com.frisky.icebreaker.core.structures.DietType;
 import com.frisky.icebreaker.core.structures.MenuCategory;
 import com.frisky.icebreaker.core.structures.MenuItem;
-import com.frisky.icebreaker.interfaces.OnOrderUpdateListener;
+import com.frisky.icebreaker.interfaces.OrderUpdateListener;
 import com.frisky.icebreaker.interfaces.UIActivity;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -36,7 +36,7 @@ import java.util.Objects;
 import static com.frisky.icebreaker.ui.assistant.UIAssistant.getDietTypeFromString;
 
 public class MenuActivity extends AppCompatActivity implements UIActivity,
-        OnOrderUpdateListener {
+        OrderUpdateListener {
 
     SharedPreferences sharedPreferences;
 

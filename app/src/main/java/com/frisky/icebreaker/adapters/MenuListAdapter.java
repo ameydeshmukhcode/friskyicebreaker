@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.core.structures.MenuCategory;
 import com.frisky.icebreaker.core.structures.MenuItem;
-import com.frisky.icebreaker.interfaces.OnOrderUpdateListener;
+import com.frisky.icebreaker.interfaces.OrderUpdateListener;
 import com.google.android.material.button.MaterialButton;
 
 import java.util.List;
@@ -26,7 +26,7 @@ public class MenuListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private final int CATEGORY_VIEW = 77;
     private final int MENU_ITEM_VIEW = 88;
 
-    private OnOrderUpdateListener orderUpdateListener;
+    private OrderUpdateListener orderUpdateListener;
 
     static class MenuItemHolder extends RecyclerView.ViewHolder {
         MaterialButton mAdd;
@@ -60,7 +60,7 @@ public class MenuListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
     }
 
-    public MenuListAdapter(List<Object> menu, OnOrderUpdateListener listener) {
+    public MenuListAdapter(List<Object> menu, OrderUpdateListener listener) {
         this.mMenu = menu;
         this.orderUpdateListener = listener;
     }
