@@ -60,11 +60,11 @@ public class VisitActivity extends AppCompatActivity implements UIActivity {
         mFinalTotal = findViewById(R.id.text_final_total);
         mOrderTotal = findViewById(R.id.text_order_total);
         mGST = findViewById(R.id.text_gst);
-        mOrderListRecyclerView = findViewById(R.id.recycler_view_final_order);
+        mOrderListRecyclerView = findViewById(R.id.recycler_view_visit);
 
-        mLayout = findViewById(R.id.layout_order_summary);
+        mLayout = findViewById(R.id.layout_visit_summary);
         mLayout.setVisibility(View.GONE);
-        progressBar = findViewById(R.id.progress_summary);
+        progressBar = findViewById(R.id.progress_visit);
 
         mBackButton = findViewById(R.id.button_back);
         mBackButton.setOnClickListener(v -> this.onBackPressed());
