@@ -49,9 +49,9 @@ public class SignInEmailActivity extends AppCompatActivity implements FormActivi
     @Override
     public void initUI() {
         mLoginButton = findViewById(R.id.button_login);
-        mSignUpLink = findViewById(R.id.link_sign_up);
+        mSignUpLink = findViewById(R.id.button_sign_up);
         mErrorText = findViewById(R.id.text_error);
-        mForgotPasswordLink = findViewById(R.id.link_forgot_password);
+        mForgotPasswordLink = findViewById(R.id.button_forgot_password);
 
         mEmailInput = findViewById(R.id.input_email);
         mPasswordInput = findViewById(R.id.input_password);
