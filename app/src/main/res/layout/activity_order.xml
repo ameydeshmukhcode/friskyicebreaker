@@ -16,7 +16,6 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/your_order"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/museosans300"
@@ -128,7 +127,6 @@
         app:layout_constraintStart_toStartOf="@+id/final_total" />
 
     <TextView
-        android:id="@+id/rupee_gst"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="2dp"
@@ -163,7 +161,6 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/rupee_final"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_marginEnd="2dp"

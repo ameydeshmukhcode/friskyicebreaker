@@ -133,7 +133,6 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/bio_input"
                 style="@style/Input.Primary"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"

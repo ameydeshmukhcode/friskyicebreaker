@@ -60,7 +60,6 @@
     <string name="your_order">Your Order</string>
     <string name="currently_at">Currently at</string>
     <string name="cart_active">You have items in the cart</string>
-    <string name="your_total">Your total:</string>
     <string name="cart_total">Cart total:</string>
     <string name="item_total">Item total:</string>
     <string name="order_total">Order total:</string>
@@ -72,7 +71,6 @@
     <string name="unavailable">Unavailable</string>
     <string name="in_cart">In cart</string>
     <string name="order_rank">Order #</string>
-    <string name="order_summary">Order Summary</string>
     <string name="status_pending">Pending</string>
     <!-- Status -->
     <string name="confirm_order_info">Send order to kitchen for preparation?</string>
