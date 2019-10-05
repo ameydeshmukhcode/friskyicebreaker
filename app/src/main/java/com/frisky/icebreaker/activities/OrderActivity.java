@@ -95,7 +95,7 @@ public class OrderActivity extends AppCompatActivity implements UIActivity, Clea
             sessionID = sharedPreferences.getString("session_id", "");
         }
 
-        mRecyclerOrderListView = findViewById(R.id.recycler_view_order_list);
+        mRecyclerOrderListView = findViewById(R.id.recycler_view_orders);
         mRecyclerOrderListView.setOverScrollMode(View.OVER_SCROLL_NEVER);
 
         RecyclerView.LayoutManager mOrderListViewLayoutManager;
