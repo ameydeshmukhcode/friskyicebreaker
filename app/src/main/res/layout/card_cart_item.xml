@@ -12,6 +12,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <ImageView
+            android:id="@+id/image_diet_type"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_marginStart="24dp"
+            app:layout_constraintBottom_toBottomOf="@+id/text_name"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/text_name" />
+
         <TextView
             android:id="@+id/text_name"
             android:layout_width="0dp"
@@ -23,15 +32,6 @@
             android:textSize="@dimen/text_menu_item_title"
             app:layout_constraintStart_toEndOf="@+id/image_diet_type"
             app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/image_diet_type"
-            android:layout_width="10dp"
-            android:layout_height="10dp"
-            android:layout_marginStart="24dp"
-            app:layout_constraintBottom_toBottomOf="@+id/text_name"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/text_name" />
 
         <TextView
             android:id="@+id/rupee"
@@ -97,24 +97,6 @@
             app:layout_constraintVertical_bias="0.0" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_add"
-            style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
-            android:layout_width="26dp"
-            android:layout_height="26dp"
-            android:layout_marginEnd="24dp"
-            android:backgroundTint="@color/appGreen"
-            android:insetTop="0dp"
-            android:insetBottom="0dp"
-            app:icon="@drawable/ic_add"
-            app:iconGravity="textStart"
-            app:iconPadding="0dp"
-            app:layout_constraintBottom_toBottomOf="@+id/text_price"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/text_name">
-
-        </com.google.android.material.button.MaterialButton>
-
-        <com.google.android.material.button.MaterialButton
             android:id="@+id/button_remove"
             style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
             android:layout_width="26dp"
@@ -144,6 +126,34 @@
             app:layout_constraintEnd_toStartOf="@+id/button_add"
             app:layout_constraintTop_toTopOf="@+id/button_add" />
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_add"
+            style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:layout_marginEnd="24dp"
+            android:backgroundTint="@color/appGreen"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            app:icon="@drawable/ic_add"
+            app:iconGravity="textStart"
+            app:iconPadding="0dp"
+            app:layout_constraintBottom_toBottomOf="@+id/text_price"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/text_name">
+
+        </com.google.android.material.button.MaterialButton>
+
+        <ImageView
+            android:id="@+id/image_in_cart"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            app:layout_constraintBottom_toBottomOf="@+id/in_cart"
+            app:layout_constraintEnd_toStartOf="@+id/in_cart"
+            app:layout_constraintStart_toStartOf="@+id/button_remove"
+            app:layout_constraintTop_toTopOf="@+id/in_cart"
+            app:srcCompat="@drawable/ic_cart" />
+
         <TextView
             android:id="@+id/in_cart"
             android:layout_width="wrap_content"
@@ -156,16 +166,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/button_add"
             app:layout_constraintStart_toEndOf="@+id/image_in_cart" />
-
-        <ImageView
-            android:id="@+id/image_in_cart"
-            android:layout_width="16dp"
-            android:layout_height="16dp"
-            app:layout_constraintBottom_toBottomOf="@+id/in_cart"
-            app:layout_constraintEnd_toStartOf="@+id/in_cart"
-            app:layout_constraintStart_toStartOf="@+id/button_remove"
-            app:layout_constraintTop_toTopOf="@+id/in_cart"
-            app:srcCompat="@drawable/ic_cart" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
