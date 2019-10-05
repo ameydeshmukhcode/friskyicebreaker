@@ -122,7 +122,7 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
             mBottomSheetOrder.setVisibility(View.GONE);
         }
 
-        mCartTotalText = findViewById(R.id.text_order_amount);
+        mCartTotalText = findViewById(R.id.text_cart_total);
         mBottomSheetCart.setOnClickListener(v -> {
             Intent showOrder = new Intent(getApplicationContext(), CartActivity.class);
             showOrder.putExtra("cart_list", mCartList);

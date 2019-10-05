@@ -9,7 +9,7 @@
     android:foreground="?attr/selectableItemBackground">
 
     <TextView
-        android:id="@+id/order_active"
+        android:id="@+id/items_in_cart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -22,18 +22,18 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/your_total"
+        android:id="@+id/cart_total"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="16dp"
         android:fontFamily="@font/museosans300"
-        android:text="@string/your_total"
+        android:text="@string/cart_total"
         android:textSize="@dimen/text_subtitle_size"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/order_active" />
+        app:layout_constraintTop_toBottomOf="@+id/items_in_cart" />
 
     <TextView
         android:id="@+id/rupee"
@@ -44,33 +44,34 @@
         android:text="@string/rupee"
         android:textColor="@color/appRed"
         android:textSize="@dimen/text_subtitle_size"
-        app:layout_constraintBottom_toBottomOf="@+id/your_total"
-        app:layout_constraintStart_toEndOf="@+id/your_total"
-        app:layout_constraintTop_toTopOf="@+id/your_total" />
+        app:layout_constraintBottom_toBottomOf="@+id/cart_total"
+        app:layout_constraintStart_toEndOf="@+id/cart_total"
+        app:layout_constraintTop_toTopOf="@+id/cart_total" />
 
     <TextView
-        android:id="@+id/text_order_amount"
+        android:id="@+id/text_cart_total"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
         android:fontFamily="@font/museosans700"
         android:text="@string/default_number"
         android:textColor="@color/appRed"
-        app:layout_constraintBottom_toBottomOf="@+id/your_total"
+        app:layout_constraintBottom_toBottomOf="@+id/cart_total"
         app:layout_constraintStart_toEndOf="@+id/rupee"
-        app:layout_constraintTop_toTopOf="@+id/your_total" />
+        app:layout_constraintTop_toTopOf="@+id/cart_total" />
 
     <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_view_cart"
+        style="@style/Button.Outlined"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_marginEnd="16dp"
-        android:text="@string/view_cart"
-        android:textSize="@dimen/text_subtitle_size"
         android:clickable="false"
         android:focusable="false"
-        style="@style/Button.Outlined"
-        app:layout_constraintBottom_toBottomOf="@+id/your_total"
+        android:text="@string/view_cart"
+        android:textSize="@dimen/text_subtitle_size"
+        app:layout_constraintBottom_toBottomOf="@+id/cart_total"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/order_active" />
+        app:layout_constraintTop_toTopOf="@+id/items_in_cart" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
