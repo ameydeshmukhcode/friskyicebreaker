@@ -49,7 +49,7 @@ public class RestaurantActivity extends AppCompatActivity implements UIActivity 
     }
 
     public void initUI() {
-        mPubNameText = findViewById(R.id.text_pub_name);
+        mPubNameText = findViewById(R.id.text_restaurant_name);
         mTagsText = findViewById(R.id.text_cuisine);
         mRatingText = findViewById(R.id.text_rating);
         mLocationText = findViewById(R.id.text_location);

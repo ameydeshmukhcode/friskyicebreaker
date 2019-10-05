@@ -64,7 +64,7 @@ public class DineFragment extends Fragment {
 
                 TextView noOrders = view.findViewById(R.id.no_orders);
 
-                TextView restaurant = view.findViewById(R.id.text_pub_name);
+                TextView restaurant = view.findViewById(R.id.text_restaurant_name);
                 TextView table = view.findViewById(R.id.text_table);
                 restaurant.setText(sharedPreferences.getString("restaurant_name", ""));
                 table.setText(sharedPreferences.getString("table_name", ""));

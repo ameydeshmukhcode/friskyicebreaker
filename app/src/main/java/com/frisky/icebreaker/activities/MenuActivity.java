@@ -103,9 +103,9 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
 
         mDummyMenu = findViewById(R.id.dummy_menu);
 
-        mRestName = findViewById(R.id.text_pub_name);
+        mRestName = findViewById(R.id.text_restaurant_name);
         mTableSerial = findViewById(R.id.text_table);
-        mRecyclerMenuListView = findViewById(R.id.recycler_view);
+        mRecyclerMenuListView = findViewById(R.id.recycler_view_menu);
 
         mBottomSheetCart = findViewById(R.id.bottom_sheet_cart);
         mBottomSheetCart.setVisibility(View.GONE);
