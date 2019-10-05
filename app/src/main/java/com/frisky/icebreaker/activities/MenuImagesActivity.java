@@ -10,16 +10,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import com.frisky.icebreaker.R;
-import com.frisky.icebreaker.adapters.MenuViewAdapter;
+import com.frisky.icebreaker.pagers.MenuImagesPager;
 
 import java.util.ArrayList;
 
-public class MenuViewActivity extends AppCompatActivity {
+public class MenuImagesActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_menu_view);
+        setContentView(R.layout.activity_menu_images);
 
         Button nextButton = findViewById(R.id.button_next_image);
         Button prevButton = findViewById(R.id.button_previous_image);
@@ -43,7 +43,7 @@ public class MenuViewActivity extends AppCompatActivity {
             nextButton.setVisibility(View.INVISIBLE);
         }
 
-        slideshow.setAdapter(new MenuViewAdapter(getApplicationContext(), mMenuList));
+        slideshow.setAdapter(new MenuImagesPager(getApplicationContext(), mMenuList));
         slideshow.setCurrentItem(currentPage);
 
         textCurrent.setText(String.valueOf(currentPage + 1));

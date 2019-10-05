@@ -1,4 +1,4 @@
-package com.frisky.icebreaker.adapters;
+package com.frisky.icebreaker.pagers;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,11 +12,11 @@ import androidx.viewpager.widget.PagerAdapter;
 
 import com.frisky.icebreaker.R;
 
-public class SlideshowAdapter extends PagerAdapter {
+public class SlideshowPager extends PagerAdapter {
 
     private Context context;
 
-    public SlideshowAdapter(Context applicationContext) {
+    public SlideshowPager(Context applicationContext) {
         context = applicationContext;
     }
 

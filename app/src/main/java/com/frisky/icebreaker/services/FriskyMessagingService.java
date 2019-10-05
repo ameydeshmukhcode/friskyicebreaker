@@ -12,7 +12,7 @@ import androidx.core.app.NotificationCompat;
 
 import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.activities.HomeActivity;
-import com.frisky.icebreaker.activities.OrderSummaryActivity;
+import com.frisky.icebreaker.activities.VisitActivity;
 import com.frisky.icebreaker.notifications.NotificationFactory;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
@@ -20,7 +20,7 @@ import com.google.firebase.messaging.RemoteMessage;
 import java.util.Map;
 import java.util.Random;
 
-public class FriskyService extends FirebaseMessagingService {
+public class FriskyMessagingService extends FirebaseMessagingService {
 
     @Override
     public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
@@ -43,7 +43,7 @@ public class FriskyService extends FirebaseMessagingService {
                                     NotificationManager.IMPORTANCE_DEFAULT));
                 }
 
-                Intent notificationIntent = new Intent(this, OrderSummaryActivity.class);
+                Intent notificationIntent = new Intent(this, VisitActivity.class);
                 notificationIntent.putExtra("session_id",
                         sharedPreferences.getString("session_id", ""));
                 notificationIntent.putExtra("restaurant_id",

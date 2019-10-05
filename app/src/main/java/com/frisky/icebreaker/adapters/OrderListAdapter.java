@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.frisky.icebreaker.R;
-import com.frisky.icebreaker.core.structures.OrderDetailsHeader;
+import com.frisky.icebreaker.core.structures.OrderHeader;
 import com.frisky.icebreaker.core.structures.OrderItem;
 import com.frisky.icebreaker.core.structures.OrderStatus;
 
@@ -63,7 +63,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     @Override
     public int getItemViewType(int position) {
-        if (mOrderList.get(position) instanceof OrderDetailsHeader) {
+        if (mOrderList.get(position) instanceof OrderHeader) {
             return ORDER_HEADER;
         } else if (mOrderList.get(position) instanceof OrderItem) {
             return ORDER_ITEM;
@@ -78,7 +78,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         switch (viewType) {
             case ORDER_HEADER:
                 itemView = LayoutInflater.from(viewGroup.getContext())
-                        .inflate(R.layout.card_order_details, viewGroup, false);
+                        .inflate(R.layout.card_order_header, viewGroup, false);
 
                 return new OrderDetailsHeaderHolder(itemView);
 
@@ -99,7 +99,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
         int CURRENT_VIEW = 0;
 
-        if (mOrderList.get(position) instanceof OrderDetailsHeader) {
+        if (mOrderList.get(position) instanceof OrderHeader) {
             CURRENT_VIEW = ORDER_HEADER;
         } else if (mOrderList.get(position) instanceof OrderItem) {
             CURRENT_VIEW = ORDER_ITEM;
@@ -108,9 +108,9 @@ public class OrderListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         switch (CURRENT_VIEW) {
             case ORDER_HEADER:
                 OrderListAdapter.OrderDetailsHeaderHolder orderHeaderHolder = (OrderDetailsHeaderHolder) viewHolder;
-                OrderDetailsHeader orderDetailsHeader = (OrderDetailsHeader) mOrderList.get(position);
-                orderHeaderHolder.mRank.setText(String.valueOf(orderDetailsHeader.getRank()));
-                orderHeaderHolder.mTime.setText(orderDetailsHeader.getTime());
+                OrderHeader orderHeader = (OrderHeader) mOrderList.get(position);
+                orderHeaderHolder.mRank.setText(String.valueOf(orderHeader.getRank()));
+                orderHeaderHolder.mTime.setText(orderHeader.getTime());
                 break;
 
             case ORDER_ITEM:

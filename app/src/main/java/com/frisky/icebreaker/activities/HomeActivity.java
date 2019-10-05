@@ -17,9 +17,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.frisky.icebreaker.R;
-import com.frisky.icebreaker.fragments.DiningFragment;
-import com.frisky.icebreaker.fragments.OrderHistoryFragment;
-import com.frisky.icebreaker.fragments.RestaurantViewFragment;
+import com.frisky.icebreaker.fragments.DineFragment;
+import com.frisky.icebreaker.fragments.VisitsFragment;
+import com.frisky.icebreaker.fragments.HomeFragment;
 import com.frisky.icebreaker.interfaces.UIActivity;
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -236,7 +236,7 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
                     fragmentManager.beginTransaction().show(homeFragment).commit();
                 } else {
                     //if the fragment does not exist, add it to fragment manager.
-                    fragmentManager.beginTransaction().add(R.id.home_activity_fragment, new RestaurantViewFragment(), "home").commit();
+                    fragmentManager.beginTransaction().add(R.id.home_activity_fragment, new HomeFragment(), "home").commit();
                 }
                 if(dineFragment != null && dineFragment.isVisible()){
                     //if the other fragment is visible, hide it.
@@ -251,7 +251,7 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
                 if(dineFragment != null) {
                     fragmentManager.beginTransaction().show(dineFragment).commit();
                 } else {
-                    fragmentManager.beginTransaction().add(R.id.home_activity_fragment, new DiningFragment(), "dine").commit();
+                    fragmentManager.beginTransaction().add(R.id.home_activity_fragment, new DineFragment(), "dine").commit();
                 }
                 if(homeFragment != null && homeFragment.isVisible()){
                     fragmentManager.beginTransaction().hide(homeFragment).commit();
@@ -264,7 +264,7 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
                 if(visitsFragment != null) {
                     fragmentManager.beginTransaction().show(visitsFragment).commit();
                 } else {
-                    fragmentManager.beginTransaction().add(R.id.home_activity_fragment, new OrderHistoryFragment(), "hist").commit();
+                    fragmentManager.beginTransaction().add(R.id.home_activity_fragment, new VisitsFragment(), "hist").commit();
                 }
                 if(dineFragment != null && dineFragment.isVisible()){
                     fragmentManager.beginTransaction().hide(dineFragment).commit();

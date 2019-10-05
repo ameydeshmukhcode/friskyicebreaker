@@ -18,7 +18,7 @@ import androidx.recyclerview.widget.LinearSmoothScroller;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.frisky.icebreaker.R;
-import com.frisky.icebreaker.adapters.MenuItemListAdapter;
+import com.frisky.icebreaker.adapters.MenuListAdapter;
 import com.frisky.icebreaker.core.structures.DietType;
 import com.frisky.icebreaker.core.structures.MenuCategory;
 import com.frisky.icebreaker.core.structures.MenuItem;
@@ -200,7 +200,7 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
         mRecyclerMenuListView.setLayoutManager(mMenuListViewLayoutManager);
 
         // specify an adapter (see also next example)
-        mMenuListViewAdapter = new MenuItemListAdapter(mMenu, this);
+        mMenuListViewAdapter = new MenuListAdapter(mMenu, this);
         mRecyclerMenuListView.setAdapter(mMenuListViewAdapter);
 
         prepareMenuData();

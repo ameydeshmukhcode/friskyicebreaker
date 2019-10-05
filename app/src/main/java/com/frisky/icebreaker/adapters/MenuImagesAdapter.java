@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.frisky.icebreaker.R;
-import com.frisky.icebreaker.activities.MenuViewActivity;
+import com.frisky.icebreaker.activities.MenuImagesActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -48,7 +48,7 @@ public class MenuImagesAdapter extends RecyclerView.Adapter<MenuImagesAdapter.Im
     public void onBindViewHolder(@NonNull ImageViewHolder holder, int position) {
         Picasso.get().load(mMenuList.get(position)).into(holder.menuImage);
         holder.menuImage.setOnClickListener(v -> {
-            Intent showMenu = new Intent(context.getApplicationContext(), MenuViewActivity.class);
+            Intent showMenu = new Intent(context.getApplicationContext(), MenuImagesActivity.class);
             showMenu.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             showMenu.putParcelableArrayListExtra("menu_list", mMenuList);
             showMenu.putExtra("menu_page", position);

@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import com.frisky.icebreaker.R;
-import com.frisky.icebreaker.adapters.SlideshowAdapter;
+import com.frisky.icebreaker.pagers.SlideshowPager;
 
 public class SlideshowActivity extends AppCompatActivity {
 
@@ -32,7 +32,7 @@ public class SlideshowActivity extends AppCompatActivity {
             Button nextButton = findViewById(R.id.button_next);
 
             ViewPager slideshow = findViewById(R.id.pager_slideshow);
-            slideshow.setAdapter(new SlideshowAdapter(getApplicationContext()));
+            slideshow.setAdapter(new SlideshowPager(getApplicationContext()));
 
             skipButton.setOnClickListener(v -> {
                 sharedPreferences.edit().putBoolean("slideshow_complete", true).apply();

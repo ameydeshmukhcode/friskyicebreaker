@@ -19,7 +19,7 @@ import java.util.List;
 
 import static com.frisky.icebreaker.ui.assistant.UIAssistant.getTypeIcon;
 
-public class MenuItemListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class MenuListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<Object> mMenu;
 
@@ -60,7 +60,7 @@ public class MenuItemListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }
     }
 
-    public MenuItemListAdapter(List<Object> menu, OnOrderUpdateListener listener) {
+    public MenuListAdapter(List<Object> menu, OnOrderUpdateListener listener) {
         this.mMenu = menu;
         this.orderUpdateListener = listener;
     }
@@ -84,19 +84,19 @@ public class MenuItemListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 itemView = LayoutInflater.from(viewGroup.getContext())
                     .inflate(R.layout.card_menu_category, viewGroup, false);
 
-                return new MenuItemListAdapter.MenuSubCategoryHolder(itemView);
+                return new MenuListAdapter.MenuSubCategoryHolder(itemView);
 
             case MENU_ITEM_VIEW:
                 itemView = LayoutInflater.from(viewGroup.getContext())
                         .inflate(R.layout.card_menu_item, viewGroup, false);
 
-                return new MenuItemListAdapter.MenuItemHolder(itemView);
+                return new MenuListAdapter.MenuItemHolder(itemView);
         }
 
         itemView = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.card_menu_category, viewGroup, false);
 
-        return new MenuItemListAdapter.MenuItemHolder(itemView);
+        return new MenuListAdapter.MenuItemHolder(itemView);
     }
 
     @Override

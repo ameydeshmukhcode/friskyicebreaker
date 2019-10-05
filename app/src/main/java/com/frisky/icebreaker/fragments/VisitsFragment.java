@@ -17,8 +17,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.frisky.icebreaker.R;
-import com.frisky.icebreaker.adapters.OrderSummaryListAdapter;
-import com.frisky.icebreaker.core.structures.OrderSummary;
+import com.frisky.icebreaker.adapters.VisitsListAdapter;
+import com.frisky.icebreaker.core.structures.Visit;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -30,18 +30,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class OrderHistoryFragment extends Fragment {
+public class VisitsFragment extends Fragment {
 
-    private OrderSummaryListAdapter mOrderSummaryAdapter;
+    private VisitsListAdapter mOrderSummaryAdapter;
     private ConstraintLayout mEmptyState;
     private ShimmerFrameLayout mShimmerFrame;
 
-    private List<OrderSummary> mSessionHistoryList = new ArrayList<>();
+    private List<Visit> mSessionHistoryList = new ArrayList<>();
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_order_summary_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_visits, container, false);
 
         RecyclerView mRecyclerPubView = view.findViewById(R.id.recycler_view);
         mEmptyState = view.findViewById(R.id.fragment_empty_state);
@@ -58,7 +58,7 @@ public class OrderHistoryFragment extends Fragment {
         mPubViewLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerPubView.setLayoutManager(mPubViewLayoutManager);
 
-        mOrderSummaryAdapter = new OrderSummaryListAdapter(mSessionHistoryList, getContext());
+        mOrderSummaryAdapter = new VisitsListAdapter(mSessionHistoryList, getContext());
         mRecyclerPubView.setAdapter(mOrderSummaryAdapter);
 
         getOrderHistory();
@@ -88,7 +88,7 @@ public class OrderHistoryFragment extends Fragment {
                                 double total = Double.parseDouble(document.getString("amount_payable"));
                                 final DocumentReference restaurantReference = document.getReference().getParent().getParent();
                                 restaurantReference.get().addOnCompleteListener(restTask -> {
-                                    OrderSummary summary = new OrderSummary(restaurantReference.getId(),
+                                    Visit summary = new Visit(restaurantReference.getId(),
                                             Uri.parse(restTask.getResult().getString("image")),
                                             String.valueOf(restTask.getResult().get("name")),
                                             document.getId(), endTime, total);

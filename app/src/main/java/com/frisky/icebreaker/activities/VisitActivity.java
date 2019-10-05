@@ -28,7 +28,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class OrderSummaryActivity extends AppCompatActivity implements UIActivity {
+public class VisitActivity extends AppCompatActivity implements UIActivity {
 
     TextView mRestaurantName;
     TextView mOrderDateTime;
@@ -49,7 +49,7 @@ public class OrderSummaryActivity extends AppCompatActivity implements UIActivit
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_order_summary);
+        setContentView(R.layout.activity_visit);
         initUI();
     }
 

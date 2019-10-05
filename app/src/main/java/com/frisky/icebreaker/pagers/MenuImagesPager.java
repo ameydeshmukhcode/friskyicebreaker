@@ -1,4 +1,4 @@
-package com.frisky.icebreaker.adapters;
+package com.frisky.icebreaker.pagers;
 
 import android.content.Context;
 import android.net.Uri;
@@ -15,12 +15,12 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class MenuViewAdapter extends PagerAdapter {
+public class MenuImagesPager extends PagerAdapter {
 
     private ArrayList<Uri> mMenuList;
     private Context mContext;
 
-    public MenuViewAdapter(Context context, ArrayList<Uri> menuList) {
+    public MenuImagesPager(Context context, ArrayList<Uri> menuList) {
         mContext = context;
         mMenuList = menuList;
     }

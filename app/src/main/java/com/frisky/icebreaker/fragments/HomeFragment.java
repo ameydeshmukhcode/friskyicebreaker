@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class RestaurantViewFragment extends Fragment {
+public class HomeFragment extends Fragment {
 
     private List<Restaurant> mRestaurantList = new ArrayList<>();
     private RecyclerView.Adapter mPubViewAdapter;
@@ -41,7 +41,7 @@ public class RestaurantViewFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup viewGroup, @Nullable Bundle savedInstanceState) {
         View view;
-        view = inflater.inflate(R.layout.fragment_restaurant, viewGroup, false);
+        view = inflater.inflate(R.layout.fragment_home, viewGroup, false);
 
         Button settingsButton = view.findViewById(R.id.button_settings);
         settingsButton.setOnClickListener(v -> startActivity(new Intent(getActivity(), OptionsActivity.class)));

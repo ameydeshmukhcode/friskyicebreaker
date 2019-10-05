@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.adapters.OrderListAdapter;
-import com.frisky.icebreaker.core.structures.OrderDetailsHeader;
+import com.frisky.icebreaker.core.structures.OrderHeader;
 import com.frisky.icebreaker.core.structures.OrderItem;
 import com.frisky.icebreaker.core.structures.OrderStatus;
 import com.frisky.icebreaker.interfaces.UIActivity;
@@ -169,8 +169,8 @@ public class OrderActivity extends AppCompatActivity implements UIActivity, Clea
                         String orderTime = formatter.format((Objects
                                 .requireNonNull(snapshot.getTimestamp("timestamp")).toDate()));
 
-                        OrderDetailsHeader orderDetailsHeader = new OrderDetailsHeader(orderTime, docRank);
-                        mOrderList.add(orderDetailsHeader);
+                        OrderHeader orderHeader = new OrderHeader(orderTime, docRank);
+                        mOrderList.add(orderHeader);
 
                         for (Map.Entry<String, Object> entry : orderData.entrySet()) {
                             String itemID = entry.getKey();

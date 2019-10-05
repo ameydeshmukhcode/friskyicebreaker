@@ -36,7 +36,7 @@ import java.util.Objects;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class DiningFragment extends Fragment {
+public class DineFragment extends Fragment {
 
     private RecyclerView mOrderListRecyclerView;
     private TextView recommendedItems;
@@ -55,9 +55,9 @@ public class DiningFragment extends Fragment {
 
         if (sharedPreferences.getBoolean("session_active", false)) {
             if (sharedPreferences.getBoolean("bill_requested", false)) {
-                view = inflater.inflate(R.layout.fragment_dining_bill_requested, container, false);
+                view = inflater.inflate(R.layout.fragment_dine_bill_requested, container, false);
             } else {
-                view = inflater.inflate(R.layout.fragment_dining_session_active, container, false);
+                view = inflater.inflate(R.layout.fragment_dine_session_active, container, false);
 
                 String restID = sharedPreferences.getString("restaurant_id", "");
                 String sessionID = sharedPreferences.getString("session_id", "");
@@ -109,7 +109,7 @@ public class DiningFragment extends Fragment {
             }
             return view;
         } else {
-            view = inflater.inflate(R.layout.fragment_dining_scan_qr, container, false);
+            view = inflater.inflate(R.layout.fragment_dine_scan_qr, container, false);
             return view;
         }
     }
