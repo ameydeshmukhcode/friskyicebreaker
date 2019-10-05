@@ -7,7 +7,7 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/youre_at"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -49,7 +49,7 @@
         android:textSize="@dimen/app_bar_text_size"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/text_restaurant_name"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/youre_at" />
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/card_recommendations"
@@ -67,6 +67,18 @@
             android:layout_height="match_parent">
 
             <TextView
+                android:id="@+id/recommendations"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/museosans300"
+                android:text="@string/recommendations"
+                android:textSize="@dimen/text_subtitle_size"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
                 android:id="@+id/text_recommendations"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -80,17 +92,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/recommendations" />
 
-            <TextView
-                android:id="@+id/recommendations"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:fontFamily="@font/museosans300"
-                android:text="@string/recommendations"
-                android:textSize="@dimen/text_subtitle_size"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.card.MaterialCardView>
@@ -110,6 +111,18 @@
             android:layout_height="match_parent">
 
             <TextView
+                android:id="@+id/last_order"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/museosans300"
+                android:text="@string/last_order"
+                android:textSize="@dimen/text_subtitle_size"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
                 android:id="@+id/no_orders"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -123,18 +136,6 @@
                 app:layout_constraintStart_toStartOf="@+id/recycler_view_last_order"
                 app:layout_constraintTop_toTopOf="@+id/recycler_view_last_order" />
 
-            <TextView
-                android:id="@+id/orders"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:fontFamily="@font/museosans300"
-                android:text="@string/last_order"
-                android:textSize="@dimen/text_subtitle_size"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view_last_order"
                 android:layout_width="match_parent"
@@ -145,7 +146,7 @@
                 android:minHeight="50dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/orders" />
+                app:layout_constraintTop_toBottomOf="@+id/last_order" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/button_show_orders"

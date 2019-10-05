@@ -34,7 +34,7 @@ public class SlideshowPager extends PagerAdapter {
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        ViewGroup layout = (ViewGroup) inflater.inflate(R.layout.slideshow_layout, container, false);
+        ViewGroup layout = (ViewGroup) inflater.inflate(R.layout.layout_slideshow, container, false);
         TextView title = layout.findViewById(R.id.text_slide_title);
         TextView desc = layout.findViewById(R.id.text_slide_desc);
         ImageView image = layout.findViewById(R.id.image_slideshow);

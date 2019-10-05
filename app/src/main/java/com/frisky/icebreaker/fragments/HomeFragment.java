@@ -48,7 +48,7 @@ public class HomeFragment extends Fragment {
 
         mShimmerViewContainer = view.findViewById(R.id.shimmer_list);
 
-        RecyclerView mRecyclerPubView = view.findViewById(R.id.recycler_view);
+        RecyclerView mRecyclerPubView = view.findViewById(R.id.recycler_view_restaurants);
 
         mRecyclerPubView.setPadding(0, 0, 0, 0);
         mRecyclerPubView.setPadding(0, 0, 0, 225);

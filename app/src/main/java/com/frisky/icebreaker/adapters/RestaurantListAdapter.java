@@ -36,12 +36,12 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
         TextView mLocation;
         PubViewHolder(View view) {
             super(view);
-            mImage = view.findViewById(R.id.image_pub);
+            mImage = view.findViewById(R.id.image_restaurant);
             mTitle = view.findViewById(R.id.text_title);
             mCuisine = view.findViewById(R.id.text_cuisine);
             mRating = view.findViewById(R.id.text_rating);
             mLocation = view.findViewById(R.id.text_location);
-            mPubCard = view.findViewById(R.id.card_pub);
+            mPubCard = view.findViewById(R.id.card_restaurant);
         }
     }
 

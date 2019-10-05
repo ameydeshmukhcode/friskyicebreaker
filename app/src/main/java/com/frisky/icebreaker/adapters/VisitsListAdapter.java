@@ -35,7 +35,7 @@ public class VisitsListAdapter extends RecyclerView.Adapter<VisitsListAdapter.Or
             super(view);
             mName = view.findViewById(R.id.text_restaurant_name);
             mTime = view.findViewById(R.id.text_time);
-            mOrderCard = view.findViewById(R.id.card_order_history);
+            mOrderCard = view.findViewById(R.id.card_visit);
             mRestaurantImage = view.findViewById(R.id.image_restaurant);
             mAmount = view.findViewById(R.id.text_total);
         }

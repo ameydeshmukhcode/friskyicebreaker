@@ -40,7 +40,7 @@ public class MenuImagesPager extends PagerAdapter {
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
         LayoutInflater inflater = LayoutInflater.from(mContext);
         View layout = inflater.inflate(R.layout.image_menu, container, false);
-        ImageView image = layout.findViewById(R.id.image_menu_page);
+        ImageView image = layout.findViewById(R.id.image_menu);
         Picasso.get().load(mMenuList.get(position)).into(image);
         container.addView(layout);
         return layout;

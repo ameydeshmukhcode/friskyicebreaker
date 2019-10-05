@@ -43,7 +43,7 @@ public class VisitsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_visits, container, false);
 
-        RecyclerView mRecyclerPubView = view.findViewById(R.id.recycler_view);
+        RecyclerView mRecyclerPubView = view.findViewById(R.id.recycler_view_visits);
         mEmptyState = view.findViewById(R.id.fragment_empty_state);
         mShimmerFrame = view.findViewById(R.id.shimmer_list);
 
