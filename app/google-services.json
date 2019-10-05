@@ -15,6 +15,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "719761927765-v6uvpkkvgjoeaj0isnrppta7nnbs6uuf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.frisky.icebreaker",
+            "certificate_hash": "f563ba196e726bc1ffbb0f754afc243aa1e7f604"
+          }
+        },
+        {
+          "client_id": "719761927765-2j6llp36qh4f66ddgj8amoiimv6e3tgv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.frisky.icebreaker",
+            "certificate_hash": "99a7ef7513678c644980b8efc669ec529a2a2db1"
+          }
+        },
+        {
           "client_id": "719761927765-1qaqlrtboccss3bemc5rr0b2re8oo8pg.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
