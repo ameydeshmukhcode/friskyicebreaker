@@ -32,7 +32,7 @@ public class CartActivity extends AppCompatActivity implements UIActivity,
 
     SharedPreferences sharedPreferences;
 
-    Button mConfirmOrderButton;
+    Button mPlaceOrderButton;
     Button mBackButton;
     TextView mCartTotalText;
 
@@ -62,15 +62,15 @@ public class CartActivity extends AppCompatActivity implements UIActivity,
         mBackButton = findViewById(R.id.button_back);
         mBackButton.setOnClickListener(v -> CartActivity.super.onBackPressed());
 
-        mConfirmOrderButton = findViewById(R.id.button_confirm_order);
-        mConfirmOrderButton.setOnClickListener(v -> {
+        mPlaceOrderButton = findViewById(R.id.button_place_order);
+        mPlaceOrderButton.setOnClickListener(v -> {
             if (mCartList.size() > 0) {
                 ConfirmOrderDialog confirmOrderDialog = new ConfirmOrderDialog();
                 confirmOrderDialog.show(getSupportFragmentManager(), "confirm order dialog");
             }
         });
 
-        mCartTotalText = findViewById(R.id.text_order_total);
+        mCartTotalText = findViewById(R.id.text_cart_total);
 
         TextView mTableSerial = findViewById(R.id.text_table);
         mTableSerial.setText(sharedPreferences.getString("table_name", ""));

@@ -129,4 +129,6 @@
     <string name="instant_menu_desc">Access the menu and browse your favorite dishes instantly.\nPlace orders without having to wait.</string>
     <string name="keep_tabs">Keep Tabs</string>
     <string name="keep_tabs_desc">Get real-time bill and order updates and check your previous orders at anytime.</string>
+    <string name="your_cart">Your Cart</string>
+    <string name="place_order">Place Order</string>
 </resources>

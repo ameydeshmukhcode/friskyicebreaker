@@ -16,10 +16,11 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:id="@+id/your_cart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/museosans300"
-        android:text="@string/your_order"
+        android:text="@string/your_cart"
         android:textColor="@color/textDark"
         android:textSize="@dimen/app_bar_text_size"
         app:layout_constraintBottom_toBottomOf="@+id/button_back"
@@ -89,7 +90,7 @@
         android:fontFamily="@font/museosans300"
         android:text="@string/cart_total"
         android:textSize="@dimen/text_title_size"
-        app:layout_constraintBottom_toTopOf="@+id/button_confirm_order"
+        app:layout_constraintBottom_toTopOf="@+id/button_place_order"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
@@ -102,11 +103,11 @@
         android:textColor="@color/appRed"
         android:textSize="@dimen/text_title_size"
         app:layout_constraintBottom_toBottomOf="@+id/cart_total"
-        app:layout_constraintEnd_toStartOf="@+id/text_order_total"
+        app:layout_constraintEnd_toStartOf="@+id/text_cart_total"
         app:layout_constraintTop_toTopOf="@+id/cart_total" />
 
     <TextView
-        android:id="@+id/text_order_total"
+        android:id="@+id/text_cart_total"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_marginEnd="32dp"
@@ -119,13 +120,13 @@
         app:layout_constraintTop_toTopOf="@+id/cart_total" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/button_confirm_order"
+        android:id="@+id/button_place_order"
         style="@style/Button.Unelevated"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="16dp"
         android:backgroundTint="@color/appGreen"
-        android:text="@string/confirm_order"
+        android:text="@string/place_order"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
