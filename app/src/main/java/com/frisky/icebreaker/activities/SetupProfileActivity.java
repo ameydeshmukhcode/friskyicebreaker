@@ -93,9 +93,9 @@ public class SetupProfileActivity extends AppCompatActivity implements FormActiv
         mCancelButton = findViewById(R.id.button_cancel);
         mDoneButton = findViewById(R.id.button_done);
 
-        dobView = findViewById(R.id.dobView);
-        dobLayout = findViewById(R.id.dobInput);
-        genderLayout = findViewById(R.id.genderLayout);
+        dobView = findViewById(R.id.view_dob);
+        dobLayout = findViewById(R.id.dob_input);
+        genderLayout = findViewById(R.id.gender_input);
 
         mGenderPicker = findViewById(R.id.dropdown_gender);
 
