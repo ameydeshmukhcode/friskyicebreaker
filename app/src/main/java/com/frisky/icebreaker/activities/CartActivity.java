@@ -85,7 +85,7 @@ public class CartActivity extends AppCompatActivity implements UIActivity,
             mCartTotal = cartTotal;
         }
 
-        mRecyclerCartListView = findViewById(R.id.recycler_view_cart_list);
+        mRecyclerCartListView = findViewById(R.id.recycler_view_cart);
         mRecyclerCartListView.setOverScrollMode(View.OVER_SCROLL_NEVER);
 
         RecyclerView.LayoutManager mMenuListViewLayoutManager;
