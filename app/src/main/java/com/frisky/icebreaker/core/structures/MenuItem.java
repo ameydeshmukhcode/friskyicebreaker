@@ -1,15 +1,10 @@
 package com.frisky.icebreaker.core.structures;
 
-import java.io.Serializable;
-
-public class MenuItem implements Serializable {
-    private String id;
-    private String name;
+public class MenuItem extends BaseItem {
     private String description;
     private String category;
     private int price;
     private boolean available;
-    private int count = 0;
     private DietType dietType;
 
     public MenuItem(String id, String name, String description, String category, int price, boolean available, DietType dietType) {
