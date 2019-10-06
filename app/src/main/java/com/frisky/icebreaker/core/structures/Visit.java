@@ -2,7 +2,7 @@ package com.frisky.icebreaker.core.structures;
 
 import android.net.Uri;
 
-public class OrderSummary {
+public class Visit {
     private Uri restaurantImage;
     private String restaurantID;
     private String restaurantName;
@@ -11,8 +11,8 @@ public class OrderSummary {
 
     private double totalAmount;
 
-    public OrderSummary(String restaurantID, Uri restaurantImage, String restaurantName, String sessionID,
-                        String endTime, double totalAmount) {
+    public Visit(String restaurantID, Uri restaurantImage, String restaurantName, String sessionID,
+                 String endTime, double totalAmount) {
         this.restaurantImage = restaurantImage;
         this.restaurantID = restaurantID;
         this.restaurantName = restaurantName;

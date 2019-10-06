@@ -1,10 +1,10 @@
 package com.frisky.icebreaker.core.structures;
 
-public class OrderDetailsHeader {
+public class OrderHeader {
     private String time;
     private int rank;
 
-    public OrderDetailsHeader(String time, int rank) {
+    public OrderHeader(String time, int rank) {
         this.time = time;
         this.rank = rank;
     }

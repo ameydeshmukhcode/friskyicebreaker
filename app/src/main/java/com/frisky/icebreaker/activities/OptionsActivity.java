@@ -23,19 +23,16 @@ import com.squareup.picasso.Picasso;
 
 public class OptionsActivity extends AppCompatActivity implements UIActivity {
 
+    FirebaseAuth mAuth;
+    SharedPreferences sharedPreferences;
+
     Button mLogoutButton;
     Button mProfileButton;
-
     ImageView mProfileImage;
     TextView mNameText;
     TextView mBioText;
-
     TextView mVersionText;
-
     Toolbar mToolbar;
-
-    FirebaseAuth mAuth;
-    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,8 +81,7 @@ public class OptionsActivity extends AppCompatActivity implements UIActivity {
                     startActivity(signOutIntent);
                     finish();
                 }
-            }
-            else {
+            } else {
                 Toast toast = Toast.makeText(this, "You have an active session!", Toast.LENGTH_SHORT);
                 toast.setGravity(Gravity.CENTER, 0, 0);
                 toast.show();

@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.frisky.icebreaker">
 
+    <uses-permission android:name="android.permission.CAMERA" />
+
     <application
         android:allowBackup="false"
         android:icon="@mipmap/icon_first"
@@ -11,7 +13,6 @@
         android:roundIcon="@mipmap/icon_first_round"
         android:theme="@style/FriskyAppTheme"
         tools:ignore="UnusedAttribute">
-        <activity android:name=".activities.MenuViewActivity"></activity>
         <activity android:name=".activities.SlideshowActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -35,18 +36,17 @@
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".activities.QRScanActivity" />
         <activity android:name=".activities.MenuActivity" />
+        <activity android:name=".activities.MenuImagesActivity" />
         <activity android:name=".activities.CartActivity" />
         <activity android:name=".activities.OrderActivity" />
         <activity android:name=".activities.OptionsActivity" />
-        <activity android:name=".activities.OrderSummaryActivity" />
-
+        <activity android:name=".activities.VisitActivity" />
         <service
-            android:name=".services.OrderSessionService"
-            android:enabled="true"
-            android:exported="false" />
+            android:name=".services.FriskyMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
     </application>
-    <uses-permission android:name="android.permission.CAMERA" />
-
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-
 </manifest>

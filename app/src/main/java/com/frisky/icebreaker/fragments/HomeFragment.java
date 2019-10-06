@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class RestaurantViewFragment extends Fragment {
+public class HomeFragment extends Fragment {
 
     private List<Restaurant> mRestaurantList = new ArrayList<>();
     private RecyclerView.Adapter mPubViewAdapter;
@@ -41,14 +41,14 @@ public class RestaurantViewFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup viewGroup, @Nullable Bundle savedInstanceState) {
         View view;
-        view = inflater.inflate(R.layout.fragment_restaurant, viewGroup, false);
+        view = inflater.inflate(R.layout.fragment_home, viewGroup, false);
 
         Button settingsButton = view.findViewById(R.id.button_settings);
         settingsButton.setOnClickListener(v -> startActivity(new Intent(getActivity(), OptionsActivity.class)));
 
         mShimmerViewContainer = view.findViewById(R.id.shimmer_list);
 
-        RecyclerView mRecyclerPubView = view.findViewById(R.id.recycler_view);
+        RecyclerView mRecyclerPubView = view.findViewById(R.id.recycler_view_restaurants);
 
         mRecyclerPubView.setPadding(0, 0, 0, 0);
         mRecyclerPubView.setPadding(0, 0, 0, 225);
@@ -108,7 +108,7 @@ public class RestaurantViewFragment extends Fragment {
 
                     Log.d("Frisky Debug", name + " " + address + " " + tags);
 
-                    Restaurant restaurant = new Restaurant(Uri.parse(image), document.getId(), name, name, address,
+                    Restaurant restaurant = new Restaurant(Uri.parse(image), document.getId(), name, address,
                             tags.substring(1, tags.length() - 1), 4.5);
                     mRestaurantList.add(restaurant);
                     mPubViewAdapter.notifyDataSetChanged();

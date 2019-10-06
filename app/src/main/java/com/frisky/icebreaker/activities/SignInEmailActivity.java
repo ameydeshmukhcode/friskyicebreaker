@@ -12,7 +12,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.interfaces.FormActivity;
-import com.frisky.icebreaker.interfaces.UIActivity;
 import com.frisky.icebreaker.ui.components.dialogs.ProgressDialog;
 import com.google.firebase.FirebaseNetworkException;
 import com.google.firebase.auth.FirebaseAuth;
@@ -20,7 +19,7 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.FirebaseUser;
 
-public class SignInEmailActivity extends AppCompatActivity implements UIActivity, FormActivity {
+public class SignInEmailActivity extends AppCompatActivity implements FormActivity {
 
     Button mSignUpLink;
     Button mForgotPasswordLink;
@@ -50,9 +49,9 @@ public class SignInEmailActivity extends AppCompatActivity implements UIActivity
     @Override
     public void initUI() {
         mLoginButton = findViewById(R.id.button_login);
-        mSignUpLink = findViewById(R.id.link_sign_up);
+        mSignUpLink = findViewById(R.id.button_sign_up);
         mErrorText = findViewById(R.id.text_error);
-        mForgotPasswordLink = findViewById(R.id.link_forgot_password);
+        mForgotPasswordLink = findViewById(R.id.button_forgot_password);
 
         mEmailInput = findViewById(R.id.input_email);
         mPasswordInput = findViewById(R.id.input_password);
@@ -116,21 +115,17 @@ public class SignInEmailActivity extends AppCompatActivity implements UIActivity
                         if (task.isSuccessful()) {
                             Log.d(getString(R.string.tag_debug), "Reset pw email sent.");
                             mErrorText.setText(getString(R.string.error_password_reset_email));
-                        }
-                        else {
+                        } else {
                             try {
                                 if (task.getException() != null)
                                     throw task.getException();
-                            }
-                            catch (FirebaseAuthInvalidUserException e) {
+                            } catch (FirebaseAuthInvalidUserException e) {
                                 Log.e("Create User Error", e.getErrorCode());
                                 mErrorText.setText(getString(R.string.error_not_signed_up));
-                            }
-                            catch (FirebaseAuthInvalidCredentialsException e) {
+                            } catch (FirebaseAuthInvalidCredentialsException e) {
                                 Log.e("Create User Error", e.getErrorCode());
                                 mErrorText.setText(getString(R.string.error_incorrect_password));
-                            }
-                            catch (Exception exp) {
+                            } catch (Exception exp) {
                                 Log.e("Reset password error", exp.toString());
                             }
                         }
@@ -148,23 +143,18 @@ public class SignInEmailActivity extends AppCompatActivity implements UIActivity
                     .addOnCompleteListener(this, task -> {
                         if (task.isSuccessful()) {
                             verifyLogin();
-                        }
-                        else {
+                        } else {
                             progressDialog.dismiss();
                             try {
-                                if (task.getException() != null)
-                                    throw task.getException();
-                            }
-                            catch (FirebaseAuthInvalidUserException e) {
+                                if (task.getException() != null) throw task.getException();
+                            } catch (FirebaseAuthInvalidUserException e) {
                                 Log.e("Sign In Error", e.getErrorCode());
                                 mErrorText.setText(getString(R.string.error_not_signed_up));
-                            }
-                            catch (FirebaseAuthInvalidCredentialsException e) {
+                            } catch (FirebaseAuthInvalidCredentialsException e) {
                                 Log.e("Sign In Error", e.getErrorCode());
                                 if (e.getErrorCode().equals("ERROR_INVALID_EMAIL")) {
                                     mErrorText.setText(getString(R.string.error_invalid_email));
-                                }
-                                else if (e.getErrorCode().equals("ERROR_WRONG_PASSWORD")) {
+                                } else if (e.getErrorCode().equals("ERROR_WRONG_PASSWORD")) {
                                     if (PW_ENTRY_FAILED > 2) {
                                         mErrorText.setText(getString(R.string.error_password_reset_hint));
                                         return;
@@ -172,19 +162,16 @@ public class SignInEmailActivity extends AppCompatActivity implements UIActivity
                                     mErrorText.setText(getString(R.string.error_incorrect_password));
                                     PW_ENTRY_FAILED++;
                                 }
-                            }
-                            catch (FirebaseNetworkException e) {
+                            } catch (FirebaseNetworkException e) {
                                 Log.e("Sign In Error", e.getMessage());
                                 mErrorText.setText(getString(R.string.error_network));
-                            }
-                            catch (Exception e) {
+                            } catch (Exception e) {
                                 Log.e("Sign In Error", e.getMessage());
                             }
                             Log.e("Sign In Error", "signInWithEmail:failure", task.getException());
                         }
                     });
-        }
-        else {
+        } else {
             progressDialog.dismiss();
         }
     }

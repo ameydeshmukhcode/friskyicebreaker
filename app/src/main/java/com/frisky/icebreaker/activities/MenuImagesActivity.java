@@ -10,46 +10,40 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import com.frisky.icebreaker.R;
-import com.frisky.icebreaker.adapters.MenuViewAdapter;
+import com.frisky.icebreaker.pagers.MenuImagesPager;
 
 import java.util.ArrayList;
 
-public class MenuViewActivity extends AppCompatActivity {
+public class MenuImagesActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_menu_view);
+        setContentView(R.layout.activity_menu_images);
 
         Button nextButton = findViewById(R.id.button_next_image);
         Button prevButton = findViewById(R.id.button_previous_image);
         Button mCancelButton = findViewById(R.id.button_cancel);
-
         TextView textCurrent = findViewById(R.id.text_current_page);
         TextView totalPages = findViewById(R.id.text_total_pages);
 
+        int currentPage = getIntent().getIntExtra("menu_page", 0);
         ViewPager slideshow = findViewById(R.id.pager_menu_pages);
         ArrayList<Uri> mMenuList = getIntent().getParcelableArrayListExtra("menu_list");
-        int currentPage = getIntent().getIntExtra("menu_page", 0);
 
         mCancelButton.setOnClickListener(v -> onBackPressed());
 
-        nextButton.setOnClickListener(v -> {
-            slideshow.setCurrentItem(slideshow.getCurrentItem() + 1);
-        });
+        nextButton.setOnClickListener(v -> slideshow.setCurrentItem(slideshow.getCurrentItem() + 1));
 
-        prevButton.setOnClickListener(v -> {
-            slideshow.setCurrentItem(slideshow.getCurrentItem() - 1);
-        });
+        prevButton.setOnClickListener(v -> slideshow.setCurrentItem(slideshow.getCurrentItem() - 1));
 
         if (currentPage == 0) {
             prevButton.setVisibility(View.INVISIBLE);
-        }
-        else if (currentPage == (mMenuList.size() - 1)) {
+        } else if (currentPage == (mMenuList.size() - 1)) {
             nextButton.setVisibility(View.INVISIBLE);
         }
 
-        slideshow.setAdapter(new MenuViewAdapter(getApplicationContext(), mMenuList));
+        slideshow.setAdapter(new MenuImagesPager(getApplicationContext(), mMenuList));
         slideshow.setCurrentItem(currentPage);
 
         textCurrent.setText(String.valueOf(currentPage + 1));
@@ -66,11 +60,9 @@ public class MenuViewActivity extends AppCompatActivity {
                 textCurrent.setText(String.valueOf(position + 1));
                 if (position == 0) {
                     prevButton.setVisibility(View.INVISIBLE);
-                }
-                else if (position == (mMenuList.size() - 1)) {
+                } else if (position == (mMenuList.size() - 1)) {
                     nextButton.setVisibility(View.INVISIBLE);
-                }
-                else {
+                } else {
                     nextButton.setVisibility(View.VISIBLE);
                     prevButton.setVisibility(View.VISIBLE);
                 }

@@ -16,7 +16,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/emailInput"
+        android:id="@+id/email_input"
         style="@style/Input.Primary"
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
@@ -35,14 +35,14 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/passwordInput"
+        android:id="@+id/password_input"
         style="@style/Input.Primary"
         android:layout_marginTop="16dp"
         android:hint="@string/password"
         app:endIconMode="password_toggle"
-        app:layout_constraintEnd_toEndOf="@+id/emailInput"
-        app:layout_constraintStart_toStartOf="@+id/emailInput"
-        app:layout_constraintTop_toBottomOf="@+id/emailInput">
+        app:layout_constraintEnd_toEndOf="@+id/email_input"
+        app:layout_constraintStart_toStartOf="@+id/email_input"
+        app:layout_constraintTop_toBottomOf="@+id/email_input">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@id/input_password"
@@ -55,14 +55,14 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/confirmPasswordInput"
+        android:id="@+id/confirm_password_input"
         style="@style/Input.Primary"
         android:layout_marginTop="16dp"
-        android:hint="@string/password_confirm"
+        android:hint="@string/confirm_password"
         app:endIconMode="password_toggle"
-        app:layout_constraintEnd_toEndOf="@+id/passwordInput"
-        app:layout_constraintStart_toStartOf="@+id/passwordInput"
-        app:layout_constraintTop_toBottomOf="@+id/passwordInput">
+        app:layout_constraintEnd_toEndOf="@+id/password_input"
+        app:layout_constraintStart_toStartOf="@+id/password_input"
+        app:layout_constraintTop_toBottomOf="@+id/password_input">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/input_confirm_password"
@@ -79,9 +79,9 @@
         style="@style/Button.Primary"
         android:layout_marginTop="16dp"
         android:text="@string/sign_up"
-        app:layout_constraintEnd_toEndOf="@+id/confirmPasswordInput"
-        app:layout_constraintStart_toStartOf="@+id/confirmPasswordInput"
-        app:layout_constraintTop_toBottomOf="@+id/confirmPasswordInput" />
+        app:layout_constraintEnd_toEndOf="@+id/confirm_password_input"
+        app:layout_constraintStart_toStartOf="@+id/confirm_password_input"
+        app:layout_constraintTop_toBottomOf="@+id/confirm_password_input" />
 
     <TextView
         android:id="@+id/text_error"
@@ -90,7 +90,7 @@
         android:layout_marginTop="16dp"
         android:fontFamily="@font/museosans300"
         android:gravity="center"
-        android:textColor="@color/appRed"
+        android:textColor="@color/redAccent"
         android:textSize="@dimen/text_subtitle_size"
         app:layout_constraintEnd_toEndOf="@+id/button_sign_up"
         app:layout_constraintStart_toStartOf="@+id/button_sign_up"

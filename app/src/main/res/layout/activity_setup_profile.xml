@@ -66,7 +66,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/image_profile" />
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/nameInput"
+                android:id="@+id/name_input"
                 style="@style/Input.Primary"
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="16dp"
@@ -84,15 +84,24 @@
                     android:textColor="@android:color/black" />
             </com.google.android.material.textfield.TextInputLayout>
 
+            <View
+                android:id="@+id/view_dob"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="@+id/dob_input"
+                app:layout_constraintEnd_toEndOf="@+id/dob_input"
+                app:layout_constraintStart_toStartOf="@+id/dob_input"
+                app:layout_constraintTop_toTopOf="@+id/dob_input" />
+
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/dobInput"
+                android:id="@+id/dob_input"
                 style="@style/Input.Primary"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:hint="@string/date_of_birth"
-                app:layout_constraintEnd_toStartOf="@+id/genderLayout"
-                app:layout_constraintStart_toStartOf="@+id/nameInput"
-                app:layout_constraintTop_toBottomOf="@+id/nameInput">
+                app:layout_constraintEnd_toStartOf="@+id/gender_input"
+                app:layout_constraintStart_toStartOf="@+id/name_input"
+                app:layout_constraintTop_toBottomOf="@+id/name_input">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/input_date_of_birth"
@@ -103,16 +112,16 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/genderLayout"
+                android:id="@+id/gender_input"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginStart="8dp"
                 android:hint="@string/gender"
-                app:layout_constraintBottom_toBottomOf="@+id/dobInput"
-                app:layout_constraintEnd_toEndOf="@+id/nameInput"
-                app:layout_constraintStart_toEndOf="@+id/dobInput"
-                app:layout_constraintTop_toTopOf="@+id/dobInput">
+                app:layout_constraintBottom_toBottomOf="@+id/dob_input"
+                app:layout_constraintEnd_toEndOf="@+id/name_input"
+                app:layout_constraintStart_toEndOf="@+id/dob_input"
+                app:layout_constraintTop_toTopOf="@+id/dob_input">
 
                 <AutoCompleteTextView
                     android:id="@+id/dropdown_gender"
@@ -132,26 +141,18 @@
                 app:counterMaxLength="50"
                 app:counterTextAppearance="@style/FriskyText"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/nameInput"
-                app:layout_constraintStart_toStartOf="@+id/nameInput"
-                app:layout_constraintTop_toBottomOf="@+id/dobInput">
+                app:layout_constraintEnd_toEndOf="@+id/name_input"
+                app:layout_constraintStart_toStartOf="@+id/name_input"
+                app:layout_constraintTop_toBottomOf="@+id/dob_input">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/input_bio"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/museosans300"
+                    android:maxLength="50"
                     android:textColor="@android:color/black" />
             </com.google.android.material.textfield.TextInputLayout>
-
-            <View
-                android:id="@+id/dobView"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:layout_constraintBottom_toBottomOf="@+id/dobInput"
-                app:layout_constraintEnd_toEndOf="@+id/dobInput"
-                app:layout_constraintStart_toStartOf="@+id/dobInput"
-                app:layout_constraintTop_toTopOf="@+id/dobInput" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

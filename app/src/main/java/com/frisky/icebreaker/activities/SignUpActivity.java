@@ -11,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.interfaces.FormActivity;
-import com.frisky.icebreaker.interfaces.UIActivity;
 import com.frisky.icebreaker.ui.components.dialogs.ProgressDialog;
 import com.google.firebase.FirebaseNetworkException;
 import com.google.firebase.auth.FirebaseAuth;
@@ -19,7 +18,7 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 
-public class SignUpActivity extends AppCompatActivity implements FormActivity, UIActivity {
+public class SignUpActivity extends AppCompatActivity implements FormActivity {
 
     Button mSignUpButton;
     EditText mEmailInput;
@@ -70,36 +69,28 @@ public class SignUpActivity extends AppCompatActivity implements FormActivity, U
                             // go back to SignInActivity and finish this
                             super.onBackPressed();
                             finish();
-                        }
-                        else if (!task.isSuccessful()) {
+                        } else if (!task.isSuccessful()) {
                             progressDialog.dismiss();
                             try {
-                                if (task.getException() != null)
-                                    throw task.getException();
-                            }
-                            catch(FirebaseAuthWeakPasswordException e) {
+                                if (task.getException() != null) throw task.getException();
+                            } catch(FirebaseAuthWeakPasswordException e) {
                                 Log.e("Create User Error", e.getReason());
                                 mErrorText.setText(getString(R.string.error_weak_password));
-                            }
-                            catch(FirebaseAuthInvalidCredentialsException e) {
+                            } catch(FirebaseAuthInvalidCredentialsException e) {
                                 Log.e("Create User Error", e.getErrorCode());
                                 mErrorText.setText(getString(R.string.error_invalid_email));
-                            }
-                            catch(FirebaseAuthUserCollisionException e) {
+                            } catch(FirebaseAuthUserCollisionException e) {
                                 Log.e("Create User Error", e.getErrorCode());
                                 mErrorText.setText(getString(R.string.error_duplicate_email));
-                            }
-                            catch (FirebaseNetworkException e) {
+                            } catch (FirebaseNetworkException e) {
                                 Log.e("Create User Error", e.getMessage());
                                 mErrorText.setText(getString(R.string.error_network));
-                            }
-                            catch(Exception e) {
+                            } catch(Exception e) {
                                 Log.e("Create User Error", e.getMessage());
                             }
                         }
                     });
-        }
-        else {
+        } else {
             progressDialog.dismiss();
         }
     }

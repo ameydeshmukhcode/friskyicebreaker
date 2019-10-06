@@ -1,4 +1,4 @@
-package com.frisky.icebreaker.adapters;
+package com.frisky.icebreaker.pagers;
 
 import android.content.Context;
 import android.net.Uri;
@@ -9,19 +9,18 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
-import androidx.viewpager.widget.ViewPager;
 
 import com.frisky.icebreaker.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class MenuViewAdapter extends PagerAdapter {
+public class MenuImagesPager extends PagerAdapter {
 
     private ArrayList<Uri> mMenuList;
     private Context mContext;
 
-    public MenuViewAdapter(Context context, ArrayList<Uri> menuList) {
+    public MenuImagesPager(Context context, ArrayList<Uri> menuList) {
         mContext = context;
         mMenuList = menuList;
     }
@@ -41,7 +40,7 @@ public class MenuViewAdapter extends PagerAdapter {
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
         LayoutInflater inflater = LayoutInflater.from(mContext);
         View layout = inflater.inflate(R.layout.image_menu, container, false);
-        ImageView image = layout.findViewById(R.id.image_menu_page);
+        ImageView image = layout.findViewById(R.id.image_menu);
         Picasso.get().load(mMenuList.get(position)).into(image);
         container.addView(layout);
         return layout;

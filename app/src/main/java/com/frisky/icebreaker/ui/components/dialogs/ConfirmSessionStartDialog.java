@@ -55,7 +55,7 @@ public class ConfirmSessionStartDialog extends DialogFragment {
     }
 
     @Override
-    public void onDismiss(DialogInterface dialog) {
+    public void onDismiss(@NonNull DialogInterface dialog) {
         super.onDismiss(dialog);
         this.onConfirmSessionStart.sessionStart(false);
     }

@@ -17,7 +17,6 @@ import com.facebook.shimmer.ShimmerFrameLayout;
 import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.adapters.MenuImagesAdapter;
 import com.frisky.icebreaker.interfaces.UIActivity;
-import com.google.android.material.appbar.AppBarLayout;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
@@ -33,7 +32,6 @@ public class RestaurantActivity extends AppCompatActivity implements UIActivity 
     TextView mRatingText;
     TextView mLocationText;
     ImageView mImageHeader;
-    AppBarLayout mAppBarLayout;
     Toolbar mToolbar;
 
     ArrayList<Uri> mMenuList = new ArrayList<>();
@@ -49,12 +47,11 @@ public class RestaurantActivity extends AppCompatActivity implements UIActivity 
     }
 
     public void initUI() {
-        mPubNameText = findViewById(R.id.text_pub_name);
+        mPubNameText = findViewById(R.id.text_restaurant_name);
         mTagsText = findViewById(R.id.text_cuisine);
         mRatingText = findViewById(R.id.text_rating);
         mLocationText = findViewById(R.id.text_location);
         mImageHeader = findViewById(R.id.image_restaurant_header);
-        mAppBarLayout = findViewById(R.id.app_bar_container);
         mToolbar = findViewById(R.id.toolbar_restaurant);
         shimmerFrameLayout = findViewById(R.id.shimmer_menu_list);
         shimmerFrameLayout.startShimmer();

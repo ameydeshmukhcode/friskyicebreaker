@@ -28,7 +28,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class OrderSummaryActivity extends AppCompatActivity implements UIActivity {
+public class VisitActivity extends AppCompatActivity implements UIActivity {
 
     TextView mRestaurantName;
     TextView mOrderDateTime;
@@ -49,7 +49,7 @@ public class OrderSummaryActivity extends AppCompatActivity implements UIActivit
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_order_summary);
+        setContentView(R.layout.activity_visit);
         initUI();
     }
 
@@ -60,11 +60,11 @@ public class OrderSummaryActivity extends AppCompatActivity implements UIActivit
         mFinalTotal = findViewById(R.id.text_final_total);
         mOrderTotal = findViewById(R.id.text_order_total);
         mGST = findViewById(R.id.text_gst);
-        mOrderListRecyclerView = findViewById(R.id.recycler_view_final_order);
+        mOrderListRecyclerView = findViewById(R.id.recycler_view_visit);
 
-        mLayout = findViewById(R.id.layout_order_summary);
+        mLayout = findViewById(R.id.layout_visit_summary);
         mLayout.setVisibility(View.GONE);
-        progressBar = findViewById(R.id.progress_summary);
+        progressBar = findViewById(R.id.progress_visit);
 
         mBackButton = findViewById(R.id.button_back);
         mBackButton.setOnClickListener(v -> this.onBackPressed());
@@ -94,8 +94,7 @@ public class OrderSummaryActivity extends AppCompatActivity implements UIActivit
                 .get().addOnCompleteListener(task -> {
                    if (task.isSuccessful()) {
                        DocumentSnapshot snapshot = task.getResult();
-                       if (snapshot == null)
-                           return;
+                       if (snapshot == null) return;
                        if (snapshot.contains("end_time")) {
                            @SuppressLint("SimpleDateFormat")
                            SimpleDateFormat formatter = new SimpleDateFormat("dd MMM YYYY hh:mm a");
@@ -151,21 +150,18 @@ public class OrderSummaryActivity extends AppCompatActivity implements UIActivit
                                 String itemID = entry.getKey();
                                 HashMap<String, Object> item = (HashMap<String, Object>) entry.getValue();
 
-                                String name = String.valueOf(item.get("name"));
                                 int count = Integer.parseInt(String.valueOf(item.get("quantity")));
                                 int price = Integer.parseInt(String.valueOf(item.get("cost")));
+                                String name = String.valueOf(item.get("name"));
                                 OrderItem orderItem = new OrderItem(itemID, name, count, (count * price));
 
                                 if (String.valueOf(item.get("status")).equals("pending")) {
                                     orderItem.setStatus(OrderStatus.PENDING);
-                                }
-                                else if (String.valueOf(item.get("status")).equals("accepted")) {
+                                } else if (String.valueOf(item.get("status")).equals("accepted")) {
                                     orderItem.setStatus(OrderStatus.ACCEPTED);
-                                }
-                                else if (String.valueOf(item.get("status")).equals("rejected")) {
+                                } else if (String.valueOf(item.get("status")).equals("rejected")) {
                                     orderItem.setStatus(OrderStatus.REJECTED);
-                                }
-                                else if (String.valueOf(item.get("status")).equals("cancelled")) {
+                                } else if (String.valueOf(item.get("status")).equals("cancelled")) {
                                     orderItem.setStatus(OrderStatus.CANCELLED);
                                 }
 

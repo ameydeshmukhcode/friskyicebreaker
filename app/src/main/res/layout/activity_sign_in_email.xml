@@ -16,7 +16,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/emailInput"
+        android:id="@+id/email_input"
         style="@style/Input.Primary"
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
@@ -35,13 +35,13 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/passwordInput"
+        android:id="@+id/password_input"
         style="@style/Input.Primary"
         android:layout_marginTop="16dp"
         android:hint="@string/password"
-        app:layout_constraintEnd_toEndOf="@+id/emailInput"
-        app:layout_constraintStart_toStartOf="@+id/emailInput"
-        app:layout_constraintTop_toBottomOf="@+id/emailInput"
+        app:layout_constraintEnd_toEndOf="@+id/email_input"
+        app:layout_constraintStart_toStartOf="@+id/email_input"
+        app:layout_constraintTop_toBottomOf="@+id/email_input"
         app:endIconMode="password_toggle" >
 
         <com.google.android.material.textfield.TextInputEditText
@@ -55,26 +55,26 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/link_forgot_password"
+        android:id="@+id/button_forgot_password"
         style="@style/Widget.MaterialComponents.Button.TextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/museosans300"
-        android:text="@string/password_forgot"
+        android:text="@string/forgot_password"
         android:textAppearance="@style/FriskyText"
         android:textColor="@android:color/black"
         android:textSize="@dimen/text_subtitle_size"
-        app:layout_constraintEnd_toEndOf="@+id/passwordInput"
-        app:layout_constraintTop_toBottomOf="@+id/passwordInput"
+        app:layout_constraintEnd_toEndOf="@+id/password_input"
+        app:layout_constraintTop_toBottomOf="@+id/password_input"
         app:rippleColor="@color/tintDark" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button_login"
         style="@style/Button.Primary"
         android:text="@string/sign_in"
-        app:layout_constraintEnd_toEndOf="@+id/passwordInput"
-        app:layout_constraintStart_toStartOf="@+id/passwordInput"
-        app:layout_constraintTop_toBottomOf="@+id/link_forgot_password" />
+        app:layout_constraintEnd_toEndOf="@+id/password_input"
+        app:layout_constraintStart_toStartOf="@+id/password_input"
+        app:layout_constraintTop_toBottomOf="@+id/button_forgot_password" />
 
     <TextView
         android:id="@+id/text_error"
@@ -83,7 +83,7 @@
         android:layout_marginTop="16dp"
         android:fontFamily="@font/museosans300"
         android:gravity="center"
-        android:textColor="@color/appRed"
+        android:textColor="@color/redAccent"
         android:textSize="@dimen/text_subtitle_size"
         app:layout_constraintEnd_toEndOf="@+id/button_login"
         app:layout_constraintStart_toStartOf="@+id/button_login"
@@ -91,9 +91,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="0dp"
-        android:layout_height="@dimen/sign_up_layout_height"
+        android:layout_height="@dimen/layout_sign_up_height"
         android:background="@color/backgroundDark"
-        android:contentDescription="@string/facebook"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -115,12 +114,12 @@
                 android:textColor="@color/textLight"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/link_sign_up"
+                app:layout_constraintEnd_toStartOf="@+id/button_sign_up"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/link_sign_up"
+                android:id="@+id/button_sign_up"
                 style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

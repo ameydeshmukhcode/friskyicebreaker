@@ -21,7 +21,7 @@
         android:fontFamily="@font/museosans300"
         android:text="@string/your_order"
         android:textColor="@color/textDark"
-        android:textSize="@dimen/app_bar_text_size"
+        android:textSize="@dimen/text_heading_size"
         app:layout_constraintBottom_toBottomOf="@+id/button_back"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -38,7 +38,7 @@
         android:text="@string/placeholder_text"
         android:textAllCaps="true"
         android:textColor="@color/textDark"
-        android:textSize="@dimen/app_bar_text_size"
+        android:textSize="@dimen/text_heading_size"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_back" />
@@ -56,7 +56,7 @@
         app:layout_constraintTop_toBottomOf="@+id/text_table" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view_order_list"
+        android:id="@+id/recycler_view_orders"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:padding="8dp"
@@ -76,44 +76,33 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
         android:background="@color/lightAccent"
-        app:layout_constraintBottom_toTopOf="@+id/textView3"
+        app:layout_constraintBottom_toTopOf="@+id/order_total"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/text_gst"
+        android:id="@+id/order_total"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:fontFamily="@font/museosans300"
-        android:text="@string/default_number"
+        android:text="@string/order_total"
         android:textSize="@dimen/text_subtitle_size"
-        app:layout_constraintBottom_toBottomOf="@+id/textView4"
-        app:layout_constraintEnd_toEndOf="@+id/text_order_total"
-        app:layout_constraintTop_toTopOf="@+id/textView4" />
+        app:layout_constraintBottom_toTopOf="@+id/gst"
+        app:layout_constraintStart_toStartOf="@+id/gst" />
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="2dp"
-        android:fontFamily="@font/museosans300"
-        android:text="@string/rupee"
-        android:textSize="@dimen/text_subtitle_size"
-        app:layout_constraintBottom_toBottomOf="@+id/textView4"
-        app:layout_constraintEnd_toStartOf="@+id/text_gst"
-        app:layout_constraintTop_toTopOf="@+id/textView4" />
-
-    <TextView
-        android:id="@+id/textView10"
+        android:id="@+id/rupee_order"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_marginEnd="2dp"
         android:fontFamily="@font/museosans300"
         android:text="@string/rupee"
         android:textSize="@dimen/text_subtitle_size"
-        app:layout_constraintBottom_toBottomOf="@+id/textView3"
+        app:layout_constraintBottom_toBottomOf="@+id/order_total"
         app:layout_constraintEnd_toStartOf="@+id/text_bill_amount"
-        app:layout_constraintTop_toTopOf="@+id/textView3" />
+        app:layout_constraintTop_toTopOf="@+id/order_total" />
 
     <TextView
         android:id="@+id/text_bill_amount"
@@ -122,23 +111,45 @@
         android:fontFamily="@font/museosans300"
         android:text="@string/default_number"
         android:textSize="@dimen/text_subtitle_size"
-        app:layout_constraintBottom_toBottomOf="@+id/textView10"
+        app:layout_constraintBottom_toBottomOf="@+id/rupee_order"
         app:layout_constraintEnd_toEndOf="@+id/text_order_total"
-        app:layout_constraintTop_toTopOf="@+id/textView10" />
+        app:layout_constraintTop_toTopOf="@+id/rupee_order" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/gst"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:fontFamily="@font/museosans300"
-        android:text="@string/order_total"
+        android:text="@string/gst"
         android:textSize="@dimen/text_subtitle_size"
-        app:layout_constraintBottom_toTopOf="@+id/textView4"
-        app:layout_constraintStart_toStartOf="@+id/textView4" />
+        app:layout_constraintBottom_toTopOf="@+id/final_total"
+        app:layout_constraintStart_toStartOf="@+id/final_total" />
 
     <TextView
-        android:id="@+id/order_total"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="2dp"
+        android:fontFamily="@font/museosans300"
+        android:text="@string/rupee"
+        android:textSize="@dimen/text_subtitle_size"
+        app:layout_constraintBottom_toBottomOf="@+id/gst"
+        app:layout_constraintEnd_toStartOf="@+id/text_gst"
+        app:layout_constraintTop_toTopOf="@+id/gst" />
+
+    <TextView
+        android:id="@+id/text_gst"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/museosans300"
+        android:text="@string/default_number"
+        android:textSize="@dimen/text_subtitle_size"
+        app:layout_constraintBottom_toBottomOf="@+id/gst"
+        app:layout_constraintEnd_toEndOf="@+id/text_order_total"
+        app:layout_constraintTop_toTopOf="@+id/gst" />
+
+    <TextView
+        android:id="@+id/final_total"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -155,11 +166,11 @@
         android:layout_marginEnd="2dp"
         android:fontFamily="@font/museosans700"
         android:text="@string/rupee"
-        android:textColor="@color/appRed"
+        android:textColor="@color/redAccent"
         android:textSize="@dimen/text_title_size"
-        app:layout_constraintBottom_toBottomOf="@+id/order_total"
+        app:layout_constraintBottom_toBottomOf="@+id/final_total"
         app:layout_constraintEnd_toStartOf="@+id/text_order_total"
-        app:layout_constraintTop_toTopOf="@+id/order_total" />
+        app:layout_constraintTop_toTopOf="@+id/final_total" />
 
     <TextView
         android:id="@+id/text_order_total"
@@ -168,29 +179,18 @@
         android:layout_marginEnd="32dp"
         android:fontFamily="@font/museosans700"
         android:text="@string/default_number"
-        android:textColor="@color/appRed"
+        android:textColor="@color/redAccent"
         android:textSize="@dimen/text_title_size"
-        app:layout_constraintBottom_toBottomOf="@+id/order_total"
+        app:layout_constraintBottom_toBottomOf="@+id/final_total"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/order_total" />
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:fontFamily="@font/museosans300"
-        android:text="@string/gst"
-        android:textSize="@dimen/text_subtitle_size"
-        app:layout_constraintBottom_toTopOf="@+id/order_total"
-        app:layout_constraintStart_toStartOf="@+id/order_total" />
+        app:layout_constraintTop_toTopOf="@+id/final_total" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button_clear_bill"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="4dp"
         android:layout_marginBottom="16dp"
-        android:backgroundTint="@color/appGreen"
+        android:backgroundTint="@color/greenAccent"
         android:text="@string/clear_bill"
         style="@style/Button.Unelevated"
         app:layout_constraintBottom_toBottomOf="parent"
