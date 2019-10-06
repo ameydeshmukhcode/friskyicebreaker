@@ -60,7 +60,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/museosans300"
-        android:text="@string/password_forgot"
+        android:text="@string/forgot_password"
         android:textAppearance="@style/FriskyText"
         android:textColor="@android:color/black"
         android:textSize="@dimen/text_subtitle_size"
@@ -83,7 +83,7 @@
         android:layout_marginTop="16dp"
         android:fontFamily="@font/museosans300"
         android:gravity="center"
-        android:textColor="@color/appRed"
+        android:textColor="@color/redAccent"
         android:textSize="@dimen/text_subtitle_size"
         app:layout_constraintEnd_toEndOf="@+id/button_login"
         app:layout_constraintStart_toStartOf="@+id/button_login"
@@ -91,9 +91,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="0dp"
-        android:layout_height="@dimen/sign_up_layout_height"
+        android:layout_height="@dimen/layout_sign_up_height"
         android:background="@color/backgroundDark"
-        android:contentDescription="@string/facebook"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">

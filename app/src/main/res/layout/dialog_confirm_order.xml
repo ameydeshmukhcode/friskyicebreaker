@@ -12,7 +12,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:fontFamily="@font/museosans700"
-        android:text="@string/confirm_order"
+        android:text="@string/place_order"
         android:textSize="@dimen/text_title_size"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -24,7 +24,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:fontFamily="@font/museosans300"
-        android:text="@string/confirm_order_info"
+        android:text="@string/place_order_info"
         android:textSize="@dimen/text_subtitle_size"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/confirm_order"

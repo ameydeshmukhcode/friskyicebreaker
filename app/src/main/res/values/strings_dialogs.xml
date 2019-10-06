@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Dialogs -->
+    <!-- Place Order Dialog -->
+    <string name="place_order_info">Send order to kitchen for preparation?</string>
+    <!-- Clear Bill Dialog -->
+    <string name="clear_bill_info">You are about to request the bill and end your session.
+        You won\'t be able to order anymore items after you confirm.</string>
+    <!-- Session Start Dialog -->
+    <string name="start_new_session">Start new Session?</string>
+    <string name="start_new_session_info">Start a new session to:\n- Browse the Menu
+        \n- Place Orders\n- Get Order and Bill updates</string>
+    <!--Image Picker Dialog-->
+    <string name="pick_image">Pick Image</string>
+    <string name="image_gallery">Choose from Gallery</string>
+</resources>

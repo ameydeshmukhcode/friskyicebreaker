@@ -29,7 +29,7 @@
             android:layout_marginTop="8dp"
             android:fontFamily="@font/museosans700"
             android:text="@string/placeholder_text"
-            android:textSize="@dimen/text_menu_item_title"
+            android:textSize="@dimen/text_card_item_title"
             app:layout_constraintStart_toEndOf="@+id/image_diet_type"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -40,7 +40,7 @@
             android:layout_marginTop="4dp"
             android:fontFamily="@font/museosans700"
             android:text="@string/rupee"
-            android:textSize="@dimen/text_menu_item_price"
+            android:textSize="@dimen/text_card_other"
             app:layout_constraintStart_toStartOf="@+id/text_name"
             app:layout_constraintTop_toBottomOf="@+id/text_name" />
 
@@ -51,7 +51,7 @@
             android:layout_marginStart="4dp"
             android:fontFamily="@font/museosans700"
             android:text="@string/default_number"
-            android:textSize="@dimen/text_menu_item_price"
+            android:textSize="@dimen/text_card_other"
             app:layout_constraintBottom_toBottomOf="@+id/rupee"
             app:layout_constraintStart_toEndOf="@+id/rupee"
             app:layout_constraintTop_toTopOf="@+id/rupee" />
@@ -64,7 +64,7 @@
             android:layout_marginBottom="8dp"
             android:fontFamily="@font/museosans300"
             android:text="@string/item_total"
-            android:textSize="@dimen/text_menu_item_description"
+            android:textSize="@dimen/text_card_other"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/text_name"
             app:layout_constraintTop_toBottomOf="@+id/rupee" />
@@ -76,8 +76,8 @@
             android:layout_marginStart="8dp"
             android:fontFamily="@font/museosans700"
             android:text="@string/rupee"
-            android:textColor="@color/appRed"
-            android:textSize="@dimen/text_menu_item_description"
+            android:textColor="@color/redAccent"
+            android:textSize="@dimen/text_card_other"
             app:layout_constraintBottom_toBottomOf="@+id/item_total"
             app:layout_constraintStart_toEndOf="@+id/item_total"
             app:layout_constraintTop_toTopOf="@+id/item_total" />
@@ -89,8 +89,8 @@
             android:layout_marginStart="4dp"
             android:fontFamily="@font/museosans700"
             android:text="@string/default_number"
-            android:textColor="@color/appRed"
-            android:textSize="@dimen/text_menu_item_description"
+            android:textColor="@color/redAccent"
+            android:textSize="@dimen/text_card_other"
             app:layout_constraintBottom_toBottomOf="@+id/rupee_total"
             app:layout_constraintStart_toEndOf="@+id/rupee_total"
             app:layout_constraintTop_toTopOf="@+id/rupee_total"
@@ -101,7 +101,7 @@
             style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
             android:layout_width="26dp"
             android:layout_height="26dp"
-            android:backgroundTint="@color/appGreen"
+            android:backgroundTint="@color/greenAccent"
             android:insetTop="0dp"
             android:insetBottom="0dp"
             app:icon="@drawable/ic_remove"
@@ -132,7 +132,7 @@
             android:layout_width="26dp"
             android:layout_height="26dp"
             android:layout_marginEnd="24dp"
-            android:backgroundTint="@color/appGreen"
+            android:backgroundTint="@color/greenAccent"
             android:insetTop="0dp"
             android:insetBottom="0dp"
             app:icon="@drawable/ic_add"
@@ -162,7 +162,7 @@
             android:fontFamily="@font/museosans300"
             android:text="@string/in_cart"
             android:textColor="@color/textDark"
-            android:textSize="@dimen/text_menu_item_description"
+            android:textSize="@dimen/text_card_other"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/button_add"
             app:layout_constraintStart_toEndOf="@+id/image_in_cart" />

@@ -27,8 +27,8 @@
 
         <ImageView
             android:id="@+id/image_profile"
-            android:layout_width="@dimen/edit_image_width"
-            android:layout_height="@dimen/edit_image_width"
+            android:layout_width="@dimen/image_profile"
+            android:layout_height="@dimen/image_profile"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             app:layout_constraintStart_toStartOf="parent"

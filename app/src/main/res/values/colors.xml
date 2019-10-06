@@ -18,15 +18,13 @@
     <color name="tintDark">@color/darkAccent</color>
     <color name="transparent">@android:color/transparent</color>
 
-    <!--Facebook-->
-
-    <!--Rating Badges-->
+    <!-- Rating Badges-->
     <color name="rating_very_high">#208927</color>
     <color name="rating_high">#26B030</color>
     <color name="rating_low">#E2D240</color>
     <color name="rating_very_low">#DA2C2C</color>
 
-    <!--Order -->
-    <color name="appGreen">#49D852</color>
-    <color name="appRed">#E71A1A</color>
+    <!-- Accents -->
+    <color name="greenAccent">#49D852</color>
+    <color name="redAccent">#E71A1A</color>
 </resources>

@@ -195,7 +195,7 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
 
         BadgeDrawable dineBadge = navigation.getBadge(R.id.menu_dine);
         assert dineBadge != null;
-        dineBadge.setBackgroundColor(getColor(R.color.appGreen));
+        dineBadge.setBackgroundColor(getColor(R.color.greenAccent));
 
         if (sharedPreferences.contains("bill_requested")) {
             mBottomSheetTitle.setText(getString(R.string.bill_requested));

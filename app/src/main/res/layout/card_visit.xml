@@ -36,7 +36,7 @@
             android:layout_marginEnd="4dp"
             android:fontFamily="@font/museosans700"
             android:text="@string/placeholder_text"
-            android:textSize="@dimen/pub_title_size"
+            android:textSize="@dimen/text_card_restaurant_title"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/image_restaurant"
             app:layout_constraintTop_toTopOf="parent" />
@@ -58,7 +58,7 @@
             android:layout_marginTop="4dp"
             android:fontFamily="@font/museosans300"
             android:text="@string/visited_on"
-            android:textSize="@dimen/pub_extra_info_size"
+            android:textSize="@dimen/text_card_other"
             app:layout_constraintEnd_toEndOf="@+id/text_restaurant_name"
             app:layout_constraintStart_toStartOf="@+id/text_restaurant_name"
             app:layout_constraintTop_toBottomOf="@+id/divider" />
@@ -69,7 +69,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/museosans700"
             android:text="@string/placeholder_text"
-            android:textSize="@dimen/pub_extra_info_size"
+            android:textSize="@dimen/text_card_other"
             app:layout_constraintEnd_toEndOf="@+id/text_restaurant_name"
             app:layout_constraintStart_toStartOf="@+id/text_restaurant_name"
             app:layout_constraintTop_toBottomOf="@id/visit_time" />
@@ -81,7 +81,7 @@
             android:layout_marginTop="8dp"
             android:fontFamily="@font/museosans300"
             android:text="@string/total_amount"
-            android:textSize="@dimen/pub_extra_info_size"
+            android:textSize="@dimen/text_card_other"
             app:layout_constraintEnd_toEndOf="@+id/text_time"
             app:layout_constraintStart_toStartOf="@+id/text_time"
             app:layout_constraintTop_toBottomOf="@+id/text_time" />
@@ -93,7 +93,7 @@
             android:fontFamily="@font/museosans700"
             android:text="@string/rupee"
             android:textColor="@color/textDark"
-            android:textSize="@dimen/pub_extra_info_size"
+            android:textSize="@dimen/text_card_other"
             app:layout_constraintStart_toStartOf="@+id/total"
             app:layout_constraintTop_toBottomOf="@+id/total" />
 
@@ -105,7 +105,7 @@
             android:layout_marginBottom="4dp"
             android:fontFamily="@font/museosans700"
             android:text="@string/default_number"
-            android:textSize="@dimen/pub_extra_info_size"
+            android:textSize="@dimen/text_card_other"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/total"
             app:layout_constraintStart_toEndOf="@+id/rupee"

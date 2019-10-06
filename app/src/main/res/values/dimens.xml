@@ -1,14 +1,6 @@
-<resources
-    xmlns:tools="http://schemas.android.com/tools" >
-
+<resources>
     <!-- App Bar -->
-    <dimen name="app_bar_extended_height">180dp</dimen>
-
-    <!-- Bottom Nav -->
-
-    <!-- Icebreaker Button-->
-
-    <!-- Inputs -->
+    <dimen name="app_bar_extended_height">200dp</dimen>
 
     <!-- Buttons -->
     <dimen name="button_square_dimen">50dp</dimen>
@@ -18,27 +10,21 @@
 
     <!-- Text -->
     <dimen name="text_large_title_size">30sp</dimen>
+    <dimen name="text_heading_size">20sp</dimen>
     <dimen name="text_title_size">18sp</dimen>
     <dimen name="text_subtitle_size">14sp</dimen>
-    <dimen name="app_bar_text_size">20sp</dimen>
     <dimen name="text_button_primary_size">20sp</dimen>
-    <dimen name="text_menu_item_title">14sp</dimen>
-    <dimen name="text_menu_item_description">12sp</dimen>
-    <dimen name="text_menu_item_price">12sp</dimen>
 
-    <!-- Restaurant Card -->
-    <dimen name="pub_title_size">16sp</dimen>
-    <dimen name="pub_extra_info_size">12sp</dimen>
+    <!-- Cards -->
+    <dimen name="text_card_restaurant_title">16sp</dimen>
+    <dimen name="text_card_item_title">14sp</dimen>
+    <dimen name="text_card_other">12sp</dimen>
 
-    <!-- Dialogs -->
-
-    <!-- Edit Image -->
-    <dimen name="edit_image_width">100dp</dimen>
-
-    <!-- User List -->
+    <!-- Image -->
+    <dimen name="image_profile">100dp</dimen>
 
     <!-- Drawable -->
     <dimen name="bg_round_rect_radius">10dp</dimen>
 
-    <dimen name="sign_up_layout_height">64dp</dimen>
+    <dimen name="layout_sign_up_height">64dp</dimen>
 </resources>
