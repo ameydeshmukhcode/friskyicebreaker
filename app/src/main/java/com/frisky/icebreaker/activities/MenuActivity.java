@@ -56,8 +56,8 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
     String restaurantID;
     private List<Object> mMenu = new ArrayList<>();
     private List<MenuCategory> mCategories = new ArrayList<>();
-    private List<MenuItem> mItems = new ArrayList<>();
     ArrayList<MenuItem> mCartList = new ArrayList<>();
+    HashMap<String, ArrayList<MenuItem>> mItems = new HashMap<>();
     HashMap<String, Integer> mCategoryOrderMap = new HashMap<>();
 
 
@@ -234,8 +234,13 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
                 .get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 if (task.getResult() != null) {
+                    String categoryId = "";
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         boolean available = true;
+                        String currentCategory = document.getString("category_id");
+
+                        if (!categoryId.equals(currentCategory)) categoryId = document.getString("category_id");
+
                         String name = document.getString("name");
                         if (document.contains("is_available")) {
                             if (!(boolean) document.get("is_available")) {
@@ -252,8 +257,15 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
                         }
                         int cost = Integer.parseInt(Objects.requireNonNull(document.getString("cost")));
                         MenuItem item = new MenuItem(document.getId(), name, description,
-                                document.getString("category_id"), cost, available, type);
-                        mItems.add(item);
+                                currentCategory, cost, available, type);
+
+                        if (!mItems.containsKey(currentCategory)) {
+                            ArrayList<MenuItem> categoryList = new ArrayList<>();
+                            categoryList.add(item);
+                            mItems.put(currentCategory, categoryList);
+                        } else {
+                            mItems.get(currentCategory).add(item);
+                        }
                     }
                     setupMenu();
                 }
@@ -267,14 +279,11 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
     private void setupMenu() {
         for (int i = 0; i < mCategories.size(); i++) {
             final MenuCategory category = mCategories.get(i);
+            String categoryID = category.getId();
             mMenu.add(category);
             mCategoryOrderMap.put(category.getName(), mMenu.size() - 1);
             categoryMenu.getMenu().add(category.getName());
-            for (int j = 0; j < mItems.size(); j++) {
-                if (mItems.get(j).getCategory().matches(category.getId())) {
-                    mMenu.add(mItems.get(j));
-                }
-            }
+            mMenu.addAll(mItems.get(categoryID));
         }
         mMenuListViewAdapter.notifyDataSetChanged();
         mDummyMenu.setVisibility(View.GONE);

@@ -22,11 +22,14 @@ import com.frisky.icebreaker.BuildConfig;
 import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.ui.components.dialogs.ConfirmSessionStartDialog;
 import com.frisky.icebreaker.ui.components.dialogs.ProgressDialog;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.functions.FirebaseFunctions;
+import com.google.firebase.firestore.SetOptions;
 
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -40,6 +43,7 @@ public class QRScanActivity extends AppCompatActivity implements ConfirmSessionS
     ConstraintLayout mDummyMenu;
 
     SharedPreferences sharedPreferences;
+    FirebaseUser mUser;
 
     String restaurantID;
     String tableID;
@@ -53,6 +57,8 @@ public class QRScanActivity extends AppCompatActivity implements ConfirmSessionS
         setContentView(R.layout.activity_qr_scan);
 
         sharedPreferences = getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE);
+
+        mUser = FirebaseAuth.getInstance().getCurrentUser();
 
         mScanner = findViewById(R.id.frame_scanner);
         mDummyMenu = findViewById(R.id.dummy_menu);
@@ -177,7 +183,8 @@ public class QRScanActivity extends AppCompatActivity implements ConfirmSessionS
                         updateOnSessionStartFail();
                         mCodeScanner.startPreview();
                     } else {
-                        createUserSession();
+                        getRestaurantAndTableDetails(restaurantID, tableID);
+                        initUserSession(restaurantID, tableID);
                     }
                 } else {
                     Toast.makeText(getBaseContext(),"Invalid QR Code", Toast.LENGTH_LONG).show();
@@ -191,46 +198,101 @@ public class QRScanActivity extends AppCompatActivity implements ConfirmSessionS
         });
     }
 
-    @SuppressWarnings("unchecked")
-    private void createUserSession() {
-        Map<String, Object> data = new HashMap<>();
-        data.put("restaurant", restaurantID);
-        data.put("table", tableID);
+    private void getRestaurantAndTableDetails(String restID, String tableID) {
+        FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+        DocumentReference resRef = firebaseFirestore.collection("restaurants").document(restID);
+        resRef.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                DocumentSnapshot document = task.getResult();
+                if (document == null)
+                    return;
+                if (document.exists()) {
+                    String restaurantName = document.getString("name");
+                    sharedPreferences.edit().putString("restaurant_name", restaurantName).apply();
+                    Log.d(getString(R.string.tag_debug), "DocumentSnapshot data: " + document.getData());
+                }
+                else {
+                    Log.e("Doesn't exist", "No such document");
+                }
+            }
+            else {
+                Log.e("Task", "failed with ", task.getException());
+            }
+        }).addOnFailureListener(e -> updateOnSessionStartFail());
+        DocumentReference tableRef = firebaseFirestore
+                .collection("restaurants")
+                .document(restID)
+                .collection("tables")
+                .document(tableID);
+        tableRef.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                DocumentSnapshot document = task.getResult();
+                if (document == null)
+                    return;
+                if (document.exists()) {
+                    String tableSerial = "Table " + document.get("number");
+                    sharedPreferences.edit().putString("table_name", tableSerial).apply();
+                    Log.d(getString(R.string.tag_debug), "DocumentSnapshot data: " + document.getData());
+                }
+                else {
+                    Log.e("Doesn't exist", "No such document");
+                }
+            }
+            else {
+                Log.e("Task", "failed with ", task.getException());
+            }
+        }).addOnFailureListener(e -> updateOnSessionStartFail());
+    }
 
-        FirebaseFunctions.getInstance()
-                .getHttpsCallable("createUserSession")
-                .call(data)
-                .continueWith(task -> {
-                    if(task.isSuccessful()) {
-                        if (task.getResult() != null) {
-                            Map<String, Object> resultData = (Map<String, Object>) task.getResult().getData();
-                            if (resultData != null) {
-                                String restaurantName = (String) resultData.get("restaurant_name");
-                                String tableName = (String) resultData.get("table_name");
-                                String sessionID = (String) resultData.get("session_id");
-
-                                showMenu(restaurantName, tableName, sessionID);
-                            }
-                        }
-                    } else if (!task.isSuccessful()){
-                        updateOnSessionStartFail();
-                        Toast.makeText(getBaseContext(), "Something went wrong :( Try again.", Toast.LENGTH_SHORT).show();
-                    }
-
-                    return "createUserSession";
+    private void initUserSession(final String restID, final String tableID) {
+        final FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+        Map<String, Object> sessionDetails = new HashMap<>();
+        sessionDetails.put("table_id", tableID);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null)
+            sessionDetails.put("created_by", FirebaseAuth.getInstance().getCurrentUser().getUid());
+        sessionDetails.put("start_time", new Timestamp(System.currentTimeMillis()));
+        sessionDetails.put("is_active", true);
+        firebaseFirestore.collection("restaurants")
+                .document(restID)
+                .collection("sessions")
+                .add(sessionDetails)
+                .addOnSuccessListener(documentReference -> {
+                    final String sessionID = documentReference.getId();
+                    Log.d(getString(R.string.tag_debug), "DocumentSnapshot written with ID: " + documentReference.getId());
+                    Map<String, Object> userSessionDetails = new HashMap<>();
+                    userSessionDetails.put("session_active", true);
+                    userSessionDetails.put("current_session", sessionID);
+                    userSessionDetails.put("restaurant", restID);
+                    sharedPreferences.edit()
+                            .putBoolean("session_active", true)
+                            .putString("restaurant_id", restID)
+                            .putString("session_id", sessionID)
+                            .putString("table_id", tableID)
+                            .apply();
+                    firebaseFirestore.collection("users")
+                            .document(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                            .set(userSessionDetails, SetOptions.merge())
+                            .addOnSuccessListener(aVoid -> {
+                                Map<String, Object> tableSessionDetails = new HashMap<>();
+                                tableSessionDetails.put("occupied", true);
+                                tableSessionDetails.put("session_id", sessionID);
+                                firebaseFirestore.collection("restaurants")
+                                        .document(restID)
+                                        .collection("tables")
+                                        .document(tableID)
+                                        .set(tableSessionDetails, SetOptions.merge())
+                                        .addOnSuccessListener(aVoid1 -> showMenu())
+                                        .addOnFailureListener(e -> updateOnSessionStartFail());
+                            });
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("", "Error adding document", e);
+                    updateOnSessionStartFail();
                 });
     }
 
-    private void showMenu(String restaurantName, String tableName, String sessionID) {
-        sharedPreferences.edit()
-                .putBoolean("session_active", true)
-                .putString("session_id", sessionID)
-                .putString("restaurant_id", restaurantID)
-                .putString("restaurant_name", restaurantName)
-                .putString("table_id", tableID)
-                .putString("table_name", "Table " + tableName)
-                .apply();
-
+    private void showMenu() {
         Intent showMenu = new Intent(getBaseContext(), MenuActivity.class);
         startActivity(showMenu);
         finish();
