@@ -34,6 +34,7 @@ public class VisitsFragment extends Fragment {
     private VisitsListAdapter mOrderSummaryAdapter;
     private ConstraintLayout mEmptyState;
     private ShimmerFrameLayout mShimmerFrame;
+    private RecyclerView mRecyclerPubView;
 
     private List<Visit> mSessionHistoryList = new ArrayList<>();
 
@@ -42,7 +43,7 @@ public class VisitsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_visits, container, false);
 
-        RecyclerView mRecyclerPubView = view.findViewById(R.id.recycler_view_visits);
+        mRecyclerPubView = view.findViewById(R.id.recycler_view_visits);
         mEmptyState = view.findViewById(R.id.fragment_empty_state);
         mShimmerFrame = view.findViewById(R.id.shimmer_list);
 
@@ -76,6 +77,7 @@ public class VisitsFragment extends Fragment {
 
                 if (queryDocumentSnapshots.getDocuments().size() > 0) {
                     mEmptyState.setVisibility(View.GONE);
+                    mRecyclerPubView.setVisibility(View.VISIBLE);
                     for (DocumentSnapshot document : queryDocumentSnapshots.getDocuments()) {
                         if (document == null) return;
                         if (document.contains("amount_payable")) {
@@ -100,6 +102,7 @@ public class VisitsFragment extends Fragment {
                 } else {
                     mShimmerFrame.stopShimmer();
                     mShimmerFrame.setVisibility(View.GONE);
+                    mRecyclerPubView.setVisibility(View.GONE);
                     mEmptyState.setVisibility(View.VISIBLE);
                 }
         });
