@@ -3,7 +3,6 @@ package com.frisky.icebreaker.fragments;
 import android.annotation.SuppressLint;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,9 +20,9 @@ import com.frisky.icebreaker.adapters.VisitsListAdapter;
 import com.frisky.icebreaker.core.structures.Visit;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -54,7 +53,6 @@ public class VisitsFragment extends Fragment {
         mRecyclerPubView.setClipToPadding(false);
 
         RecyclerView.LayoutManager mPubViewLayoutManager;
-        // use a linear layout manager
         mPubViewLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerPubView.setLayoutManager(mPubViewLayoutManager);
 
@@ -68,47 +66,40 @@ public class VisitsFragment extends Fragment {
 
     private void getOrderHistory() {
         FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();
+        String userID = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
 
         mFirestore.collectionGroup("sessions")
-                .whereEqualTo("created_by", Objects.requireNonNull(FirebaseAuth.getInstance()
-                        .getCurrentUser()).getUid())
-                .orderBy("end_time", Query.Direction.DESCENDING)
-                .get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                if (task.getResult() != null) {
-                    if (task.getResult().size() > 0) {
-                        mEmptyState.setVisibility(View.GONE);
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-                            if (document == null) return;
-                            if (document.contains("amount_payable")) {
-                                @SuppressLint("SimpleDateFormat")
-                                SimpleDateFormat formatter = new SimpleDateFormat("dd MMM YYYY hh:mm a");
-                                String endTime = formatter.format((Objects
-                                        .requireNonNull(document.getTimestamp("end_time")).toDate()));
-                                double total = Double.parseDouble(document.getString("amount_payable"));
-                                final DocumentReference restaurantReference = document.getReference().getParent().getParent();
-                                restaurantReference.get().addOnCompleteListener(restTask -> {
-                                    Visit summary = new Visit(restaurantReference.getId(),
-                                            Uri.parse(restTask.getResult().getString("image")),
-                                            String.valueOf(restTask.getResult().get("name")),
-                                            document.getId(), endTime, total);
-                                    mSessionHistoryList.add(summary);
-                                    mOrderSummaryAdapter.notifyDataSetChanged();
-                                    mShimmerFrame.stopShimmer();
-                                    mShimmerFrame.setVisibility(View.GONE);
-                                });
-                            }
+            .whereEqualTo("created_by", userID)
+            .orderBy("end_time", Query.Direction.DESCENDING)
+            .addSnapshotListener((queryDocumentSnapshots, e) -> {
+                if (queryDocumentSnapshots.getDocuments().size() > 0) {
+                    mEmptyState.setVisibility(View.GONE);
+                    for (DocumentSnapshot document : queryDocumentSnapshots.getDocuments()) {
+                        if (document == null) return;
+                        if (document.contains("amount_payable")) {
+                            @SuppressLint("SimpleDateFormat")
+                            SimpleDateFormat formatter = new SimpleDateFormat("dd MMM YYYY hh:mm a");
+                            String endTime = formatter.format((Objects
+                                    .requireNonNull(document.getTimestamp("end_time")).toDate()));
+                            double total = Double.parseDouble(document.getString("amount_payable"));
+                            final DocumentReference restaurantReference = document.getReference().getParent().getParent();
+                            restaurantReference.get().addOnCompleteListener(restTask -> {
+                                Visit summary = new Visit(restaurantReference.getId(),
+                                        Uri.parse(restTask.getResult().getString("image")),
+                                        String.valueOf(restTask.getResult().get("name")),
+                                        document.getId(), endTime, total);
+                                mSessionHistoryList.add(summary);
+                                mOrderSummaryAdapter.notifyDataSetChanged();
+                                mShimmerFrame.stopShimmer();
+                                mShimmerFrame.setVisibility(View.GONE);
+                            });
                         }
-                    } else {
-                        mShimmerFrame.stopShimmer();
-                        mShimmerFrame.setVisibility(View.GONE);
-                        mEmptyState.setVisibility(View.VISIBLE);
                     }
+                } else {
+                    mShimmerFrame.stopShimmer();
+                    mShimmerFrame.setVisibility(View.GONE);
+                    mEmptyState.setVisibility(View.VISIBLE);
                 }
-
-            } else {
-                Log.e("error", "Error getting documents: ", task.getException());
-            }
         });
     }
 }
