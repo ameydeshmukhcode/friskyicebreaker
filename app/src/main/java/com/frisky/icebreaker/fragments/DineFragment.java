@@ -27,7 +27,6 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -121,21 +120,17 @@ public class DineFragment extends Fragment {
         docRef.collection("items")
                 .whereEqualTo("recommended", true)
                 .orderBy("name")
-                .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        QuerySnapshot result = task.getResult();
-
-                        if (result.size() > 0) {
-                            recommendedCard.setVisibility(View.VISIBLE);
-                            StringBuilder currentItems = new StringBuilder(recommendedItems.getText().toString());
-                            for (DocumentSnapshot snapshot : result.getDocuments()) {
-                                if (snapshot.contains("name")) {
-                                    currentItems.append(snapshot.getString("name")).append(", ");
-                                }
+                .addSnapshotListener((queryDocumentSnapshots, e) -> {
+                    assert queryDocumentSnapshots != null;
+                    if (queryDocumentSnapshots.size() > 0) {
+                        recommendedCard.setVisibility(View.VISIBLE);
+                        StringBuilder currentItems = new StringBuilder(recommendedItems.getText().toString());
+                        for (DocumentSnapshot snapshot : queryDocumentSnapshots.getDocuments()) {
+                            if (snapshot.contains("name")) {
+                                currentItems.append(snapshot.getString("name")).append(", ");
                             }
-                            recommendedItems.setText(currentItems.substring(0, currentItems.length() - 2));
                         }
+                        recommendedItems.setText(currentItems.substring(0, currentItems.length() - 2));
                     }
                 });
     }
