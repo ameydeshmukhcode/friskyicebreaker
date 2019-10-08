@@ -59,12 +59,12 @@ public class VisitsFragment extends Fragment {
         mOrderSummaryAdapter = new VisitsListAdapter(mSessionHistoryList, getContext());
         mRecyclerPubView.setAdapter(mOrderSummaryAdapter);
 
-        getOrderHistory();
+        addListenerForVisits();
 
         return view;
     }
 
-    private void getOrderHistory() {
+    private void addListenerForVisits() {
         FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();
         String userID = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
 
