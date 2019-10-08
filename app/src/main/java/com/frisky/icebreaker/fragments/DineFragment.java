@@ -92,7 +92,7 @@ public class DineFragment extends Fragment {
                 getRecommendedItems(sharedPreferences.getString("restaurant_id", ""));
 
                 if (sharedPreferences.contains("order_active")) {
-                    getOrderDetails(restID, sessionID);
+                    addListenerForOrderUpdates(restID, sessionID);
                     noOrders.setVisibility(View.GONE);
                     showOrders.setVisibility(View.VISIBLE);
                 }
@@ -141,7 +141,7 @@ public class DineFragment extends Fragment {
     }
 
     @SuppressWarnings("unchecked")
-    private void getOrderDetails(String restaurantID, String sessionID) {
+    private void addListenerForOrderUpdates(String restaurantID, String sessionID) {
         final DocumentReference docRef = FirebaseFirestore.getInstance().collection("restaurants")
                 .document(restaurantID);
 
@@ -149,15 +149,12 @@ public class DineFragment extends Fragment {
                 .whereEqualTo("session_id", sessionID)
                 .orderBy("timestamp", Query.Direction.DESCENDING)
                 .limit(1)
-                .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
+                .addSnapshotListener((queryDocumentSnapshots, e)-> {
                         mOrderList.clear();
 
-                        QuerySnapshot document = task.getResult();
-                        assert document != null;
+                        assert queryDocumentSnapshots != null;
 
-                        for (DocumentSnapshot snapshot : document.getDocuments()) {
+                        for (DocumentSnapshot snapshot : queryDocumentSnapshots.getDocuments()) {
 
                             Map<String, Object> orderData = (Map<String, Object>) snapshot.get("items");
                             assert orderData != null;
@@ -187,7 +184,6 @@ public class DineFragment extends Fragment {
 
                         orderListAdapter = new OrderListAdapter(getContext(), mOrderList);
                         mOrderListRecyclerView.setAdapter(orderListAdapter);
-                    }
                 });
     }
 }
