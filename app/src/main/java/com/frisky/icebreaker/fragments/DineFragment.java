@@ -27,7 +27,6 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -92,7 +91,7 @@ public class DineFragment extends Fragment {
                 getRecommendedItems(sharedPreferences.getString("restaurant_id", ""));
 
                 if (sharedPreferences.contains("order_active")) {
-                    getOrderDetails(restID, sessionID);
+                    addListenerForOrderUpdates(restID, sessionID);
                     noOrders.setVisibility(View.GONE);
                     showOrders.setVisibility(View.VISIBLE);
                 }
@@ -121,27 +120,24 @@ public class DineFragment extends Fragment {
         docRef.collection("items")
                 .whereEqualTo("recommended", true)
                 .orderBy("name")
-                .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        QuerySnapshot result = task.getResult();
-
-                        if (result.size() > 0) {
-                            recommendedCard.setVisibility(View.VISIBLE);
-                            StringBuilder currentItems = new StringBuilder(recommendedItems.getText().toString());
-                            for (DocumentSnapshot snapshot : result.getDocuments()) {
-                                if (snapshot.contains("name")) {
-                                    currentItems.append(snapshot.getString("name")).append(", ");
-                                }
+                .addSnapshotListener((queryDocumentSnapshots, e) -> {
+                    assert queryDocumentSnapshots != null;
+                    if (queryDocumentSnapshots.size() > 0) {
+                        recommendedItems.setText("");
+                        recommendedCard.setVisibility(View.VISIBLE);
+                        StringBuilder currentItems = new StringBuilder(recommendedItems.getText().toString());
+                        for (DocumentSnapshot snapshot : queryDocumentSnapshots.getDocuments()) {
+                            if (snapshot.contains("name")) {
+                                currentItems.append(snapshot.getString("name")).append(", ");
                             }
-                            recommendedItems.setText(currentItems.substring(0, currentItems.length() - 2));
                         }
+                        recommendedItems.setText(currentItems.substring(0, currentItems.length() - 2));
                     }
                 });
     }
 
     @SuppressWarnings("unchecked")
-    private void getOrderDetails(String restaurantID, String sessionID) {
+    private void addListenerForOrderUpdates(String restaurantID, String sessionID) {
         final DocumentReference docRef = FirebaseFirestore.getInstance().collection("restaurants")
                 .document(restaurantID);
 
@@ -149,15 +145,12 @@ public class DineFragment extends Fragment {
                 .whereEqualTo("session_id", sessionID)
                 .orderBy("timestamp", Query.Direction.DESCENDING)
                 .limit(1)
-                .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
+                .addSnapshotListener((queryDocumentSnapshots, e)-> {
                         mOrderList.clear();
 
-                        QuerySnapshot document = task.getResult();
-                        assert document != null;
+                        assert queryDocumentSnapshots != null;
 
-                        for (DocumentSnapshot snapshot : document.getDocuments()) {
+                        for (DocumentSnapshot snapshot : queryDocumentSnapshots.getDocuments()) {
 
                             Map<String, Object> orderData = (Map<String, Object>) snapshot.get("items");
                             assert orderData != null;
@@ -187,7 +180,6 @@ public class DineFragment extends Fragment {
 
                         orderListAdapter = new OrderListAdapter(getContext(), mOrderList);
                         mOrderListRecyclerView.setAdapter(orderListAdapter);
-                    }
                 });
     }
 }

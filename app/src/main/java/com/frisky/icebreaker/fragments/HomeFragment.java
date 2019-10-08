@@ -73,7 +73,7 @@ public class HomeFragment extends Fragment {
 
         if (BuildConfig.DEBUG) {
             mFirestore.collection("restaurants")
-                    .whereEqualTo("status_listing", "debug")
+                    .whereLessThan("status_listing", "new")
                     .get()
                     .addOnCompleteListener(this::addToRestaurantList);
         }
