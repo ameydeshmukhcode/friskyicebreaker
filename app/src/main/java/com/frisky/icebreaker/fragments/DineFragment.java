@@ -123,6 +123,7 @@ public class DineFragment extends Fragment {
                 .addSnapshotListener((queryDocumentSnapshots, e) -> {
                     assert queryDocumentSnapshots != null;
                     if (queryDocumentSnapshots.size() > 0) {
+                        recommendedItems.setText("");
                         recommendedCard.setVisibility(View.VISIBLE);
                         StringBuilder currentItems = new StringBuilder(recommendedItems.getText().toString());
                         for (DocumentSnapshot snapshot : queryDocumentSnapshots.getDocuments()) {

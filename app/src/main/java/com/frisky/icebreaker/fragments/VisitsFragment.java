@@ -72,6 +72,8 @@ public class VisitsFragment extends Fragment {
             .whereEqualTo("created_by", userID)
             .orderBy("end_time", Query.Direction.DESCENDING)
             .addSnapshotListener((queryDocumentSnapshots, e) -> {
+                mSessionHistoryList.clear();
+
                 if (queryDocumentSnapshots.getDocuments().size() > 0) {
                     mEmptyState.setVisibility(View.GONE);
                     for (DocumentSnapshot document : queryDocumentSnapshots.getDocuments()) {
