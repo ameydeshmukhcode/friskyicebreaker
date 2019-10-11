@@ -221,7 +221,7 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
         navigation.removeBadge(R.id.menu_dine);
         mScanQRCodeFAB.setVisibility(View.VISIBLE);
         mScanQRCodeFAB.setOnClickListener(v -> startActivity(new Intent(this, QRScanActivity.class)));
-        mBottomSheetBehaviour.setState(BottomSheetBehavior.STATE_COLLAPSED);
+        mBottomSheetBehaviour.setState(BottomSheetBehavior.STATE_HIDDEN);
     }
 
     private void switchFragment(String fragment) {
