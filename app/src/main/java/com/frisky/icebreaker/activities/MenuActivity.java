@@ -25,7 +25,6 @@ import com.frisky.icebreaker.core.structures.MenuItem;
 import com.frisky.icebreaker.interfaces.OrderUpdateListener;
 import com.frisky.icebreaker.interfaces.UIActivity;
 import com.frisky.icebreaker.ui.assistant.NonDismissibleSnackBar;
-import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.DocumentSnapshot;
