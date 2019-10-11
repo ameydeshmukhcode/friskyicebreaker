@@ -24,6 +24,8 @@ import com.frisky.icebreaker.core.structures.MenuCategory;
 import com.frisky.icebreaker.core.structures.MenuItem;
 import com.frisky.icebreaker.interfaces.OrderUpdateListener;
 import com.frisky.icebreaker.interfaces.UIActivity;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -43,23 +45,22 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
     Button mBackButton;
     TextView mRestName;
     TextView mTableSerial;
-    Button mCategoryPickerButton;
-    ConstraintLayout mBottomSheetCart;
-    ConstraintLayout mBottomSheetOrder;
+    ExtendedFloatingActionButton mCategoryPickerButton;
     ConstraintLayout mDummyMenu;
-    TextView mCartTotalText;
 
     RecyclerView.Adapter mMenuListViewAdapter;
     RecyclerView mRecyclerMenuListView;
 
+    Snackbar mSnackbar;
+
     int mCartTotal = 0;
+    boolean mSnackbarVisible = false;
     String restaurantID;
     private List<Object> mMenu = new ArrayList<>();
     private List<MenuCategory> mCategories = new ArrayList<>();
     ArrayList<MenuItem> mCartList = new ArrayList<>();
     HashMap<String, ArrayList<MenuItem>> mItems = new HashMap<>();
     HashMap<String, Integer> mCategoryOrderMap = new HashMap<>();
-
 
     PopupMenu categoryMenu;
 
@@ -100,6 +101,7 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
         });
 
         mCategoryPickerButton.setOnClickListener(v -> categoryMenu.show());
+        mCategoryPickerButton.setElevation(8);
 
         mDummyMenu = findViewById(R.id.dummy_menu);
 
@@ -107,39 +109,38 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
         mTableSerial = findViewById(R.id.text_table);
         mRecyclerMenuListView = findViewById(R.id.recycler_view_menu);
 
-        mBottomSheetCart = findViewById(R.id.bottom_sheet_cart);
-        mBottomSheetCart.setVisibility(View.GONE);
-
-        mBottomSheetOrder = findViewById(R.id.bottom_sheet_order);
-
         if (sharedPreferences.getBoolean("order_active", false)) {
-            mBottomSheetOrder.setVisibility(View.VISIBLE);
-            mBottomSheetOrder.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), OrderActivity.class)));
+            showOrderSnackbar();
+
             mRecyclerMenuListView.setPadding(0, 0, 0, 0);
             mRecyclerMenuListView.setPadding(0, 0, 0, 225);
             mRecyclerMenuListView.setClipToPadding(false);
-        } else {
-            mBottomSheetOrder.setVisibility(View.GONE);
         }
-
-        mCartTotalText = findViewById(R.id.text_cart_total);
-        mBottomSheetCart.setOnClickListener(v -> {
-            Intent showOrder = new Intent(getApplicationContext(), CartActivity.class);
-            showOrder.putExtra("cart_list", mCartList);
-            showOrder.putExtra("cart_total", mCartTotal);
-            startActivity(showOrder);
-        });
 
         setUserSession();
     }
 
     @Override
     public void addToOrder(MenuItem item) {
-        mBottomSheetOrder.setVisibility(View.GONE);
-
         mCartTotal += item.getPrice();
-        mBottomSheetCart.setVisibility(View.VISIBLE);
-        mCartTotalText.setText(String.valueOf(mCartTotal));
+
+        Log.d(getString(R.string.tag_debug), "add" + mSnackbarVisible);
+
+        if (!mSnackbarVisible) {
+            View root = findViewById(R.id.root);
+            mSnackbar = Snackbar.make(root, R.string.cart_active, Snackbar.LENGTH_INDEFINITE);
+            mSnackbar.setAction("View", v -> {
+                    Intent showOrder = new Intent(getApplicationContext(), CartActivity.class);
+                    showOrder.putExtra("cart_list", mCartList);
+                    showOrder.putExtra("cart_total", mCartTotal);
+                    startActivity(showOrder);
+                });
+            mSnackbar.show();
+        }
+
+        mSnackbarVisible = true;
+
+        Log.d(getString(R.string.tag_debug), "add" + mSnackbarVisible);
 
         if (mCartList.size() == 0) {
             mCartList.add(item);
@@ -174,16 +175,16 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
             }
         }
 
-        if (mCartTotal > 0) {
-            mCartTotalText.setText(String.valueOf(mCartTotal));
-        } else {
-            mBottomSheetCart.setVisibility(View.GONE);
+        if (mCartTotal <= 0) {
+            if (mSnackbarVisible) {
+                mSnackbar.dismiss();
+                mSnackbarVisible = false;
+            }
+
             if (sharedPreferences.getBoolean("order_active", false)) {
-                mBottomSheetOrder.setVisibility(View.VISIBLE);
-                mBottomSheetOrder.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), OrderActivity.class)));
+                showOrderSnackbar();
             } else {
-                mBottomSheetOrder.setVisibility(View.GONE);
-                mRecyclerMenuListView.setPadding(0, 0, 0, 0);
+                mRecyclerMenuListView.setPadding(0, 0, 0, 100);
                 mRecyclerMenuListView.setClipToPadding(false);
             }
         }
@@ -195,11 +196,9 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
         mRecyclerMenuListView.setOverScrollMode(View.OVER_SCROLL_NEVER);
 
         RecyclerView.LayoutManager mMenuListViewLayoutManager;
-        // use a linear layout manager
         mMenuListViewLayoutManager = new LinearLayoutManager(getApplicationContext());
         mRecyclerMenuListView.setLayoutManager(mMenuListViewLayoutManager);
 
-        // specify an adapter (see also next example)
         mMenuListViewAdapter = new MenuListAdapter(mMenu, this);
         mRecyclerMenuListView.setAdapter(mMenuListViewAdapter);
 
@@ -287,5 +286,12 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
         }
         mMenuListViewAdapter.notifyDataSetChanged();
         mDummyMenu.setVisibility(View.GONE);
+    }
+
+    private void showOrderSnackbar() {
+        View root = findViewById(R.id.root);
+        mSnackbar = Snackbar.make(root, R.string.view_order_summary, Snackbar.LENGTH_INDEFINITE);
+        mSnackbar.setAction("View", v -> startActivity(new Intent(getApplicationContext(), OrderActivity.class)));
+        mSnackbar.show();
     }
 }
