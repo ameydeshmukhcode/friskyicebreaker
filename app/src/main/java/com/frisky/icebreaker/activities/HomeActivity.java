@@ -12,17 +12,17 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.frisky.icebreaker.R;
 import com.frisky.icebreaker.fragments.DineFragment;
-import com.frisky.icebreaker.fragments.VisitsFragment;
 import com.frisky.icebreaker.fragments.HomeFragment;
+import com.frisky.icebreaker.fragments.VisitsFragment;
 import com.frisky.icebreaker.interfaces.UIActivity;
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -39,19 +39,19 @@ import java.util.Objects;
 
 public class HomeActivity extends AppCompatActivity implements UIActivity, BottomNavigationView.OnNavigationItemSelectedListener {
 
-    ConstraintLayout mBottomSheet;
     Button mBottomSheetButton;
 
     TextView mBottomSheetTitle;
     TextView mBottomSheetInfo;
     TextView mBottomSheetDetails;
 
-    Intent mResumeSessionIntent;
-
     SharedPreferences sharedPreferences;
 
     ExtendedFloatingActionButton mScanQRCodeFAB;
     BottomNavigationView navigation;
+
+    View mBottomSheet;
+    BottomSheetBehavior mBottomSheetBehaviour;
 
     FirebaseUser mUser;
 
@@ -59,7 +59,6 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        mResumeSessionIntent = new Intent(getApplicationContext(), MenuActivity.class);
         sharedPreferences = getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE);
 
         mUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -91,6 +90,7 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
                 });
 
         switchFragment("home");
+        initUI();
 
         checkForProfileSetup();
     }
@@ -98,8 +98,6 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
     @Override
     protected void onResume() {
         super.onResume();
-
-        initUI();
 
         checkSessionDetails();
     }
@@ -126,7 +124,9 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
 
     public void initUI() {
         mBottomSheet = findViewById(R.id.bottom_sheet_session);
-        mBottomSheet.setVisibility(View.GONE);
+
+        mBottomSheetBehaviour = BottomSheetBehavior.from(mBottomSheet);
+        mBottomSheetBehaviour.setState(BottomSheetBehavior.STATE_HIDDEN);
 
         mBottomSheetTitle = findViewById(R.id.text_sheet_title);
         mBottomSheetInfo = findViewById(R.id.text_info);
@@ -209,17 +209,19 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
         } else {
             mBottomSheetInfo.setText(sharedPreferences.getString("restaurant_name", ""));
             mBottomSheetDetails.setText(sharedPreferences.getString("table_name", ""));
-            mBottomSheetButton.setOnClickListener(v -> startActivity(mResumeSessionIntent));
+            Intent resumeSession = new Intent(getApplicationContext(), MenuActivity.class);
+            mBottomSheetButton.setOnClickListener(v -> startActivity(resumeSession));
         }
 
-        mBottomSheet.setVisibility(View.VISIBLE);
+        mBottomSheetBehaviour = BottomSheetBehavior.from(mBottomSheet);
+        mBottomSheetBehaviour.setState(BottomSheetBehavior.STATE_COLLAPSED);
     }
 
     private void disableSession() {
         navigation.removeBadge(R.id.menu_dine);
         mScanQRCodeFAB.setVisibility(View.VISIBLE);
         mScanQRCodeFAB.setOnClickListener(v -> startActivity(new Intent(this, QRScanActivity.class)));
-        mBottomSheet.setVisibility(View.GONE);
+        mBottomSheetBehaviour.setState(BottomSheetBehavior.STATE_HIDDEN);
     }
 
     private void switchFragment(String fragment) {

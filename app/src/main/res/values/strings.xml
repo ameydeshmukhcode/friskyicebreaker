@@ -80,7 +80,6 @@
     <string name="unavailable">Unavailable</string>
     <string name="cart_active">You have items in the cart</string>
     <string name="cart_total">Cart total</string>
-    <string name="view_cart">View Cart</string>
     <string name="your_cart">Your Cart</string>
     <string name="in_cart">In cart</string>
     <string name="item_total">Item total</string>
