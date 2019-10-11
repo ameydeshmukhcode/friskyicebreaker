@@ -24,6 +24,8 @@ import com.frisky.icebreaker.core.structures.MenuCategory;
 import com.frisky.icebreaker.core.structures.MenuItem;
 import com.frisky.icebreaker.interfaces.OrderUpdateListener;
 import com.frisky.icebreaker.interfaces.UIActivity;
+import com.frisky.icebreaker.ui.assistant.NonDismissibleSnackBar;
+import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -109,6 +111,12 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
         mTableSerial = findViewById(R.id.text_table);
         mRecyclerMenuListView = findViewById(R.id.recycler_view_menu);
 
+        setUserSession();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         if (sharedPreferences.getBoolean("order_active", false)) {
             showOrderSnackbar();
 
@@ -117,30 +125,18 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
             mRecyclerMenuListView.setClipToPadding(false);
         }
 
-        setUserSession();
+        if (mCartList.size() > 0) showCartSnackbar();
     }
 
     @Override
     public void addToOrder(MenuItem item) {
         mCartTotal += item.getPrice();
 
-        Log.d(getString(R.string.tag_debug), "add" + mSnackbarVisible);
-
         if (!mSnackbarVisible) {
-            View root = findViewById(R.id.root);
-            mSnackbar = Snackbar.make(root, R.string.cart_active, Snackbar.LENGTH_INDEFINITE);
-            mSnackbar.setAction("View", v -> {
-                    Intent showOrder = new Intent(getApplicationContext(), CartActivity.class);
-                    showOrder.putExtra("cart_list", mCartList);
-                    showOrder.putExtra("cart_total", mCartTotal);
-                    startActivity(showOrder);
-                });
-            mSnackbar.show();
+            showCartSnackbar();
         }
 
         mSnackbarVisible = true;
-
-        Log.d(getString(R.string.tag_debug), "add" + mSnackbarVisible);
 
         if (mCartList.size() == 0) {
             mCartList.add(item);
@@ -291,7 +287,21 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
     private void showOrderSnackbar() {
         View root = findViewById(R.id.root);
         mSnackbar = Snackbar.make(root, R.string.view_order_summary, Snackbar.LENGTH_INDEFINITE);
+        mSnackbar.setBehavior(new NonDismissibleSnackBar());
         mSnackbar.setAction("View", v -> startActivity(new Intent(getApplicationContext(), OrderActivity.class)));
+        mSnackbar.show();
+    }
+
+    private void showCartSnackbar() {
+        View root = findViewById(R.id.root);
+        mSnackbar = Snackbar.make(root, R.string.cart_active, Snackbar.LENGTH_INDEFINITE);
+        mSnackbar.setBehavior(new NonDismissibleSnackBar());
+        mSnackbar.setAction("View", v -> {
+            Intent showOrder = new Intent(getApplicationContext(), CartActivity.class);
+            showOrder.putExtra("cart_list", mCartList);
+            showOrder.putExtra("cart_total", mCartTotal);
+            startActivity(showOrder);
+        });
         mSnackbar.show();
     }
 }
