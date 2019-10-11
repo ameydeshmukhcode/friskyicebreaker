@@ -3,6 +3,7 @@ package com.frisky.icebreaker.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -286,6 +287,10 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
     private void showOrderSnackbar() {
         View root = findViewById(R.id.root);
         mSnackbar = Snackbar.make(root, R.string.view_order_summary, Snackbar.LENGTH_INDEFINITE);
+        TextView mainTextView = mSnackbar.getView().findViewById(R.id.snackbar_text);
+        TextView actionTextView = mSnackbar.getView().findViewById(R.id.snackbar_action);
+        mainTextView.setTextAppearance(R.style.FriskyText);
+        actionTextView.setTextAppearance(R.style.FriskyText);
         mSnackbar.setBehavior(new NonDismissibleSnackBar());
         mSnackbar.setAction("View", v -> startActivity(new Intent(getApplicationContext(), OrderActivity.class)));
         mSnackbar.show();
@@ -294,6 +299,10 @@ public class MenuActivity extends AppCompatActivity implements UIActivity,
     private void showCartSnackbar() {
         View root = findViewById(R.id.root);
         mSnackbar = Snackbar.make(root, R.string.cart_active, Snackbar.LENGTH_INDEFINITE);
+        TextView mainTextView = mSnackbar.getView().findViewById(R.id.snackbar_text);
+        TextView actionTextView = mSnackbar.getView().findViewById(R.id.snackbar_action);
+        mainTextView.setTextAppearance(R.style.FriskyText);
+        actionTextView.setTextAppearance(R.style.FriskyText);
         mSnackbar.setBehavior(new NonDismissibleSnackBar());
         mSnackbar.setAction("View", v -> {
             Intent showOrder = new Intent(getApplicationContext(), CartActivity.class);
