@@ -250,6 +250,7 @@ public class SetupProfileActivity extends AppCompatActivity implements FormActiv
             enableForm();
         } else {
             ProgressDialog progressDialog = new ProgressDialog("Updating Your Profile");
+
             progressDialog.setCancelable(false);
             progressDialog.show(getSupportFragmentManager(), "progress dialog");
 
@@ -315,7 +316,6 @@ public class SetupProfileActivity extends AppCompatActivity implements FormActiv
                                                     .putBoolean("profile_setup_complete", true)
                                                     .putString("u_image", uri.toString())
                                                     .apply();
-                                            progressDialog.dismiss();
                                             Toast.makeText(getApplicationContext(), "Profile Updated!", Toast.LENGTH_SHORT).show();
                                             Intent launchOptions = new Intent(getApplicationContext(), OptionsActivity.class);
                                             startActivity(launchOptions);
@@ -334,7 +334,8 @@ public class SetupProfileActivity extends AppCompatActivity implements FormActiv
     private void updateProfileData() {
         disableForm();
 
-        ProgressDialog progressDialog = new ProgressDialog("Uploading your details");
+        ProgressDialog progressDialog = new ProgressDialog("Updating Your Profile");
+
         progressDialog.setCancelable(false);
         progressDialog.show(getSupportFragmentManager(), "progress dialog");
 
@@ -382,7 +383,6 @@ public class SetupProfileActivity extends AppCompatActivity implements FormActiv
                                             .putBoolean("profile_setup_complete", true)
                                             .putString("u_image", uri.toString())
                                             .apply();
-                                    progressDialog.dismiss();
                                     Intent launchOptions = new Intent(getApplicationContext(), OptionsActivity.class);
                                     startActivity(launchOptions);
                                     finish();
