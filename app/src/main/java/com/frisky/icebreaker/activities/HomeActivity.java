@@ -215,6 +215,19 @@ public class HomeActivity extends AppCompatActivity implements UIActivity, Botto
 
         mBottomSheetBehaviour = BottomSheetBehavior.from(mBottomSheet);
         mBottomSheetBehaviour.setState(BottomSheetBehavior.STATE_COLLAPSED);
+        mBottomSheetBehaviour.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(@NonNull View bottomSheet, int newState) {
+                if (newState == BottomSheetBehavior.STATE_DRAGGING) {
+                    mBottomSheetBehaviour.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                }
+            }
+
+            @Override
+            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+
+            }
+        });
     }
 
     private void disableSession() {
